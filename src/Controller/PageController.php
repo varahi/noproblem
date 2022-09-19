@@ -25,9 +25,13 @@ class PageController extends AbstractController
     /**
      * @Route("/articles", name="app_articles")
      */
-    public function articles()
+    public function articles(
+        ArticleRepository $articleRepository
+    )
     {
+        $articles = $articleRepository->findAll();
         return $this->render('articles/index.html.twig', [
+            'articles' => $articles
         ]);
     }
 

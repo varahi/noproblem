@@ -21,6 +21,6 @@ new Vue({
 });
 
 new Vue({
-    el: '#app',
+    el: '#articles',
     render: h => h(Articles)
 });

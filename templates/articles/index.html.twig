@@ -1,7 +1,15 @@
 {% extends 'base.html.twig' %}
-{% block title %}Articles{% endblock %}
+{% block title %}Articles Vue{% endblock %}
 {% block body %}
-    <div id="app">
+    <div id="articles">
         <app />
     </div>
+
+
+<!--    {% for article in articles %}
+        <h3>{{ article.name }}</h3>
+        <div>
+            {{ article.bodytext|raw }}
+        </div>
+    {% endfor %}-->
 {% endblock %}

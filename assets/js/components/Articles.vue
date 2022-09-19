@@ -4,7 +4,7 @@
     <div class="col" v-if="items && items.length">
       <div class="item" v-for="item of items">
         <h3><strong>{{item.title}}</strong></h3>
-        <div class="description">{{item.description}}</div>
+        <div class="description" v-html="item.description">{{item.description}}</div>
       </div>
     </div>
 
@@ -29,6 +29,8 @@ export default {
 
   // Fetches items when the component is created.
   created() {
+    //const host = window.location.hostname;
+    //axios.get(`http://+ host +/api/articles`)
     axios.get(`http://127.0.0.1/api/articles`)
         .then(response => {
           // JSON responses are automatically parsed.
