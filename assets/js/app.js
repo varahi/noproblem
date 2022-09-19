@@ -7,6 +7,7 @@
 
 import Vue from 'vue';
 import Home from './components/Home';
+import Articles from './components/Articles';
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '../css/app.css';
@@ -19,7 +20,7 @@ new Vue({
     render: h => h(Home)
 });
 
-//new Vue({
-//    el: '#cat',
-//    render: h => h(Categories)
-//});
+new Vue({
+    el: '#app',
+    render: h => h(Articles)
+});
