@@ -12,6 +12,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use App\Entity\City;
 use App\Entity\Category;
 use App\Entity\Job;
+use App\Entity\Article;
+use App\Entity\ArticleCategory;
+use App\Entity\Course;
+use App\Entity\Page;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -33,8 +37,7 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
+        yield MenuItem::linkToRoute('On site', 'fa fa-home', 'app_home');
 
         yield MenuItem::section('Database');
         yield MenuItem::subMenu('Database', 'fa fa-database')->setSubItems([
@@ -43,8 +46,24 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Job', 'fa fa-handshake-o', Job::class),
         ]);
 
-        //yield MenuItem::section('Users');
+        /*yield MenuItem::section('Articles');
+        yield MenuItem::subMenu('Articles', 'fa fa-tasks')->setSubItems([
+            MenuItem::linkToCrud('Category', 'fa fa-folder-o', ArticleCategory::class),
+            MenuItem::linkToCrud('Article', 'fa fa-folder-open-o', Article::class),
+        ]);*/
+
+        yield MenuItem::section('Site');
+        yield MenuItem::subMenu('Site', 'fa fa-sitemap')->setSubItems([
+            MenuItem::linkToCrud('Page', 'fa fa-paper-plane-o', Page::class),
+            MenuItem::linkToCrud('Article Category', 'fa fa-folder-o', ArticleCategory::class),
+            MenuItem::linkToCrud('Article', 'fa fa-folder-open-o', Article::class),
+        ]);
+
+        yield MenuItem::section('Users');
         yield MenuItem::linkToCrud('User', 'fa fa-user', User::class);
-        yield MenuItem::linkToCrud('Client', 'fa fa-user', User::class)->setController(UserClientCrudController::class);
+        yield MenuItem::linkToCrud('Client', 'fa fa-user-circle', User::class)->setController(UserClientCrudController::class);
+
+        yield MenuItem::section('Cources');
+        yield MenuItem::linkToCrud('Course', 'fa fa-id-badge', Course::class);
     }
 }
