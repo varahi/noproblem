@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -41,5 +42,9 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Category', 'fa fa-bars', Category::class),
             MenuItem::linkToCrud('Job', 'fa fa-handshake-o', Job::class),
         ]);
+
+        //yield MenuItem::section('Users');
+        yield MenuItem::linkToCrud('User', 'fa fa-user', User::class);
+        yield MenuItem::linkToCrud('Client', 'fa fa-user', User::class)->setController(UserClientCrudController::class);
     }
 }
