@@ -19,6 +19,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Form\Type\FileUploadType;
 
 class JobCrudController extends AbstractCrudController
 {
@@ -27,12 +28,33 @@ class JobCrudController extends AbstractCrudController
         return Job::class;
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('Job')
+            ->setEntityLabelInPlural('Job')
+            ->setSearchFields(['name'])
+            ->setDefaultSort(['id' => 'DESC']);
+    }
+
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add(EntityFilter::new('category'))
+            ;
+    }
+
     public function configureFields(string $pageName): iterable
     {
         yield IntegerField::new('id')->setFormTypeOption('disabled', 'disabled');
         yield BooleanField::new('hidden');
         yield TextField::new('name');
         yield TextareaField::new('description');
+        yield ImageField::new('image')
+            ->setBasePath('uploads/')
+            ->setUploadDir('public_html/uploads')
+            ->setFormType(FileUploadType::class)
+            ->setRequired(false);
         yield TextField::new('age');
         yield ChoiceField::new('experience')->setChoices(
             [
@@ -73,20 +95,5 @@ class JobCrudController extends AbstractCrudController
         yield DateField::new('startDate');
         yield AssociationField::new('city')->hideOnIndex();
         yield AssociationField::new('category')->hideOnIndex();
-        yield ImageField::new('image')
-            ->setBasePath('/uploads/files')
-            ->setLabel('Image')
-            ->onlyOnIndex();
     }
-
-    /*
-    public function configureFields(string $pageName): iterable
-    {
-        return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
-        ];
-    }
-    */
 }

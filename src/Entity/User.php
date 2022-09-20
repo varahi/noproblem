@@ -66,7 +66,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $avatar;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $isVerified;
 
@@ -75,9 +75,64 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $tickets;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $about;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $age;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $experience;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $education;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $citizen;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $address;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=City::class, inversedBy="users")
+     */
+    private $city;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="users")
+     */
+    private $category;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Tariff::class, inversedBy="users")
+     */
+    private $tariff;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $hidden;
+
     public function __construct()
     {
         $this->tickets = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->firstName .' '. $this->lastName;
     }
 
     public function getId(): ?int
@@ -237,6 +292,126 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $ticket->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAbout(): ?string
+    {
+        return $this->about;
+    }
+
+    public function setAbout(?string $about): self
+    {
+        $this->about = $about;
+
+        return $this;
+    }
+
+    public function getAge(): ?int
+    {
+        return $this->age;
+    }
+
+    public function setAge(?int $age): self
+    {
+        $this->age = $age;
+
+        return $this;
+    }
+
+    public function getExperience(): ?string
+    {
+        return $this->experience;
+    }
+
+    public function setExperience(?string $experience): self
+    {
+        $this->experience = $experience;
+
+        return $this;
+    }
+
+    public function getEducation(): ?string
+    {
+        return $this->education;
+    }
+
+    public function setEducation(?string $education): self
+    {
+        $this->education = $education;
+
+        return $this;
+    }
+
+    public function getCitizen(): ?string
+    {
+        return $this->citizen;
+    }
+
+    public function setCitizen(?string $citizen): self
+    {
+        $this->citizen = $citizen;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getCity(): ?City
+    {
+        return $this->city;
+    }
+
+    public function setCity(?City $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getTariff(): ?Tariff
+    {
+        return $this->tariff;
+    }
+
+    public function setTariff(?Tariff $tariff): self
+    {
+        $this->tariff = $tariff;
+
+        return $this;
+    }
+
+    public function isHidden(): ?bool
+    {
+        return $this->hidden;
+    }
+
+    public function setHidden(bool $hidden): self
+    {
+        $this->hidden = $hidden;
 
         return $this;
     }

@@ -10,7 +10,6 @@ use App\Controller\Traits\DataTrait;
 
 class PageController extends AbstractController
 {
-
     use DataTrait;
 
     /**
@@ -27,8 +26,7 @@ class PageController extends AbstractController
      */
     public function articles(
         ArticleRepository $articleRepository
-    )
-    {
+    ) {
         $articles = $articleRepository->findAll();
         return $this->render('articles/index.html.twig', [
             'articles' => $articles

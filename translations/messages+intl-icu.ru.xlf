@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="ru" target-language="ru" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="sUrHikb" resname="Articles">
+        <source>Articles</source>
+        <target>Статьи</target>
+      </trans-unit>
+      <trans-unit id="To Home" resname="To Home">
+        <source>To Home</source>
+        <target>На главную</target>
+      </trans-unit>
+      <trans-unit id="Database" resname="Database">
+        <source>Database</source>
+        <target>База данных</target>
+      </trans-unit>
+      <trans-unit id="Site" resname="Site">
+        <source>Site</source>
+        <target>Сайт</target>
+      </trans-unit>
+      <trans-unit id="Cities" resname="Cities">
+        <source>Cities</source>
+        <target>Города</target>
+      </trans-unit>
+      <trans-unit id="City" resname="City">
+        <source>City</source>
+        <target>Город</target>
+      </trans-unit>
+      <trans-unit id="Categories" resname="Categories">
+        <source>Categories</source>
+        <target>Категории</target>
+      </trans-unit>
+      <trans-unit id="Category" resname="Category">
+        <source>Category</source>
+        <target>Категория</target>
+      </trans-unit>
+      <trans-unit id="Jobs" resname="Jobs">
+        <source>Jobs</source>
+        <target>Вакансии</target>
+      </trans-unit>
+      <trans-unit id="Job" resname="Job">
+        <source>Job</source>
+        <target>Вакансия</target>
+      </trans-unit>
+      <trans-unit id="Pages" resname="Pages">
+        <source>Pages</source>
+        <target>Страницы</target>
+      </trans-unit>
+      <trans-unit id="Page" resname="Page">
+        <source>Page</source>
+        <target>Страница</target>
+      </trans-unit>
+      <trans-unit id="Article Categories" resname="Article Categories">
+        <source>Article Categories</source>
+        <target>Категории статей</target>
+      </trans-unit>
+      <trans-unit id="ArticleCategory" resname="ArticleCategory">
+        <source>Article Category</source>
+        <target>Категория статей</target>
+      </trans-unit>
+      <trans-unit id="Name" resname="Name">
+        <source>Name</source>
+        <target>Название</target>
+      </trans-unit>
+      <trans-unit id="Description" resname="Description">
+        <source>Description</source>
+        <target>Описание</target>
+      </trans-unit>
+      <trans-unit id="Bodytext" resname="Bodytext">
+        <source>Bodytext</source>
+        <target>Текст</target>
+      </trans-unit>
+      <trans-unit id="Is Hidden" resname="Is Hidden">
+        <source>Is Hidden</source>
+        <target>Скрыть</target>
+      </trans-unit>
+      <trans-unit id="Hidden" resname="Hidden">
+        <source>Hidden</source>
+        <target>Скрыть</target>
+      </trans-unit>
+      <trans-unit id="Image" resname="Image">
+        <source>Image</source>
+        <target>Изображение</target>
+      </trans-unit>
+      <trans-unit id="Age" resname="Age">
+        <source>Age</source>
+        <target>Возраст(лет)</target>
+      </trans-unit>
+      <trans-unit id="Experience" resname="Experience">
+        <source>Experience</source>
+        <target>Опыт</target>
+      </trans-unit>
+      <trans-unit id="Education" resname="Education">
+        <source>Education</source>
+        <target>Образование</target>
+      </trans-unit>
+      <trans-unit id="Citizen" resname="Citizen">
+        <source>Citizen</source>
+        <target>Гражданство</target>
+      </trans-unit>
+      <trans-unit id="Start Now" resname="Start Now">
+        <source>Start Now</source>
+        <target>Начать сейчас</target>
+      </trans-unit>
+      <trans-unit id="Start Date" resname="Start Date">
+        <source>Start Date</source>
+        <target>Дата начала</target>
+      </trans-unit>
+      <trans-unit id="First Name" resname="First Name">
+        <source>First Name</source>
+        <target>Имя</target>
+      </trans-unit>
+      <trans-unit id="Last Name" resname="Last Name">
+        <source>Last Name</source>
+        <target>Фамилия</target>
+      </trans-unit>
+      <trans-unit id="Phone" resname="Phone">
+        <source>Phone</source>
+        <target>Телефон</target>
+      </trans-unit>
+      <trans-unit id="Client" resname="Client">
+        <source>Client</source>
+        <target>Клиенты</target>
+      </trans-unit>
+      <trans-unit id="User" resname="User">
+        <source>User</source>
+        <target>Пользователь</target>
+      </trans-unit>
+      <trans-unit id="Users" resname="Users">
+        <source>Users</source>
+        <target>Пользователи</target>
+      </trans-unit>
+      <trans-unit id="Avatar" resname="Avatar">
+        <source>Avatar</source>
+        <target>Аватар пользователя</target>
+      </trans-unit>
+      <trans-unit id="Tariff" resname="Tariff">
+        <source>Tariff</source>
+        <target>Тариф</target>
+      </trans-unit>
+      <trans-unit id="About" resname="About">
+        <source>About</source>
+        <target>О Себе</target>
+      </trans-unit>
+      <trans-unit id="Address" resname="Address">
+        <source>Address</source>
+        <target>Адрес</target>
+      </trans-unit>
+      <trans-unit id="Username" resname="Username">
+        <source>Username</source>
+        <target>Имя пользователя</target>
+      </trans-unit>
+      <trans-unit id="Cources" resname="Cources">
+        <source>Cources</source>
+        <target>Курсы</target>
+      </trans-unit>
+      <trans-unit id="Course" resname="Course">
+        <source>Course</source>
+        <target>Курс</target>
+      </trans-unit>
+      <trans-unit id="Price" resname="Price">
+        <source>Price</source>
+        <target>Стоимость курса</target>
+      </trans-unit>
+      <trans-unit id="Discounted Price" resname="Discounted Price">
+        <source>Discounted Price</source>
+        <target>Стоимость со скидкой</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

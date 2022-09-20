@@ -25,3 +25,15 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+
+.env.test
+.php-cs-fixer.cache
+bin/phpunit
+composer.phar
+docker-compose.override.yml
+docker-compose.yml
+migrations/
+php-cs-fixer
+phpunit.xml.dist
+public_html/
+yarn.lock
