@@ -23,10 +23,10 @@ security:
             anonymous: false
             lazy: true
             provider: app_user_provider
-            #custom_authenticator: App\Security\AppAuthenticator
-            guard:
-                authenticators:
-                    - App\Security\AppAuthenticator
+            custom_authenticator: App\Security\AppAuthenticator
+            #guard:
+            #    authenticators:
+            #        - App\Security\AppAuthenticator
             logout:
                 path: app_logout
                 # where to redirect after logout
@@ -42,7 +42,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         ### ROLE_ADMIN - access to admin panel
-         - { path: ^/admin, roles: ROLE_ADMIN }
+         #- { path: ^/admin, roles: ROLE_ADMIN }
          ### Front-end user groups
          - { path: ^/employer, roles: ROLE_EMPLOYEE }
          - { path: ^/customer, roles: ROLE_CUSTOMER }

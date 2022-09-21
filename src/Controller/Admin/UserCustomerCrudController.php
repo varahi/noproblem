@@ -27,7 +27,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Form\Type\FileUploadType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
-class UserClientCrudController extends AbstractCrudController
+class UserCustomerCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
@@ -36,7 +36,7 @@ class UserClientCrudController extends AbstractCrudController
 
     public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): \Doctrine\ORM\QueryBuilder
     {
-        $role = 'ROLE_CLIENT';
+        $role = 'ROLE_CUSTOMER';
         $qb = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
         $qb->where('entity.roles LIKE :roles');
         $qb->setParameter('roles', '%"'.$role.'"%');
@@ -64,7 +64,7 @@ class UserClientCrudController extends AbstractCrudController
         yield TextField::new('password')->setFormType(PasswordType::class)->hideOnIndex();
         yield TelephoneField::new('phone')->hideOnIndex();
         yield EmailField::new('email');
-        yield ArrayField::new('roles')->hideOnIndex();
+        yield ArrayField::new('roles')->hideOnIndex()->setFormTypeOption('disabled', 'disabled');
         yield ImageField::new('avatar')
             ->setBasePath('uploads/')
             ->setUploadDir('public_html/uploads')

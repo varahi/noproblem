@@ -15,6 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Form\Type\FileUploadType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 class CourseCrudController extends AbstractCrudController
 {
@@ -29,7 +30,8 @@ class CourseCrudController extends AbstractCrudController
             ->setEntityLabelInSingular('Course')
             ->setEntityLabelInPlural('Course')
             ->setSearchFields(['name'])
-            ->setDefaultSort(['id' => 'DESC']);
+            ->setDefaultSort(['id' => 'DESC'])
+            ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig');
     }
 
     public function configureFields(string $pageName): iterable
@@ -42,7 +44,7 @@ class CourseCrudController extends AbstractCrudController
             ->setUploadDir('public_html/uploads')
             ->setFormType(FileUploadType::class)
             ->setRequired(false);
-        yield TextEditorField::new('bodytext');
+        yield TextEditorField::new('bodytext')->hideOnIndex()->setFormType(CKEditorType::class);
         yield MoneyField::new('price')->setCurrency('RUB')->setCustomOption('storedAsCents', false);
         yield MoneyField::new('discountedPrice')->setCurrency('RUB')->setCustomOption('storedAsCents', false);
     }

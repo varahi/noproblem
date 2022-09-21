@@ -44,6 +44,7 @@ class ArticleCrudController extends AbstractCrudController
     {
         yield IntegerField::new('id')->setFormTypeOption('disabled', 'disabled');
         yield TextField::new('name');
+        yield TextEditorField::new('bodytext')->setFormType(CKEditorType::class);
         yield AssociationField::new('category');
         yield ImageField::new('image')
             ->setBasePath('uploads/')
@@ -51,7 +52,6 @@ class ArticleCrudController extends AbstractCrudController
             ->setFormType(FileUploadType::class)
             //->setUploadedFileNamePattern('[randomhash].[extension]')
             ->setRequired(false);
-        yield TextEditorField::new('bodytext')->hideOnIndex()->setFormType(CKEditorType::class);
         //yield TextEditorField::new('bodytext');
     }
 }

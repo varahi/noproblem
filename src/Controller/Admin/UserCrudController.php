@@ -56,7 +56,7 @@ class UserCrudController extends AbstractCrudController
         yield TextField::new('lastName');
         yield TextField::new('email');
         yield TextField::new('phone');
-        yield ArrayField::new('roles')->hideOnIndex();
+        yield ArrayField::new('roles')->hideOnIndex()->setFormTypeOption('disabled', 'disabled');
         yield ImageField::new('avatar')
             ->setBasePath('/uploads/files')
             ->setLabel('Avatar')

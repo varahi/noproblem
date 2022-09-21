@@ -169,6 +169,14 @@
         <source>Discounted Price</source>
         <target>Стоимость со скидкой</target>
       </trans-unit>
+      <trans-unit id="Workers" resname="Workers">
+        <source>Workers</source>
+        <target>Работники</target>
+      </trans-unit>
+      <trans-unit id="Customers" resname="Customers">
+        <source>Customers</source>
+        <target>Заказчики</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
