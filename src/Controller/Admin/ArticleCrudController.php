@@ -14,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Form\Type\FileUploadType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 class ArticleCrudController extends AbstractCrudController
 {
@@ -28,7 +29,8 @@ class ArticleCrudController extends AbstractCrudController
             ->setEntityLabelInSingular('Articles')
             ->setEntityLabelInPlural('Articles')
             ->setSearchFields(['name'])
-            ->setDefaultSort(['id' => 'DESC']);
+            ->setDefaultSort(['id' => 'DESC'])
+            ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig');
     }
 
     public function configureFilters(Filters $filters): Filters
@@ -49,6 +51,7 @@ class ArticleCrudController extends AbstractCrudController
             ->setFormType(FileUploadType::class)
             //->setUploadedFileNamePattern('[randomhash].[extension]')
             ->setRequired(false);
-        yield TextEditorField::new('bodytext');
+        yield TextEditorField::new('bodytext')->hideOnIndex()->setFormType(CKEditorType::class);
+        //yield TextEditorField::new('bodytext');
     }
 }

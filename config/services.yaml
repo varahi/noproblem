@@ -4,6 +4,11 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    app.supported_locales: 'en|ru'
+    default_admin_email: webmaster@noproblem.ru
+    default_subject: Subject from noproblem
+    default_domain: 'noproblem.ru'
+    default_scheme: 'https'
 
 services:
     # default configuration for services in *this* file

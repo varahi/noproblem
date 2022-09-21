@@ -33,7 +33,10 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Noproblem');
+            //->setTitle('Noproblem')
+            ->setTitle('<img src="assets/img/logo.svg" class="img-fluid d-block mx-auto" style="max-width:150px; width:100%;"><h2 class="mt-3 fw-bold text-black text-center" style="font-size: 22px;"></h2>')
+            ->renderContentMaximized()
+            ;
     }
 
     public function configureMenuItems(): iterable

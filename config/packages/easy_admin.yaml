@@ -1,0 +1,17 @@
+# dosya konumu => config/packages/easy_admin.yaml
+
+#easy_admin:
+#  design:
+#    form_theme:
+#      - '@EasyAdmin/form/bootstrap_4.html.twig'
+#      - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
+
+#easy_admin:
+#  entities:
+#    Article:
+#      class: App\Entity\Article
+#      label: Article
+#      form:
+#        fields:
+#          - title
+#          - { property: 'bodytext', type: 'fos_ckeditor'}
