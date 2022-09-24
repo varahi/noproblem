@@ -31,7 +31,7 @@ export default {
   created() {
     //const host = window.location.hostname;
     //axios.get(`http://+ host +/api/articles`)
-    axios.get(`http://127.0.0.1/api/articles`)
+    axios.get(`api/articles`)
         .then(response => {
           // JSON responses are automatically parsed.
           this.items = response.data

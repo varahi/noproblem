@@ -1,0 +1,89 @@
+<template>
+  <section class="banner modal-vue">
+    <div class="inner">
+      <h1 class="banner_header">Найдите надежного работника или работу самостоятельно</h1>
+      <h3 class="banner_header-2">без посредников</h3>
+      <div class="banner_btn-box">
+        <button class="banner_btn" type="button" @click="showModal = true">Попробовать</button>
+      </div>
+    </div>
+
+    <!-- overlay -->
+    <div class="overlay" v-if="showModal" @click="showModal = false"></div>
+
+    <!-- modal -->
+<!--    <div class="modal" v-if="showModal">
+      <button class="close" @click="showModal = false">x</button>
+      <h3>Title</h3>
+      <p>Description</p>
+    </div>-->
+
+    <div class="okno fon oneblock modal" v-if="showModal">
+      <div class="in">
+        <div class="title">
+          <h2>Выберите свою роль</h2>
+          <button class="close" @click="showModal = false">
+            <img src="public_html/assets/img/krest.svg">
+          </button>
+        </div>
+
+        <div class="double">
+          <div class="button">
+            <a>Работодатель</a>
+          </div>
+          <div class="button">
+            <a>Работник</a>
+          </div>
+          <div class="button">
+            <a>Покупатель</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</template>
+
+<script>
+export default {
+  data: () => ({
+    showModal: false,
+  }),
+}
+</script>
+
+<style scoped>
+.modal-vue .overlay {
+  backdrop-filter: blur(4px);
+  background: rgba(110, 99, 99, 0.34);
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.modal-vue .modal {
+  position: relative;
+  width: 300px;
+  z-index: 9999;
+  margin: 0 auto;
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.modal-vue .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  width: 33px;
+  height: 33px;
+  cursor: pointer;
+  border: none;
+  background: #fff;
+  font-size: 36px;
+}
+</style>
