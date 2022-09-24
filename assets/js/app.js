@@ -6,19 +6,27 @@
  */
 
 import Vue from 'vue';
-import Home from './components/Home';
+import Main from './components/Main';
+//import Home from './components/Home';
 import Articles from './components/Articles';
 
 // any CSS you import will output into a single css file (app.css in this case)
-import '../css/app.css';
+//import '../css/app.css';
+import '../css/main.css';
+import '../css/custom.css';
 
 // start the Stimulus application
 //import '../bootstrap';
 
 new Vue({
     el: '#app',
-    render: h => h(Home)
+    render: h => h(Main)
 });
+
+//new Vue({
+//    el: '#app',
+//    render: h => h(Home)
+//});
 
 new Vue({
     el: '#articles',

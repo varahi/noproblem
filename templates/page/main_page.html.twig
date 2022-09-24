@@ -1,0 +1,43 @@
+{% extends 'layouts/main.html.twig' %}
+{% block title %}Hello PagesController!{% endblock %}
+{% block body %}
+
+    <div id="app">
+        <app />
+    </div>
+
+    {% include 'partials/header.html.twig' %}
+    <main class="main-page">
+        <section class="banner">
+            <div class="inner">
+                <h1 class="banner_header">Найдите надежного работника или работу самостоятельно</h1>
+                <h3 class="banner_header-2">без посредников</h3>
+                <div class="banner_btn-box">
+                    <button class="banner_btn" type="button">Попробовать</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="advantage">
+            {% include 'partials/pages/main/advantage_box_why.html.twig' %}
+            {% include 'partials/pages/main/advantage_box_search.html.twig' %}
+        </section>
+
+        <section class="how-it-works">
+            {% include 'partials/pages/main/how_it_works_header.html.twig' %}
+        </section>
+
+        {% include 'partials/pages/main/reviews.html.twig' %}
+
+        <div class="inner">
+            {% include 'partials/pages/main/section_feedback.html.twig' %}
+        </div>
+        <div class="inner">
+            {% include 'partials/pages/main/section_app.html.twig' %}
+        </div>
+        <div class="inner">
+            {% include 'partials/pages/main/footer.html.twig' %}
+        </div>
+    </main>
+
+{% endblock %}
