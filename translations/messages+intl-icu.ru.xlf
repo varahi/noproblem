@@ -177,6 +177,18 @@
         <source>Customers</source>
         <target>Заказчики</target>
       </trans-unit>
+      <trans-unit id="Reviews" resname="Reviews">
+        <source>Reviews</source>
+        <target>Отзывы</target>
+      </trans-unit>
+      <trans-unit id="Review" resname="Review">
+        <source>Review</source>
+        <target>Отзыв</target>
+      </trans-unit>
+      <trans-unit id="Position" resname="Position">
+        <source>Position</source>
+        <target>Должность</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

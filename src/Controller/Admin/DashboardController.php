@@ -17,6 +17,7 @@ use App\Entity\ArticleCategory;
 use App\Entity\Course;
 use App\Entity\Page;
 use App\Entity\Tariff;
+use App\Entity\Review;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -54,6 +55,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Pages', 'fa fa-paper-plane-o', Page::class),
             MenuItem::linkToCrud('Article Categories', 'fa fa-folder-o', ArticleCategory::class),
             MenuItem::linkToCrud('Articles', 'fa fa-folder-open-o', Article::class),
+            MenuItem::linkToCrud('Reviews', 'fa fa-comment-o', Review::class),
         ]);
 
         yield MenuItem::section('Users');

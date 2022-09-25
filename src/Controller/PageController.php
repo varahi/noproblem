@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Message;
 use App\Entity\City;
 use App\Repository\ArticleRepository;
+use App\Repository\ReviewRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,14 +27,15 @@ class PageController extends AbstractController
      * @Route("/", name="app_main")
      */
     public function mainPage(
-        Request $request
+        Request $request,
+        ReviewRepository $reviewRepository
     ): Response {
         $message = new Message();
         $form = $this->createForm(MessageFormType::class, $message);
         $form->handleRequest($request);
-
+        $reviews = $reviewRepository->findLimitOrder(4, 0);
         return $this->render('page/main_page.html.twig', [
-            //'ticket' => $ticket,
+            'reviews' => $reviews,
             'form' => $form->createView()
         ]);
     }

@@ -12,18 +12,12 @@
     <div class="overlay" v-if="showModal" @click="showModal = false"></div>
 
     <!-- modal -->
-<!--    <div class="modal" v-if="showModal">
-      <button class="close" @click="showModal = false">x</button>
-      <h3>Title</h3>
-      <p>Description</p>
-    </div>-->
-
     <div class="okno fon oneblock modal" v-if="showModal">
       <div class="in">
         <div class="title">
           <h2>Выберите свою роль</h2>
           <button class="close" @click="showModal = false">
-            <img src="public_html/assets/img/krest.svg">
+            <img src="assets/img/krest.svg">
           </button>
         </div>
 
@@ -66,18 +60,18 @@ export default {
 
 .modal-vue .modal {
   position: relative;
-  width: 300px;
+  width: 700px;
   z-index: 9999;
   margin: 0 auto;
-  padding: 20px 30px;
+  padding: 30px 30px;
   background-color: #fff;
   border-radius: 10px;
 }
 
 .modal-vue .close {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 20px;
+  right: 40px;
 
   width: 33px;
   height: 33px;
@@ -85,5 +79,65 @@ export default {
   border: none;
   background: #fff;
   font-size: 36px;
+}
+.title h2 {
+  font-size: 36px;
+  font-weight: lighter;
+}
+/* Buttons */
+.krest img {
+  width: 33px;
+  height: 33px;
+  cursor: pointer;
+}
+.double {
+  margin: 60px auto 0;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  align-items: center;
+  grid-gap: 25px;
+  width: max-content;
+}
+.button a {
+  font-size: 20px;
+  color: #fff;
+}
+
+.button {
+  background: #5B5367;
+  border-radius: 40px;
+  width: 200px;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 10px 5px 10px 5px;
+}
+.button:hover{
+  transition: 200ms;
+  background: #6d3d67;
+}
+
+@media only screen and (max-width: 800px) {
+  .okno {
+    width: 100%;
+  }
+  .double {
+    grid-template-columns: 1fr;
+    margin-top: 45px;
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+  .okno .in {
+    padding: 10px;
+  }
+  .okno .oneblock .button {
+    height: 39px;
+    width: 220px;
+  }
+  .okno .oneblock .button a {
+    font-size: 20px;
+
+  }
 }
 </style>
