@@ -12,6 +12,7 @@ import Registration from './components/Pages/Registration';
 
 import Articles from './components/Pages/Articles';
 import UserEdit from './components/Test/UserEdit';
+import AdvantageBoxSearch from './components/Pages/AdvantageBoxSearch';
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '../css/main.css';
@@ -36,4 +37,9 @@ new Vue({
 new Vue({
     el: '#registration',
     render: h => h(Registration)
+});
+
+new Vue({
+    el: '#advantage_box_search',
+    render: h => h(AdvantageBoxSearch)
 });

@@ -6,7 +6,7 @@ namespace App\Controller\Traits;
 
 trait DataTrait
 {
-    public function getJsonArrData($items)
+    public function getArticleJsonArrData($items)
     {
         if ($items) {
             foreach ($items as $item) {
@@ -28,6 +28,42 @@ trait DataTrait
                     'id' => $itemId,
                     'title' => $itemTitle,
                     'description' => $itemDescription
+                ];
+            }
+            return $arrData;
+        } else {
+            return null;
+        }
+    }
+
+    public function getJsonArrData($items)
+    {
+        if ($items) {
+            foreach ($items as $item) {
+                if ($item->getId()) {
+                    $itemId = $item->getId();
+                }
+                if ($item->getName()) {
+                    $itemTitle = $item->getName();
+                } else {
+                    $itemTitle = null;
+                }
+                if ($item->getDescription()) {
+                    $itemDescription = $item->getDescription();
+                } else {
+                    $itemDescription = null;
+                }
+                if ($item->getImage()) {
+                    $itemImage = $item->getImage();
+                } else {
+                    $itemImage = null;
+                }
+
+                $arrData[] = [
+                    'id' => $itemId,
+                    'title' => $itemTitle,
+                    'description' => $itemDescription,
+                    'image' => $itemImage
                 ];
             }
             return $arrData;
