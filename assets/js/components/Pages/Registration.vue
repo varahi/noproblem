@@ -47,6 +47,7 @@ export default {
 </script>
 
 <style scoped>
+/* Modal */
 .modal-vue .overlay {
   backdrop-filter: blur(4px);
   background: rgba(110, 99, 99, 0.34);
@@ -59,13 +60,18 @@ export default {
 }
 
 .modal-vue .modal {
-  position: relative;
-  width: 700px;
   z-index: 9999;
   margin: 0 auto;
   padding: 30px 30px;
   background-color: #fff;
   border-radius: 10px;
+  position: fixed;
+  width: 700px;
+  height: 150px;
+  top: 50%;
+  left: 50%;
+  margin-top: -75px; /* Negative half of height. */
+  margin-left: -350px; /* Negative half of width. */
 }
 
 .modal-vue .close {
