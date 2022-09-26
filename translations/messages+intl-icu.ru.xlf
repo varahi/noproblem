@@ -141,6 +141,10 @@
         <source>Tariff</source>
         <target>Тариф</target>
       </trans-unit>
+      <trans-unit id="Tariffs" resname="Tariffs">
+        <source>Tariffs</source>
+        <target>Тарифы</target>
+      </trans-unit>
       <trans-unit id="About" resname="About">
         <source>About</source>
         <target>О Себе</target>
@@ -169,6 +173,10 @@
         <source>Discounted Price</source>
         <target>Стоимость со скидкой</target>
       </trans-unit>
+      <trans-unit id="Discount Price" resname="Discount Price">
+        <source>Discounted Price</source>
+        <target>Стоимость со скидкой</target>
+      </trans-unit>
       <trans-unit id="Workers" resname="Workers">
         <source>Workers</source>
         <target>Работники</target>
@@ -188,6 +196,30 @@
       <trans-unit id="Position" resname="Position">
         <source>Position</source>
         <target>Должность</target>
+      </trans-unit>
+      <trans-unit id="Term Days" resname="Term Days">
+        <source>Term Days</source>
+        <target>Срок дней</target>
+      </trans-unit>
+      <trans-unit id="Admins" resname="Admins">
+        <source>Admins</source>
+        <target>Администраторы</target>
+      </trans-unit>
+      <trans-unit id="Ticket" resname="Ticket">
+        <source>Ticket</source>
+        <target>Тикет</target>
+      </trans-unit>
+      <trans-unit id="Appeals" resname="Appeals">
+        <source>Appeals</source>
+        <target>Обращения</target>
+      </trans-unit>
+      <trans-unit id="Appeal" resname="Appeal">
+        <source>Appeal</source>
+        <target>Обращение</target>
+      </trans-unit>
+      <trans-unit id="Answer" resname="Answer">
+        <source>Answer</source>
+        <target>Ответ</target>
       </trans-unit>
     </body>
   </file>

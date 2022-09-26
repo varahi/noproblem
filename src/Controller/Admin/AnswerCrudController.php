@@ -2,56 +2,48 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Category;
+use App\Entity\Answer;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
-use EasyCorp\Bundle\EasyAdminBundle\Form\Type\FileUploadType;
 
-class CategoryCrudController extends AbstractCrudController
+class AnswerCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Category::class;
+        return Answer::class;
     }
 
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Categories')
-            ->setEntityLabelInPlural('Categories')
-            ->setSearchFields(['name', 'description'])
+            ->setEntityLabelInSingular('Answer')
+            ->setEntityLabelInPlural('Answer')
+            ->setSearchFields(['title'])
             ->setDefaultSort(['id' => 'DESC']);
     }
 
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
-            ->add(EntityFilter::new('jobs'))
+            ->add(EntityFilter::new('user'))
+            ->add(EntityFilter::new('ticket'))
             ;
     }
 
     public function configureFields(string $pageName): iterable
     {
         yield IntegerField::new('id')->setFormTypeOption('disabled', 'disabled');
-        yield TextField::new('name');
-        yield AssociationField::new('jobs')
-            ->setFormTypeOptions([
-                'by_reference' => false,
-            ])->hideOnIndex();
-        yield ImageField::new('image')
-            ->setBasePath('uploads/')
-            ->setUploadDir('public_html/uploads')
-            ->setFormType(FileUploadType::class)
-            ->setRequired(false);
-        yield TextareaField::new('description');
-        //yield AssociationField::new('users');
+        yield DateTimeField::new('created');
+        yield TextareaField::new('answer');
+        yield AssociationField::new('ticket');
+        yield AssociationField::new('user');
     }
 }

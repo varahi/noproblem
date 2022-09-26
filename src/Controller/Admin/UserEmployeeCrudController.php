@@ -70,8 +70,8 @@ class UserEmployeeCrudController extends AbstractCrudController
             ->setUploadDir('public_html/uploads')
             ->setFormType(FileUploadType::class)
             ->setRequired(false);
-        yield TextareaField::new('about');
-        yield TextField::new('age');
+        yield TextareaField::new('about')->hideOnIndex();
+        yield TextField::new('age')->hideOnIndex();
         yield ChoiceField::new('experience')->setChoices(
             [
                 'Нет' => null,

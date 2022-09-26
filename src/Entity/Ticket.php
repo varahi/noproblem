@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TicketRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,7 +22,7 @@ class Ticket
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private $title;
 
     /**
      * @ORM\Column(type="datetime")
@@ -28,17 +30,17 @@ class Ticket
     private $created;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tickets")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="ticket")
      */
     private $user;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $closed;
 
@@ -52,19 +54,47 @@ class Ticket
      */
     private $status;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Answer::class, mappedBy="ticket")
+     */
+    private $answer;
+
+    public function __construct()
+    {
+        $this->created = new \DateTime();
+        $this->answer = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->title;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getTitle(): ?string
     {
-        return $this->name;
+        return $this->title;
     }
 
-    public function setName(string $name): self
+    public function setTitle(string $title): self
     {
-        $this->name = $name;
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
@@ -77,18 +107,6 @@ class Ticket
     public function setCreated(\DateTimeInterface $created): self
     {
         $this->created = $created;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
 
         return $this;
     }
@@ -137,6 +155,36 @@ class Ticket
     public function setStatus(int $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Answer>
+     */
+    public function getAnswer(): Collection
+    {
+        return $this->answer;
+    }
+
+    public function addAnswer(Answer $answer): self
+    {
+        if (!$this->answer->contains($answer)) {
+            $this->answer[] = $answer;
+            $answer->setTicket($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnswer(Answer $answer): self
+    {
+        if ($this->answer->removeElement($answer)) {
+            // set the owning side to null (unless already changed)
+            if ($answer->getTicket() === $this) {
+                $answer->setTicket(null);
+            }
+        }
 
         return $this;
     }

@@ -10,10 +10,10 @@
           <button class="close" @click="showModal = false"><img src="assets/img/krest.svg"></button>
         </div>
         <div class="double">
-          <div class="button">
-            <a>Ищу работу </a>
+          <div class="button" @click="goToLink()">
+            <a>Ищу работу</a>
           </div>
-          <div class="button">
+          <div class="button" @click="goToLink()">
             <a>Ищу работника</a>
           </div>
         </div>
@@ -56,7 +56,30 @@ export default {
         .catch(e => {
           this.errors.push(e)
         })
-    }
+    },
+  methods: {
+    async goToLink(slug) {
+      //this.$router.push({ path: '/articles' })
+      window.location.href='/articles'
+
+      /*switch(slug){
+        case 'master-na-chas':
+          this.$router.push('/vacancies/master-na-chas')
+          break;
+        case 'domrabotnica':
+          this.$router.push('/vacancies/domrabotnica')
+          break;
+        case 'nyanya':
+          this.$router.push('/vacancies/nyanya')
+          break;
+        case 'sidelki':
+          this.$router.push('/vacancies/sidelki')
+          break;
+        default:
+          this.$router.push('/vacancies/master-na-chas')
+      }*/
+    },
+  }
 }
 </script>
 

@@ -18,7 +18,7 @@ import AdvantageBoxSearch from './components/Pages/AdvantageBoxSearch';
 import '../css/main.css';
 import '../css/custom.css';
 
-new Vue({
+/*new Vue({
     el: '#app',
     render: h => h(Main)
 });
@@ -26,13 +26,12 @@ new Vue({
 new Vue({
     el: '#articles',
     render: h => h(Articles)
-});
+});*/
 
-new Vue({
+/*new Vue({
     el: '#user-edit-app',
     render: h => h(UserEdit)
-});
-
+});*/
 
 new Vue({
     el: '#registration',

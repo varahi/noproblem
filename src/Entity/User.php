@@ -130,10 +130,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $messages;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Job::class, mappedBy="client")
+     */
+    private $jobs;
+
     public function __construct()
     {
         $this->tickets = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $this->jobs = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -451,6 +457,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($message->getUser() === $this) {
                 $message->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Job>
+     */
+    public function getJobs(): Collection
+    {
+        return $this->jobs;
+    }
+
+    public function addJob(Job $job): self
+    {
+        if (!$this->jobs->contains($job)) {
+            $this->jobs[] = $job;
+            $job->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJob(Job $job): self
+    {
+        if ($this->jobs->removeElement($job)) {
+            // set the owning side to null (unless already changed)
+            if ($job->getClient() === $this) {
+                $job->setClient(null);
             }
         }
 

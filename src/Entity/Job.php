@@ -87,6 +87,11 @@ class Job
      */
     private $category;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="jobs")
+     */
+    private $client;
+
     public function __toString(): string
     {
         return $this->name;
@@ -261,6 +266,18 @@ class Job
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getClient(): ?User
+    {
+        return $this->client;
+    }
+
+    public function setClient(?User $client): self
+    {
+        $this->client = $client;
 
         return $this;
     }

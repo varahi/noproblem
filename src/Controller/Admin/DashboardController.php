@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Answer;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -18,6 +19,7 @@ use App\Entity\Course;
 use App\Entity\Page;
 use App\Entity\Tariff;
 use App\Entity\Review;
+use App\Entity\Ticket;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -46,10 +48,11 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Database');
         yield MenuItem::subMenu('Database', 'fa fa-database')->setSubItems([
-            MenuItem::linkToCrud('Cities', 'fa fa-building', City::class),
-            MenuItem::linkToCrud('Categories', 'fa fa-bars', Category::class),
             MenuItem::linkToCrud('Jobs', 'fa fa-handshake-o', Job::class),
+            MenuItem::linkToCrud('Categories', 'fa fa-bars', Category::class),
+            MenuItem::linkToCrud('Cities', 'fa fa-building', City::class),
         ]);
+
         yield MenuItem::section('Site');
         yield MenuItem::subMenu('Site', 'fa fa-sitemap')->setSubItems([
             MenuItem::linkToCrud('Pages', 'fa fa-paper-plane-o', Page::class),
@@ -58,9 +61,15 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Reviews', 'fa fa-comment-o', Review::class),
         ]);
 
+        yield MenuItem::section('Appeals');
+        yield MenuItem::subMenu('Appeals', 'fa fa-reorder')->setSubItems([
+            MenuItem::linkToCrud('Ticket', 'fa fa-ticket', Ticket::class),
+            MenuItem::linkToCrud('Answer', 'fa fa fa-support', Answer::class),
+        ]);
+
         yield MenuItem::section('Users');
         yield MenuItem::subMenu('Users', 'fa fa-users')->setSubItems([
-            MenuItem::linkToCrud('User', 'fa fa-user', User::class),
+            MenuItem::linkToCrud('Admins', 'fa fa-user', User::class)->setController(UserCrudController::class),
             MenuItem::linkToCrud('Workers', 'fa fa-user-circle', User::class)->setController(UserEmployeeCrudController::class),
             MenuItem::linkToCrud('Customers', 'fa fa-user-circle-o', User::class)->setController(UserCustomerCrudController::class),
         ]);
@@ -69,6 +78,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Course', 'fa fa-id-badge', Course::class);
 
         yield MenuItem::section('Tariffs');
-        yield MenuItem::linkToCrud('Tariff', 'fa fa-plane', Tariff::class);
+        yield MenuItem::linkToCrud('Tariff', 'fa fa-volume-up', Tariff::class);
     }
 }

@@ -91,9 +91,10 @@ class JobCrudController extends AbstractCrudController
                 'Страны ЕС' => '11',
             ]
         )->hideOnIndex();
-        yield BooleanField::new('startNow');
-        yield DateField::new('startDate');
+        yield BooleanField::new('startNow')->hideOnIndex();
+        yield DateField::new('startDate')->hideOnIndex();
         yield AssociationField::new('city')->hideOnIndex();
         yield AssociationField::new('category')->hideOnIndex();
+        yield AssociationField::new('client');
     }
 }
