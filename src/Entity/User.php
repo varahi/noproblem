@@ -131,7 +131,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $messages;
 
     /**
-     * @ORM\OneToMany(targetEntity=Job::class, mappedBy="client")
+     * @ORM\OneToMany(targetEntity=Job::class, mappedBy="client", cascade={"persist"}, orphanRemoval=true)
      */
     private $jobs;
 

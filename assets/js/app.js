@@ -8,6 +8,7 @@
 import Vue from 'vue';
 // Pages
 import Main from './components/Pages/Main';
+import Login from './components/Pages/Login';
 import Registration from './components/Pages/Registration';
 
 import Articles from './components/Pages/Articles';
@@ -32,6 +33,11 @@ new Vue({
     el: '#user-edit-app',
     render: h => h(UserEdit)
 });*/
+
+new Vue({
+    el: '#login',
+    render: h => h(Login)
+});
 
 new Vue({
     el: '#registration',

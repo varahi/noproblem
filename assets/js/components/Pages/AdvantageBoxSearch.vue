@@ -24,8 +24,9 @@
       <div class="inner">
         <h3 class="advantage-search_header">Поиск работника или работы</h3>
         <div class="advantage-search_btn-box">
+<!--          {{ items }}-->
           <div v-for="item of items">
-            <button type="button" class="advantage-search_btn" @click="showModal = true">
+            <button type="button" class="advantage-search_btn" v-on:click="showModal = true">
               <img class="advantage-search_btn-img" :src="`uploads/${item.image}`" width="180" height="180" alt="check" />
               <span class="advantage-search_btn-text">{{item.title}}</span>
             </button>
@@ -87,6 +88,7 @@ export default {
 .advantage-search_btn:hover {
   box-shadow: 1px 1px 20px 9px hsl(0deg 0% 86% / 97%);
   cursor: pointer;
+  transition: 200ms;
 }
 
 /* Modal */
