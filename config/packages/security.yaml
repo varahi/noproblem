@@ -20,13 +20,17 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            json_login:
+                username_path: email
+                password_path: password
+                check_path: /api/login
+            #custom_authenticator: App\Security\AppAuthenticator
             anonymous: false
             lazy: true
             provider: app_user_provider
-            custom_authenticator: App\Security\AppAuthenticator
-            #guard:
-            #    authenticators:
-            #        - App\Security\AppAuthenticator
+            guard:
+                authenticators:
+                    - App\Security\AppAuthenticator
             logout:
                 path: app_logout
                 # where to redirect after logout

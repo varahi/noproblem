@@ -12,10 +12,10 @@
         <div class="double">
 
           <div class="alert alert-success" role="alert" v-if="formSubmittedSuccess">
-            Congratulations! You account registered successfully
+            Вы успешно вошли в систему
           </div>
 
-          <form class="form-std" autocomplete="off" method="post" v-on:submit.prevent="submitForm" v-else>
+          <form class="form-std" autocomplete="off" method="post" v-on:submit.prevent="performLogin" v-else>
             <div class="form-input">
               <input type="text" class="form-control" id="inputEmail" v-model="email" placeholder="E-mail">
               <small class="form-text text-danger" v-if="validationErrors.email">
@@ -62,7 +62,7 @@
     },
 
     methods: {
-      submitForm: function (event) {
+      performLogin: function (event) {
         event.preventDefault();
 
         let component = this;
@@ -71,7 +71,7 @@
           password: this.password,
         };
 
-        axios.create().post('/login-handler', body).then(function (response) {
+        axios.create().post('/api/login', body).then(function (response) {
           if(response.data.status === 400){
             component.validationErrors = response.data.errors;
           }
