@@ -1,27 +1,61 @@
 <header>
-    <nav class="nav inner">
-        <div class="nav_logo">
-            <a href="#">
-                <img class="nav_logo-img" src="{{ asset('assets/css/icons/logo.svg') }}" width="185" height="95" alt="logo-icon"/>
+    <div class="nav content">
+        <a class="nav-link" href="{{ path('app_main') }}">
+            <img class="logo" src="{{ asset('assets/img/logo.svg') }}">
+        </a>
+        <div class="menu">
+            <div class="regs" v-if="!viewmenu()">
+                <div class="vhod"  style="cursor:pointer">
+                    <span>Сообщения</span>
+                    <img src="{{ asset('assets/img/bi_chat.svg') }}">
+                </div>
+            </div>
+            <div class="regs" >
+                <div class="vhod" @click="$router.push('/blog')" style="cursor:pointer">
+                    <a href="{{ path('app_blog') }}"><span>Блог</span></a>
+                    <img src="{{ asset('assets/img/blockicon.svg') }}">
+                </div>
+            </div>
+            <div class="regs" v-if="viewmenu()">
+                <div class="vhod" @click="$router.push('/course')" style="cursor:pointer">
+                    <span>Список курсов</span>
+                    <img src="{{ asset('assets/img/courseicon.svg') }}">
+                </div>
+            </div>
+            <div class="btn_worker" v-if="viewmenu()" style="cursor: pointer;"  @click="gotocategory()">
+                <a>Стать работником</a>
+            </div>
+
+            <div class="btn_employer"  v-if="viewmenu()" style="cursor: pointer;"  @click="gotocategory()">
+                <a>Стать работодателем</a>
+            </div>
+            <div class="menus">
+                <img src="{{ asset('assets/img/burger.svg') }}" class="burger lazyLoad isLoaded" style="font-size:30px;cursor:pointer" onclick="openNav()";>
+            </div>
+        </div>
+    </div>
+
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <img class="logo logo_menu" src="{{ asset('assets/img/logo.svg') }}">
+        <div class="sidenav_container">
+            <a href="#">Авторизация</a>
+            <a href="#">Регистрация</a>
+            <a href="#">Ваш город / <span>Город не выбран</span></a>
+            <a href="#">Все вакансии</a>
+            <a href="#">О компании</a>
+            <a href="#">Тарифы</a>
+        </div>
+        <div class="cocial_network">
+            <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">
+                <img src="{{ asset('assets/img/instagram.svg') }}" class="lazyLoad isLoaded">
+            </a>
+            <a href="/vacancies" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">
+                <img data-v-75e54aca=""  src="{{ asset('assets/img/youtube.svg') }}" class="lazyLoad isLoaded">
+            </a>
+            <a href="/vacancies" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">
+                <img src="{{ asset('assets/img/facebook.svg') }}"class="lazyLoad isLoaded">
             </a>
         </div>
-        <div class="nav_box">
-            <div class="nav_blog">
-                <a href="#">
-                    <span class="nav_blog-text">Блог</span>
-                    <img class="nav_blog-img" src="{{ asset('assets/css/icons/blog-icon.svg') }}" width="20" height="20" alt="blog-icon"/>
-                </a>
-            </div>
-            <div class="nav_list">
-                <a href="#">
-                    <span class="nav_list-text">Список курсов</span>
-                    <img class="nav_list-img" src="{{ asset('assets/css/icons/list-icon.svg') }}" width="20" height="20" alt="list-icon"/>
-                </a>
-            </div>
-            <div id="login"></div>
-            <button class="nav_btn-menu">
-                <img class="nav_btn-menu-img" src="{{ asset('assets/css/icons/menu-icon.svg') }}" width="44" height="44" alt="menu"/>
-            </button>
-        </div>
-    </nav>
+    </div>
 </header>

@@ -1,0 +1,35 @@
+<div class="poisk content">
+    <h2>Поиск работника или работы</h2>
+    <div class="work">
+        {% if categories %}
+            {% for category in categories %}
+                <div  class="bob">
+                    <div class="inside">
+                        <img src="{{ asset('uploads/' ~ category.image) }}" class="lazyLoad isLoaded" />
+                        <h3>{{ category.name }}</h3>
+
+<!--                        <div class="backgroundfon" style="display: none;"><div class="okno fon">
+                                <div class="okno fon oneblock"><div class="in">
+                                        <div  class="title"><h2 >Чем мы можем вам помочь?</h2>
+                                            <div  class="krest">
+                                                <img  data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAzNiAzNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTM0LjY2NjMgMS4zMzMzM0wxLjMzMzAxIDM0LjY2NjdNMzQuNjY2MyAzNC42NjY3TDEuMzMzMDEgMS4zMzMzM0wzNC42NjYzIDM0LjY2NjdaIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" src="/preload.gif" class="lazyLoad">
+                                            </div>
+                                        </div>
+                                        <div  class="double">
+                                            <div  class="button" style="cursor: pointer;"><a >Ищу работу</a>
+                                            </div>
+                                            <div  class="button" style="cursor: pointer;">
+                                                <a>Ищу работника</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>

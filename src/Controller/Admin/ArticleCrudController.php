@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Article;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -44,7 +45,8 @@ class ArticleCrudController extends AbstractCrudController
     {
         yield IntegerField::new('id')->setFormTypeOption('disabled', 'disabled');
         yield TextField::new('name');
-        yield TextEditorField::new('bodytext')->setFormType(CKEditorType::class);
+        yield TextareaField::new('teaser');
+        yield TextEditorField::new('bodytext')->setFormType(CKEditorType::class)->hideOnIndex();
         yield AssociationField::new('category');
         yield ImageField::new('image')
             ->setBasePath('uploads/')

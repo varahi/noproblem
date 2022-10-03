@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Message;
 use App\Entity\City;
 use App\Repository\ArticleRepository;
+use App\Repository\CategoryRepository;
 use App\Repository\ReviewRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,14 +26,17 @@ class PageController extends AbstractController
      */
     public function mainPage(
         Request $request,
-        ReviewRepository $reviewRepository
+        ReviewRepository $reviewRepository,
+        CategoryRepository $categoryRepository
     ): Response {
         $message = new Message();
         $form = $this->createForm(MessageFormType::class, $message);
         $form->handleRequest($request);
         $reviews = $reviewRepository->findLimitOrder(4, 0);
+        $categories = $categoryRepository->findAllOrder(['id' => 'ASC']);
         return $this->render('page/main_page.html.twig', [
             'reviews' => $reviews,
+            'categories' => $categories,
             'form' => $form->createView()
         ]);
     }
@@ -54,6 +58,18 @@ class PageController extends AbstractController
     ) {
         $articles = $articleRepository->findAll();
         return $this->render('articles/index.html.twig', [
+            'articles' => $articles
+        ]);
+    }
+
+    /**
+     * @Route("/blog", name="app_blog")
+     */
+    public function blogPage(
+        ArticleRepository $articleRepository
+    ) {
+        $articles = $articleRepository->findAll();
+        return $this->render('page/blog/list.html.twig', [
             'articles' => $articles
         ]);
     }

@@ -1,9 +1,0 @@
-.inner {
-    max-width: 1160px;
-    margin: 0 auto;
-}
-.banner_btn:hover {
-    opacity: 0.8;
-    transition: 200ms;
-    cursor: pointer;
-}

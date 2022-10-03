@@ -64,7 +64,6 @@
     methods: {
       performLogin: function (event) {
         event.preventDefault();
-
         let component = this;
         let body = {
           email: this.email,

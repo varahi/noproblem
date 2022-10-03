@@ -10,29 +10,34 @@ import Vue from 'vue';
 import Main from './components/Pages/Main';
 import Login from './components/Pages/Login';
 import Registration from './components/Pages/Registration';
-
-import Articles from './components/Pages/Articles';
+//import Articles from './components/Pages/Articles';
+import Blog from './components/Pages/Blog';
 import UserEdit from './components/Test/UserEdit';
 import AdvantageBoxSearch from './components/Pages/AdvantageBoxSearch';
 
 // any CSS you import will output into a single css file (app.css in this case)
-import '../css/main.css';
+import '../css/style.css';
 import '../css/custom.css';
 
 /*new Vue({
     el: '#app',
     render: h => h(Main)
-});
-
-new Vue({
-    el: '#articles',
-    render: h => h(Articles)
 });*/
 
 /*new Vue({
     el: '#user-edit-app',
     render: h => h(UserEdit)
 });*/
+
+/*new Vue({
+    el: '#articles',
+    render: h => h(Articles)
+});*/
+
+new Vue({
+    el: '#blog',
+    render: h => h(Blog)
+});
 
 new Vue({
     el: '#login',

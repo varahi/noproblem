@@ -42,6 +42,11 @@ class Article
      */
     private $category;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $teaser;
+
     public function __toString(): string
     {
         return $this->name;
@@ -108,6 +113,18 @@ class Article
     public function setCategory(?ArticleCategory $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getTeaser(): ?string
+    {
+        return $this->teaser;
+    }
+
+    public function setTeaser(?string $teaser): self
+    {
+        $this->teaser = $teaser;
 
         return $this;
     }

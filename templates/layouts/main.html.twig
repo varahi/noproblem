@@ -5,23 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex,nofollow">
-
     <title>{% block title %}No problem{% endblock %}</title>
     <meta name="description" content="">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
 </head>
-<body>
-{% block body %}
-{% endblock %}
+<body class="main-page">
+{#{% block body %}
+{% endblock %}#}
+
+{% block content %}{% endblock %}
 
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
 {% endblock %}
 
+{% block javascripts_footer %}
+    <script src="{{ asset('assets/js/script.js') }}"></script>
+{% endblock %}
 </body>
 </html>

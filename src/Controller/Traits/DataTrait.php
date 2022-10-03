@@ -18,6 +18,16 @@ trait DataTrait
                 } else {
                     $itemTitle = null;
                 }
+                if ($item->getImage()) {
+                    $itemImage = $item->getImage();
+                } else {
+                    $itemImage = null;
+                }
+                if ($item->getTeaser()) {
+                    $itemTeaser = $item->getTeaser();
+                } else {
+                    $itemTeaser = null;
+                }
                 if ($item->getBodytext()) {
                     $itemDescription = $item->getBodytext();
                 } else {
@@ -27,7 +37,9 @@ trait DataTrait
                 $arrData[] = [
                     'id' => $itemId,
                     'title' => $itemTitle,
-                    'description' => $itemDescription
+                    'description' => $itemDescription,
+                    'teaser' => $itemTeaser,
+                    'image' => $itemImage
                 ];
             }
             return $arrData;
