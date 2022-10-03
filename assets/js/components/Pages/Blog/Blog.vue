@@ -15,11 +15,20 @@
           <div class="grid_two_block" v-for="item of items">
             <div class="title_blog">
               <h3>{{item.title}}</h3>
-              <p v-html="item.teaser">{{item.teaser}}</p>
-              <a href="/blog/interesnoe/kakaya-to-statya-novaya-live" class="btn_article">Подробнее</a>
+              <p v-html="item.teaser">{{item.teaser}}  {{item.slug}}</p>
+              <a v-bind:href="'/blog/detail/'+ item.slug" class="btn_article">Подробнее</a>
+
+              <!--
+              <router-link
+                  to="/home"
+                  class="btn_article">
+                  <a class="btn_article">Home</a>
+              </router-link>-->
+              <!-- <router-link :to="{ name: 'details', params: { projectId: project.id }}">{{project.name}}</router-link>-->
+
             </div>
             <div class="images">
-              <img class="lazyLoad isLoaded img_article" :src="`uploads/${item.image}`" alt="" width="800" />
+              <img class="lazyLoad isLoaded img_article" :src="`uploads/${item.image}`" alt={item.title} width="800" />
             </div>
           </div>
         </div>

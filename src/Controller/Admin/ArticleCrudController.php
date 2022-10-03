@@ -14,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Form\Type\FileUploadType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
@@ -45,6 +46,8 @@ class ArticleCrudController extends AbstractCrudController
     {
         yield IntegerField::new('id')->setFormTypeOption('disabled', 'disabled');
         yield TextField::new('name');
+        yield SlugField::new('slug')->hideOnIndex()->setTargetFieldName('name');
+        ;
         yield TextareaField::new('teaser');
         yield TextEditorField::new('bodytext')->setFormType(CKEditorType::class)->hideOnIndex();
         yield AssociationField::new('category');

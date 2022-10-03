@@ -2,10 +2,24 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ArticleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
+ * @ORM\Entity(repositoryClass=ArticleRepository::class)
+ * @UniqueEntity("slug")
+ * @ApiResource(
+ *     collectionOperations={"get"={"normalization_context"={"groups"="article:list"}}},
+ *     itemOperations={"get"={"normalization_context"={"groups"="article:item"}}},
+ *     order={"id"="DESC", "name"="ASC"},
+ *     paginationEnabled=false
+ * )
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
  */
 class Article
@@ -46,6 +60,12 @@ class Article
      * @ORM\Column(type="text", nullable=true)
      */
     private $teaser;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+    #[Groups(['article:list', 'article:item'])]
+    private $slug;
 
     public function __toString(): string
     {
@@ -125,6 +145,18 @@ class Article
     public function setTeaser(?string $teaser): self
     {
         $this->teaser = $teaser;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

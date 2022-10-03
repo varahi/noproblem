@@ -11,7 +11,8 @@ import Main from './components/Pages/Main';
 import Login from './components/Pages/Login';
 import Registration from './components/Pages/Registration';
 //import Articles from './components/Pages/Articles';
-import Blog from './components/Pages/Blog';
+import Blog from './components/Pages/Blog/Blog';
+import BlogDetail from './components/Pages/Blog/BlogDetail';
 import UserEdit from './components/Test/UserEdit';
 import AdvantageBoxSearch from './components/Pages/AdvantageBoxSearch';
 
@@ -36,6 +37,11 @@ import '../css/custom.css';
 
 new Vue({
     el: '#blog',
+    render: h => h(Blog)
+});
+
+new Vue({
+    el: '#blog-detail',
     render: h => h(Blog)
 });
 
