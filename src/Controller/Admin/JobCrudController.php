@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
@@ -46,16 +47,28 @@ class JobCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        yield IntegerField::new('id')->setFormTypeOption('disabled', 'disabled');
+        yield FormField::addPanel('Main info')->setIcon('fa fa-info')->setCssClass('col-sm-8');
+        //yield FormField::addRow();
+
+        yield IntegerField::new('id')->setFormTypeOption('disabled', 'disabled')->hideWhenCreating();
         yield BooleanField::new('hidden');
-        yield TextField::new('name');
-        yield TextareaField::new('description');
+        yield TextField::new('name')->setColumns('col-md-8');
+        yield TextareaField::new('description')->setColumns('col-md-8');
         yield ImageField::new('image')
             ->setBasePath('uploads/')
             ->setUploadDir('public_html/uploads')
             ->setFormType(FileUploadType::class)
             ->setRequired(false);
-        yield TextField::new('age');
+
+        yield FormField::addPanel('Additional info')->setIcon('fa fa-info-circle')->setCssClass('col-sm-4');
+        //yield FormField::addRow();
+        yield AssociationField::new('city')->hideOnIndex()->setColumns('col-md-12');
+        yield AssociationField::new('category')->hideOnIndex()->setColumns('col-md-12');
+        yield AssociationField::new('client')->setColumns('col-md-12');
+
+        yield FormField::addPanel('General requirements')->setIcon('fa fa-gear');
+        yield FormField::addRow();
+        yield TextField::new('age')->setColumns('col-md-4');
         yield ChoiceField::new('experience')->setChoices(
             [
                 'Нет' => null,
@@ -64,7 +77,9 @@ class JobCrudController extends AbstractCrudController
                 '2-5 лет' => '3',
                 'более 5 лет' => '4',
             ]
-        )->hideOnIndex();
+        )
+            ->hideOnIndex()
+            ->setColumns('col-md-4');
         yield ChoiceField::new('education')->setChoices(
             [
                 'Нет' => null,
@@ -74,7 +89,11 @@ class JobCrudController extends AbstractCrudController
                 'Неполное высшее' => '4',
                 'Высшее' => '5',
             ]
-        )->hideOnIndex();
+        )
+            ->hideOnIndex()
+            ->setColumns('col-md-4');
+
+        yield FormField::addRow();
         yield ChoiceField::new('citizen')->setChoices(
             [
                 'Нет' => null,
@@ -90,11 +109,11 @@ class JobCrudController extends AbstractCrudController
                 'Узбекистан' => '10',
                 'Страны ЕС' => '11',
             ]
-        )->hideOnIndex();
+        )
+            ->hideOnIndex()
+            ->setColumns('col-md-4');
+
         yield BooleanField::new('startNow')->hideOnIndex();
         yield DateField::new('startDate')->hideOnIndex();
-        yield AssociationField::new('city')->hideOnIndex();
-        yield AssociationField::new('category')->hideOnIndex();
-        yield AssociationField::new('client');
     }
 }

@@ -221,6 +221,38 @@
         <source>Answer</source>
         <target>Ответ</target>
       </trans-unit>
+      <trans-unit id="Main info" resname="Main info">
+        <source>Main Info</source>
+        <target>Основная информация</target>
+      </trans-unit>
+      <trans-unit id="Additional info" resname="Additional info">
+        <source>Additional info</source>
+        <target>Расширенная информация</target>
+      </trans-unit>
+      <trans-unit id="General requirements" resname="General requirements">
+        <source>General requirements</source>
+        <target>Общии требования</target>
+      </trans-unit>
+      <trans-unit id="Relations" resname="Relations">
+        <source>Relations</source>
+        <target>Связи</target>
+      </trans-unit>
+      <trans-unit id="Employer" resname="Employer">
+        <source>Employer</source>
+        <target>Работник</target>
+      </trans-unit>
+      <trans-unit id="General information" resname="General information">
+        <source>General information</source>
+        <target>Общие данные</target>
+      </trans-unit>
+        <trans-unit id="Change password" resname="Change password">
+            <source>Change password</source>
+            <target>Сменить пароль</target>
+        </trans-unit>
+      <trans-unit id="Customer" resname="Customer">
+        <source>Customer</source>
+        <target>Заказчик</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -6,6 +6,8 @@ use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TelephoneField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
@@ -26,6 +28,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Form\Type\FileUploadType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class UserCustomerCrudController extends AbstractCrudController
 {
@@ -47,31 +50,70 @@ class UserCustomerCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('User')
-            ->setEntityLabelInPlural('User')
+            ->setEntityLabelInSingular('Customer')
+            ->setEntityLabelInPlural('Customer')
             ->setSearchFields(['firstName', 'lastName', 'email'])
             ->setDefaultSort(['id' => 'DESC']);
     }
 
     public function configureFields(string $pageName): iterable
     {
-        yield IntegerField::new('id')->setFormTypeOption('disabled', 'disabled');
+        yield FormField::addPanel('Main info')->setIcon('fa fa-info')->setCssClass('col-sm-6');
+
+        yield IntegerField::new('id')->setFormTypeOption('disabled', 'disabled')->hideWhenCreating();
+        $roles = [ 'ROLE_CUSTOMER' ];
+        yield ChoiceField::new('roles')
+            ->setChoices(array_combine($roles, $roles))
+            ->allowMultipleChoices()
+            ->renderAsBadges()
+            ->hideOnIndex()
+            ->setColumns('col-md-8');
+        //yield ArrayField::new('roles')->hideOnIndex()->setFormTypeOption('disabled', 'disabled');
         yield BooleanField::new('hidden');
-        yield TextField::new('firstName');
-        yield TextField::new('lastName');
-        yield TextField::new('email');
-        yield TextField::new('username')->hideOnIndex();
-        yield TextField::new('password')->setFormType(PasswordType::class)->hideOnIndex();
-        yield TelephoneField::new('phone')->hideOnIndex();
-        yield EmailField::new('email');
-        yield ArrayField::new('roles')->hideOnIndex()->setFormTypeOption('disabled', 'disabled');
+        yield TextField::new('firstName')->setColumns('col-md-10');
+        yield TextField::new('lastName')->setColumns('col-md-10');
+        yield TextField::new('email')->setColumns('col-md-10');
+        yield TextField::new('username')->hideOnIndex()->setColumns('col-md-10');
+        //yield TextField::new('password')->setFormType(PasswordType::class)->hideOnIndex();
+        yield EmailField::new('email')->setColumns('col-md-10');
         yield ImageField::new('avatar')
             ->setBasePath('uploads/')
             ->setUploadDir('public_html/uploads')
             ->setFormType(FileUploadType::class)
             ->setRequired(false);
-        yield TextareaField::new('about')->hideOnIndex();
-        yield TextField::new('age')->hideOnIndex();
+
+        yield FormField::addPanel('General information')->setIcon('fa fa-info-circle')->setCssClass('col-sm-6');
+        yield TextareaField::new('about')->hideOnIndex()->setColumns('col-md-10');
+        yield AssociationField::new('city')->hideOnIndex()->setColumns('col-md-10');
+        yield TextareaField::new('address')->hideOnIndex()->setColumns('col-md-10');
+        yield TelephoneField::new('phone')->hideOnIndex()->setColumns('col-md-10');
+        yield TextField::new('age')->hideOnIndex()->setColumns('col-md-10');
+
+        yield FormField::addPanel('Change password')->setIcon('fa fa-key')->setCssClass('col-sm-12');
+        yield FormField::addRow();
+        yield Field::new('password', 'New password')->onlyWhenCreating()->setRequired(true)
+            ->setFormType(RepeatedType::class)
+            ->setRequired(false)
+            ->setFormTypeOptions([
+                'type'            => PasswordType::class,
+                'first_options'   => [ 'label' => 'New password' ],
+                'second_options'  => [ 'label' => 'Repeat password' ],
+                'error_bubbling'  => true,
+                'invalid_message' => 'The password fields do not match.',
+            ]);
+        yield Field::new('password', 'New password')->onlyWhenUpdating()->setRequired(false)
+            ->setFormType(RepeatedType::class)
+            ->setRequired(false)
+            ->setFormTypeOptions([
+                'type'            => PasswordType::class,
+                'first_options'   => [ 'label' => 'New password' ],
+                'second_options'  => [ 'label' => 'Repeat password' ],
+                'error_bubbling'  => true,
+                'invalid_message' => 'The password fields do not match.',
+            ]);
+
+        yield FormField::addPanel('Relations')->setIcon('fa fa-chain')->setCssClass('col-sm-12');
+        yield FormField::addRow();
         yield ChoiceField::new('experience')->setChoices(
             [
                 'Нет' => null,
@@ -80,7 +122,8 @@ class UserCustomerCrudController extends AbstractCrudController
                 '2-5 лет' => '3',
                 'более 5 лет' => '4',
             ]
-        )->hideOnIndex();
+        )->hideOnIndex()
+            ->setColumns('col-md-4');
         yield ChoiceField::new('education')->setChoices(
             [
                 'Нет' => null,
@@ -90,7 +133,8 @@ class UserCustomerCrudController extends AbstractCrudController
                 'Неполное высшее' => '4',
                 'Высшее' => '5',
             ]
-        )->hideOnIndex();
+        )->hideOnIndex()
+            ->setColumns('col-md-4');
         yield ChoiceField::new('citizen')->setChoices(
             [
                 'Нет' => null,
@@ -106,11 +150,12 @@ class UserCustomerCrudController extends AbstractCrudController
                 'Узбекистан' => '10',
                 'Страны ЕС' => '11',
             ]
-        )->hideOnIndex();
-        yield TextareaField::new('address')->hideOnIndex();
-        yield AssociationField::new('city')->hideOnIndex();
-        yield AssociationField::new('category')->hideOnIndex();
-        yield AssociationField::new('tariff')->hideOnIndex();
-        yield AssociationField::new('jobs')->hideOnIndex();
+        )->hideOnIndex()
+            ->setColumns('col-md-4');
+
+        yield FormField::addRow();
+        yield AssociationField::new('category')->hideOnIndex()->setColumns('col-md-4');
+        yield AssociationField::new('tariff')->hideOnIndex()->setColumns('col-md-4');
+        yield AssociationField::new('jobs')->hideOnIndex()->setColumns('col-md-4');
     }
 }

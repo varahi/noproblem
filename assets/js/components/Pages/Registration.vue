@@ -10,6 +10,7 @@
 
     <!-- overlay -->
     <div class="overlay" v-if="showModal" @click="showModal = false"></div>
+    <div class="overlay" v-if="showSecondModal" @click="showSecondModal = false"></div>
 
     <!-- modal -->
     <div class="okno fon oneblock modal" v-if="showModal">
@@ -22,7 +23,7 @@
         </div>
 
         <div class="double">
-          <div class="button">
+          <div class="button" @click="showSecondModal = true, showModal = false">
             <a>Работодатель</a>
           </div>
           <div class="button">
@@ -35,14 +36,95 @@
       </div>
     </div>
 
+    <!-- Registration modal box -->
+    <div class="okno fon oneblock modal" v-if="showSecondModal">
+      <div class="in">
+        <div class="title">
+          <h2>Выберите свою роль</h2>
+          <button class="close" @click="showSecondModal = false">
+            <img src="assets/img/krest.svg">
+          </button>
+        </div>
+
+        <div class="double">
+          <div class="alert alert-success" role="alert" v-if="formSubmittedSuccess">
+            Congratulations! You account registered successfully
+          </div>
+
+          <form class="form-std" method="post" v-on:submit.prevent="submitForm" v-else>
+
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" id="email" v-model="email" aria-describedby="emailHelp" placeholder="Enter email">
+              <small class="form-text text-danger" v-if="validationErrors.email">
+                {{ validationErrors.email }}
+              </small>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" v-model="password" placeholder="Password">
+              <small class="form-text text-danger" v-if="validationErrors.password">
+                {{ validationErrors.password }}
+              </small>
+            </div>
+            <button type="submit" class="btn btn-success">Register</button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
   </section>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-  data: () => ({
-    showModal: false,
-  }),
+  name: 'SignUpForm',
+  data() {
+    return {
+      showModal: false,
+      showSecondModal: false,
+      msg: 'SignUpForm',
+
+      email: '',
+      password: '',
+
+      validationErrors: {},
+      formSubmittedSuccess: false
+    }
+  },
+
+  methods: {
+    submitForm: function (event) {
+      event.preventDefault();
+
+      let component = this;
+      let body = {
+        fullname: this.fullname,
+        username: this.username,
+        email: this.email,
+        password: this.password,
+      };
+
+      axios.create().post('/sign-up-handler', body).then(function (response) {
+        if(response.data.status === 400){
+          component.validationErrors = response.data.errors;
+        }
+        else{
+          component.formSubmittedSuccess = true;
+          component.validationErrors = {};
+        }
+      }).catch(function (error) {
+        let message = 'Internal server error';
+        alert(message);
+        console.log(message);
+        console.log(error.response);
+      });
+    }
+  }
+
 }
 </script>
 
