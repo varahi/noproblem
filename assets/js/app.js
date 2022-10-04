@@ -7,19 +7,26 @@
 
 import Vue from 'vue';
 // Pages
-import Main from './components/Pages/Main';
-import Login from './components/Pages/Login';
-import Registration from './components/Pages/Registration';
+//import Main from './components/Pages/Main';
+//import Login from './components/Pages/Login';
+//import Registration from './components/Pages/Registration';
 //import Articles from './components/Pages/Articles';
 //import Blog from './components/Pages/Blog/Blog';
 //import BlogDetail from './components/Pages/Blog/BlogDetail';
-import BlogCategory from './components/Pages/Blog/Category';
+//import BlogCategory from './components/Pages/Blog/Category';
 //import UserEdit from './components/Test/UserEdit';
 //import AdvantageBoxSearch from './components/Pages/AdvantageBoxSearch';
+
+import CourseList from './components/Pages/Courses/CourseList';
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '../css/style.css';
 import '../css/custom.css';
+
+new Vue({
+    el: '#course-list',
+    render: h => h(CourseList)
+});
 
 /*new Vue({
     el: '#app',

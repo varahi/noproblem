@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Course;
 use App\Entity\Message;
 use App\Entity\Article;
 use App\Entity\City;
@@ -108,7 +109,7 @@ class PageController extends AbstractController
     /**
      * @Route("/blog", name="app_blog")
      */
-    public function blogPage(
+    public function blogList(
         ArticleRepository $articleRepository,
         ArticleCategoryRepository $articleCategoryRepository
     ) {
@@ -123,7 +124,7 @@ class PageController extends AbstractController
     /**
      * @Route("/blog/category/{slug}", name="app_blog_list_by_category")
      */
-    public function blogListByCategoryPage(
+    public function blogListByCategory(
         ArticleRepository $articleRepository,
         ArticleCategoryRepository $articleCategoryRepository,
         ArticleCategory $articleCategory
@@ -139,7 +140,7 @@ class PageController extends AbstractController
     /**
      * @Route("/blog/detail/{slug}", name="app_blog_detail")
      */
-    public function blogDetailPage(
+    public function blogDetail(
         Request $request,
         TranslatorInterface $translator,
         NotifierInterface $notifier,
@@ -150,6 +151,35 @@ class PageController extends AbstractController
         return new Response($this->twig->render('pages/blog/detail.html.twig', [
             'article' => $article,
             'categories' => $categories
+        ]));
+    }
+
+    /**
+     * @Route("/courses", name="app_courses")
+     */
+    public function coursesList(
+        ArticleRepository $articleRepository,
+        ArticleCategoryRepository $articleCategoryRepository
+    ) {
+        //$articles = $articleRepository->findAll();
+        //$categories = $articleCategoryRepository->findAll();
+        return $this->render('pages/courses/list.html.twig', [
+            //'articles' => $articles,
+            //'categories' => $categories
+        ]);
+    }
+
+    /**
+     * @Route("/course/detail/{slug}", name="app_course_detail")
+     */
+    public function courseDetail(
+        Request $request,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier,
+        Course $course
+    ): Response {
+        return new Response($this->twig->render('pages/courses/detail.html.twig', [
+            'course' => $course,
         ]));
     }
 }

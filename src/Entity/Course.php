@@ -47,6 +47,16 @@ class Course
      */
     private $discountedPrice;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $teaser;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +130,30 @@ class Course
     public function setDiscountedPrice(?float $discountedPrice): self
     {
         $this->discountedPrice = $discountedPrice;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getTeaser(): ?string
+    {
+        return $this->teaser;
+    }
+
+    public function setTeaser(?string $teaser): self
+    {
+        $this->teaser = $teaser;
 
         return $this;
     }

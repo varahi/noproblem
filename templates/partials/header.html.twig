@@ -11,14 +11,14 @@
                 </div>
             </div>
             <div class="regs" >
-                <div class="vhod" @click="$router.push('/blog')" style="cursor:pointer">
+                <div class="vhod" style="cursor:pointer">
                     <a href="{{ path('app_blog') }}"><span>Блог</span></a>
                     <img src="{{ asset('assets/img/blockicon.svg') }}">
                 </div>
             </div>
             <div class="regs" v-if="viewmenu()">
-                <div class="vhod" @click="$router.push('/course')" style="cursor:pointer">
-                    <span>Список курсов</span>
+                <div class="vhod" style="cursor:pointer">
+                    <a href="{{ path('app_courses') }}"><span>Список курсов</span></a>
                     <img src="{{ asset('assets/img/courseicon.svg') }}">
                 </div>
             </div>

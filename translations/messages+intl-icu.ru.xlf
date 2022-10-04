@@ -253,6 +253,14 @@
         <source>Customer</source>
         <target>Заказчик</target>
       </trans-unit>
+      <trans-unit id="Teaser" resname="Teaser">
+        <source>Teaser</source>
+        <target>Анонс</target>
+      </trans-unit>
+      <trans-unit id="Slug" resname="Slug">
+        <source>Slug</source>
+        <target>Сегмент url</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

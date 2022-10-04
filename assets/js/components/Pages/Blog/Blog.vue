@@ -20,7 +20,7 @@
 
             </div>
             <div class="images">
-              <img class="lazyLoad isLoaded img_article" :src="`uploads/${item.image}`" alt={item.title} width="800" />
+              <img class="lazyLoad isLoaded img_article" :src="`uploads/${item.image}`" alt={item.title} />
             </div>
           </div>
         </div>

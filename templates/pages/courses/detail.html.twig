@@ -1,0 +1,28 @@
+{% extends 'layouts/base.html.twig' %}
+{% block title %}Блог Компании - Онлайн-сервис по подбору домашнего персонала{% endblock %}
+{% block body %}
+    {% include 'partials/header.html.twig' %}
+
+    <div class="content grid_new_course">
+        <div class="blockcontent_new_course">
+            <h1>{{ course.name }}</h1>
+            <img src="{{ asset('uploads/' ~ course.image) }}" class="lazyLoad isLoaded img_new_article" alt="{{ course.name }}" />
+            <article>
+                {{ course.bodytext|raw }}
+            </article>
+        </div>
+
+        <div class="blockfixed_new_course">
+            <div class="price">
+                <p>Стоимость: <span >500 руб.</span></p>
+                <p>Количество разделов: <span>3</span></p>
+                <p>Видео: <span>1</span></p>
+                <p>Изображений: <span data-v-1ab5165e="">1</span></p>
+                <p>Текстовых: <span>1</span></p></div>
+            <div class="button">Купить курс</div>
+        </div>
+
+    </div>
+
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}

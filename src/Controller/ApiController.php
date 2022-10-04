@@ -6,6 +6,7 @@ use App\Controller\Traits\DataTrait;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\ArticleCategoryRepository;
+use App\Repository\CourseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,6 +23,24 @@ class ApiController extends AbstractController
         return $this->render('api/index.html.twig', [
             'controller_name' => 'ApiController',
         ]);
+    }
+
+    /**
+     * @Route("/api/courses", name="api_courses")
+     * @return Response
+     */
+    public function apiCourses(
+        CourseRepository $courseRepository
+    ) {
+        $items = $courseRepository->findLimitOrder('999', '0');
+        $arrData = $this->getArticleJsonArrData($items);
+
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $response->setContent(json_encode($arrData));
+
+        return $response;
     }
 
     /**

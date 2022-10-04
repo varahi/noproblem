@@ -63,8 +63,8 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Appeals');
         yield MenuItem::subMenu('Appeals', 'fa fa-reorder')->setSubItems([
-            MenuItem::linkToCrud('Ticket', 'fa fa-ticket', Ticket::class),
-            MenuItem::linkToCrud('Answer', 'fa fa fa-support', Answer::class),
+            MenuItem::linkToCrud('Tickets', 'fa fa-ticket', Ticket::class),
+            MenuItem::linkToCrud('Answers', 'fa fa fa-support', Answer::class),
         ]);
 
         yield MenuItem::section('Users');
@@ -75,7 +75,7 @@ class DashboardController extends AbstractDashboardController
         ]);
 
         yield MenuItem::section('Cources');
-        yield MenuItem::linkToCrud('Course', 'fa fa-id-badge', Course::class);
+        yield MenuItem::linkToCrud('Cources', 'fa fa-id-badge', Course::class);
 
         yield MenuItem::section('Tariffs');
         yield MenuItem::linkToCrud('Tariff', 'fa fa-volume-up', Tariff::class);
