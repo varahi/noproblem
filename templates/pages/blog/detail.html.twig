@@ -3,17 +3,11 @@
 {% block body %}
     {% include 'partials/header.html.twig' %}
 
+    {# <div id="blog-detail"></div>#}
+
     <div class="article">
         <div class="content gridblock">
-            <div  class="sidebar">
-                <div class="grid_one_block">
-                    <div class="onegrid">
-                        <img src="../assets/img/for_worker.jpg" class="lazyLoad isLoaded img_onegrid"><a data-v-3e621fbe="" href="/blog/dlya-rabotnika" class="">Для работника</a>
-                    </div>
-                    <div  class="onegrid"><img src="../assets/img/interesting.jpeg" class="lazyLoad isLoaded img_onegrid"> <a href="/blog/interesnoe" class="">Интересное</a>
-                    </div>
-                </div>
-            </div>
+            {% include 'partials/blog/_category.html.twig' %}
             <div>
                 <div class="new_blockarticle">
                     <h1 >{{ article.name }}</h1>
@@ -25,6 +19,5 @@
             </div>
         </div>
     </div>
-
     {% include 'partials/footer.html.twig' %}
 {% endblock %}

@@ -39,6 +39,15 @@ class ArticleCategoryRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param array $order
+     * @return ArticleCategory[]
+     */
+    public function findAllOrder(array $order)
+    {
+        return $this->findBy([], $order);
+    }
+
 //    /**
 //     * @return ArticleCategory[] Returns an array of ArticleCategory objects
 //     */

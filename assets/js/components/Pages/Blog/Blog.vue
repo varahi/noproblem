@@ -1,21 +1,13 @@
 <template>
   <div class="article">
     <div class="content gridblock">
-      <div  class="sidebar">
-        <div class="grid_one_block">
-          <div class="onegrid">
-            <img src="assets/img/for_worker.jpg" class="lazyLoad isLoaded img_onegrid"><a href="" class="">Для работника</a>
-          </div>
-          <div  class="onegrid"><img src="assets/img/interesting.jpeg" class="lazyLoad isLoaded img_onegrid"> <a href="/blog/interesnoe" class="">Интересное</a>
-          </div>
-        </div>
-      </div>
+      <Category />
       <div>
         <div class="" v-if="items && items.length">
           <div class="grid_two_block" v-for="item of items">
             <div class="title_blog">
               <h3>{{item.title}}</h3>
-              <p v-html="item.teaser">{{item.teaser}}  {{item.slug}}</p>
+              <p v-html="item.teaser">{{item.teaser}}</p>
               <a v-bind:href="'/blog/detail/'+ item.slug" class="btn_article">Подробнее</a>
 
               <!--
@@ -39,8 +31,12 @@
 
 <script>
 import axios from 'axios';
+import Category from "./Category";
 
 export default {
+  components: {
+    Category
+  },
   data() {
     return {
       items: [],

@@ -16,6 +16,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ArticleRepository extends ServiceEntityRepository
 {
+    public const CATEGORY_TABLE = 'App\Entity\ArticleCategory';
+
+    public const ARTICLE_TABLE = 'App\Entity\Article';
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Article::class);
@@ -46,6 +50,21 @@ class ArticleRepository extends ServiceEntityRepository
     public function findAllOrder(array $order)
     {
         return $this->findBy([], $order);
+    }
+
+    /**
+     * @param int $id
+     * @return int|mixed|string
+     */
+    public function findByCategory(int $id)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('article');
+        $qb->from(self::ARTICLE_TABLE, 'article');
+        $qb->join('article.category', 'cat');
+        $qb->where($qb->expr()->eq('cat.id', $id));
+
+        return $qb->getQuery()->getResult();
     }
 
 //    /**

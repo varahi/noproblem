@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -45,6 +46,7 @@ class CategoryCrudController extends AbstractCrudController
         yield FormField::addPanel('Main info')->setIcon('fa fa-info')->setCssClass('col-sm-8');
         yield IntegerField::new('id')->setFormTypeOption('disabled', 'disabled')->hideWhenCreating();
         yield TextField::new('name')->setColumns('col-md-8');
+        yield SlugField::new('slug')->hideOnIndex()->setTargetFieldName('name');
         yield TextareaField::new('description')->setColumns('col-md-10');
 
         yield FormField::addPanel('Relations')->setIcon('fa fa-chain')->setCssClass('col-sm-4');

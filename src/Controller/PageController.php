@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Message;
 use App\Entity\Article;
 use App\Entity\City;
+use App\Entity\ArticleCategory;
 use App\Repository\ArticleRepository;
+use App\Repository\ArticleCategoryRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\ReviewRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -107,11 +109,30 @@ class PageController extends AbstractController
      * @Route("/blog", name="app_blog")
      */
     public function blogPage(
-        ArticleRepository $articleRepository
+        ArticleRepository $articleRepository,
+        ArticleCategoryRepository $articleCategoryRepository
     ) {
         $articles = $articleRepository->findAll();
+        $categories = $articleCategoryRepository->findAll();
         return $this->render('pages/blog/list.html.twig', [
-            'articles' => $articles
+            'articles' => $articles,
+            'categories' => $categories
+        ]);
+    }
+
+    /**
+     * @Route("/blog/category/{slug}", name="app_blog_list_by_category")
+     */
+    public function blogListByCategoryPage(
+        ArticleRepository $articleRepository,
+        ArticleCategoryRepository $articleCategoryRepository,
+        ArticleCategory $articleCategory
+    ) {
+        $articles = $articleRepository->findByCategory($articleCategory->getId());
+        $categories = $articleCategoryRepository->findAll();
+        return $this->render('pages/blog/list_by_category.html.twig', [
+            'articles' => $articles,
+            'categories' => $categories
         ]);
     }
 
@@ -122,10 +143,13 @@ class PageController extends AbstractController
         Request $request,
         TranslatorInterface $translator,
         NotifierInterface $notifier,
-        Article $article
+        Article $article,
+        ArticleCategoryRepository $articleCategoryRepository
     ): Response {
+        $categories = $articleCategoryRepository->findAll();
         return new Response($this->twig->render('pages/blog/detail.html.twig', [
-            'article' => $article
+            'article' => $article,
+            'categories' => $categories
         ]));
     }
 }

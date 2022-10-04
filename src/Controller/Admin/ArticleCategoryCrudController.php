@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
@@ -41,6 +42,7 @@ class ArticleCategoryCrudController extends AbstractCrudController
     {
         yield IntegerField::new('id')->setFormTypeOption('disabled', 'disabled');
         yield TextField::new('name');
+        yield SlugField::new('slug')->hideOnIndex()->setTargetFieldName('name');
         yield AssociationField::new('articles');
         yield ImageField::new('image')
             ->setBasePath('uploads/')

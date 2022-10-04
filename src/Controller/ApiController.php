@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Controller\Traits\DataTrait;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\ArticleCategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,6 +43,24 @@ class ApiController extends AbstractController
     }
 
     /**
+     * @Route("/api/article-{id}", name="api_detail_article")
+     * @return Response
+     */
+    public function apiDetailArticle(
+        ArticleRepository $articleRepository
+    ) {
+        $items = $articleRepository->findAllOrder(['id' => 'ASC']);
+        $arrData = $this->getArticleJsonArrData($items);
+
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $response->setContent(json_encode($arrData));
+
+        return $response;
+    }
+
+    /**
      * @Route("/api/categories", name="api_categories")
      * @return Response
      */
@@ -49,6 +68,24 @@ class ApiController extends AbstractController
         CategoryRepository $categoryRepository
     ) {
         $items = $categoryRepository->findAllOrder(['id' => 'ASC']);
+        $arrData = $this->getJsonArrData($items);
+
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $response->setContent(json_encode($arrData));
+
+        return $response;
+    }
+
+    /**
+     * @Route("/api/blog-categories", name="api_blog_categories")
+     * @return Response
+     */
+    public function apiBlogCategories(
+        ArticleCategoryRepository $articleCategoryRepository
+    ) {
+        $items = $articleCategoryRepository->findAllOrder(['id' => 'ASC']);
         $arrData = $this->getJsonArrData($items);
 
         $response = new Response();

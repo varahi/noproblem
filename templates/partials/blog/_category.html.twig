@@ -1,0 +1,10 @@
+<div  class="sidebar">
+    <div class="grid_one_block">
+        {% for category in categories %}
+            <div class="onegrid">
+                <img src="{{ asset('uploads/' ~ category.image) }}" class="lazyLoad isLoaded img_onegrid" alt="{{ category.name }}" />
+                <a href="{{ path('app_blog_list_by_category', { slug: category.slug}) }}" class="">{{ category.name }}</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>

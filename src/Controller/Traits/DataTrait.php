@@ -76,12 +76,18 @@ trait DataTrait
                 } else {
                     $itemImage = null;
                 }
+                if ($item->getSlug()) {
+                    $itemSlug = $item->getSlug();
+                } else {
+                    $itemSlug = null;
+                }
 
                 $arrData[] = [
                     'id' => $itemId,
                     'title' => $itemTitle,
                     'description' => $itemDescription,
-                    'image' => $itemImage
+                    'image' => $itemImage,
+                    'slug' => $itemSlug
                 ];
             }
             return $arrData;
