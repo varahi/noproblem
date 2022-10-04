@@ -59,12 +59,38 @@ class ArticleRepository extends ServiceEntityRepository
     public function findByCategory(int $id)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
+        $expr = $qb->expr();
         $qb->select('article');
         $qb->from(self::ARTICLE_TABLE, 'article');
         $qb->join('article.category', 'cat');
         $qb->where($qb->expr()->eq('cat.id', $id));
+        $qb->andWhere($expr->neq('article.hidden', 1));
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param $limit
+     * @param $offset
+     * @return float|int|mixed|string
+     */
+    public function findLimitOrder($limit, $offset)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $expr = $qb->expr();
+
+        $qb->select('a')
+            ->from(self::ARTICLE_TABLE, 'a')
+            //->where('r.hidden is not NULL')
+            ->where($expr->neq('a.hidden', 1))
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->orderBy('a.id', 'ASC');
+
+        $reviews = $qb->getQuery()->getResult();
+        return $reviews;
+
+        //return $this->findBy([], $order);
     }
 
 //    /**

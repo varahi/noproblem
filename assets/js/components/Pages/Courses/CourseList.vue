@@ -11,8 +11,11 @@
           <p v-html="item.teaser">{{item.teaser}}</p>
           <div  class="blockprice">
             <a v-bind:href="'/course/detail/'+ item.slug" class="btn_article">Подробнее</a>
-            <div class="price_course">
-              <p>Стоимость:<span > 500 руб.</span></p>
+            <div class="price_course" v-if="item.price">
+              <p>Стоимость:<span > {{item.price}} руб.</span></p>
+            </div>
+            <div class="price_course" v-else>
+              <p>Стоимость:<span > Бесплатно</span></p>
             </div>
           </div>
         </div>
@@ -20,7 +23,6 @@
     </div>
   </div>
 </template>
-
 
 <script>
 import axios from 'axios';

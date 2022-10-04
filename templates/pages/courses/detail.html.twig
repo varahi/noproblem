@@ -14,7 +14,12 @@
 
         <div class="blockfixed_new_course">
             <div class="price">
-                <p>Стоимость: <span >500 руб.</span></p>
+                {% if course.price %}
+                    <p>Стоимость: <span >{{ course.price }} руб.</span></p>
+                {% else %}
+                    <p>Стоимость: <span >Беспатно</span></p>
+                {% endif %}
+
                 <p>Количество разделов: <span>3</span></p>
                 <p>Видео: <span>1</span></p>
                 <p>Изображений: <span data-v-1ab5165e="">1</span></p>

@@ -33,7 +33,7 @@ class ApiController extends AbstractController
         CourseRepository $courseRepository
     ) {
         $items = $courseRepository->findLimitOrder('999', '0');
-        $arrData = $this->getArticleJsonArrData($items);
+        $arrData = $this->getCourseJsonArrData($items);
 
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');
@@ -50,7 +50,8 @@ class ApiController extends AbstractController
     public function apiArticles(
         ArticleRepository $articleRepository
     ) {
-        $items = $articleRepository->findAllOrder(['id' => 'ASC']);
+        //$items = $articleRepository->findAllOrder(['id' => 'ASC']);
+        $items = $articleRepository->findLimitOrder('999', '0');
         $arrData = $this->getArticleJsonArrData($items);
 
         $response = new Response();

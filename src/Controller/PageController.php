@@ -113,7 +113,7 @@ class PageController extends AbstractController
         ArticleRepository $articleRepository,
         ArticleCategoryRepository $articleCategoryRepository
     ) {
-        $articles = $articleRepository->findAll();
+        $articles = $articleRepository->findLimitOrder('999', '0');
         $categories = $articleCategoryRepository->findAll();
         return $this->render('pages/blog/list.html.twig', [
             'articles' => $articles,

@@ -45,6 +45,7 @@ class ArticleCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         yield IntegerField::new('id')->setFormTypeOption('disabled', 'disabled');
+        yield BooleanField::new('hidden');
         yield TextField::new('name');
         yield SlugField::new('slug')->hideOnIndex()->setTargetFieldName('name');
         yield TextareaField::new('teaser');
