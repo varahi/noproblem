@@ -1,17 +1,12 @@
 {% extends 'layouts/main.html.twig' %}
 {% block title %}Главная - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block content %}
+
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
     {% include 'partials/header.html.twig' %}
     <div>
-        <div class="indexa">
-            <div class="main content">
-                <h2>Найдите надежного работника<br> или работу самостоятельно<br> <b>без посредников</b></h2>
-                <div class="btn_try" @click="$store.dispatch('okna/getOkno',{type:'registration',action:true})" style="cursor:pointer">
-                    <a>Попробовать</a>
-                </div>
-                <div class="main_background">
-                </div>
-            </div>
+        <div id="app">
+            <try-and-register />
         </div>
         {% include 'partials/pages/main/why.html.twig' %}
     </div>
@@ -20,6 +15,42 @@
     {% include 'partials/pages/main/_block5.html.twig' %}
     {% include 'partials/pages/main/_block6.html.twig' %}
     {% include 'partials/footer.html.twig' %}
+
+
+<!--    <button id="openModal" onclick="openModal()">Open Modal</button>-->
+
+    <!-- The Modal -->
+    <div id="login" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p>Some text in the Modal..</p>
+            <span class="close" onclick="openSecondModal()">Register</span>
+        </div>
+    </div>
+
+    <div id="register" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSecondModal()">&times;</span>
+            Register form
+        </div>
+    </div>
+
+<!--    <script>
+        function openModal() {
+            $("#login").css("display", "block");
+        }
+        function closeModal() {
+            $("#login").css("display", "none");
+        }
+        function closeSecondModal() {
+            $("#register").css("display", "none");
+        }
+        function openSecondModal() {
+            $("#register").css("display", "block");
+            $("#login").css("display", "none");
+        }
+    </script>-->
 
     {#<div class="one content">
         <div class="mobfile">

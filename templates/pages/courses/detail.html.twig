@@ -20,7 +20,12 @@
                     <p>Стоимость: <span >Беспатно</span></p>
                 {% endif %}
 
-                <p>Количество разделов: <span>3</span></p>
+                <p>Количество разделов: <span>{{ course.contain|length }}</span></p>
+
+<!--                {% for contain in course.contain %}
+                    {{ contain.type }}
+                {% endfor %}-->
+
                 <p>Видео: <span>1</span></p>
                 <p>Изображений: <span data-v-1ab5165e="">1</span></p>
                 <p>Текстовых: <span>1</span></p></div>

@@ -74,9 +74,21 @@ class PageController extends AbstractController
     }
 
     /**
+     * @Route("/vacancies", name="app_vacancies")
+     */
+    public function vacanciesPage(
+        Request $request,
+        ReviewRepository $reviewRepository,
+        CategoryRepository $categoryRepository
+    ): Response {
+        return new Response($this->twig->render('pages/sign-up.html.twig', [
+        ]));
+    }
+
+    /**
      * @Route("/employee", name="app_employee")
      */
-    public function app_employeePage(
+    public function employeePage(
         Request $request,
         ReviewRepository $reviewRepository,
         CategoryRepository $categoryRepository

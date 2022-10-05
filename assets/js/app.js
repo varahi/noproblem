@@ -5,11 +5,10 @@
  * (and its CSS file) in your base layout (base.html.twig).
  */
 
-import Vue from 'vue';
+
 // Pages
 //import Main from './components/Pages/Main';
 //import Login from './components/Pages/Login';
-//import Registration from './components/Pages/Registration';
 //import Articles from './components/Pages/Articles';
 //import Blog from './components/Pages/Blog/Blog';
 //import BlogDetail from './components/Pages/Blog/BlogDetail';
@@ -18,6 +17,11 @@ import Vue from 'vue';
 //import AdvantageBoxSearch from './components/Pages/AdvantageBoxSearch';
 
 import Courses from './components/Pages/Courses/CourseList';
+import TryAndRegister from './components/Pages/TryAndRegister';
+//import SignUpForm from './components/SignUpForm.vue'
+import Vue from 'vue';
+
+//Vue.component('SignUpForm', SignUpForm);
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '../css/style.css';
@@ -25,9 +29,16 @@ import '../css/custom.css';
 
 new Vue({
     el: '#app',
-    //render: h => h(CourseList)
-    components: {Courses}
+    components: {
+        Courses,
+        TryAndRegister
+    }
 });
+
+/*new Vue({
+    el: '#vue-app',
+    render: h => h(SignUpForm),
+});*/
 
 /*new Vue({
     el: '#app',
