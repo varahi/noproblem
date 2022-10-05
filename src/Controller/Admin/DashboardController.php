@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Answer;
+use App\Entity\Contain;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -75,7 +76,10 @@ class DashboardController extends AbstractDashboardController
         ]);
 
         yield MenuItem::section('Cources');
-        yield MenuItem::linkToCrud('Cources', 'fa fa-id-badge', Course::class);
+        yield MenuItem::subMenu('Cources', 'fa fa-id-badge')->setSubItems([
+            MenuItem::linkToCrud('Course', 'fa fa-cube', Course::class),
+            MenuItem::linkToCrud('Contain', 'fa fa-cubes', Contain::class),
+        ]);
 
         yield MenuItem::section('Tariffs');
         yield MenuItem::linkToCrud('Tariff', 'fa fa-volume-up', Tariff::class);

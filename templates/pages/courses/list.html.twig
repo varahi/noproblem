@@ -2,6 +2,13 @@
 {% block title %}Курсы Компании - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block body %}
     {% include 'partials/header.html.twig' %}
-    <div id="course-list"></div>
+<!--    <div id="course-list"></div>-->
+    <div id="app">
+        <courses></courses>
+    </div>
     {% include 'partials/footer.html.twig' %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
 {% endblock %}
+

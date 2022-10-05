@@ -1,0 +1,258 @@
+{% extends 'layouts/base.html.twig' %}
+{% block title %}Блог Компании - Онлайн-сервис по подбору домашнего персонала{% endblock %}
+{% block body %}
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=22bbec55-f932-4a17-beb2-c5927a172692" type="text/javascript"></script>
+    <style>
+        html, body, #map {
+            width: 100%; height: 100%; padding: 0; margin: 0;
+        }
+    </style>
+    {% include 'partials/header.html.twig' %}
+    <div class="">
+        <div class="content">
+            <div class="bread">
+                <a href="/" class="nuxt-link-active main_vavancies" >Главная</a>
+                <a href="" class="nuxt-link-active" >Анкеты</a>
+            </div>
+            <div class="choose">
+                <p>Все анкеты:</p>
+                <div class="for mob_group_btn">
+                    <div class="click">
+                        <a href="/vacancies/muzh-na-chas" class="">Мастер на час</a>
+                    </div>
+                    <div class="click" >
+                        <a href="/vacancies/domrabotnica" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Домработница</a>
+                    </div>
+                    <div class="click">
+                        <a href="/vacancies/nyanya" class="">Няня</a>
+                    </div>
+                    <div class="click">
+                        <a href="/vacancies/sidelka" class="">Сиделка</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mains">
+                <div class="fon">
+
+                    <button class="accordion_filter"><span>Фильтр анкет</span></button>
+                    <div class="panel_filter">
+                        <div class="inside_city">
+                            <div class="block_emp">
+                                <p>Город</p>
+                                <select name="select" >
+                                    <option value="62af83a8e8571ed6bd060d95">Солнечногорск</option>
+                                    <option value="62af839ce8571ed6bd060d88">Красногорск</option>
+                                    <option value="62af8391e8571ed6bd060d7b">Зеленоград</option>
+                                    <option value="62af8380e8571ed6bd060d6e" >Троицк</option>
+                                    <option value="62af8372e8571ed6bd060d61">Саратов</option>
+                                    <option value="62af8366e8571ed6bd060d54">Самара</option>
+                                    <option value="62af834be8571ed6bd060d47">Борисоглебск</option>
+                                    <option value="62af8332e8571ed6bd060d3a">Воронеж</option>
+                                    <option value="62af8323e8571ed6bd060d2d">Ачинск</option>
+                                    <option value="62af8247e8571ed6bd060d1c">Суздаль</option>
+                                    <option value="62af823de8571ed6bd060d0f" >Сургут</option>
+                                    <option value="62af8234e8571ed6bd060d02">Бердск</option>
+                                    <option value="62af8229e8571ed6bd060cf5">Новосибирск</option>
+                                    <option value="62af81cfe8571ed6bd060ce4">Березники</option>
+                                    <option value="62af81c6e8571ed6bd060cd7">Пермь</option>
+                                    <option value="62af81afe8571ed6bd060cca">Советск</option>
+                                    <option value="62af81a3e8571ed6bd060cbd">Курск</option>
+                                    <option value="62af8199e8571ed6bd060cb0">Брянск</option>
+                                    <option value="62af818fe8571ed6bd060ca3">Смоленск</option>
+                                    <option value="62af817be8571ed6bd060c96" >Батайск</option>
+                                    <option value="62af816de8571ed6bd060c89" >Таганрог</option>
+                                    <option value="62af8160e8571ed6bd060c7c" >Цимлянск</option>
+                                    <option value="62af813ee8571ed6bd060c6f">Нижний Новгород</option>
+                                    <option value="62af811de8571ed6bd060c58">Великий Новгород</option>
+                                    <option value="62af8107e8571ed6bd060c4b" >Ростов на Дону</option>
+                                    <option value="62af80f8e8571ed6bd060c3e">Астрахань</option>
+                                    <option value="62af80c7e8571ed6bd060c31" >Полевской</option>
+                                    <option value="62af807ae8571ed6bd060c0c" >Нижний Тагил</option>
+                                    <option value="62af806de8571ed6bd060c01">Асбест</option>
+                                    <option value="62af8046e8571ed6bd060bf6" >Верхняя Пышма</option>
+                                    <option value="62af801ee8571ed6bd060beb" >Богданович</option>
+                                    <option value="62af7fdae8571ed6bd060bdc" >Калининград</option>
+                                    <option value="62af7fcce8571ed6bd060bd1" >Красноярск</option>
+                                    <option value="62af7db0e8571ed6bd060bc2" >Саранск</option>
+                                    <option value="62af7d96e8571ed6bd060bb7" >Заинск</option>
+                                    <option value="62af7d75e8571ed6bd060bac">Набережные Челны</option>
+                                    <option value="62af7d60e8571ed6bd060ba1" >Казань</option>
+                                    <option value="62af7d46e8571ed6bd060b96">Ирбит</option>
+                                    <option value="62af7d37e8571ed6bd060b8b">Невьянск</option>
+                                    <option value="62af7cf7e8571ed6bd060b76" >Красноуфимск</option>
+                                    <option value="62af7ce9e8571ed6bd060b6b" >Среднеуральск</option>
+                                    <option value="62af7cd2e8571ed6bd060b60" >Мытищи</option>
+                                    <option value="62af7cc3e8571ed6bd060b55" >Серпухов</option>
+                                    <option value="62af7caee8571ed6bd060b4a" >Жуковский</option>
+                                    <option value="62af7c9de8571ed6bd060b3f" >Одинцово</option>
+                                    <option value="62af7c88e8571ed6bd060b34" >Подольск</option>
+                                    <option value="62af7c56e8571ed6bd060b25" >Белоозёрский</option>
+                                    <option value="62af7c36e8571ed6bd060b16" >Видное</option>
+                                    <option value="62af7b01e8571ed6bd060aef" >Гатчина</option>
+                                    <option value="62af7a7be8571ed6bd060ae0" >Санкт-Петербург</option>
+                                    <option value="6269585002aa05b9a518d44d" >Пермь</option>
+                                    <option value="6256da9735ea8c2ad20a8766">Омск</option>
+                                    <option value="6256bb6fb9018afc70cc289e">Москва</option>
+                                    <option value="6256b7cf1a68d909435e3084" >Екатеринбург</option>
+                                </select>
+                            </div>
+                            <div class="block_emp">
+                                <p>Район</p>
+                                <select name="select">
+                                    <option value="value1" >Отрадное</option>
+                                    <option value="value2" selected="selected">Отрадное</option>
+                                    <option value="value3" >Отрадное</option></select></div>
+                            <div class="block_emp" ><p>Почасовая ставка</p>
+                                <div class="mob_bet">
+                                    <div class="mob_bet_number">
+                                        <span>от</span>
+                                        <input type="number" name="number" placeholder="350">
+                                    </div>
+                                    <div class="mob_bet_number">
+                                        <span >до</span>
+                                        <input type="number" name="number" placeholder="1000">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="block_emp mobs" ><p>Проживание:</p> <select name="select" >
+                                    <option value="value1" >С проживанием</option>
+                                    <option value="value2" selected="selected" >С проживанием</option>
+                                    <option value="value3" >С проживанием</option></select></div>
+                            <div class="block_emp mobs" >
+                                <p >Оплата:</p>
+                                <div class="both" >
+                                    <select name="select" >
+                                        <option value="value1" >Почасовая</option>
+                                        <option value="value2" selected="selected" >Почасовая</option>
+                                        <option value="value3" >Почасовая</option>
+                                    </select>
+                                    <div class="mob_bet">
+                                        <div class="mob_bet_number">
+                                            <div class="hour" ><span >от</span>
+                                                <input type="number" name="numbers" placeholder="350р" >
+                                            </div>
+                                        </div>
+                                        <div class="mob_bet_number">
+                                            <div class="hour" ><span >до</span>
+                                                <input type="number" name="numberss" placeholder="900р">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <!--  <div class="sort mobs">
+                           <p >Сортировать по:</p>
+                           <select name="select" >
+                             <option value="value1" >Новизне</option>
+                             <option value="value2" selected="selected" >Новизне</option>
+                              <option value="value3">Новизне</option></select>
+                            </div>  -->
+                        <div class="knopka mob_emp mobs">
+                            <a href="/vacancies/domrabotnica" aria-current="page" class="nuxt-link-exact-active nuxt-link-active" >Применить</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="big" >
+                    <div class="title" >
+                        <h2 >Все анкеты</h2>
+                    </div>
+
+
+                    <div id="map" style="width: 833px; height: 500px; margin-bottom: 20px"></div>
+                    <div class="large fon">
+                        <div class="in" >
+                            <div class="formob">
+                                <!---->
+                                <!--         <div class="together mobs">
+                                        <div class="all" >
+                                          <p>Все </p>
+                                           <img data-src="/_nuxt/img/downs.3c8ce17.svg" src="/preload.gif" class="lazyLoad">
+                                        </div>
+                                       <div class="filter">
+                                         <img data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTciIGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAxNyAxOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iMTUuNDk2NiIgd2lkdGg9IjE4IiBoZWlnaHQ9IjEiIHRyYW5zZm9ybT0icm90YXRlKDkwIDE1LjQ5NjYgMCkiIGZpbGw9IiM2RDNENjciLz4KPHJlY3QgeD0iOSIgd2lkdGg9IjE4IiBoZWlnaHQ9IjEiIHRyYW5zZm9ybT0icm90YXRlKDkwIDkgMCkiIGZpbGw9IiM2RDNENjciLz4KPHJlY3QgeD0iMi41MDI5MyIgd2lkdGg9IjE4IiBoZWlnaHQ9IjEiIHRyYW5zZm9ybT0icm90YXRlKDkwIDIuNTAyOTMgMCkiIGZpbGw9IiM2RDNENjciLz4KPGNpcmNsZSBjeD0iMTUiIGN5PSI0IiByPSIxLjc1IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjNkQzRDY3IiBzdHJva2Utd2lkdGg9IjAuNSIvPgo8Y2lyY2xlIGN4PSIyIiBjeT0iOCIgcj0iMS43NSIgZmlsbD0id2hpdGUiIHN0cm9rZT0iIzZEM0Q2NyIgc3Ryb2tlLXdpZHRoPSIwLjUiLz4KPGNpcmNsZSBjeD0iOC41IiBjeT0iMTQiIHI9IjEuNzUiIGZpbGw9IndoaXRlIiBzdHJva2U9IiM2RDNENjciIHN0cm9rZS13aWR0aD0iMC41Ii8+Cjwvc3ZnPgo=" src="/preload.gif"  class="lazyLoad">
+                                       </div>
+                                     </div>  -->
+                                <!---->
+                            </div>
+                            <div class="novacanse">
+                                <p>По данному запросу анкет не найдено</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'partials/footer.html.twig' %}
+    <script type="text/javascript">
+        ymaps.ready(function () {
+            var myMap = new ymaps.Map('map', {
+                    center: [55.751574, 37.573856],
+                    zoom: 9
+                }, {
+                    searchControlProvider: 'yandex#search'
+                }),
+
+                // Creating a content layout.
+                MyIconContentLayout = ymaps.templateLayoutFactory.createClass(
+                    '<div style="color: #FFFFFF; font-weight: bold;">$[properties.iconContent]</div>'
+                ),
+
+                myPlacemark = new ymaps.Placemark(myMap.getCenter(), {
+                    hintContent: 'Анкета №2',
+                    balloonContent: '<div><div>Анкета №2</div><div>Описание анкеты</div></div>'
+                }, {
+                    /**
+                     * Options.
+                     * You must specify this type of layout.
+                     */
+                    iconLayout: 'default#image',
+                    // Custom image for the placemark icon.
+                    iconImageHref: 'assets/img/map_point.svg',
+                    // The size of the placemark.
+                    iconImageSize: [30, 42],
+                    /**
+                     * The offset of the upper left corner of the icon relative
+                     * to its "tail" (the anchor point).
+                     */
+                    iconImageOffset: [-5, -38]
+                }),
+
+                myPlacemarkWithContent = new ymaps.Placemark([55.661574, 37.573856], {
+                    hintContent: 'Анкета №1',
+                    balloonContent: '<div><div>Анкета №1</div><div>Описание анкеты</div></div>',
+                    iconContent: '12'
+
+                }, {
+                    /**
+                     * Options.
+                     * You must specify this type of layout.
+                     */
+                    iconLayout: 'default#imageWithContent',
+                    // Custom image for the placemark icon.
+                    iconImageHref: 'assets/img/map_point.svg',
+                    // The size of the placemark.
+                    iconImageSize: [48, 48],
+                    /**
+                     * The offset of the upper left corner of the icon relative
+                     * to its "tail" (the anchor point).
+                     */
+                    iconImageOffset: [-24, -24],
+                    // Offset of the layer with content relative to the layer with the image.
+                    iconContentOffset: [15, 15],
+                    // Content layout.
+                    iconContentLayout: MyIconContentLayout
+                });
+
+            myMap.geoObjects
+                .add(myPlacemark)
+                .add(myPlacemarkWithContent);
+        });
+    </script>
+{% endblock %}

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CourseRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -56,6 +58,21 @@ class Course
      * @ORM\Column(type="text", nullable=true)
      */
     private $teaser;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Contain::class, mappedBy="course")
+     */
+    private $contain;
+
+    public function __construct()
+    {
+        $this->contain = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
+    }
 
     public function getId(): ?int
     {
@@ -154,6 +171,36 @@ class Course
     public function setTeaser(?string $teaser): self
     {
         $this->teaser = $teaser;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Contain>
+     */
+    public function getContain(): Collection
+    {
+        return $this->contain;
+    }
+
+    public function addContain(Contain $contain): self
+    {
+        if (!$this->contain->contains($contain)) {
+            $this->contain[] = $contain;
+            $contain->setCourse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContain(Contain $contain): self
+    {
+        if ($this->contain->removeElement($contain)) {
+            // set the owning side to null (unless already changed)
+            if ($contain->getCourse() === $this) {
+                $contain->setCourse(null);
+            }
+        }
 
         return $this;
     }

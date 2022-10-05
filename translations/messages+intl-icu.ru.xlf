@@ -261,6 +261,10 @@
         <source>Slug</source>
         <target>Сегмент url</target>
       </trans-unit>
+      <trans-unit id="Contain" resname="Contain">
+        <source>Contain</source>
+        <target>Содержимое курса</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

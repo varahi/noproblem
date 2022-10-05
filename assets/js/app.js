@@ -17,15 +17,16 @@ import Vue from 'vue';
 //import UserEdit from './components/Test/UserEdit';
 //import AdvantageBoxSearch from './components/Pages/AdvantageBoxSearch';
 
-import CourseList from './components/Pages/Courses/CourseList';
+import Courses from './components/Pages/Courses/CourseList';
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '../css/style.css';
 import '../css/custom.css';
 
 new Vue({
-    el: '#course-list',
-    render: h => h(CourseList)
+    el: '#app',
+    //render: h => h(CourseList)
+    components: {Courses}
 });
 
 /*new Vue({

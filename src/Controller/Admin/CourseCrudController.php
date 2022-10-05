@@ -43,6 +43,7 @@ class CourseCrudController extends AbstractCrudController
         yield TextField::new('name');
         yield SlugField::new('slug')->hideOnIndex()->setTargetFieldName('name');
         yield TextareaField::new('teaser');
+        yield AssociationField::new('contain');
         yield ImageField::new('image')
             ->setBasePath('uploads/')
             ->setUploadDir('public_html/uploads')

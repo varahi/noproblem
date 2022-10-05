@@ -28,6 +28,7 @@
 import axios from 'axios';
 
 export default {
+  name: "courses",
   components: {
   },
   data() {
