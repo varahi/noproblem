@@ -32,15 +32,51 @@
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <img class="logo logo_menu" src="{{ asset('assets/img/logo.svg') }}">
+
         <div class="sidenav_container">
-            <a href="#">Авторизация</a>
-            <a href="#">Регистрация</a>
-            <a href="#">Ваш город / <span>Город не выбран</span></a>
-            <a href="{{ path('app_vacancies') }}">Все вакансии</a>
-            <a href="{{ path('app_employee') }}">Все анкеты</a>
-            <a href="{{ path('app_company') }}">О компании</a>
-            <a href="{{ path('app_tarifs') }}">Тарифы</a>
+            {% if user is not null %}
+                {% if 'ROLE_EMPLOYEE' in user.roles %}
+                    <a href="{{ path('app_lk_employee') }}">Профиль</a>
+                    <a href="#">Мои вакансии</a>
+                    <a href="#">Избранные анкеты</a>
+                    <a href="#">Мои курсы</a>
+                    <a href="#">История платежей</a>
+                    <a href="#">Служба поддержки</a>
+                    <a href="#">Ваш город / <span>Город не выбран</span></a>
+                    <a href="{{ path('app_logout') }}">Выход</a>
+
+                {% elseif 'ROLE_CUSTOMER' in user.roles %}
+                    <a href="{{ path('app_lk_customer') }}">Профиль</a>
+                    <a href="#">Мои вакансии</a>
+                    <a href="#">Избранные анкеты</a>
+                    <a href="#">Мои курсы</a>
+                    <a href="#">История платежей</a>
+                    <a href="#">Служба поддержки</a>
+                    <a href="#">Ваш город / <span>Город не выбран</span></a>
+                    <a href="{{ path('app_logout') }}">Выход</a>
+
+                {% elseif 'ROLE_BUYER' in user.roles %}
+                    <a href="{{ path('app_lk_buyer') }}">Профиль</a>
+                    <a href="#">Мои вакансии</a>
+                    <a href="#">Избранные анкеты</a>
+                    <a href="#">Мои курсы</a>
+                    <a href="#">История платежей</a>
+                    <a href="#">Служба поддержки</a>
+                    <a href="#">Ваш город / <span>Город не выбран</span></a>
+                    <a href="{{ path('app_logout') }}">Выход</a>
+
+                {% endif %}
+            {% else %}
+                <div id="menu-auth"></div>
+                <a href="#">Регистрация</a>
+                <a href="#">Ваш город / <span>Город не выбран</span></a>
+                <a href="{{ path('app_vacancies') }}">Все вакансии</a>
+                <a href="{{ path('app_employee') }}">Все анкеты</a>
+                <a href="{{ path('app_company') }}">О компании</a>
+                <a href="{{ path('app_tarifs') }}">Тарифы</a>
+            {% endif %}
         </div>
+
         <div class="cocial_network">
             <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">
                 <img src="{{ asset('assets/img/instagram.svg') }}" class="lazyLoad isLoaded">
@@ -53,4 +89,5 @@
             </a>
         </div>
     </div>
+
 </header>

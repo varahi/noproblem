@@ -29,16 +29,20 @@ class PageController extends AbstractController
 {
     private $twig;
 
+    private $security;
+
     /**
      * @param Environment $twig
      * @param ManagerRegistry $doctrine
      */
     public function __construct(
         Environment $twig,
-        ManagerRegistry $doctrine
+        ManagerRegistry $doctrine,
+        Security $security
     ) {
         $this->twig = $twig;
         $this->doctrine = $doctrine;
+        $this->security = $security;
     }
 
     /**
@@ -50,6 +54,8 @@ class PageController extends AbstractController
         CategoryRepository $categoryRepository
     ): Response {
         $message = new Message();
+        $user = $this->security->getUser();
+
         $form = $this->createForm(MessageFormType::class, $message);
         $form->handleRequest($request);
         $reviews = $reviewRepository->findLimitOrder(4, 0);
@@ -57,6 +63,7 @@ class PageController extends AbstractController
         return $this->render('pages/main_page.html.twig', [
             'reviews' => $reviews,
             'categories' => $categories,
+            'user' => $user,
             'form' => $form->createView()
         ]);
     }

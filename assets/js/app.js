@@ -1,6 +1,7 @@
 // Import Vue components
 import Courses from './components/Pages/Courses/CourseList';
 import TryAndRegister from './components/TryAndRegister';
+import MenuAuth from './components/MenuAuth';
 import Login from './components/Login';
 import Vue from 'vue';
 
@@ -19,4 +20,9 @@ new Vue({
 new Vue({
     el: '#login',
     render: h => h(Login)
+});
+
+new Vue({
+    el: '#menu-auth',
+    render: h => h(MenuAuth)
 });

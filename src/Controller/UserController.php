@@ -13,9 +13,23 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Core\Security;
+use Twig\Environment;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Notifier\Notification\Notification;
+use Symfony\Component\Notifier\NotifierInterface;
 
 class UserController extends AbstractController
 {
+    public const ROLE_EMPLOYEE = 'ROLE_EMPLOYEE';
+
+    public const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
+
+    public const ROLE_BUYER = 'ROLE_BUYER';
+
     /**
      * @var ValidatorInterface
      */
@@ -26,12 +40,20 @@ class UserController extends AbstractController
      */
     private $userCreator;
 
+    private $security;
+
     public function __construct(
         SignUpValidator $signUpValidator,
-        UserCreator $userCreator
+        UserCreator $userCreator,
+        Security $security,
+        Environment $twig,
+        ManagerRegistry $doctrine
     ) {
         $this->userCreator = $userCreator;
         $this->signUpValidator = $signUpValidator;
+        $this->security = $security;
+        $this->twig = $twig;
+        $this->doctrine = $doctrine;
     }
 
     public function signUp(Request $request): Response
@@ -127,5 +149,102 @@ class UserController extends AbstractController
             'status' => Response::HTTP_OK,
             'entity' => $user->getId()
         ]);
+    }
+
+    /**
+     * Method to redirect logged in user
+     *
+     * @Route("/lk", name="app_lk")
+     */
+    public function login(Request $request): Response
+    {
+        $user = $this->getUser();
+        if ($user != null && in_array(self::ROLE_CUSTOMER, $user->getRoles())) {
+            return $this->redirectToRoute("app_lk_customer");
+        } elseif ($user != null && in_array(self::ROLE_EMPLOYEE, $user->getRoles())) {
+            return $this->redirectToRoute("app_lk_employee");
+        } elseif ($user != null && in_array(self::ROLE_BUYER, $user->getRoles())) {
+            return $this->redirectToRoute("app_lk_buyer");
+        } else {
+            return $this->redirectToRoute("app_main");
+        }
+    }
+
+    /**
+     * Require ROLE_CUSTOMER for *every* controller method in this class.
+     *
+     * @IsGranted("ROLE_CUSTOMER")
+     * @Route("/lk-customer", name="app_lk_customer")
+     */
+    public function customerProfile(
+        Request $request,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier
+    ): Response {
+        if ($this->isGranted(self::ROLE_CUSTOMER)) {
+            $user = $this->security->getUser();
+            {
+                //if ($user->isIsVerified() == 0) {
+                //}
+
+                return $this->render('user/lk_customer.html.twig', [
+                    'user' => $user,
+                ]);
+            }
+        } else {
+            $message = $translator->trans('Please login', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_main");
+        }
+    }
+
+    /**
+     * Require ROLE_EMPLOYEE for *every* controller method in this class.
+     *
+     * @IsGranted("ROLE_EMPLOYEE")
+     * @Route("/lk-employee", name="app_lk_employee")
+     */
+    public function employeeProfile(
+        Request $request,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier
+    ): Response {
+        if ($this->isGranted(self::ROLE_EMPLOYEE)) {
+            $user = $this->security->getUser();
+            {
+                return $this->render('user/lk_customer.html.twig', [
+                    'user' => $user,
+                ]);
+            }
+        } else {
+            $message = $translator->trans('Please login', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_main");
+        }
+    }
+
+    /**
+     * Require ROLE_BUYER for *every* controller method in this class.
+     *
+     * @IsGranted("ROLE_BUYER")
+     * @Route("/lk-employee", name="app_lk_employee")
+     */
+    public function buyerProfile(
+        Request $request,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier
+    ): Response {
+        if ($this->isGranted(self::ROLE_BUYER)) {
+            $user = $this->security->getUser();
+            {
+                return $this->render('user/lk_customer.html.twig', [
+                    'user' => $user,
+                ]);
+            }
+        } else {
+            $message = $translator->trans('Please login', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_main");
+        }
     }
 }
