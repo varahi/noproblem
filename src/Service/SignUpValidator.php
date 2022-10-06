@@ -45,7 +45,8 @@ class SignUpValidator
             return false;
         }
 
-        $uniqueFields = [self::FIELD_EMAIL => $signUpRequest->getEmail(), self::FIELD_USERNAME => $signUpRequest->getUsername()];
+        //$uniqueFields = [self::FIELD_EMAIL => $signUpRequest->getEmail(), self::FIELD_USERNAME => $signUpRequest->getUsername()];
+        $uniqueFields = [self::FIELD_EMAIL => $signUpRequest->getEmail()];
         foreach ($uniqueFields as $field => $value) {
             $users = $this->userRepository->findBy([$field => $value]);
             if (count($users)) {

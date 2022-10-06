@@ -23,7 +23,7 @@ class SignUpRequest
      * @Assert\Type("string")
      * @Assert\NotBlank()
      */
-    private $username;
+    //private $username;
 
     /**
      * @var string
@@ -48,10 +48,10 @@ class SignUpRequest
         return $this->fullname;
     }*/
 
-    public function getUsername(): string
+    /*public function getUsername(): string
     {
         return $this->username;
-    }
+    }*/
 
     public function getEmail(): string
     {

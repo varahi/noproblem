@@ -22,13 +22,7 @@
                     <img src="{{ asset('assets/img/courseicon.svg') }}">
                 </div>
             </div>
-            <div class="btn_worker" v-if="viewmenu()" style="cursor: pointer;"  @click="gotocategory()">
-                <a>Стать работником</a>
-            </div>
-
-            <div class="btn_employer"  v-if="viewmenu()" style="cursor: pointer;"  @click="gotocategory()">
-                <a>Стать работодателем</a>
-            </div>
+            <div id="login"></div>
             <div class="menus">
                 <img src="{{ asset('assets/img/burger.svg') }}" class="burger lazyLoad isLoaded" style="font-size:30px;cursor:pointer" onclick="openNav()";>
             </div>

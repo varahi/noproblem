@@ -29,13 +29,15 @@ class UserCreator
         $this->passwordEncoder = $passwordEncoder;
     }
 
-    public function createUser(SignUpRequest $signUpRequest): User
+    public function createUser(SignUpRequest $signUpRequest, $role): User
     {
         $user = new User();
         $user
             ->setEmail($signUpRequest->getEmail())
             //->setFullname($signUpRequest->getFullname())
             //->setPassword($this->passwordEncoder->encodePassword($user, $signUpRequest->getPassword()))
+            ->setRoles($role)
+            ->setIsVerified((bool)'1')
             ->setUsername($signUpRequest->getEmail());
 
         $encodedPassword = $this->passwordEncoder->encodePassword($user, $signUpRequest->getPassword());

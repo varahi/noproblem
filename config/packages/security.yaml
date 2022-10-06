@@ -48,8 +48,9 @@ security:
         ### ROLE_ADMIN - access to admin panel
          #- { path: ^/admin, roles: ROLE_ADMIN }
          ### Front-end user groups
-         - { path: ^/employer, roles: ROLE_EMPLOYEE }
-         - { path: ^/customer, roles: ROLE_CUSTOMER }
+         - { path: ^/lk/employer, roles: ROLE_EMPLOYEE } # работодатель
+         - { path: ^/lk/customer, roles: ROLE_CUSTOMER } # работник
+         - { path: ^/lk/buyer, roles: ROLE_BUYER } # пркупатель
 
 when@test:
     security:

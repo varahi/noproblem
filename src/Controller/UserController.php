@@ -51,7 +51,7 @@ class UserController extends AbstractController
      * @return JsonResponse
      * @throws \Exception
      */
-    public function signUpHandler(SignUpRequest $signUpRequest): JsonResponse
+    public function signUpHandlerEmployer(SignUpRequest $signUpRequest): JsonResponse
     {
         if (!$this->signUpValidator->validate($signUpRequest)) {
             return new JsonResponse([
@@ -60,7 +60,68 @@ class UserController extends AbstractController
             ]);
         }
 
-        $user = $this->userCreator->createUser($signUpRequest);
+        $role = array('ROLE_EMPLOYEE');
+        $user = $this->userCreator->createUser($signUpRequest, $role);
+
+        return new JsonResponse([
+            'status' => Response::HTTP_OK,
+            'entity' => $user->getId()
+        ]);
+    }
+
+    /**
+     * @ParamConverter(
+     *      "signUpRequest",
+     *      converter="fos_rest.request_body",
+     *      class="App\Http\Request\SignUpRequest"
+     * )
+     *
+     * @param SignUpRequest $signUpRequest
+     *
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function signUpHandlerCustomer(SignUpRequest $signUpRequest): JsonResponse
+    {
+        if (!$this->signUpValidator->validate($signUpRequest)) {
+            return new JsonResponse([
+                'status' => Response::HTTP_BAD_REQUEST,
+                'errors' => $this->signUpValidator->getErrors()
+            ]);
+        }
+
+        $role = array('ROLE_CUSTOMER');
+        $user = $this->userCreator->createUser($signUpRequest, $role);
+
+        return new JsonResponse([
+            'status' => Response::HTTP_OK,
+            'entity' => $user->getId()
+        ]);
+    }
+
+    /**
+     * @ParamConverter(
+     *      "signUpRequest",
+     *      converter="fos_rest.request_body",
+     *      class="App\Http\Request\SignUpRequest"
+     * )
+     *
+     * @param SignUpRequest $signUpRequest
+     *
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function signUpHandlerBuyer(SignUpRequest $signUpRequest): JsonResponse
+    {
+        if (!$this->signUpValidator->validate($signUpRequest)) {
+            return new JsonResponse([
+                'status' => Response::HTTP_BAD_REQUEST,
+                'errors' => $this->signUpValidator->getErrors()
+            ]);
+        }
+
+        $role = array('ROLE_BUYER');
+        $user = $this->userCreator->createUser($signUpRequest, $role);
 
         return new JsonResponse([
             'status' => Response::HTTP_OK,

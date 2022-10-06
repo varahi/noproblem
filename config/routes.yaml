@@ -4,7 +4,15 @@ index:
 signUp:
   path: /sign-up
   controller: App\Controller\UserController::signUp
-signUpHandler:
-  path: /sign-up-handler
-  controller: App\Controller\UserController::signUpHandler
+signUpHandlerEmployer:
+  path: /sign-up-handler-employer
+  controller: App\Controller\UserController::signUpHandlerEmployer
+  methods: POST
+signUpHandlerCustomer:
+  path: /sign-up-handler-customer
+  controller: App\Controller\UserController::signUpHandlerCustomer
+  methods: POST
+signUpHandlerBuyer:
+  path: /sign-up-handler-buyer
+  controller: App\Controller\UserController::signUpHandlerBuyer
   methods: POST
