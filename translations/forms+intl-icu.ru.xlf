@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="ru" target-language="ru" datatype="plaintext" original="file.ext">
+        <header>
+            <tool tool-id="symfony" tool-name="Symfony"/>
+        </header>
+        <body>
+            <trans-unit id="Your email" resname="Your email">
+                <source>E-mail *</source>
+                <target>Ваш e-mail *</target>
+            </trans-unit>
+            <trans-unit id="Your city" resname="Your city">
+                <source>Your city</source>
+                <target>Ваш город</target>
+            </trans-unit>
+            <trans-unit id="Your address" resname="Your address">
+                <source>Your address</source>
+                <target>Ваш адрес</target>
+            </trans-unit>
+            <trans-unit id="About" resname="About">
+                <source>About</source>
+                <target>О себе</target>
+            </trans-unit>
+            <trans-unit id="First name" resname="First name">
+                <source>First Name</source>
+                <target>Ваше имя</target>
+            </trans-unit>
+            <trans-unit id="Last name" resname="Last name">
+                <source>Last Name</source>
+                <target>Ваша фамилия</target>
+            </trans-unit>
+            <trans-unit id="Your phone" resname="Your phone">
+                <source>Phone *</source>
+                <target>Телефон *</target>
+            </trans-unit>
+            <trans-unit id="Your password" resname="Your password">
+                <source>Password *</source>
+                <target>Пароль</target>
+            </trans-unit>
+            <trans-unit id="Your confirm_password" resname="Your confirm_password">
+                <source>Confirm Password *</source>
+                <target>Подтвердите пароль</target>
+            </trans-unit>
+            <trans-unit id="Your full_name" resname="Your full_name">
+                <source>Full name *</source>
+                <target>ФИО *</target>
+            </trans-unit>
+            <trans-unit id="Your message" resname="Your message">
+                <source>Your message</source>
+                <target>Ваше сообщение</target>
+            </trans-unit>
+            <trans-unit id="Password" resname="Password">
+                <source>Password</source>
+                <target>Пароль</target>
+            </trans-unit>
+            <trans-unit id="Confirm password" resname="Confirm password">
+                <source>Confirm password</source>
+                <target>Подтвердите пароль</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

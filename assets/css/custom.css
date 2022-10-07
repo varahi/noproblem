@@ -1,6 +1,3 @@
-#map {
-
-}
 .open_map {
     border-radius: 10px;
     border: 1px solid var(--violet);
@@ -12,8 +9,95 @@
     margin-bottom: 19px;
 }
 
-/* The Modal (background) */
-/*#login,
-#regiter {
-    display: none;
+/*
+.form-std {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 20px;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+.form input,
+.form select,
+.form textarea {
+    border: 1px solid var(--violet);
+    padding: 10px;
+    border-radius: 20px;
+    width: calc(100% - 20px);
+}
+.textarea-form-control {
+    height: 200px;
+    border: 1px solid var(--violet);
+    padding: 10px;
+    border-radius: 20px;
+    width: calc(100% - 20px);
 }*/
+
+.grig-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 20px;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+.grig-group2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    gap: 20px;
+    margin-bottom: 10px;
+
+    grid-column-start: 3;
+    grid-row-start: 2;
+}
+.input {
+/*    display: grid;
+    grid-gap: 10px;
+    gap: 10px;*/
+}
+
+.form-std-custom label {
+    display: block;
+    font-size: 18px;
+    margin: 10px 0 10px 0;
+}
+
+.form-std-custom input,
+.form-std-custom select,
+.form-std-custom textarea {
+    color: #606060;
+    font-size: 18px;
+    border-radius: 40px;
+    border: 1px solid #dbdbdb;
+    height: auto;
+    padding: 12px 5px 12px 22px;
+}
+
+.form-std-custom select {
+    height: 45px;
+    width: 350px;
+}
+.form-std-custom textarea {
+    width: 600px;
+    height: 120px;
+}
+.form-std-custom input {
+    width: 320px;
+}
+
+.btn_try_custom {
+    text-align: center;
+}
+.btn_try button {
+    font-size: 18px;
+    padding: 20px 94px;
+    color: #fff;
+    background: #6d3d67;
+    background: var(--violet);
+    border-radius: 40px;
+}
+
+.in_account h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}

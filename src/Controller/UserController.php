@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -21,6 +22,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Notifier\Notification\Notification;
 use Symfony\Component\Notifier\NotifierInterface;
+use App\Form\User\EditProfileFormType;
 
 class UserController extends AbstractController
 {
@@ -227,7 +229,7 @@ class UserController extends AbstractController
      * Require ROLE_BUYER for *every* controller method in this class.
      *
      * @IsGranted("ROLE_BUYER")
-     * @Route("/lk-employee", name="app_lk_employee")
+     * @Route("/lk-buyer", name="app_lk_buyer")
      */
     public function buyerProfile(
         Request $request,
@@ -241,6 +243,46 @@ class UserController extends AbstractController
                     'user' => $user,
                 ]);
             }
+        } else {
+            $message = $translator->trans('Please login', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_main");
+        }
+    }
+
+    /**
+     *
+     * @Route("/edit-profile", name="app_edit_profile")
+     */
+    public function editProfile(
+        Request $request,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier
+    ): Response {
+        if (
+            $this->isGranted(self::ROLE_BUYER) ||
+            $this->isGranted(self::ROLE_CUSTOMER) ||
+            $this->isGranted(self::ROLE_EMPLOYEE)
+        ) {
+            $user = $this->security->getUser();
+            $form = $this->createForm(EditProfileFormType::class, $user);
+            $form->handleRequest($request);
+            $entityManager = $this->doctrine->getManager();
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                $message = $translator->trans('Profile updated', array(), 'flash');
+                $notifier->send(new Notification($message, ['browser']));
+                $referer = $request->headers->get('referer');
+                return new RedirectResponse($referer);
+            }
+
+            return new Response($this->twig->render('user/edit_profile.html.twig', [
+                'user' => $user,
+                'form' => $form->createView(),
+            ]));
         } else {
             $message = $translator->trans('Please login', array(), 'flash');
             $notifier->send(new Notification($message, ['browser']));
