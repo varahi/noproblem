@@ -1,6 +1,6 @@
 <div class="content">
     <div class="tit_account">
-        <img src="assets/img/blockicon.svg">
+        <img src="{{ asset('assets/img/blockicon.svg') }}">
         <h4>{{ 'My announcements'|trans }}</h4>
     </div>
 {% if jobs %}
@@ -58,6 +58,4 @@
 {% else %}
     <p>У вас пока нет объявлений</p>
 {% endif %}
-
-
 </div>

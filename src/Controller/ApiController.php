@@ -7,13 +7,23 @@ use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\ArticleCategoryRepository;
 use App\Repository\CourseRepository;
+use App\Repository\JobRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class ApiController extends AbstractController
 {
     use DataTrait;
+
+    private $security;
+
+    public function __construct(
+        Security $security
+    ) {
+        $this->security = $security;
+    }
 
     /**
      * @Route("/api", name="app_api")
@@ -41,6 +51,30 @@ class ApiController extends AbstractController
         $response->setContent(json_encode($arrData));
 
         return $response;
+    }
+
+    /**
+     * @Route("/api/announcements", name="api_announcements")
+     * @return Response
+     */
+    public function apiAnnouncements(
+        JobRepository $jobRepository
+    ) {
+
+        $user = $this->security->getUser();
+        if(isset($user) && $user !==null) {
+            $jobs = $jobRepository->findByUser($user->getId());
+            $arrData = $this->getAnnouncementsJsonArrData($jobs);
+        } else {
+            $arrData = [];
+        }
+
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $response->setContent(json_encode($arrData));
+        return $response;
+
     }
 
     /**

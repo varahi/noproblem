@@ -1,5 +1,6 @@
 // Import Vue components
 import Courses from './components/Pages/Courses/CourseList';
+import Announcements from './components/User/Announcements';
 import TryAndRegister from './components/TryAndRegister';
 import MenuAuth from './components/MenuAuth';
 import Login from './components/Login';
@@ -13,7 +14,8 @@ new Vue({
     el: '#app',
     components: {
         Courses,
-        TryAndRegister
+        TryAndRegister,
+        Announcements
     }
 });
 
