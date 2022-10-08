@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Answer;
 use App\Entity\Contain;
+use App\Entity\District;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -52,6 +53,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Jobs', 'fa fa-handshake-o', Job::class),
             MenuItem::linkToCrud('Categories', 'fa fa-bars', Category::class),
             MenuItem::linkToCrud('Cities', 'fa fa-building', City::class),
+            MenuItem::linkToCrud('District', 'fa fa-building', District::class),
         ]);
 
         yield MenuItem::section('Site');

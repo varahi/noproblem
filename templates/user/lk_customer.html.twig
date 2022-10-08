@@ -20,7 +20,11 @@
 
                         <div class="name_account">
                             <div class="round_account">
-                                <img src="assets/img/photo_acount.jpg" class="lazyLoad isLoaded">
+                                {% if user.avatar %}
+                                    <img id="avatar" src="{{ asset('uploads/files/' ~ user.avatar) }}" class="lazyLoad isLoaded" width="200" height="200" />
+                                {% else %}
+                                    <img src="{{ asset('assets/img/photo_acount.jpg') }}" class="lazyLoad isLoaded">
+                                {% endif %}
                             </div>
                             <div class="about_account">
                                 <p class="point_account">{{user.firstName}} {{user.lastName}}</p>
@@ -74,7 +78,8 @@
             </div>
         </div>
 
-        {% include 'partials/user/_slider.html.twig' %}
+        {% include 'partials/user/_slider1.html.twig' %}
+        {#{% include 'partials/user/_slider2.html.twig' %}#}
 
     </div>
 </div>

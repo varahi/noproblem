@@ -44,10 +44,16 @@ class City
      */
     private $users;
 
+    /**
+     * @ORM\OneToMany(targetEntity=District::class, mappedBy="city")
+     */
+    private $districts;
+
     public function __construct()
     {
         $this->jobs = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->districts = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -150,6 +156,36 @@ class City
             // set the owning side to null (unless already changed)
             if ($user->getCity() === $this) {
                 $user->setCity(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, District>
+     */
+    public function getDistricts(): Collection
+    {
+        return $this->districts;
+    }
+
+    public function addDistrict(District $district): self
+    {
+        if (!$this->districts->contains($district)) {
+            $this->districts[] = $district;
+            $district->setCity($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDistrict(District $district): self
+    {
+        if ($this->districts->removeElement($district)) {
+            // set the owning side to null (unless already changed)
+            if ($district->getCity() === $this) {
+                $district->setCity(null);
             }
         }
 

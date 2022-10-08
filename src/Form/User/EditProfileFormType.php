@@ -7,6 +7,7 @@ use App\Entity\City;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TelephoneField;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -28,7 +30,7 @@ class EditProfileFormType extends AbstractType
                 'email',
                 EmailType::class,
                 [
-                    'required' => true,
+                    'required' => false,
                     'disabled' => true,
                     'attr' => [
                         'placeholder' => 'Your email',
@@ -139,7 +141,7 @@ class EditProfileFormType extends AbstractType
                 'phone',
                 TelType::class,
                 [
-                    'required' => true,
+                    'required' => false,
                     'attr' => [
                         'placeholder' => 'Your phone',
                         'class' => 'form-control',
@@ -148,6 +150,30 @@ class EditProfileFormType extends AbstractType
                     'translation_domain' => 'forms',
                 ]
             )
+
+            ->add('avatar', FileType::class, [
+                'required' => false,
+                'mapped' => false,
+                'constraints' => [
+                    new Image([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/gif',
+                            'image/jpeg',
+                            'image/pjpeg',
+                            'image/png',
+                            'image/webp',
+                            'image/vnd.wap.wbmp'
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid image document',
+                    ])
+                ],
+                'attr' => [
+                    'onchange' => 'readURL(this);'
+                ],
+                'label' => false,
+                'translation_domain' => 'forms',
+            ])
         ;
     }
 

@@ -16,6 +16,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class JobRepository extends ServiceEntityRepository
 {
+    public const TABLE = 'App\Entity\Job';
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Job::class);
@@ -37,6 +39,24 @@ class JobRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * @param int $id
+     * @return int|mixed|string
+     */
+    public function findByUser(int $id)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('j')
+            ->from(self::TABLE, 'j')
+            ->join('j.owner', 'o')
+            ->where($qb->expr()->eq('o.id', $id))
+            //->andWhere('j.status LIKE :status')
+            //->setParameter('status', $status)
+        ;
+
+        return $qb->getQuery()->getResult();
     }
 
 //    /**

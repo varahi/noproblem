@@ -18,6 +18,11 @@ class Job
     private $id;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $name;
@@ -91,6 +96,21 @@ class Job
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="jobs")
      */
     private $client;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="ownersJobs")
+     */
+    private $owner;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=District::class, inversedBy="jobs")
+     */
+    private $district;
+
+    public function __construct()
+    {
+        $this->created = new \DateTime();
+    }
 
     public function __toString(): string
     {
@@ -278,6 +298,42 @@ class Job
     public function setClient(?User $client): self
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    public function getCreated(): ?\DateTimeInterface
+    {
+        return $this->created;
+    }
+
+    public function setCreated(\DateTimeInterface $created): self
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): self
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function getDistrict(): ?District
+    {
+        return $this->district;
+    }
+
+    public function setDistrict(?District $district): self
+    {
+        $this->district = $district;
 
         return $this;
     }

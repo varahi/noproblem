@@ -265,6 +265,18 @@
         <source>Contain</source>
         <target>Содержимое курса</target>
       </trans-unit>
+      <trans-unit id="Job owner" resname="Job owner">
+        <source>Job owner</source>
+        <target>Владелец вакансии</target>
+      </trans-unit>
+      <trans-unit id="Job performer" resname="Job performer">
+        <source>Job performer</source>
+        <target>Исполнитель вакансии</target>
+      </trans-unit>
+      <trans-unit id="District" resname="District">
+        <source>District</source>
+        <target>Район</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Job;
+use App\Form\Job\JobFormType;
 use App\Http\Request\SignUpRequest;
+use App\Repository\JobRepository;
+use App\Service\FileUploader;
 use App\Service\SignUpValidator;
 use App\Service\UserCreator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -13,6 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -209,13 +214,16 @@ class UserController extends AbstractController
     public function employeeProfile(
         Request $request,
         TranslatorInterface $translator,
-        NotifierInterface $notifier
+        NotifierInterface $notifier,
+        JobRepository $jobRepository
     ): Response {
         if ($this->isGranted(self::ROLE_EMPLOYEE)) {
             $user = $this->security->getUser();
+            $jobs = $jobRepository->findByUser($user->getId());
             {
                 return $this->render('user/lk_customer.html.twig', [
                     'user' => $user,
+                    'jobs' => $jobs
                 ]);
             }
         } else {
@@ -257,7 +265,9 @@ class UserController extends AbstractController
     public function editProfile(
         Request $request,
         TranslatorInterface $translator,
-        NotifierInterface $notifier
+        NotifierInterface $notifier,
+        UserPasswordHasherInterface $passwordHasher,
+        FileUploader $fileUploader
     ): Response {
         if (
             $this->isGranted(self::ROLE_BUYER) ||
@@ -270,6 +280,31 @@ class UserController extends AbstractController
             $entityManager = $this->doctrine->getManager();
 
             if ($form->isSubmitted() && $form->isValid()) {
+                $post = $request->request->get('edit_profile_form');
+                // Set new password if changed
+                if ($post['plainPassword']['first'] !=='' && $post['plainPassword']['second'] !=='') {
+                    if (strcmp($post['plainPassword']['first'], $post['plainPassword']['second']) == 0) {
+                        // encode the plain password
+                        $user->setPassword(
+                            $passwordHasher->hashPassword(
+                                $user,
+                                $post['plainPassword']['first']
+                            )
+                        );
+                    } else {
+                        $message = $translator->trans('Mismatch password', array(), 'flash');
+                        $notifier->send(new Notification($message, ['browser']));
+                        return $this->redirectToRoute("app_edit_client_profile");
+                    }
+                }
+
+                // File upload
+                $avatarFile = $form->get('avatar')->getData();
+                if ($avatarFile) {
+                    $avatarFileName = $fileUploader->upload($avatarFile);
+                    $user->setAvatar($avatarFileName);
+                }
+
                 $entityManager->persist($user);
                 $entityManager->flush();
 

@@ -6,8 +6,8 @@
         </header>
         <body>
             <trans-unit id="Your email" resname="Your email">
-                <source>E-mail *</source>
-                <target>Ваш e-mail *</target>
+                <source>E-mail</source>
+                <target>Ваш e-mail</target>
             </trans-unit>
             <trans-unit id="Your city" resname="Your city">
                 <source>Your city</source>
@@ -31,7 +31,7 @@
             </trans-unit>
             <trans-unit id="Your phone" resname="Your phone">
                 <source>Phone *</source>
-                <target>Телефон *</target>
+                <target>Телефон</target>
             </trans-unit>
             <trans-unit id="Your password" resname="Your password">
                 <source>Password *</source>
@@ -56,6 +56,14 @@
             <trans-unit id="Confirm password" resname="Confirm password">
                 <source>Confirm password</source>
                 <target>Подтвердите пароль</target>
+            </trans-unit>
+            <trans-unit id="Title of the job" resname="Title of the job">
+                <source>Title of the job</source>
+                <target>Название вакансии</target>
+            </trans-unit>
+            <trans-unit id="Requirements" resname="Requirements">
+                <source>Requirements</source>
+                <target>Требования</target>
             </trans-unit>
         </body>
     </file>

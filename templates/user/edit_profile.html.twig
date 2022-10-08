@@ -1,5 +1,5 @@
 {% extends 'layouts/lk.html.twig' %}
-{% block title %}Личный кабинет работника - Онлайн-сервис по подбору домашнего персонала{% endblock %}
+{% block title %}Редактировать профиль - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block body %}
     {% include 'partials/header.html.twig' %}
 
@@ -18,25 +18,49 @@
             </div>
             <div class="large_account fon">
                 <div class="in_account">
-                    <h2>Редактировать профиль</h2>
+                    <h2>Редактировать профиль
+                        {% if is_granted('ROLE_EMPLOYEE') %}
+                            работодателя
+                        {% elseif is_granted('ROLE_CUSTOMER') %}
+                            работника
+                        {% elseif is_granted('ROLE_BUYER') %}
+                        покупателя
+                        {% else %}
+                        {% endif %}
+                    </h2>
 
                 {{ form_start(form, {'attr' : {'class': 'form-std form-std-custom', 'autocomplete': 'off'}} ) }}
                     <div class="_form-group grig-group">
                         {{ form_row(form.email) }}
+                        {{ form_row(form.phone) }}
                         {{ form_row(form.firstName) }}
                         {{ form_row(form.lastName) }}
-                        {{ form_row(form.plainPassword) }}
+                    </div>
+                    <div class="_form-group grig-group">
+                        {{ form_row(form.plainPassword, { label: 'Пароль'}) }}
                     </div>
                     <div class="form-group grig-group">
                         {{ form_row(form.city) }}
                         {{ form_row(form.address) }}
-                        {{ form_row(form.phone) }}
                     </div>
-                    <div>
-                        <br />
+
+                    <div class="form-group grig-group" style="margin-top: 20px">
                         {{ form_widget(form.about) }}
+
+                        <div class="_round_account">
+                            {% if user.avatar %}
+                                <img id="avatar" src="{{ asset('uploads/files/' ~ user.avatar) }}" class="lazyLoad isLoaded" width="200" height="200" />
+                            {% else %}
+                                <img id="avatar" src="{{ asset('assets/img/photo_acount.jpg') }}" width="200">
+                            {% endif %}
+                            <div class="">
+                                <p>Аватар пользователя</p>
+                                <div class="upload_file">
+                                    {{ form_widget(form.avatar) }}
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <br />
 
                     <div class="btn_try btn_try_custom">
                         <button type="submit" class="btn btn-success">Обновить профиль</button>

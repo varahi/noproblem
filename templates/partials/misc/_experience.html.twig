@@ -1,0 +1,11 @@
+{% if job.experience is null %}
+    Менее 6 месяцев
+{% elseif job.experience == 2 %}
+    6-12 месяцев
+{% elseif job.experience == 3 %}
+    2-5 лет
+{% elseif job.experience == 4 %}
+    более 5 лет
+{% else %}
+    Нет
+{% endif %}

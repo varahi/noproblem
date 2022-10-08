@@ -1,0 +1,58 @@
+<div class="content">
+    <div class="tit_account">
+        <img src="assets/img/blockicon.svg">
+        <h4>Мои объявления</h4>
+    </div>
+    <!-- slider 1 -->
+{% if jobs %}
+    <div class="owl-carousel owl-theme" id="slider_one">
+        {% for job in jobs %}
+            <slide>
+                <div class="box_account">
+                    <div class="box_account_content">
+                        <h4>{{ job.name }}</h4>
+                        <div class="box_person_information">
+                            <div class="person_information_city">
+                                <div class="city_icon">
+                                    <img src="assets/img/city_map.svg" class="lazyLoad isLoaded">
+                                    <p class="city_box_account">{{ job.city }}, {{ job.district }}</p>
+                                </div>
+                                <p>Начать: <i class="data_box_account">{{ job.startDate|date("d.m.Y") }}</i></p>
+                                <p>Опыт работы:
+                                    <i class="data_box_account">{% include 'partials/misc/_experience.html.twig' %}</i>
+                                </p>
+                            </div>
+                            <div class="person_information_pay">
+                                <p>Оплата: <i class="data_box_account">500р/час</i></p>
+                                <p>Возраст: <i class="data_box_account">{{ job.age }}</i></p>
+                                <p>Образование: <i class="data_box_account">{% include 'partials/misc/_education.html.twig' %}</i></p>
+                            </div>
+                        </div>
+
+                        <div class="person_description">
+                            <p>{{ job.description }}</p>
+                        </div>
+                        <div class="box_vacancies">
+                            <div class="box_logo">
+                                <img src="assets/img/ava_person_account.png">
+                            </div>
+                            <div class="name_vacancies">
+                                <p class="name_vacancies_text">Вакансия от частного лица</p>
+                                <p>{{ job.owner.firstName }} {{ job.owner.lastName }}</p>
+                            </div>
+                        </div>
+                        <div class="btn_box_account">
+                            <button class="btn_box_account_one">Подробнее</button>
+                            <button class="btn_box_account_two"><a href="{{ path('app_edit_job', { id: job.id}) }}">Редактировать</a></button>
+                        </div>
+                    </div>
+                </div>
+            </slide>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>У вас пока нет объявлений</p>
+{% endif %}
+
+
+</div>

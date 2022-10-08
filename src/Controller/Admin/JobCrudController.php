@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -51,6 +52,7 @@ class JobCrudController extends AbstractCrudController
         //yield FormField::addRow();
 
         yield IntegerField::new('id')->setFormTypeOption('disabled', 'disabled')->hideWhenCreating();
+        yield DateTimeField::new('created')->setFormTypeOption('disabled', 'disabled');
         yield BooleanField::new('hidden');
         yield TextField::new('name')->setColumns('col-md-8');
         yield TextareaField::new('description')->setColumns('col-md-8');
@@ -63,8 +65,10 @@ class JobCrudController extends AbstractCrudController
         yield FormField::addPanel('Additional info')->setIcon('fa fa-info-circle')->setCssClass('col-sm-4');
         //yield FormField::addRow();
         yield AssociationField::new('city')->hideOnIndex()->setColumns('col-md-12');
+        yield AssociationField::new('district')->hideOnIndex()->setColumns('col-md-12');
         yield AssociationField::new('category')->hideOnIndex()->setColumns('col-md-12');
-        yield AssociationField::new('client')->setColumns('col-md-12');
+        yield AssociationField::new('client')->setColumns('col-md-12')->setLabel('Job performer')->hideOnIndex();
+        yield AssociationField::new('owner')->setColumns('col-md-12')->setLabel('Job owner')->hideOnIndex();
 
         yield FormField::addPanel('General requirements')->setIcon('fa fa-gear');
         yield FormField::addRow();

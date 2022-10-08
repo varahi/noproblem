@@ -9,6 +9,10 @@
         <source>Please login</source>
         <target>Пожалуйста войдите в систему</target>
       </trans-unit>
+      <trans-unit id="New job created" resname="New job created">
+        <source>New job created</source>
+        <target>Создана новая вакансия</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
