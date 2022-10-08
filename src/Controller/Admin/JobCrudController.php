@@ -56,6 +56,7 @@ class JobCrudController extends AbstractCrudController
         yield BooleanField::new('hidden');
         yield TextField::new('name')->setColumns('col-md-8');
         yield TextareaField::new('description')->setColumns('col-md-8');
+        yield TextField::new('payment')->setColumns('col-md-8');
         yield ImageField::new('image')
             ->setBasePath('uploads/')
             ->setUploadDir('public_html/uploads')

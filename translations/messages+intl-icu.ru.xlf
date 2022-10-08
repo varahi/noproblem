@@ -9,273 +9,309 @@
         <source>Articles</source>
         <target>Статьи</target>
       </trans-unit>
-      <trans-unit id="To Home" resname="To Home">
+      <trans-unit id="an0Sywq" resname="To Home">
         <source>To Home</source>
         <target>На главную</target>
       </trans-unit>
-      <trans-unit id="Database" resname="Database">
+      <trans-unit id="_n.mcST" resname="Database">
         <source>Database</source>
         <target>База данных</target>
       </trans-unit>
-      <trans-unit id="Site" resname="Site">
+      <trans-unit id="_nlVgU4" resname="Site">
         <source>Site</source>
         <target>Сайт</target>
       </trans-unit>
-      <trans-unit id="Cities" resname="Cities">
+      <trans-unit id="lWl9FEl" resname="Cities">
         <source>Cities</source>
         <target>Города</target>
       </trans-unit>
-      <trans-unit id="City" resname="City">
+      <trans-unit id=".DP3Mkb" resname="City">
         <source>City</source>
         <target>Город</target>
       </trans-unit>
-      <trans-unit id="Categories" resname="Categories">
+      <trans-unit id="uLHYlMa" resname="Categories">
         <source>Categories</source>
         <target>Категории</target>
       </trans-unit>
-      <trans-unit id="Category" resname="Category">
+      <trans-unit id="KSwG8AR" resname="Category">
         <source>Category</source>
         <target>Категория</target>
       </trans-unit>
-      <trans-unit id="Jobs" resname="Jobs">
+      <trans-unit id="Lxeg_NU" resname="Jobs">
         <source>Jobs</source>
         <target>Вакансии</target>
       </trans-unit>
-      <trans-unit id="Job" resname="Job">
+      <trans-unit id="rWF6D91" resname="Job">
         <source>Job</source>
         <target>Вакансия</target>
       </trans-unit>
-      <trans-unit id="Pages" resname="Pages">
+      <trans-unit id="kEbaFq6" resname="Pages">
         <source>Pages</source>
         <target>Страницы</target>
       </trans-unit>
-      <trans-unit id="Page" resname="Page">
+      <trans-unit id="CjCoFdZ" resname="Page">
         <source>Page</source>
         <target>Страница</target>
       </trans-unit>
-      <trans-unit id="Article Categories" resname="Article Categories">
+      <trans-unit id="e2unQuU" resname="Article Categories">
         <source>Article Categories</source>
         <target>Категории статей</target>
       </trans-unit>
-      <trans-unit id="ArticleCategory" resname="ArticleCategory">
-        <source>Article Category</source>
+      <trans-unit id="4BfbLeL" resname="ArticleCategory">
+        <source>ArticleCategory</source>
         <target>Категория статей</target>
       </trans-unit>
-      <trans-unit id="Name" resname="Name">
+      <trans-unit id="3NHVIj9" resname="Name">
         <source>Name</source>
         <target>Название</target>
       </trans-unit>
-      <trans-unit id="Description" resname="Description">
+      <trans-unit id="Um4Ah8w" resname="Description">
         <source>Description</source>
         <target>Описание</target>
       </trans-unit>
-      <trans-unit id="Bodytext" resname="Bodytext">
+      <trans-unit id="F6QyBQr" resname="Bodytext">
         <source>Bodytext</source>
         <target>Текст</target>
       </trans-unit>
-      <trans-unit id="Is Hidden" resname="Is Hidden">
+      <trans-unit id="kFgk_eb" resname="Is Hidden">
         <source>Is Hidden</source>
         <target>Скрыть</target>
       </trans-unit>
-      <trans-unit id="Hidden" resname="Hidden">
+      <trans-unit id="fm.v.w8" resname="Hidden">
         <source>Hidden</source>
         <target>Скрыть</target>
       </trans-unit>
-      <trans-unit id="Image" resname="Image">
+      <trans-unit id="GqTLC8y" resname="Image">
         <source>Image</source>
         <target>Изображение</target>
       </trans-unit>
-      <trans-unit id="Age" resname="Age">
+      <trans-unit id="Obc3DzC" resname="Age">
         <source>Age</source>
         <target>Возраст(лет)</target>
       </trans-unit>
-      <trans-unit id="Experience" resname="Experience">
+      <trans-unit id="jqsPCd8" resname="Experience">
         <source>Experience</source>
         <target>Опыт</target>
       </trans-unit>
-      <trans-unit id="Education" resname="Education">
+      <trans-unit id="USqzxrm" resname="Education">
         <source>Education</source>
         <target>Образование</target>
       </trans-unit>
-      <trans-unit id="Citizen" resname="Citizen">
+      <trans-unit id="KxR8pnb" resname="Citizen">
         <source>Citizen</source>
         <target>Гражданство</target>
       </trans-unit>
-      <trans-unit id="Start Now" resname="Start Now">
+      <trans-unit id="YEdZqXW" resname="Start Now">
         <source>Start Now</source>
         <target>Начать сейчас</target>
       </trans-unit>
-      <trans-unit id="Start Date" resname="Start Date">
+      <trans-unit id="TFL6rV3" resname="Start Date">
         <source>Start Date</source>
         <target>Дата начала</target>
       </trans-unit>
-      <trans-unit id="First Name" resname="First Name">
+      <trans-unit id="ls5uYZO" resname="First Name">
         <source>First Name</source>
         <target>Имя</target>
       </trans-unit>
-      <trans-unit id="Last Name" resname="Last Name">
+      <trans-unit id="9VVjs4a" resname="Last Name">
         <source>Last Name</source>
         <target>Фамилия</target>
       </trans-unit>
-      <trans-unit id="Phone" resname="Phone">
+      <trans-unit id="Y9zriAC" resname="Phone">
         <source>Phone</source>
         <target>Телефон</target>
       </trans-unit>
-      <trans-unit id="Client" resname="Client">
+      <trans-unit id="DHf_Cas" resname="Client">
         <source>Client</source>
         <target>Клиенты</target>
       </trans-unit>
-      <trans-unit id="User" resname="User">
+      <trans-unit id="tRLZfny" resname="User">
         <source>User</source>
         <target>Пользователь</target>
       </trans-unit>
-      <trans-unit id="Users" resname="Users">
+      <trans-unit id="awzJBNC" resname="Users">
         <source>Users</source>
         <target>Пользователи</target>
       </trans-unit>
-      <trans-unit id="Avatar" resname="Avatar">
+      <trans-unit id="yo6CbZw" resname="Avatar">
         <source>Avatar</source>
         <target>Аватар пользователя</target>
       </trans-unit>
-      <trans-unit id="Tariff" resname="Tariff">
+      <trans-unit id="y6odjFP" resname="Tariff">
         <source>Tariff</source>
         <target>Тариф</target>
       </trans-unit>
-      <trans-unit id="Tariffs" resname="Tariffs">
+      <trans-unit id="OQVo_yG" resname="Tariffs">
         <source>Tariffs</source>
         <target>Тарифы</target>
       </trans-unit>
-      <trans-unit id="About" resname="About">
+      <trans-unit id="Tvyg0Qx" resname="About">
         <source>About</source>
         <target>О Себе</target>
       </trans-unit>
-      <trans-unit id="Address" resname="Address">
+      <trans-unit id="Vu_PIJV" resname="Address">
         <source>Address</source>
         <target>Адрес</target>
       </trans-unit>
-      <trans-unit id="Username" resname="Username">
+      <trans-unit id="47ienTP" resname="Username">
         <source>Username</source>
         <target>Имя пользователя</target>
       </trans-unit>
-      <trans-unit id="Cources" resname="Cources">
+      <trans-unit id="6ozFOez" resname="Cources">
         <source>Cources</source>
         <target>Курсы</target>
       </trans-unit>
-      <trans-unit id="Course" resname="Course">
+      <trans-unit id="IJbO_6B" resname="Course">
         <source>Course</source>
         <target>Курс</target>
       </trans-unit>
-      <trans-unit id="Price" resname="Price">
+      <trans-unit id="k8kchR5" resname="Price">
         <source>Price</source>
         <target>Стоимость курса</target>
       </trans-unit>
-      <trans-unit id="Discounted Price" resname="Discounted Price">
+      <trans-unit id="j5o8jNX" resname="Discounted Price">
         <source>Discounted Price</source>
         <target>Стоимость со скидкой</target>
       </trans-unit>
-      <trans-unit id="Discount Price" resname="Discount Price">
-        <source>Discounted Price</source>
+      <trans-unit id="e8mpbIz" resname="Discount Price">
+        <source>Discount Price</source>
         <target>Стоимость со скидкой</target>
       </trans-unit>
-      <trans-unit id="Workers" resname="Workers">
+      <trans-unit id="eh7J.mw" resname="Workers">
         <source>Workers</source>
         <target>Работники</target>
       </trans-unit>
-      <trans-unit id="Customers" resname="Customers">
+      <trans-unit id="qr528fT" resname="Customers">
         <source>Customers</source>
         <target>Заказчики</target>
       </trans-unit>
-      <trans-unit id="Reviews" resname="Reviews">
+      <trans-unit id="hMt4cbd" resname="Reviews">
         <source>Reviews</source>
         <target>Отзывы</target>
       </trans-unit>
-      <trans-unit id="Review" resname="Review">
+      <trans-unit id="r.B2alK" resname="Review">
         <source>Review</source>
         <target>Отзыв</target>
       </trans-unit>
-      <trans-unit id="Position" resname="Position">
+      <trans-unit id="bQMa8Q2" resname="Position">
         <source>Position</source>
         <target>Должность</target>
       </trans-unit>
-      <trans-unit id="Term Days" resname="Term Days">
+      <trans-unit id="SyHz9Ma" resname="Term Days">
         <source>Term Days</source>
         <target>Срок дней</target>
       </trans-unit>
-      <trans-unit id="Admins" resname="Admins">
+      <trans-unit id="gnOme1W" resname="Admins">
         <source>Admins</source>
         <target>Администраторы</target>
       </trans-unit>
-      <trans-unit id="Ticket" resname="Ticket">
+      <trans-unit id="VnqLX49" resname="Ticket">
         <source>Ticket</source>
         <target>Тикет</target>
       </trans-unit>
-      <trans-unit id="Appeals" resname="Appeals">
+      <trans-unit id="A_jFpWk" resname="Appeals">
         <source>Appeals</source>
         <target>Обращения</target>
       </trans-unit>
-      <trans-unit id="Appeal" resname="Appeal">
+      <trans-unit id="uLZr2hS" resname="Appeal">
         <source>Appeal</source>
         <target>Обращение</target>
       </trans-unit>
-      <trans-unit id="Answer" resname="Answer">
+      <trans-unit id="sqOqYCd" resname="Answer">
         <source>Answer</source>
         <target>Ответ</target>
       </trans-unit>
-      <trans-unit id="Main info" resname="Main info">
-        <source>Main Info</source>
+      <trans-unit id="ekdnNdq" resname="Main info">
+        <source>Main info</source>
         <target>Основная информация</target>
       </trans-unit>
-      <trans-unit id="Additional info" resname="Additional info">
+      <trans-unit id="ONzf7w5" resname="Additional info">
         <source>Additional info</source>
         <target>Расширенная информация</target>
       </trans-unit>
-      <trans-unit id="General requirements" resname="General requirements">
+      <trans-unit id="67OPQPu" resname="General requirements">
         <source>General requirements</source>
         <target>Общии требования</target>
       </trans-unit>
-      <trans-unit id="Relations" resname="Relations">
+      <trans-unit id="ujmqvl2" resname="Relations">
         <source>Relations</source>
         <target>Связи</target>
       </trans-unit>
-      <trans-unit id="Employer" resname="Employer">
+      <trans-unit id="VKO2TGf" resname="Employer">
         <source>Employer</source>
         <target>Работник</target>
       </trans-unit>
-      <trans-unit id="General information" resname="General information">
+      <trans-unit id="OWC6ckk" resname="General information">
         <source>General information</source>
         <target>Общие данные</target>
       </trans-unit>
-        <trans-unit id="Change password" resname="Change password">
-            <source>Change password</source>
-            <target>Сменить пароль</target>
-        </trans-unit>
-      <trans-unit id="Customer" resname="Customer">
+      <trans-unit id="P5yZH2O" resname="Change password">
+        <source>Change password</source>
+        <target>Сменить пароль</target>
+      </trans-unit>
+      <trans-unit id="vzdjODq" resname="Customer">
         <source>Customer</source>
         <target>Заказчик</target>
       </trans-unit>
-      <trans-unit id="Teaser" resname="Teaser">
+      <trans-unit id="YBjFg2." resname="Teaser">
         <source>Teaser</source>
         <target>Анонс</target>
       </trans-unit>
-      <trans-unit id="Slug" resname="Slug">
+      <trans-unit id="0VOH7Mb" resname="Slug">
         <source>Slug</source>
         <target>Сегмент url</target>
       </trans-unit>
-      <trans-unit id="Contain" resname="Contain">
+      <trans-unit id="5TSiwrR" resname="Contain">
         <source>Contain</source>
         <target>Содержимое курса</target>
       </trans-unit>
-      <trans-unit id="Job owner" resname="Job owner">
+      <trans-unit id="MNAJJPc" resname="Job owner">
         <source>Job owner</source>
         <target>Владелец вакансии</target>
       </trans-unit>
-      <trans-unit id="Job performer" resname="Job performer">
+      <trans-unit id="4Pcae2o" resname="Job performer">
         <source>Job performer</source>
         <target>Исполнитель вакансии</target>
       </trans-unit>
-      <trans-unit id="District" resname="District">
+      <trans-unit id="UPGHjST" resname="District">
         <source>District</source>
         <target>Район</target>
+      </trans-unit>
+      <trans-unit id="cEjzizP" resname="Payment">
+        <source>Payment</source>
+        <target>Оплата</target>
+      </trans-unit>
+      <trans-unit id="VFolQij" resname="My announcements">
+        <source>My announcements</source>
+        <target>Мои объявления</target>
+      </trans-unit>
+      <trans-unit id="y1pJKAe" resname="You logged as">
+        <source>You logged as</source>
+        <target>Вы вошли как</target>
+      </trans-unit>
+      <trans-unit id="0FJ_Sz1" resname="Logout">
+        <source>Logout</source>
+        <target>Выйти</target>
+      </trans-unit>
+      <trans-unit id="3IZZ221" resname="Enter">
+        <source>Enter</source>
+        <target>Войти</target>
+      </trans-unit>
+      <trans-unit id="C0NXL7d" resname="Register Form">
+        <source>Register Form</source>
+        <target>Форма регистрации</target>
+      </trans-unit>
+      <trans-unit id="ykRC2jP" resname="Main page">
+        <source>Main page</source>
+        <target>Главная</target>
+      </trans-unit>
+      <trans-unit id="K9GQWvj" resname="Personal area">
+        <source>Personal area</source>
+        <target>Личный кабинет</target>
+      </trans-unit>
+      <trans-unit id="1pajW90" resname="Profile">
+        <source>Profile</source>
+        <target>Мой профиль</target>
       </trans-unit>
     </body>
   </file>

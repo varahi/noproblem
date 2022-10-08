@@ -107,6 +107,11 @@ class Job
      */
     private $district;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $payment;
+
     public function __construct()
     {
         $this->created = new \DateTime();
@@ -334,6 +339,18 @@ class Job
     public function setDistrict(?District $district): self
     {
         $this->district = $district;
+
+        return $this;
+    }
+
+    public function getPayment(): ?string
+    {
+        return $this->payment;
+    }
+
+    public function setPayment(?string $payment): self
+    {
+        $this->payment = $payment;
 
         return $this;
     }

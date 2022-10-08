@@ -13,6 +13,10 @@
         <source>New job created</source>
         <target>Создана новая вакансия</target>
       </trans-unit>
+      <trans-unit id="Job updated" resname="Job updated">
+        <source>Job updated</source>
+        <target>Вакансия обновлена</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -51,6 +51,19 @@ class JobFormType extends AbstractType
                 ]
             )
             ->add(
+                'payment',
+                TextType::class,
+                [
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => '',
+                        'class' => 'form-control',
+                    ],
+                    'label' => 'Payment',
+                    'translation_domain' => 'messages',
+                ]
+            )
+            ->add(
                 'age',
                 TextType::class,
                 [

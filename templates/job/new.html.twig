@@ -22,8 +22,10 @@
                     {{ form_row(form.name) }}
                     {{ form_row(form.category) }}
                 </div>
-                {{ form_row(form.description) }}
-
+                <div class="form-group grig-group">
+                    {{ form_row(form.description) }}
+                    {{ form_row(form.payment) }}
+                </div>
                 <div class="_form-group grig-group">
                     {{ form_row(form.age) }}
                     {{ form_row(form.experience) }}
@@ -33,12 +35,10 @@
                     {{ form_row(form.district) }}
                     {{ form_row(form.address) }}
                 </div>
-
                 <div class="_form-group grig-group">
                     {{ form_row(form.startNow) }}
                     {{ form_row(form.startDate) }}
                 </div>
-
                 <div class="btn_try btn_try_custom">
                     <button type="submit" class="btn btn-success">Создать вакансию</button>
                 </div>

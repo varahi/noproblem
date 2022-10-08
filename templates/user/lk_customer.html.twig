@@ -1,17 +1,17 @@
 {% extends 'layouts/lk.html.twig' %}
-{% block title %}Личный кабинет работника - Онлайн-сервис по подбору домашнего персонала{% endblock %}
+{% block title %}Личный кабинет - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block body %}
     {% include 'partials/header.html.twig' %}
 
 <div>
     <div class="main_account content">
         <div  class="bread">
-            <a  href="/" class="nuxt-link-active">Главная</a>
+            <a  href="/" class="nuxt-link-active">{{ 'Main page'|trans }}</a>
             <a>/</a>
-            <a> Личный кабинет</a>
+            <a>{{ 'Personal area'|trans }}</a>
         </div>
         <div class="mobfile mobs">
-            <p>Мой профиль</p>
+            <p>{{ 'Profile'|trans }}</p>
         </div>
         <div class="large_account fon">
             <div class="in_account">
@@ -30,7 +30,7 @@
                                 <p class="point_account">{{user.firstName}} {{user.lastName}}</p>
                                 <span class="nan hidden_content">Наниматель</span>
                                 <div class="city_account">
-                                    <img src="assets/img/city_map.svg" class="lazyLoad isLoaded">
+                                    <img src="{{ asset('assets/img/city_map.svg') }}" class="lazyLoad isLoaded">
                                     {% if user.city %}
                                         <span class="town_account">{{ user.city.name }}</span>
                                     {% else %}
@@ -57,7 +57,7 @@
                         <div class="window_account">
                             <div class="var_account">
                                 <h5>Верификация</h5>
-                                <img src="assets/img/verif.svg" class="lazyLoad isLoaded">
+                                <img src="{{ asset('assets/img/verif.svg') }}" class="lazyLoad isLoaded">
                             </div>
                             <p>Паспорт - <span>не загружен</span></p>
                             <p> Телефон -  <span>не подтвержден</span></p>

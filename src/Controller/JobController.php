@@ -106,6 +106,16 @@ class JobController extends AbstractController
                 $form = $this->createForm(JobFormType::class, $job);
                 $form->handleRequest($request);
 
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $entityManager = $doctrine->getManager();
+                    $entityManager->persist($job);
+                    $entityManager->flush();
+
+                    $message = $translator->trans('Job updated', array(), 'flash');
+                    $notifier->send(new Notification($message, ['browser']));
+                    $referer = $request->headers->get('referer');
+                    return new RedirectResponse($referer);
+                }
                 return new Response($this->twig->render('job/edit.html.twig', [
                     'user' => $user,
                     'form' => $form->createView()
