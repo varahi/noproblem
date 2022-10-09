@@ -140,12 +140,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $ownersJobs;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastlogin;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Worksheet::class, mappedBy="user")
+     */
+    private $worksheets;
+
     public function __construct()
     {
         $this->tickets = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->jobs = new ArrayCollection();
         $this->ownersJobs = new ArrayCollection();
+        $this->created = new \DateTime();
+        $this->worksheets = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -523,6 +540,60 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($ownersJob->getOwner() === $this) {
                 $ownersJob->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCreated(): ?\DateTimeInterface
+    {
+        return $this->created;
+    }
+
+    public function setCreated(\DateTimeInterface $created): self
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    public function getLastlogin(): ?\DateTimeInterface
+    {
+        return $this->lastlogin;
+    }
+
+    public function setLastlogin(?\DateTimeInterface $lastlogin): self
+    {
+        $this->lastlogin = $lastlogin;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Worksheet>
+     */
+    public function getWorksheets(): Collection
+    {
+        return $this->worksheets;
+    }
+
+    public function addWorksheet(Worksheet $worksheet): self
+    {
+        if (!$this->worksheets->contains($worksheet)) {
+            $this->worksheets[] = $worksheet;
+            $worksheet->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWorksheet(Worksheet $worksheet): self
+    {
+        if ($this->worksheets->removeElement($worksheet)) {
+            // set the owning side to null (unless already changed)
+            if ($worksheet->getUser() === $this) {
+                $worksheet->setUser(null);
             }
         }
 

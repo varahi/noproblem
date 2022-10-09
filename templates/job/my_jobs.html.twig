@@ -1,0 +1,27 @@
+{% extends 'layouts/lk.html.twig' %}
+{% block title %}Личный кабинет - Онлайн-сервис по подбору домашнего персонала{% endblock %}
+{% block body %}
+    {% include 'partials/header.html.twig' %}
+
+    <div>
+        <div class="main_account content">
+            <div  class="bread">
+                <a  href="/" class="nuxt-link-active">{{ 'Main page'|trans }}</a>
+                <a href="{{ path('app_lk') }}">/ {{ 'Personal area'|trans }}</a>
+                <a>/ {{ 'My jobs'|trans }}</a>
+            </div>
+            <div class="mobfile mobs">
+                <p>{{ 'Profile'|trans }}</p>
+            </div>
+            <div class="large_account fon"></div>
+            {% if is_granted('ROLE_EMPLOYEE') %}
+                {% include 'partials/user/_slider1.html.twig' %}
+                {#{% include 'partials/user/_slider2.html.twig' %}#}
+            {% endif %}
+        </div>
+    </div>
+
+    {% include 'partials/footer.html.twig' %}
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
+{% endblock %}

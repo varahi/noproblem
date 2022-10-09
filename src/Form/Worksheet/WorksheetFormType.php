@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Job;
+namespace App\Form\Worksheet;
 
 use App\Entity\Category;
 use App\Entity\Citizen;
@@ -8,25 +8,40 @@ use App\Entity\City;
 use App\Entity\District;
 use App\Entity\Education;
 use App\Entity\Experience;
-use App\Entity\Job;
+use App\Entity\Worksheet;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\IsTrue;
 
-class JobFormType extends AbstractType
+class WorksheetFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            /*->add('name')
+            ->add('payment')
+            ->add('startNow')
+            ->add('startDate')
+            ->add('age')
+            ->add('description')
+            ->add('additional')
+            ->add('schedule')
+            ->add('preferredContactMethod')
+            ->add('created')
+            ->add('hidden')
+            ->add('city')
+            ->add('district')
+            ->add('education')
+            ->add('experience')
+            ->add('citizen')
+            ->add('user')
+            ->add('category')*/
+
             ->add(
                 'name',
                 TextType::class,
@@ -122,18 +137,7 @@ class JobFormType extends AbstractType
                     'class' => 'date'
                 ]
             ])
-            ->add(
-                'address',
-                TextType::class,
-                [
-                    'required' => true,
-                    'attr' => [
-                        'placeholder' => '',
-                        'class' => 'form-control textarea-form-control',
-                    ],
-                    'label' => 'Address',
-                ]
-            )
+
             ->add('city', EntityType::class, [
                 'class' => City::class,
                 'multiple'  => false,
@@ -161,26 +165,7 @@ class JobFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Job::class,
+            'data_class' => Worksheet::class,
         ]);
     }
 }
-
-
-/*->add(
-    'experience',
-    ChoiceType::class,
-    [
-        'required' => true,
-        'label' => 'Experience',
-        'translation_domain' => 'messages',
-        'choices'  => [
-            'Нет' => null,
-            'Менее 6 месяцев' => '1',
-            '6-12 месяцев' => '2',
-            '2-5 лет' => '3',
-            'более 5 лет' => '4',
-        ],
-        'data' => 'null'
-    ]
-)*/

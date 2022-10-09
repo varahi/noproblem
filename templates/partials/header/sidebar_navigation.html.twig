@@ -6,7 +6,7 @@
         {% if user is defined and user is not null %}
             {% if 'ROLE_EMPLOYEE' in user.roles %}
                 <a href="{{ path('app_lk_employee') }}">Профиль</a>
-                <a href="#">Мои вакансии</a>
+                <a href="{{ path('app_my_jobs') }}">Мои вакансии</a>
                 <a href="#">Избранные анкеты</a>
                 <a href="#">Мои курсы</a>
                 <a href="#">История платежей</a>

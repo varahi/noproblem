@@ -200,13 +200,13 @@ trait DataTrait
                 if ($item->getOwner()) {
                     $itemOwner = $item->getOwner()->getFirstName() .' '.$item->getOwner()->getLastName();
                 }
-                    $arrData[] = [
+                $arrData[] = [
                     'id' => $itemId,
                     'title' => $itemTitle,
                     'description' => $itemDescription,
                     'image' => $itemImage,
                     'age' => $itemAge,
-                    'startDate' => date_format($itemStartDate,"d.m.Y"),
+                    'startDate' => date_format($itemStartDate, "d.m.Y"),
                     'city' => $itemCity,
                     'district' => $itemDistrict,
                     'payment' => $itemPayment,

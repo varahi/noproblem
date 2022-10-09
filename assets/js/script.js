@@ -76,7 +76,7 @@ for (i = 0; i < acc1.length; i++) {
         margin:10,
         nav:true,
         dots: true,
-        navText: ['<img src="assets/img/left.png">', '<img src="assets/img/right.png">'],
+        navText: ['<img src="/assets/img/left.png">', '<img src="/assets/img/right.png">'],
         responsive:{
             0:{
                 items:1
@@ -97,7 +97,7 @@ for (i = 0; i < acc1.length; i++) {
         margin:10,
         nav:true,
         dots: true,
-        navText: ['<img src="assets/img/left.png">', '<img src="assets/img/right.png">'],
+        navText: ['<img src="/assets/img/left.png">', '<img src="/assets/img/right.png">'],
         responsive:{
             0:{
                 items:1

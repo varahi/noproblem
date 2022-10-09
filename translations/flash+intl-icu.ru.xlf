@@ -17,6 +17,10 @@
         <source>Job updated</source>
         <target>Вакансия обновлена</target>
       </trans-unit>
+      <trans-unit id="New worksheet created" resname="New worksheet created">
+        <source>New worksheet created</source>
+        <target>Создана новая анкета</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

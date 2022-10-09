@@ -49,11 +49,17 @@ class City
      */
     private $districts;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Worksheet::class, mappedBy="city")
+     */
+    private $worksheets;
+
     public function __construct()
     {
         $this->jobs = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->districts = new ArrayCollection();
+        $this->worksheets = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -186,6 +192,36 @@ class City
             // set the owning side to null (unless already changed)
             if ($district->getCity() === $this) {
                 $district->setCity(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Worksheet>
+     */
+    public function getWorksheets(): Collection
+    {
+        return $this->worksheets;
+    }
+
+    public function addWorksheet(Worksheet $worksheet): self
+    {
+        if (!$this->worksheets->contains($worksheet)) {
+            $this->worksheets[] = $worksheet;
+            $worksheet->setCity($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWorksheet(Worksheet $worksheet): self
+    {
+        if ($this->worksheets->removeElement($worksheet)) {
+            // set the owning side to null (unless already changed)
+            if ($worksheet->getCity() === $this) {
+                $worksheet->setCity(null);
             }
         }
 

@@ -60,9 +60,8 @@ class ApiController extends AbstractController
     public function apiAnnouncements(
         JobRepository $jobRepository
     ) {
-
         $user = $this->security->getUser();
-        if(isset($user) && $user !==null) {
+        if (isset($user) && $user !==null) {
             $jobs = $jobRepository->findByUser($user->getId());
             $arrData = $this->getAnnouncementsJsonArrData($jobs);
         } else {
@@ -74,7 +73,6 @@ class ApiController extends AbstractController
         $response->headers->set('Access-Control-Allow-Origin', '*');
         $response->setContent(json_encode($arrData));
         return $response;
-
     }
 
     /**

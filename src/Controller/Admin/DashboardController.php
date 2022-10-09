@@ -6,6 +6,7 @@ use App\Entity\Answer;
 use App\Entity\Contain;
 use App\Entity\District;
 use App\Entity\User;
+use App\Entity\Worksheet;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -22,6 +23,9 @@ use App\Entity\Page;
 use App\Entity\Tariff;
 use App\Entity\Review;
 use App\Entity\Ticket;
+use App\Entity\Education;
+use App\Entity\Experience;
+use App\Entity\Citizen;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -48,12 +52,21 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToRoute('To Home', 'fa fa-home', 'app_main');
 
+        yield MenuItem::section('Jobs and worksheets');
+        yield MenuItem::subMenu('Jobs and worksheets', 'fa fa-server')->setSubItems([
+            MenuItem::linkToCrud('Jobs', 'fa fa-handshake-o', Job::class),
+            MenuItem::linkToCrud('Worksheets', 'fa fa-id-badge', Worksheet::class),
+        ]);
+
         yield MenuItem::section('Database');
         yield MenuItem::subMenu('Database', 'fa fa-database')->setSubItems([
-            MenuItem::linkToCrud('Jobs', 'fa fa-handshake-o', Job::class),
             MenuItem::linkToCrud('Categories', 'fa fa-bars', Category::class),
             MenuItem::linkToCrud('Cities', 'fa fa-building', City::class),
-            MenuItem::linkToCrud('District', 'fa fa-building', District::class),
+            MenuItem::linkToCrud('District', 'fa fa-building-o', District::class),
+            MenuItem::linkToCrud('Experience', 'fa fa-gears', Experience::class),
+            MenuItem::linkToCrud('Education', 'fa fa-book', Education::class),
+            MenuItem::linkToCrud('Citizen', 'fa fa-braille', Citizen::class),
+
         ]);
 
         yield MenuItem::section('Site');
@@ -73,7 +86,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Users');
         yield MenuItem::subMenu('Users', 'fa fa-users')->setSubItems([
             MenuItem::linkToCrud('Admins', 'fa fa-user', User::class)->setController(UserCrudController::class),
-            MenuItem::linkToCrud('Workers', 'fa fa-user-circle', User::class)->setController(UserEmployeeCrudController::class),
+            MenuItem::linkToCrud('Employers', 'fa fa-user-circle', User::class)->setController(UserEmployeeCrudController::class),
             MenuItem::linkToCrud('Customers', 'fa fa-user-circle-o', User::class)->setController(UserCustomerCrudController::class),
         ]);
 

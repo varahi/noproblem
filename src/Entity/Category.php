@@ -54,10 +54,16 @@ class Category
      */
     private $slug;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Worksheet::class, mappedBy="category")
+     */
+    private $worksheets;
+
     public function __construct()
     {
         $this->jobs = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->worksheets = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -186,6 +192,36 @@ class Category
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Worksheet>
+     */
+    public function getWorksheets(): Collection
+    {
+        return $this->worksheets;
+    }
+
+    public function addWorksheet(Worksheet $worksheet): self
+    {
+        if (!$this->worksheets->contains($worksheet)) {
+            $this->worksheets[] = $worksheet;
+            $worksheet->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWorksheet(Worksheet $worksheet): self
+    {
+        if ($this->worksheets->removeElement($worksheet)) {
+            // set the owning side to null (unless already changed)
+            if ($worksheet->getCategory() === $this) {
+                $worksheet->setCategory(null);
+            }
+        }
 
         return $this;
     }

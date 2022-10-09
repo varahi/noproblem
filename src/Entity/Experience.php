@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\DistrictRepository;
+use App\Repository\ExperienceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=DistrictRepository::class)
+ * @ORM\Entity(repositoryClass=ExperienceRepository::class)
  */
-class District
+class Experience
 {
     /**
      * @ORM\Id
@@ -25,22 +25,12 @@ class District
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity=City::class, inversedBy="districts")
-     */
-    private $city;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Job::class, mappedBy="district")
+     * @ORM\OneToMany(targetEntity=Job::class, mappedBy="experience")
      */
     private $jobs;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $hidden;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Worksheet::class, mappedBy="district")
+     * @ORM\OneToMany(targetEntity=Worksheet::class, mappedBy="experience")
      */
     private $worksheets;
 
@@ -72,18 +62,6 @@ class District
         return $this;
     }
 
-    public function getCity(): ?City
-    {
-        return $this->city;
-    }
-
-    public function setCity(?City $city): self
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Job>
      */
@@ -96,7 +74,7 @@ class District
     {
         if (!$this->jobs->contains($job)) {
             $this->jobs[] = $job;
-            $job->setDistrict($this);
+            $job->setExperience($this);
         }
 
         return $this;
@@ -106,22 +84,10 @@ class District
     {
         if ($this->jobs->removeElement($job)) {
             // set the owning side to null (unless already changed)
-            if ($job->getDistrict() === $this) {
-                $job->setDistrict(null);
+            if ($job->getExperience() === $this) {
+                $job->setExperience(null);
             }
         }
-
-        return $this;
-    }
-
-    public function isHidden(): ?bool
-    {
-        return $this->hidden;
-    }
-
-    public function setHidden(bool $hidden): self
-    {
-        $this->hidden = $hidden;
 
         return $this;
     }
@@ -138,7 +104,7 @@ class District
     {
         if (!$this->worksheets->contains($worksheet)) {
             $this->worksheets[] = $worksheet;
-            $worksheet->setDistrict($this);
+            $worksheet->setExperience($this);
         }
 
         return $this;
@@ -148,8 +114,8 @@ class District
     {
         if ($this->worksheets->removeElement($worksheet)) {
             // set the owning side to null (unless already changed)
-            if ($worksheet->getDistrict() === $this) {
-                $worksheet->setDistrict(null);
+            if ($worksheet->getExperience() === $this) {
+                $worksheet->setExperience(null);
             }
         }
 

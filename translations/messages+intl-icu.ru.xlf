@@ -183,7 +183,7 @@
       </trans-unit>
       <trans-unit id="qr528fT" resname="Customers">
         <source>Customers</source>
-        <target>Заказчики</target>
+        <target>Работники</target>
       </trans-unit>
       <trans-unit id="hMt4cbd" resname="Reviews">
         <source>Reviews</source>
@@ -249,9 +249,13 @@
         <source>Change password</source>
         <target>Сменить пароль</target>
       </trans-unit>
-      <trans-unit id="vzdjODq" resname="Customer">
-        <source>Customer</source>
+      <trans-unit id="vzdjODq" resname="Employee">
+        <source>Employee</source>
         <target>Заказчик</target>
+      </trans-unit>
+      <trans-unit id="Employers" resname="Employers">
+        <source>Employers</source>
+        <target>Заказчики</target>
       </trans-unit>
       <trans-unit id="YBjFg2." resname="Teaser">
         <source>Teaser</source>
@@ -312,6 +316,30 @@
       <trans-unit id="1pajW90" resname="Profile">
         <source>Profile</source>
         <target>Мой профиль</target>
+      </trans-unit>
+      <trans-unit id="My jobs" resname="My jobs">
+        <source>My jobs</source>
+        <target>Мои вакансии</target>
+      </trans-unit>
+      <trans-unit id="Additional" resname="Additional">
+        <source>Additional</source>
+        <target>Дополнительно</target>
+      </trans-unit>
+      <trans-unit id="Worksheet" resname="Worksheet">
+        <source>Worksheet</source>
+        <target>Анкета</target>
+      </trans-unit>
+      <trans-unit id="Worksheets" resname="Worksheets">
+        <source>Worksheets</source>
+        <target>Анкеты</target>
+      </trans-unit>
+        <trans-unit id="Jobs and worksheets" resname="Jobs and worksheets">
+            <source>Jobs and worksheets</source>
+            <target>Вакансии и анкеты</target>
+        </trans-unit>
+      <trans-unit id="Profile owner" resname="v">
+        <source>Profile owner</source>
+        <target>Владелец анкеты</target>
       </trans-unit>
     </body>
   </file>

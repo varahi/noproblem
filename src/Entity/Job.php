@@ -38,21 +38,6 @@ class Job
     private $age;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $experience;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $education;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $citizen;
-
-    /**
      * @ORM\Column(type="date", nullable=true)
      */
     private $startDate;
@@ -112,6 +97,21 @@ class Job
      */
     private $payment;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Experience::class, inversedBy="jobs")
+     */
+    private $experience;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Education::class, inversedBy="jobs")
+     */
+    private $education;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Citizen::class, inversedBy="jobs")
+     */
+    private $citizen;
+
     public function __construct()
     {
         $this->created = new \DateTime();
@@ -159,42 +159,6 @@ class Job
     public function setAge(?string $age): self
     {
         $this->age = $age;
-
-        return $this;
-    }
-
-    public function getExperience(): ?string
-    {
-        return $this->experience;
-    }
-
-    public function setExperience(?string $experience): self
-    {
-        $this->experience = $experience;
-
-        return $this;
-    }
-
-    public function getEducation(): ?string
-    {
-        return $this->education;
-    }
-
-    public function setEducation(?string $education): self
-    {
-        $this->education = $education;
-
-        return $this;
-    }
-
-    public function getCitizen(): ?string
-    {
-        return $this->citizen;
-    }
-
-    public function setCitizen(?string $citizen): self
-    {
-        $this->citizen = $citizen;
 
         return $this;
     }
@@ -351,6 +315,42 @@ class Job
     public function setPayment(?string $payment): self
     {
         $this->payment = $payment;
+
+        return $this;
+    }
+
+    public function getExperience(): ?Experience
+    {
+        return $this->experience;
+    }
+
+    public function setExperience(?Experience $experience): self
+    {
+        $this->experience = $experience;
+
+        return $this;
+    }
+
+    public function getEducation(): ?Education
+    {
+        return $this->education;
+    }
+
+    public function setEducation(?Education $education): self
+    {
+        $this->education = $education;
+
+        return $this;
+    }
+
+    public function getCitizen(): ?Citizen
+    {
+        return $this->citizen;
+    }
+
+    public function setCitizen(?Citizen $citizen): self
+    {
+        $this->citizen = $citizen;
 
         return $this;
     }

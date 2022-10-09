@@ -2,40 +2,35 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Job;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use App\Entity\Worksheet;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TelephoneField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Form\Type\FileUploadType;
 
-class JobCrudController extends AbstractCrudController
+class WorksheetCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Job::class;
+        return Worksheet::class;
     }
 
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Job')
-            ->setEntityLabelInPlural('Job')
-            ->setSearchFields(['name', 'description', 'age', 'address'])
+            ->setEntityLabelInSingular('Worksheet')
+            ->setEntityLabelInPlural('Worksheet')
+            ->setSearchFields(['name'])
             ->setDefaultSort(['id' => 'DESC']);
     }
 
@@ -63,72 +58,27 @@ class JobCrudController extends AbstractCrudController
         yield BooleanField::new('hidden');
         yield TextField::new('name')->setColumns('col-md-8');
         yield TextareaField::new('description')->setColumns('col-md-8')->hideOnIndex();
+        yield TextareaField::new('additional')->setColumns('col-md-8')->hideOnIndex();
         yield TextField::new('payment')->setColumns('col-md-8');
-        yield ImageField::new('image')
+        /*yield ImageField::new('image')
             ->setBasePath('uploads/')
             ->setUploadDir('public_html/uploads')
             ->setFormType(FileUploadType::class)
-            ->setRequired(false);
+            ->setRequired(false);*/
 
         yield FormField::addPanel('Additional info')->setIcon('fa fa-info-circle')->setCssClass('col-sm-4');
         //yield FormField::addRow();
         yield AssociationField::new('city')->hideOnIndex()->setColumns('col-md-12');
         yield AssociationField::new('district')->hideOnIndex()->setColumns('col-md-12');
         yield AssociationField::new('category')->hideOnIndex()->setColumns('col-md-12');
-        yield AssociationField::new('client')->setColumns('col-md-12')->setLabel('Job performer')->hideOnIndex();
-        yield AssociationField::new('owner')->setColumns('col-md-12')->setLabel('Job owner')->hideOnIndex();
+        yield AssociationField::new('user')->setColumns('col-md-12')->setLabel('Profile owner')->hideOnIndex();
 
         yield FormField::addPanel('General requirements')->setIcon('fa fa-gear');
         yield FormField::addRow();
-        yield TextField::new('age')->setColumns('col-md-4');
-        /*yield ChoiceField::new('experience')->setChoices(
-            [
-                'Нет' => null,
-                'Менее 6 месяцев' => '1',
-                '6-12 месяцев' => '2',
-                '2-5 лет' => '3',
-                'более 5 лет' => '4',
-            ]
-        )
-            ->hideOnIndex()
-            ->setColumns('col-md-4');*/
-
-        /*yield ChoiceField::new('education')->setChoices(
-            [
-                'Нет' => null,
-                'Начальное' => '1',
-                'Среднее' => '2',
-                'Техническое' => '3',
-                'Неполное высшее' => '4',
-                'Высшее' => '5',
-            ]
-        )
-            ->hideOnIndex()
-            ->setColumns('col-md-4');*/
-
+        yield TextField::new('age')->setColumns('col-md-4')->hideOnIndex();
         yield AssociationField::new('experience')->setColumns('col-md-4')->hideOnIndex();
         yield AssociationField::new('education')->setColumns('col-md-4')->hideOnIndex();
-
         yield FormField::addRow();
-        /*yield ChoiceField::new('citizen')->setChoices(
-            [
-                'Нет' => null,
-                'РФ' => '1',
-                'Белоруссия' => '2',
-                'Армения' => '3',
-                'Азербайджан' => '4',
-                'Грузия' => '5',
-                'Казахстан' => '6',
-                'Киргизия' => '7',
-                'Молодова' => '8',
-                'Таджикистан' => '9',
-                'Узбекистан' => '10',
-                'Страны ЕС' => '11',
-            ]
-        )
-            ->hideOnIndex()
-            ->setColumns('col-md-4');*/
-
         yield AssociationField::new('citizen')->setColumns('col-md-4')->hideOnIndex();
         yield BooleanField::new('startNow')->hideOnIndex();
         yield DateField::new('startDate')->hideOnIndex();

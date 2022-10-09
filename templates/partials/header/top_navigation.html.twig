@@ -26,7 +26,7 @@
         <a>Поиск вакансии</a>
     </div>
     <div class="btn_employer" style="cursor: pointer;">
-        <a>Создать анкету</a>
+        <a href="{{ path('app_new_worksheet') }}">Создать анкету</a>
     </div>
 {% elseif is_granted('ROLE_BUYER') %}
     <div class="btn_worker" style="cursor: pointer;">

@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Job;
+use App\Entity\Worksheet;
 use App\Form\Job\JobFormType;
+use App\Form\Worksheet\WorksheetFormType;
+use App\Repository\JobRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -102,6 +105,14 @@ class JobController extends AbstractController
     ): Response {
         if ($this->isGranted(self::ROLE_EMPLOYEE)) {
             $user = $this->security->getUser();
+            $skills = [
+                'Нет' => null,
+                'Менее 6 месяцев' => '1',
+                '6-12 месяцев' => '2',
+                '2-5 лет' => '3',
+                'более 5 лет' => '4',
+            ];
+
             if ($user->getId() == $job->getOwner()->getId()) {
                 $form = $this->createForm(JobFormType::class, $job);
                 $form->handleRequest($request);
@@ -118,13 +129,83 @@ class JobController extends AbstractController
                 }
                 return new Response($this->twig->render('job/edit.html.twig', [
                     'user' => $user,
-                    'form' => $form->createView()
+                    'form' => $form->createView(),
+                    'skills' => $skills,
+                    'job' => $job
                 ]));
             } else {
                 $message = $translator->trans('Please login', array(), 'flash');
                 $notifier->send(new Notification($message, ['browser']));
                 return $this->redirectToRoute("app_main");
             }
+        } else {
+            $message = $translator->trans('Please login', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_main");
+        }
+    }
+
+    /**
+     *
+     * @IsGranted("ROLE_EMPLOYEE")
+     * @Route("/profile/my-jobs", name="app_my_jobs")
+     */
+    public function myJobs(
+        Request $request,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier,
+        ManagerRegistry $doctrine,
+        JobRepository $jobRepository
+    ): Response {
+        if ($this->isGranted(self::ROLE_EMPLOYEE)) {
+            $user = $this->security->getUser();
+            $jobs = $jobRepository->findByUser($user->getId());
+            {
+                return $this->render('job/my_jobs.html.twig', [
+                    'user' => $user,
+                    'jobs' => $jobs
+                ]);
+            }
+        } else {
+            $message = $translator->trans('Please login', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_main");
+        }
+    }
+
+    /**
+     *
+     * @IsGranted("ROLE_CUSTOMER")
+     * @Route("/new-worksheet", name="app_new_worksheet")
+     */
+    public function newWorksheet(
+        Request $request,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier,
+        ManagerRegistry $doctrine
+    ): Response {
+        if ($this->isGranted(self::ROLE_CUSTOMER)) {
+            $user = $this->security->getUser();
+            $worksheet = new Worksheet();
+            $form = $this->createForm(WorksheetFormType::class, $worksheet);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $worksheet->setUser($user);
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($worksheet);
+                $entityManager->flush();
+
+                $message = $translator->trans('New worksheet created', array(), 'flash');
+                $notifier->send(new Notification($message, ['browser']));
+                $referer = $request->headers->get('referer');
+                return new RedirectResponse($referer);
+            }
+
+            return $this->render('worksheet/new.html.twig', [
+                'user' => $user,
+                'form' => $form->createView()
+            ]);
         } else {
             $message = $translator->trans('Please login', array(), 'flash');
             $notifier->send(new Notification($message, ['browser']));

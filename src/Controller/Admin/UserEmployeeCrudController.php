@@ -86,8 +86,8 @@ class UserEmployeeCrudController extends AbstractCrudController
         //yield TextField::new('password')->setFormType(PasswordType::class)->hideOnIndex();
         yield EmailField::new('email')->setColumns('col-md-10');
         yield ImageField::new('avatar')
-            ->setBasePath('uploads/')
-            ->setUploadDir('public_html/uploads')
+            ->setBasePath('uploads/files/')
+            ->setUploadDir('public_html/uploadsfiles')
             ->setFormType(FileUploadType::class)
             ->setRequired(false);
 
@@ -164,5 +164,12 @@ class UserEmployeeCrudController extends AbstractCrudController
         yield FormField::addRow();
         yield AssociationField::new('category')->hideOnIndex()->setColumns('col-md-6');
         yield AssociationField::new('tariff')->hideOnIndex()->setColumns('col-md-6');
+
+        yield FormField::addRow();
+        yield AssociationField::new('ownersJobs')
+            ->setFormTypeOptions([
+                'by_reference' => false,
+            ])->hideOnIndex()
+            ->setColumns('col-md-12')->setLabel('Jobs');
     }
 }
