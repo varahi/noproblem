@@ -21,6 +21,10 @@
         <source>New worksheet created</source>
         <target>Создана новая анкета</target>
       </trans-unit>
+      <trans-unit id="Worksheet updated" resname="Worksheet updated">
+        <source>Worksheet updated</source>
+        <target>Анкета обновлена</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

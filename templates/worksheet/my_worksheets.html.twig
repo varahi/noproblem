@@ -14,9 +14,8 @@
                 <p>{{ 'Profile'|trans }}</p>
             </div>
             <div class="large_account fon"></div>
-            {% if is_granted('ROLE_EMPLOYEE') %}
-                {% include 'partials/user/_slider1.html.twig' %}
-                {#{% include 'partials/user/_slider2.html.twig' %}#}
+            {% if is_granted('ROLE_CUSTOMER') %}
+                {% include 'partials/worksheet/_slider1.html.twig' %}
             {% endif %}
         </div>
     </div>

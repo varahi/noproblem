@@ -8,6 +8,7 @@ use App\Entity\Job;
 use App\Form\Job\JobFormType;
 use App\Http\Request\SignUpRequest;
 use App\Repository\JobRepository;
+use App\Repository\WorksheetRepository;
 use App\Service\FileUploader;
 use App\Service\SignUpValidator;
 use App\Service\UserCreator;
@@ -186,16 +187,16 @@ class UserController extends AbstractController
     public function customerProfile(
         Request $request,
         TranslatorInterface $translator,
-        NotifierInterface $notifier
+        NotifierInterface $notifier,
+        WorksheetRepository $worksheetRepository
     ): Response {
         if ($this->isGranted(self::ROLE_CUSTOMER)) {
             $user = $this->security->getUser();
+            $worksheets = $worksheetRepository->findByUser($user->getId());
             {
-                //if ($user->isIsVerified() == 0) {
-                //}
-
                 return $this->render('user/lk_customer.html.twig', [
                     'user' => $user,
+                    'worksheets' => $worksheets
                 ]);
             }
         } else {

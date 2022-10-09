@@ -16,7 +16,7 @@
 
             {% elseif 'ROLE_CUSTOMER' in user.roles %}
                 <a href="{{ path('app_lk_customer') }}">Профиль</a>
-                <a href="#">Мои вакансии</a>
+                <a href="{{ path('app_my_worksheets') }}">Мои анкеты</a>
                 <a href="#">Избранные анкеты</a>
                 <a href="#">Мои курсы</a>
                 <a href="#">История платежей</a>

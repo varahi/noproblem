@@ -16,6 +16,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class WorksheetRepository extends ServiceEntityRepository
 {
+    public const TABLE = 'App\Entity\Worksheet';
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Worksheet::class);
@@ -37,6 +39,26 @@ class WorksheetRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * @param int $id
+     * @return int|mixed|string
+     */
+    public function findByUser(int $id)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $expr = $qb->expr();
+        $qb->select('w')
+            ->from(self::TABLE, 'w')
+            ->join('w.user', 'u')
+            ->where($qb->expr()->eq('u.id', $id))
+            ->andWhere($expr->neq('w.hidden', 1));
+        //->andWhere('j.status LIKE :status')
+        //->setParameter('status', $status)
+        ;
+
+        return $qb->getQuery()->getResult();
     }
 
 //    /**

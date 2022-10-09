@@ -249,11 +249,11 @@
         <source>Change password</source>
         <target>Сменить пароль</target>
       </trans-unit>
-      <trans-unit id="vzdjODq" resname="Employee">
+      <trans-unit id="FAFOalc" resname="Employee">
         <source>Employee</source>
         <target>Заказчик</target>
       </trans-unit>
-      <trans-unit id="Employers" resname="Employers">
+      <trans-unit id="42Ud50A" resname="Employers">
         <source>Employers</source>
         <target>Заказчики</target>
       </trans-unit>
@@ -317,29 +317,33 @@
         <source>Profile</source>
         <target>Мой профиль</target>
       </trans-unit>
-      <trans-unit id="My jobs" resname="My jobs">
+      <trans-unit id="b94fvG7" resname="My jobs">
         <source>My jobs</source>
         <target>Мои вакансии</target>
       </trans-unit>
-      <trans-unit id="Additional" resname="Additional">
+      <trans-unit id="nDSHQn_" resname="Additional">
         <source>Additional</source>
         <target>Дополнительно</target>
       </trans-unit>
-      <trans-unit id="Worksheet" resname="Worksheet">
+      <trans-unit id="XzOwrBe" resname="Worksheet">
         <source>Worksheet</source>
         <target>Анкета</target>
       </trans-unit>
-      <trans-unit id="Worksheets" resname="Worksheets">
+      <trans-unit id="r6Fgniq" resname="Worksheets">
         <source>Worksheets</source>
         <target>Анкеты</target>
       </trans-unit>
-        <trans-unit id="Jobs and worksheets" resname="Jobs and worksheets">
-            <source>Jobs and worksheets</source>
-            <target>Вакансии и анкеты</target>
-        </trans-unit>
-      <trans-unit id="Profile owner" resname="v">
-        <source>Profile owner</source>
+      <trans-unit id="oAcSQml" resname="Jobs and worksheets">
+        <source>Jobs and worksheets</source>
+        <target>Вакансии и анкеты</target>
+      </trans-unit>
+      <trans-unit id="TJRIXgw" resname="v">
+        <source>v</source>
         <target>Владелец анкеты</target>
+      </trans-unit>
+      <trans-unit id="QoTkcpu" resname="My worksheets">
+        <source>My worksheets</source>
+        <target>Мои анкеты</target>
       </trans-unit>
     </body>
   </file>

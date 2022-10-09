@@ -7,6 +7,7 @@ use App\Entity\Worksheet;
 use App\Form\Job\JobFormType;
 use App\Form\Worksheet\WorksheetFormType;
 use App\Repository\JobRepository;
+use App\Repository\WorksheetRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -192,6 +193,7 @@ class JobController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $worksheet->setUser($user);
+                $worksheet->setHidden('0');
                 $entityManager = $doctrine->getManager();
                 $entityManager->persist($worksheet);
                 $entityManager->flush();
@@ -206,6 +208,77 @@ class JobController extends AbstractController
                 'user' => $user,
                 'form' => $form->createView()
             ]);
+        } else {
+            $message = $translator->trans('Please login', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_main");
+        }
+    }
+
+    /**
+     *
+     * @IsGranted("ROLE_CUSTOMER")
+     * @Route("/my-worksheets", name="app_my_worksheets")
+     */
+    public function myWorksheet(
+        Request $request,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier,
+        ManagerRegistry $doctrine,
+        WorksheetRepository $worksheetRepository
+    ): Response {
+        if ($this->isGranted(self::ROLE_CUSTOMER)) {
+            $user = $this->security->getUser();
+            $worksheets = $worksheetRepository->findByUser($user->getId());
+            return $this->render('worksheet/my_worksheets.html.twig', [
+                'user' => $user,
+                'worksheets' => $worksheets
+            ]);
+        } else {
+            $message = $translator->trans('Please login', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_main");
+        }
+    }
+
+    /**
+     *
+     * @IsGranted("ROLE_CUSTOMER")
+     * @Route("/edit-worksheet/worksheet-{id}", name="app_edit_worksheet")
+     */
+    public function editWorksheet(
+        Request $request,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier,
+        ManagerRegistry $doctrine,
+        Worksheet $worksheet
+    ): Response {
+        if ($this->isGranted(self::ROLE_CUSTOMER)) {
+            $user = $this->security->getUser();
+            if ($user->getId() == $worksheet->getUser()->getId()) {
+                $form = $this->createForm(WorksheetFormType::class, $worksheet);
+                $form->handleRequest($request);
+
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $entityManager = $doctrine->getManager();
+                    $entityManager->persist($worksheet);
+                    $entityManager->flush();
+
+                    $message = $translator->trans('Worksheet updated', array(), 'flash');
+                    $notifier->send(new Notification($message, ['browser']));
+                    $referer = $request->headers->get('referer');
+                    return new RedirectResponse($referer);
+                }
+                return new Response($this->twig->render('worksheet/edit.html.twig', [
+                    'user' => $user,
+                    'form' => $form->createView(),
+                    'worksheet' => $worksheet
+                ]));
+            } else {
+                $message = $translator->trans('Please login', array(), 'flash');
+                $notifier->send(new Notification($message, ['browser']));
+                return $this->redirectToRoute("app_main");
+            }
         } else {
             $message = $translator->trans('Please login', array(), 'flash');
             $notifier->send(new Notification($message, ['browser']));
