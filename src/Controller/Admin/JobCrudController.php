@@ -77,6 +77,8 @@ class JobCrudController extends AbstractCrudController
         yield AssociationField::new('category')->hideOnIndex()->setColumns('col-md-12');
         yield AssociationField::new('client')->setColumns('col-md-12')->setLabel('Job performer')->hideOnIndex();
         yield AssociationField::new('owner')->setColumns('col-md-12')->setLabel('Job owner')->hideOnIndex();
+        yield AssociationField::new('tasks')->setColumns('col-md-12')->setLabel('Tasks')->hideOnIndex();
+        yield AssociationField::new('additional')->setColumns('col-md-12')->setLabel('Additional info')->hideOnIndex();
 
         yield FormField::addPanel('General requirements')->setIcon('fa fa-gear');
         yield FormField::addRow();

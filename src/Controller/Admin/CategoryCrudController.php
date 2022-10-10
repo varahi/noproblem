@@ -49,6 +49,7 @@ class CategoryCrudController extends AbstractCrudController
         yield SlugField::new('slug')->hideOnIndex()->setTargetFieldName('name');
         yield TextareaField::new('description')->setColumns('col-md-10');
 
+
         yield FormField::addPanel('Relations')->setIcon('fa fa-chain')->setCssClass('col-sm-4');
         yield BooleanField::new('isHidden');
         yield ImageField::new('image')
@@ -57,11 +58,19 @@ class CategoryCrudController extends AbstractCrudController
             ->setFormType(FileUploadType::class)
             ->setRequired(false)
             ->setColumns('col-md-12');
+
         yield AssociationField::new('jobs')
             ->setFormTypeOptions([
                 'by_reference' => false,
             ])->hideOnIndex()
             ->setColumns('col-md-12');
+
+        yield AssociationField::new('tasks')
+            ->setFormTypeOptions([
+                'by_reference' => false,
+            ])->hideOnIndex()
+            ->setColumns('col-md-12')
+            ->setLabel('Tags');
         //yield AssociationField::new('users');
     }
 }

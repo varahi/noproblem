@@ -59,11 +59,17 @@ class Category
      */
     private $worksheets;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Task::class, mappedBy="category")
+     */
+    private $tasks;
+
     public function __construct()
     {
         $this->jobs = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->worksheets = new ArrayCollection();
+        $this->tasks = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -221,6 +227,33 @@ class Category
             if ($worksheet->getCategory() === $this) {
                 $worksheet->setCategory(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Task>
+     */
+    public function getTasks(): Collection
+    {
+        return $this->tasks;
+    }
+
+    public function addTask(Task $task): self
+    {
+        if (!$this->tasks->contains($task)) {
+            $this->tasks[] = $task;
+            $task->addCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTask(Task $task): self
+    {
+        if ($this->tasks->removeElement($task)) {
+            $task->removeCategory($this);
         }
 
         return $this;

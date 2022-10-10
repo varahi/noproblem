@@ -2,9 +2,11 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\AdditionalInfo;
 use App\Entity\Answer;
 use App\Entity\Contain;
 use App\Entity\District;
+use App\Entity\Task;
 use App\Entity\User;
 use App\Entity\Worksheet;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -66,7 +68,8 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Experience', 'fa fa-gears', Experience::class),
             MenuItem::linkToCrud('Education', 'fa fa-book', Education::class),
             MenuItem::linkToCrud('Citizen', 'fa fa-braille', Citizen::class),
-
+            MenuItem::linkToCrud('Task', 'fa fa-braille', Task::class),
+            MenuItem::linkToCrud('Additional Info', 'fa fa-braille', AdditionalInfo::class),
         ]);
 
         yield MenuItem::section('Site');

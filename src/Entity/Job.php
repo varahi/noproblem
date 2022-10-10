@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\JobRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -112,9 +114,21 @@ class Job
      */
     private $citizen;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Task::class, inversedBy="jobs")
+     */
+    private $tasks;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=AdditionalInfo::class, inversedBy="jobs")
+     */
+    private $additional;
+
     public function __construct()
     {
         $this->created = new \DateTime();
+        $this->tasks = new ArrayCollection();
+        $this->additional = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -351,6 +365,54 @@ class Job
     public function setCitizen(?Citizen $citizen): self
     {
         $this->citizen = $citizen;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Task>
+     */
+    public function getTasks(): Collection
+    {
+        return $this->tasks;
+    }
+
+    public function addTask(Task $task): self
+    {
+        if (!$this->tasks->contains($task)) {
+            $this->tasks[] = $task;
+        }
+
+        return $this;
+    }
+
+    public function removeTask(Task $task): self
+    {
+        $this->tasks->removeElement($task);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AdditionalInfo>
+     */
+    public function getAdditional(): Collection
+    {
+        return $this->additional;
+    }
+
+    public function addAdditional(AdditionalInfo $additional): self
+    {
+        if (!$this->additional->contains($additional)) {
+            $this->additional[] = $additional;
+        }
+
+        return $this;
+    }
+
+    public function removeAdditional(AdditionalInfo $additional): self
+    {
+        $this->additional->removeElement($additional);
 
         return $this;
     }
