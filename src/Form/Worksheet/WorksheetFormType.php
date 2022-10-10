@@ -23,25 +23,6 @@ class WorksheetFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            /*->add('name')
-            ->add('payment')
-            ->add('startNow')
-            ->add('startDate')
-            ->add('age')
-            ->add('description')
-            ->add('additional')
-            ->add('schedule')
-            ->add('preferredContactMethod')
-            ->add('created')
-            ->add('hidden')
-            ->add('city')
-            ->add('district')
-            ->add('education')
-            ->add('experience')
-            ->add('citizen')
-            ->add('user')
-            ->add('category')*/
-
             ->add(
                 'name',
                 TextType::class,
@@ -125,7 +106,7 @@ class WorksheetFormType extends AbstractType
                     ]),
                 ],*/
             ])
-            ->add('startDate', DateType::class, [
+            /*->add('startDate', DateType::class, [
                 'label'     => 'Start Date',
                 'required' => false,
                 'widget' => 'single_text',
@@ -136,7 +117,7 @@ class WorksheetFormType extends AbstractType
                 'attr' => [
                     'class' => 'date'
                 ]
-            ])
+            ])*/
 
             ->add('city', EntityType::class, [
                 'class' => City::class,

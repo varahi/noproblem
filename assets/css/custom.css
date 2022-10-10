@@ -9,30 +9,6 @@
     margin-bottom: 19px;
 }
 
-/*
-.form-std {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 20px;
-    gap: 20px;
-    margin-bottom: 10px;
-}
-.form input,
-.form select,
-.form textarea {
-    border: 1px solid var(--violet);
-    padding: 10px;
-    border-radius: 20px;
-    width: calc(100% - 20px);
-}
-.textarea-form-control {
-    height: 200px;
-    border: 1px solid var(--violet);
-    padding: 10px;
-    border-radius: 20px;
-    width: calc(100% - 20px);
-}*/
-
 .grig-group {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -77,19 +53,6 @@
     width: 87%;
     min-height: 120px;
 }
-/*
-.form-std-custom select {
-    height: 45px;
-    width: 350px;
-}
-.form-std-custom textarea {
-    width: 600px;
-    height: 120px;
-}
-.form-std-custom input {
-    width: 320px;
-}
-*/
 
 .btn_try_custom {
     margin-top: 40px;
@@ -217,4 +180,9 @@ input[required] + label:after {
 
 .alert-danger .alert-link {
     color: #843534;
+}
+
+.box_account_list {
+    width: auto;
+    margin-bottom: 10px;
 }

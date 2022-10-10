@@ -19,7 +19,7 @@
     <div class="modal" v-if="showModal">
       <div class="modal-title">
         <h2>Выберите свою роль</h2>
-        <button class="close" @click="showModal = false"><img src="assets/img/krest.svg"></button>
+        <button class="close" @click="showModal = false"><img src="/assets/img/krest.svg"></button>
       </div>
       <div class="modal-content">
         <div class="buttons">
@@ -43,7 +43,7 @@
         <div class="modal-title">
           <h2>Регистрация работадателя</h2>
           <button class="close" @click="showModalEmployer = false">
-            <img src="assets/img/krest.svg">
+            <img src="/assets/img/krest.svg">
           </button>
         </div>
 
@@ -79,7 +79,7 @@
         <div class="modal-title">
           <h2>Регистрация работника</h2>
           <button class="close" @click="showModalCustomer = false">
-            <img src="assets/img/krest.svg">
+            <img src="/assets/img/krest.svg">
           </button>
         </div>
 
@@ -115,7 +115,7 @@
         <div class="modal-title">
           <h2>Регистрация покупателя</h2>
           <button class="close" @click="showModalBuyer = false">
-            <img src="assets/img/krest.svg">
+            <img src="/assets/img/krest.svg">
           </button>
         </div>
 

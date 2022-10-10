@@ -43,7 +43,7 @@ class Worksheet
     private $startNow;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $startDate;
 

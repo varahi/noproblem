@@ -3,14 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Course;
+use App\Entity\District;
 use App\Entity\Message;
 use App\Entity\Article;
 use App\Entity\City;
 use App\Entity\ArticleCategory;
+use App\Entity\Worksheet;
 use App\Repository\ArticleRepository;
 use App\Repository\ArticleCategoryRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\CityRepository;
+use App\Repository\DistrictRepository;
 use App\Repository\ReviewRepository;
+use App\Repository\WorksheetRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -93,14 +98,66 @@ class PageController extends AbstractController
     }
 
     /**
-     * @Route("/employee", name="app_employee")
+     * @Route("/detail-worksheet-{id}", name="app_detail_worksheet")
+     */
+    public function worksheetDetailPage(
+        Request $request,
+        ReviewRepository $reviewRepository,
+        CategoryRepository $categoryRepository,
+        Worksheet $worksheet
+    ): Response {
+        return new Response($this->twig->render('worksheet/detail.html.twig', [
+            'worksheet' => $worksheet
+        ]));
+    }
+
+    /**
+     * @Route("/all-profiles", name="app_all_profiles")
      */
     public function employeePage(
         Request $request,
         ReviewRepository $reviewRepository,
-        CategoryRepository $categoryRepository
+        CategoryRepository $categoryRepository,
+        CityRepository $cityRepository,
+        DistrictRepository $districtRepository,
+        WorksheetRepository $worksheetRepository
     ): Response {
-        return new Response($this->twig->render('pages/employee.html.twig', [
+        $slug = $request->query->get('category');
+        $cities = $cityRepository->findAll();
+        $districts = $districtRepository->findAll();
+        $categories = $categoryRepository->findAll();
+        if ($slug == '') {
+            $worksheets = $worksheetRepository->findAll();
+            $category = null;
+        } else {
+            $category = $categoryRepository->findOneBy(['slug' => $slug]);
+            $worksheets = $worksheetRepository->findBy(['category' => $category]);
+        }
+
+        /*$myArr = [
+            'Москва' => [
+                0 => 'Одинцово',
+                1 => 'Мытищи'
+            ],
+            'Санкт-Петербург' => [
+                2 => 'Невский',
+                3 => 'Петроградский'
+            ]
+        ];
+
+        $dList = [
+            2 => 'Невский',
+            3 => 'Петроградский'
+        ];*/
+
+        return new Response($this->twig->render('pages/all_profiles.html.twig', [
+            'cities' => $cities,
+            'districts' => $districts,
+            'worksheets' => $worksheets,
+            'categories' => $categories,
+            'category' => $category
+            //'myArr' => $myArr,
+            //'districtList' => $dList
         ]));
     }
 

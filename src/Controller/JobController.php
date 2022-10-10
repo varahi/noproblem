@@ -192,6 +192,11 @@ class JobController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+                if ($_POST['startDate'] !== '') {
+                    $datetime = new \DateTime();
+                    $startDate = $datetime->createFromFormat('Y-m-d', $_POST['startDate']);
+                    $worksheet->setStartDate($startDate);
+                }
                 $worksheet->setUser($user);
                 $worksheet->setHidden('0');
                 $entityManager = $doctrine->getManager();

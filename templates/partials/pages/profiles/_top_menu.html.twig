@@ -1,0 +1,10 @@
+<div class="choose">
+    <p>Все анкеты:</p>
+    <div class="for mob_group_btn">
+        {% for category in categories %}
+            <div class="click">
+                <a href="{{ path('app_all_profiles', { category: category.slug}) }}" class="">{{ category.name }}</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>

@@ -18,7 +18,7 @@
         <div class="title">
           <h2>Выберите свою роль</h2>
           <button class="close" @click="showModal = false">
-            <img src="assets/img/krest.svg">
+            <img src="/assets/img/krest.svg">
           </button>
         </div>
 
@@ -42,7 +42,7 @@
         <div class="title">
           <h2>Выберите свою роль</h2>
           <button class="close" @click="showSecondModal = false">
-            <img src="assets/img/krest.svg">
+            <img src="/assets/img/krest.svg">
           </button>
         </div>
 

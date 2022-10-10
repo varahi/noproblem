@@ -7,7 +7,7 @@
       <div class="in">
         <div class="title">
           <h2>Вход</h2>
-          <button class="close" @click="showModal = false"><img src="assets/img/krest.svg"></button>
+          <button class="close" @click="showModal = false"><img src="/assets/img/krest.svg"></button>
         </div>
         <div class="double">
 

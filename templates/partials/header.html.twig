@@ -5,7 +5,6 @@
         </a>
         <div class="menu">
             {% include 'partials/header/top_navigation.html.twig' %}
-
             {% if is_granted('ROLE_BUYER') %}
                 <div id="login"></div>
             {% endif %}

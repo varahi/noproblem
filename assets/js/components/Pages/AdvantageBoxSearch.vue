@@ -7,7 +7,7 @@
       <div class="in">
         <div class="title">
           <h2>Чем мы можем вам помочь?</h2>
-          <button class="close" @click="showModal = false"><img src="assets/img/krest.svg"></button>
+          <button class="close" @click="showModal = false"><img src="/assets/img/krest.svg"></button>
         </div>
         <div class="double">
           <div class="button" @click="goToLink()">
