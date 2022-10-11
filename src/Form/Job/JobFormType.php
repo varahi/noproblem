@@ -9,6 +9,8 @@ use App\Entity\District;
 use App\Entity\Education;
 use App\Entity\Experience;
 use App\Entity\Job;
+use App\Entity\Task;
+use App\Entity\AdditionalInfo;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -33,10 +35,23 @@ class JobFormType extends AbstractType
                 [
                     'required' => true,
                     'attr' => [
-                        'placeholder' => '',
-                        'class' => 'form-control',
+                        'placeholder' => 'Title of the job',
+                        'class' => 'text_input',
                     ],
-                    'label' => 'Title of the job',
+                    'label' => false,
+                    'translation_domain' => 'forms',
+                ]
+            )
+            ->add(
+                'contactFullName',
+                TextType::class,
+                [
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Contact Full Name',
+                        'class' => 'text_input',
+                    ],
+                    'label' => false,
                     'translation_domain' => 'forms',
                 ]
             )
@@ -46,10 +61,10 @@ class JobFormType extends AbstractType
                 [
                     'required' => false,
                     'attr' => [
-                        'placeholder' => '',
-                        'class' => 'form-control',
+                        'placeholder' => 'Requirements',
+                        'class' => 'text_input',
                     ],
-                    'label' => 'Requirements',
+                    'label' => false,
                     'translation_domain' => 'forms',
                 ]
             )
@@ -59,10 +74,10 @@ class JobFormType extends AbstractType
                 [
                     'required' => false,
                     'attr' => [
-                        'placeholder' => '',
+                        'placeholder' => 'Payment',
                         'class' => 'form-control',
                     ],
-                    'label' => 'Payment',
+                    'label' => false,
                     'translation_domain' => 'messages',
                 ]
             )
@@ -72,46 +87,80 @@ class JobFormType extends AbstractType
                 [
                     'required' => true,
                     'attr' => [
-                        'placeholder' => '',
+                        'placeholder' => 'Age',
                         'class' => 'form-control',
                     ],
-                    'label' => 'Age',
+                    'label' => false,
                     'translation_domain' => 'messages',
                 ]
             )
             ->add('experience', EntityType::class, [
                 'class' => Experience::class,
                 'multiple'  => false,
-                'expanded'  => false,
-                'label' => 'Experience',
+                'expanded'  => true,
+                //'label' => 'Experience',
+                'label' => false,
                 'required' => true,
             ])
             ->add('education', EntityType::class, [
                 'class' => Education::class,
                 'multiple'  => false,
                 'expanded'  => false,
-                'label' => 'Education',
+                'label' => false,
                 'required' => true,
+                'attr' => [
+                    'placeholder' => '',
+                    'class' => 'select_education nona',
+                ],
             ])
             ->add('citizen', EntityType::class, [
                 'class' => Citizen::class,
                 'multiple'  => false,
                 'expanded'  => false,
-                'label' => 'Citizen',
+                'label' => false,
                 'required' => true,
             ])
             ->add('startNow', CheckboxType::class, [
                 'mapped' => false,
                 'required' => false,
-                'label' => 'Start Now',
-                /*'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],*/
+                'label' => false
             ])
+            ->add('tasks', EntityType::class, [
+                'class' => Task::class,
+                'multiple'  => true,
+                'expanded'  => true,
+                //'label' => 'Experience',
+                'label' => false,
+                'required' => true,
+            ])
+            ->add(
+                'anotherTask',
+                TextType::class,
+                [
+                    'required' => true,
+                    'attr' => [
+                        'placeholder' => 'Another Task',
+                        'class' => 'text_input',
+                    ],
+                    'label' => false,
+                    'translation_domain' => 'forms',
+                ]
+            )
+            ->add(
+                'anotherCitizen',
+                TextType::class,
+                [
+                    'required' => true,
+                    'attr' => [
+                        'placeholder' => 'Another Citizen',
+                        'class' => 'text_input',
+                    ],
+                    'label' => false,
+                    'translation_domain' => 'forms',
+                ]
+            )
             ->add('startDate', DateType::class, [
-                'label'     => 'Start Date',
+                'label'     => false,
                 'required' => false,
                 'widget' => 'single_text',
                 //'format' => 'MM/DD/yyyy',
@@ -119,7 +168,8 @@ class JobFormType extends AbstractType
                 'html5' => true,
                 //'input'  => 'datetime_immutable',
                 'attr' => [
-                    'class' => 'date'
+                    'class' => 'text_input date',
+                    //'placeholder' => 'Start Date',
                 ]
             ])
             ->add(
@@ -128,31 +178,45 @@ class JobFormType extends AbstractType
                 [
                     'required' => true,
                     'attr' => [
-                        'placeholder' => '',
-                        'class' => 'form-control textarea-form-control',
+                        'placeholder' => 'Address',
+                        'class' => 'text_input',
                     ],
-                    'label' => 'Address',
+                    'label' => false
                 ]
             )
             ->add('city', EntityType::class, [
                 'class' => City::class,
                 'multiple'  => false,
                 'expanded'  => false,
-                'label' => 'City',
+                'label' => false,
                 'required' => true,
+                'attr' => [
+                    'class' => 'text_input',
+                ],
             ])
             ->add('district', EntityType::class, [
                 'class' => District::class,
                 'multiple'  => false,
                 'expanded'  => false,
-                'label' => 'District',
+                'label' => false,
                 'required' => true,
+                'attr' => [
+                    'class' => 'text_input',
+                ],
             ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'multiple'  => false,
                 'expanded'  => false,
-                'label' => 'Category',
+                'label' => false,
+                'required' => true,
+            ])
+            ->add('additional', EntityType::class, [
+                'class' => AdditionalInfo::class,
+                'multiple'  => true,
+                'expanded'  => true,
+                //'label' => 'Experience',
+                'label' => false,
                 'required' => true,
             ])
         ;

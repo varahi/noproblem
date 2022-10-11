@@ -1,0 +1,33 @@
+{% extends 'layouts/base.html.twig' %}
+{% block title %}Создать вакансию - Онлайн-сервис по подбору домашнего персонала{% endblock %}
+{% block body %}
+    {% include 'partials/header.html.twig' %}
+
+<div>
+    <div class="main_account content">
+        <div  class="bread">
+            <a  href="{{ path('app_main_page') }}" class="nuxt-link-active">Главная</a>
+            <a href="{{ path('app_lk') }}">/ Личный кабинет</a>
+            <a>/ Создать вакансию</a>
+        </div>
+        <div class="mobfile mobs">
+            <p>Мой профиль</p>
+        </div>
+        <div class="large_account fon">
+            <div class="in_account">
+                {% include 'partials/_message.html.twig' %}
+                <h2>Создать вакансию</h2>
+                {{ form_start(form, {'attr' : {'class': 'form-std form-std-custom', 'autocomplete': 'off'}} ) }}
+                {% include 'partials/job/_job_fields.html.twig' %}
+                <div class="btn_try btn_try_custom">
+                    <button type="submit" class="btn btn-success">Создать вакансию</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}
+

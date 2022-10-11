@@ -78,7 +78,7 @@
     margin-bottom: 20px;
 }
 
-label.required:after {
+.required:after {
     content: ' *';
     color: #ff0000;
 }
@@ -185,4 +185,24 @@ input[required] + label:after {
 .box_account_list {
     width: auto;
     margin-bottom: 10px;
+}
+
+.abouts_creating_form textarea {
+    width: 300px;
+    height: 100px;
+}
+
+#job_form_startNow {
+    color: #fff;
+    background: var(--violet);
+    border-radius: 30px;
+    padding: 12px 36px;
+}
+
+input.mins_creating_form {
+    width: 57px;
+    height: 29px;
+    text-indent: 5px;
+    font-size: 14px;
+    color: #7B7B7B;
 }

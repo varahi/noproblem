@@ -124,6 +124,21 @@ class Job
      */
     private $additional;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $contactFullName;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $anotherTask;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $anotherCitizen;
+
     public function __construct()
     {
         $this->created = new \DateTime();
@@ -413,6 +428,42 @@ class Job
     public function removeAdditional(AdditionalInfo $additional): self
     {
         $this->additional->removeElement($additional);
+
+        return $this;
+    }
+
+    public function getContactFullName(): ?string
+    {
+        return $this->contactFullName;
+    }
+
+    public function setContactFullName(?string $contactFullName): self
+    {
+        $this->contactFullName = $contactFullName;
+
+        return $this;
+    }
+
+    public function getAnotherTask(): ?string
+    {
+        return $this->anotherTask;
+    }
+
+    public function setAnotherTask(?string $anotherTask): self
+    {
+        $this->anotherTask = $anotherTask;
+
+        return $this;
+    }
+
+    public function getAnotherCitizen(): ?string
+    {
+        return $this->anotherCitizen;
+    }
+
+    public function setAnotherCitizen(?string $anotherCitizen): self
+    {
+        $this->anotherCitizen = $anotherCitizen;
 
         return $this;
     }

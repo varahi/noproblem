@@ -65,6 +65,18 @@
                 <source>Requirements</source>
                 <target>Требования</target>
             </trans-unit>
+            <trans-unit id="Contact Full Name" resname="Contact Full Name">
+                <source>Contact Full Name</source>
+                <target>Иванов Иван Иванович</target>
+            </trans-unit>
+            <trans-unit id="Another Task" resname="Another Task">
+                <source>Another Task</source>
+                <target>Другая задача</target>
+            </trans-unit>
+            <trans-unit id="Another Citizen" resname="Another Citizen">
+                <source>Another Citizen</source>
+                <target>Другое гражданство</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

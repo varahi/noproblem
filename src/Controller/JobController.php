@@ -54,6 +54,47 @@ class JobController extends AbstractController
     /**
      *
      * @IsGranted("ROLE_EMPLOYEE")
+     * @Route("/new-job_back", name="app_new_job_back")
+     */
+    public function newJobBack(
+        Request $request,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier,
+        ManagerRegistry $doctrine
+    ): Response {
+        if ($this->isGranted(self::ROLE_EMPLOYEE)) {
+            $user = $this->security->getUser();
+
+            $job = new Job();
+            $form = $this->createForm(JobFormType::class, $job);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $job->setOwner($user);
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($job);
+                $entityManager->flush();
+
+                $message = $translator->trans('New job created', array(), 'flash');
+                $notifier->send(new Notification($message, ['browser']));
+                $referer = $request->headers->get('referer');
+                return new RedirectResponse($referer);
+            }
+
+            return $this->render('job/new_back.html.twig', [
+                'user' => $user,
+                'form' => $form->createView()
+            ]);
+        } else {
+            $message = $translator->trans('Please login', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_main");
+        }
+    }
+
+    /**
+     *
+     * @IsGranted("ROLE_EMPLOYEE")
      * @Route("/new-job", name="app_new_job")
      */
     public function newJob(
@@ -69,7 +110,8 @@ class JobController extends AbstractController
             $form = $this->createForm(JobFormType::class, $job);
             $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted()) {
+                dd($_POST);
                 $job->setOwner($user);
                 $entityManager = $doctrine->getManager();
                 $entityManager->persist($job);
