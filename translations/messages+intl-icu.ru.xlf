@@ -345,7 +345,10 @@
         <source>My worksheets</source>
         <target>Мои анкеты</target>
       </trans-unit>
-
+      <trans-unit id="KY6mQRC" resname="Ignore text">
+        <source>Ignore text</source>
+        <target>Если это были не вы, просто проигнорируйте это письмо.</target>
+      </trans-unit>
       <trans-unit id="4O3_s6c" resname="Reset password">
         <source>Reset password</source>
         <target>Восстановить пароль</target>
@@ -381,6 +384,14 @@
       <trans-unit id="p49E9Md" resname="Cheers">
         <source>Cheers</source>
         <target>Спасибо</target>
+      </trans-unit>
+      <trans-unit id="New password" resname="New password">
+        <source>New password</source>
+        <target>Новый пароль</target>
+      </trans-unit>
+      <trans-unit id="Repeat password" resname="Repeat password">
+        <source>Repeat password</source>
+        <target>Поворить пароль</target>
       </trans-unit>
     </body>
   </file>

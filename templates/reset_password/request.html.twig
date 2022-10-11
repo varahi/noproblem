@@ -1,24 +1,28 @@
 {% extends 'layouts/base.html.twig' %}
-{% block body %}
+{% block title %}Восстановить пароль - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 
-    <section id="auth_block">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="auth_items block_shadow b_center">
-                        <h2 class="b_center">{{ 'Reset password'|trans }}</h2>
-                        {{ form_start(requestForm, {'attr' : {'class': 'form-std', 'autocomplete': 'off'}} ) }}
-                        {{ form_widget(requestForm.email) }}
-                        <div style="margin-bottom: 20px;">
-                            <small>{{ 'mail_message_reset_password'|trans }}</small>
-                        </div>
-                        <button>{{ 'Reset'|trans }}</button>
-                        <p class="m_t_15"><a href="{{ path('app_login') }}">{{ 'Login'|trans }}</a></p>
-                        {{ form_end(requestForm) }}
+{% block body %}
+    {% include 'partials/header.html.twig' %}
+
+    <div class="main_account content">
+        <div class="large_account fon">
+            <div class="in_account">
+                <div class="reset-form-content">
+                    <h2 class="b_center">{{ 'Reset password'|trans }}</h2>
+                    {{ form_start(requestForm, {'attr' : {'class': 'form-std form-std-custom', 'autocomplete': 'off'}} ) }}
+                    {{ form_widget(requestForm.email) }}
+                    <div style="margin-bottom: 20px;">
+                        <small>{{ 'mail_message_reset_password'|trans }}</small>
                     </div>
+
+                    <div class="btn_try btn_try_custom">
+                        <button type="submit" class="btn btn-success">{{ 'Reset'|trans }}</button>
+                    </div>
+                    <!--                <p class="m_t_15"><a href="{{ path('app_login') }}">{{ 'Login'|trans }}</a></p>-->
+                    {{ form_end(requestForm) }}
                 </div>
             </div>
         </div>
-    </section>
-
+    </div>
+    {% include 'partials/footer.html.twig' %}
 {% endblock %}

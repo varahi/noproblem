@@ -1,22 +1,21 @@
 {% extends 'layouts/base.html.twig' %}
+{% block title %}Восстановить пароль - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block body %}
-
-    <section id="auth_block">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="auth_items block_shadow b_center">
-                        <h2 class="b_center">{{ 'Reset password'|trans }}</h2>
-                        {{ form_start(resetForm, {'attr' : {'class': 'form-std', 'autocomplete': 'off'}} ) }}
-                        {{ form_row(resetForm.plainPassword) }}
-                        <div class="input-submit">
-                            <input type="submit" value="{{ 'Reset'|trans }}">
-                        </div>
-                        {{ form_end(resetForm) }}
+    {% include 'partials/header.html.twig' %}
+    <div class="main_account content">
+        <div class="large_account fon">
+            <div class="in_account ">
+                <div class="reset-form-content">
+                    <h2 class="b_center">{{ 'Reset password'|trans }}</h2>
+                    {{ form_start(resetForm, {'attr' : {'class': 'form-std form-std-custom repair-password', 'autocomplete': 'off'}} ) }}
+                    {{ form_row(resetForm.plainPassword) }}
+                    <div class="btn_try btn_try_custom">
+                        <button type="submit" class="btn btn-success">{{ 'Reset'|trans }}</button>
                     </div>
+                    {{ form_end(resetForm) }}
                 </div>
             </div>
         </div>
-    </section>
-
+    </div>
+    {% include 'partials/footer.html.twig' %}
 {% endblock %}

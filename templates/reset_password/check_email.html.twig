@@ -1,23 +1,20 @@
 {% extends 'layouts/base.html.twig' %}
+{% block title %}Проверьте почту - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block body %}
+    {% include 'partials/header.html.twig' %}
 
-    <section id="auth_block">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="auth_items block_shadow b_center">
-                        <div class="content-inner">
-                            <p>
-                                {{ 'mail_message_check_email'|trans }}
-                                {{ 'mail_message_link_expire'|trans }}
-                                {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
-                            </p>
-                            <p>{{ 'mail_message_check_email_info'|trans }} <a href="{{ path('app_forgot_password_request') }}"> {{ 'try_again'|trans }}</a>.</p>
-                        </div>
-                    </div>
-                </div>
+    <div class="main_account content">
+        <div class="large_account fon">
+            <div class="in_account">
+                <h2 class="b_center">Проверьте вашу почту</h2>
+                <p>
+                    {{ 'mail_message_check_email'|trans }}
+                    {{ 'mail_message_link_expire'|trans }}
+                    {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+                </p>
+                <p>{{ 'mail_message_check_email_info'|trans }} <a href="{{ path('app_forgot_password_request') }}"> {{ 'try_again'|trans }}</a>.</p>
             </div>
         </div>
-    </section>
-
+    </div>
+    {% include 'partials/footer.html.twig' %}
 {% endblock %}
