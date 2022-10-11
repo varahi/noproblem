@@ -1,0 +1,22 @@
+{% extends 'layouts/base.html.twig' %}
+{% block body %}
+
+    <section id="auth_block">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="auth_items block_shadow b_center">
+                        <h2 class="b_center">{{ 'Reset password'|trans }}</h2>
+                        {{ form_start(resetForm, {'attr' : {'class': 'form-std', 'autocomplete': 'off'}} ) }}
+                        {{ form_row(resetForm.plainPassword) }}
+                        <div class="input-submit">
+                            <input type="submit" value="{{ 'Reset'|trans }}">
+                        </div>
+                        {{ form_end(resetForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

@@ -126,6 +126,14 @@ class PageController extends AbstractController
         $cities = $cityRepository->findAll();
         $districts = $districtRepository->findAll();
         $categories = $categoryRepository->findAll();
+
+        if ($this->security->getUser()) {
+            $user = $this->security->getUser();
+        } else {
+            $user = null;
+        }
+
+
         if ($slug == '') {
             $worksheets = $worksheetRepository->findAll();
             $category = null;
@@ -155,7 +163,8 @@ class PageController extends AbstractController
             'districts' => $districts,
             'worksheets' => $worksheets,
             'categories' => $categories,
-            'category' => $category
+            'category' => $category,
+            'user' => $user
             //'myArr' => $myArr,
             //'districtList' => $dList
         ]));

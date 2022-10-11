@@ -345,6 +345,43 @@
         <source>My worksheets</source>
         <target>Мои анкеты</target>
       </trans-unit>
+
+      <trans-unit id="4O3_s6c" resname="Reset password">
+        <source>Reset password</source>
+        <target>Восстановить пароль</target>
+      </trans-unit>
+      <trans-unit id="cEyVZdY" resname="mail_message_reset_password">
+        <source>mail_message_reset_password</source>
+        <target>Введите адрес электронной почты, и мы вышлем вам ссылку для сброса пароля.</target>
+      </trans-unit>
+      <trans-unit id="2u52BrM" resname="Reset">
+        <source>Reset</source>
+        <target>Сбросить пароль</target>
+      </trans-unit>
+      <trans-unit id="iqyLx.D" resname="mail_message_check_email">
+        <source>mail_message_check_email</source>
+        <target>Если существует учетная запись, соответствующая введенному адресу электронной почты, то вы получит письмо со ссылкой, которую вы можете использовать для сброса пароля.</target>
+      </trans-unit>
+      <trans-unit id="fIVCInG" resname="mail_message_link_expire">
+        <source>mail_message_link_expire</source>
+        <target>Срок действия этой ссылки истекает через</target>
+      </trans-unit>
+      <trans-unit id="G6o9N.N" resname="mail_message_check_email_info">
+        <source>mail_message_check_email_info</source>
+        <target>Если вы не получили письмо, проверьте папку со спамом или</target>
+      </trans-unit>
+      <trans-unit id="8AIBWJy" resname="try_again">
+        <source>try_again</source>
+        <target>попробуйте снова</target>
+      </trans-unit>
+      <trans-unit id="X9hGTrh" resname="mail_message_visit_link">
+        <source>mail_message_visit_link</source>
+        <target>Вы сделали запрос на изменение пароля. Чтобы изменить пароль проследуйте по этой ссылке: </target>
+      </trans-unit>
+      <trans-unit id="p49E9Md" resname="Cheers">
+        <source>Cheers</source>
+        <target>Спасибо</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

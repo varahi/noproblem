@@ -1,0 +1,10 @@
+<h1>Сообщение с сайта noproblem.ru</h1>
+
+<p>{{ 'mail_message_visit_link'|trans }}</p>
+
+<a href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
+
+<p>{{ 'mail_message_link_expire'|trans }} {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+
+<p>{{ 'Ignore text'|trans }}!</p>
+<p>{{ 'Cheers'|trans }}!</p>

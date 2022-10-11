@@ -1,0 +1,24 @@
+{% extends 'layouts/base.html.twig' %}
+{% block body %}
+
+    <section id="auth_block">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="auth_items block_shadow b_center">
+                        <h2 class="b_center">{{ 'Reset password'|trans }}</h2>
+                        {{ form_start(requestForm, {'attr' : {'class': 'form-std', 'autocomplete': 'off'}} ) }}
+                        {{ form_widget(requestForm.email) }}
+                        <div style="margin-bottom: 20px;">
+                            <small>{{ 'mail_message_reset_password'|trans }}</small>
+                        </div>
+                        <button>{{ 'Reset'|trans }}</button>
+                        <p class="m_t_15"><a href="{{ path('app_login') }}">{{ 'Login'|trans }}</a></p>
+                        {{ form_end(requestForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

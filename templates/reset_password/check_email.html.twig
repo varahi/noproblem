@@ -1,0 +1,23 @@
+{% extends 'layouts/base.html.twig' %}
+{% block body %}
+
+    <section id="auth_block">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="auth_items block_shadow b_center">
+                        <div class="content-inner">
+                            <p>
+                                {{ 'mail_message_check_email'|trans }}
+                                {{ 'mail_message_link_expire'|trans }}
+                                {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+                            </p>
+                            <p>{{ 'mail_message_check_email_info'|trans }} <a href="{{ path('app_forgot_password_request') }}"> {{ 'try_again'|trans }}</a>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
