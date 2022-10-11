@@ -8,7 +8,7 @@
     <title>{% block title %}No problem{% endblock %}</title>
     <meta name="description" content="Cервис по подбору домашнего персонала NOPROBLEM занимается качественным подобором любого сотрудника в онлайн режиме. Большая база нянь, домбработниц, сиделок и других профессий. Найми сотрудника не выходя из дома.">
     {% block stylesheets %}
-        {#{{ encore_entry_link_tags('app') }}#}
+        {{ encore_entry_link_tags('app') }}
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/custom.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/owl.carousel.min.css') }}">
