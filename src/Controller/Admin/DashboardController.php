@@ -28,6 +28,8 @@ use App\Entity\Ticket;
 use App\Entity\Education;
 use App\Entity\Experience;
 use App\Entity\Citizen;
+use App\Entity\Busyness;
+use App\Entity\Accommodation;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -68,8 +70,10 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Experience', 'fa fa-gears', Experience::class),
             MenuItem::linkToCrud('Education', 'fa fa-book', Education::class),
             MenuItem::linkToCrud('Citizen', 'fa fa-braille', Citizen::class),
-            MenuItem::linkToCrud('Task', 'fa fa-braille', Task::class),
-            MenuItem::linkToCrud('Additional Info', 'fa fa-braille', AdditionalInfo::class),
+            MenuItem::linkToCrud('Tasks', 'fa fa-tasks', Task::class),
+            MenuItem::linkToCrud('Additional Info', 'fa fa-info', AdditionalInfo::class),
+            MenuItem::linkToCrud('Accommodation', 'fa fa-home', Accommodation::class),
+            MenuItem::linkToCrud('Busynnes', 'fa fa-check', Busyness::class),
         ]);
 
         yield MenuItem::section('Site');

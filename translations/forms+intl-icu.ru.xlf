@@ -63,7 +63,7 @@
             </trans-unit>
             <trans-unit id="Requirements" resname="Requirements">
                 <source>Requirements</source>
-                <target>Требования</target>
+                <target>Ваши требования...</target>
             </trans-unit>
             <trans-unit id="Contact Full Name" resname="Contact Full Name">
                 <source>Contact Full Name</source>

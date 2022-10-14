@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\ArticleCategory;
 use App\Entity\Task;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -37,6 +38,15 @@ class TaskRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * @param array $order
+     * @return Task[]
+     */
+    public function findAllOrder(array $order)
+    {
+        return $this->findBy([], $order);
     }
 
 //    /**

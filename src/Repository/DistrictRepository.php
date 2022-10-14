@@ -16,6 +16,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class DistrictRepository extends ServiceEntityRepository
 {
+    public const TABLE = 'App\Entity\District';
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, District::class);
@@ -37,6 +39,27 @@ class DistrictRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * @param $limit
+     * @param $offset
+     * @return float|int|mixed|string
+     */
+    public function findLimitOrder($limit, $offset)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $expr = $qb->expr();
+
+        $qb->select('c')
+            ->from(self::TABLE, 'c')
+            ->where($expr->neq('c.hidden', 1))
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->orderBy('c.name', 'ASC');
+
+        $reviews = $qb->getQuery()->getResult();
+        return $reviews;
     }
 
 //    /**

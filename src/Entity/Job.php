@@ -139,11 +139,23 @@ class Job
      */
     private $anotherCitizen;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Busyness::class, mappedBy="job")
+     */
+    private $busynesses;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Accommodation::class, mappedBy="job")
+     */
+    private $accommodations;
+
     public function __construct()
     {
         $this->created = new \DateTime();
         $this->tasks = new ArrayCollection();
         $this->additional = new ArrayCollection();
+        $this->busynesses = new ArrayCollection();
+        $this->accommodations = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -464,6 +476,66 @@ class Job
     public function setAnotherCitizen(?string $anotherCitizen): self
     {
         $this->anotherCitizen = $anotherCitizen;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Busyness>
+     */
+    public function getBusynesses(): Collection
+    {
+        return $this->busynesses;
+    }
+
+    public function addBusyness(Busyness $busyness): self
+    {
+        if (!$this->busynesses->contains($busyness)) {
+            $this->busynesses[] = $busyness;
+            $busyness->setJob($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBusyness(Busyness $busyness): self
+    {
+        if ($this->busynesses->removeElement($busyness)) {
+            // set the owning side to null (unless already changed)
+            if ($busyness->getJob() === $this) {
+                $busyness->setJob(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Accommodation>
+     */
+    public function getAccommodations(): Collection
+    {
+        return $this->accommodations;
+    }
+
+    public function addAccommodation(Accommodation $accommodation): self
+    {
+        if (!$this->accommodations->contains($accommodation)) {
+            $this->accommodations[] = $accommodation;
+            $accommodation->setJob($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAccommodation(Accommodation $accommodation): self
+    {
+        if ($this->accommodations->removeElement($accommodation)) {
+            // set the owning side to null (unless already changed)
+            if ($accommodation->getJob() === $this) {
+                $accommodation->setJob(null);
+            }
+        }
 
         return $this;
     }

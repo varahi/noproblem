@@ -74,7 +74,7 @@ class JobFormType extends AbstractType
                 [
                     'required' => false,
                     'attr' => [
-                        'placeholder' => 'Payment',
+                        'placeholder' => 'В рублях',
                         'class' => 'form-control',
                     ],
                     'label' => false,
@@ -97,7 +97,7 @@ class JobFormType extends AbstractType
             ->add('experience', EntityType::class, [
                 'class' => Experience::class,
                 'multiple'  => false,
-                'expanded'  => true,
+                'expanded'  => false,
                 //'label' => 'Experience',
                 'label' => false,
                 'required' => true,
@@ -123,16 +123,19 @@ class JobFormType extends AbstractType
             ->add('startNow', CheckboxType::class, [
                 'mapped' => false,
                 'required' => false,
-                'label' => false
+                'label' => false,
+                'attr' => [
+                    'class' => 'white',
+                ],
             ])
-            ->add('tasks', EntityType::class, [
+            /*->add('tasks', EntityType::class, [
                 'class' => Task::class,
                 'multiple'  => true,
                 'expanded'  => true,
                 //'label' => 'Experience',
                 'label' => false,
                 'required' => true,
-            ])
+            ])*/
             ->add(
                 'anotherTask',
                 TextType::class,
@@ -140,7 +143,7 @@ class JobFormType extends AbstractType
                     'required' => true,
                     'attr' => [
                         'placeholder' => 'Another Task',
-                        'class' => 'text_input',
+                        'class' => 'text_input other_help',
                     ],
                     'label' => false,
                     'translation_domain' => 'forms',
@@ -184,7 +187,7 @@ class JobFormType extends AbstractType
                     'label' => false
                 ]
             )
-            ->add('city', EntityType::class, [
+            /*->add('city', EntityType::class, [
                 'class' => City::class,
                 'multiple'  => false,
                 'expanded'  => false,
@@ -203,22 +206,23 @@ class JobFormType extends AbstractType
                 'attr' => [
                     'class' => 'text_input',
                 ],
-            ])
+            ])*/
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'multiple'  => false,
                 'expanded'  => false,
                 'label' => false,
                 'required' => true,
+                'placeholder' => 'Выберите категорию'
             ])
-            ->add('additional', EntityType::class, [
+            /*->add('additional', EntityType::class, [
                 'class' => AdditionalInfo::class,
                 'multiple'  => true,
                 'expanded'  => true,
                 //'label' => 'Experience',
                 'label' => false,
                 'required' => true,
-            ])
+            ])*/
         ;
     }
 

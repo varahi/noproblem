@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -24,14 +25,15 @@ class TaskCrudController extends AbstractCrudController
             ->setEntityLabelInSingular('Task')
             ->setEntityLabelInPlural('Task')
             ->setSearchFields(['task'])
-            ->setDefaultSort(['name' => 'DESC']);
+            ->setDefaultSort(['name' => 'ASC']);
     }
 
     public function configureFields(string $pageName): iterable
     {
         //yield BooleanField::new('isHidden');
+        yield IntegerField::new('id')->setFormTypeOption('disabled', 'disabled');
         yield TextField::new('name')->setColumns('col-md-10');
-        yield AssociationField::new('category')->setColumns('col-md-10')->hideOnIndex();
+        yield AssociationField::new('category')->setColumns('col-md-10');
     }
 
     /*

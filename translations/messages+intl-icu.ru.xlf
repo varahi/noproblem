@@ -393,6 +393,26 @@
         <source>Repeat password</source>
         <target>Поворить пароль</target>
       </trans-unit>
+      <trans-unit id="Tasks" resname="Tasks">
+        <source>Tasks</source>
+        <target>Задачи</target>
+      </trans-unit>
+      <trans-unit id="Task" resname="Task">
+        <source>Task</source>
+        <target>Задача</target>
+      </trans-unit>
+      <trans-unit id="Additional Info" resname="Additional Info">
+        <source>Additional Info</source>
+        <target>Дополнительная информация</target>
+      </trans-unit>
+      <trans-unit id="Accommodation" resname="Accommodation">
+        <source>Accommodation</source>
+        <target>Проживание</target>
+      </trans-unit>
+      <trans-unit id="Busynnes" resname="Busynnes">
+        <source>Busynnes</source>
+        <target>Занятость</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

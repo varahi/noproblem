@@ -1,0 +1,13 @@
+<div class="abouts_creating_form">
+    <div class="only">
+        <p>График работы:</p>
+    </div>
+    <div class="need_creating_form">
+        {% for busyness in busynessess %}
+            <label for="busyness{{ busyness.id }}" class="busyness_chk">
+                <input type="checkbox" id="busyness{{ busyness.id }}" name="job_form[busyness]" value="{{ busyness.id }}" onclick="onlyOneBusyness(this)">
+                <span>{{ busyness.name }}</span>
+            </label>
+        {% endfor %}
+    </div>
+</div>

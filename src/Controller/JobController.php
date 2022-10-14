@@ -6,7 +6,14 @@ use App\Entity\Job;
 use App\Entity\Worksheet;
 use App\Form\Job\JobFormType;
 use App\Form\Worksheet\WorksheetFormType;
+use App\Repository\AccommodationRepository;
+use App\Repository\AdditionalInfoRepository;
+use App\Repository\BusynessRepository;
+use App\Repository\CitizenRepository;
+use App\Repository\CityRepository;
+use App\Repository\DistrictRepository;
 use App\Repository\JobRepository;
+use App\Repository\TaskRepository;
 use App\Repository\WorksheetRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -101,10 +108,24 @@ class JobController extends AbstractController
         Request $request,
         TranslatorInterface $translator,
         NotifierInterface $notifier,
-        ManagerRegistry $doctrine
+        ManagerRegistry $doctrine,
+        TaskRepository $taskRepository,
+        CityRepository $cityRepository,
+        DistrictRepository $districtRepository,
+        CitizenRepository $citizenRepository,
+        AdditionalInfoRepository $additionalInfoRepository,
+        AccommodationRepository $accommodationRepository,
+        BusynessRepository $busynessRepository
     ): Response {
         if ($this->isGranted(self::ROLE_EMPLOYEE)) {
             $user = $this->security->getUser();
+            $tasks = $taskRepository->findAllOrder(['id' => 'ASC']);
+            $citizens = $citizenRepository->findAllOrder(['id' => 'ASC']);
+            $cities = $cityRepository->findLimitOrder('999', '0');
+            $districts = $districtRepository->findLimitOrder('999', '0');
+            $additionals = $additionalInfoRepository->findAll();
+            $accommodations = $accommodationRepository->findAll();
+            $busynessess = $busynessRepository->findAll();
 
             $job = new Job();
             $form = $this->createForm(JobFormType::class, $job);
@@ -125,6 +146,13 @@ class JobController extends AbstractController
 
             return $this->render('job/new.html.twig', [
                 'user' => $user,
+                'tasks' => $tasks,
+                'cities' => $cities,
+                'districts' => $districts,
+                'citizens' => $citizens,
+                'additionals' => $additionals,
+                'accommodations' => $accommodations,
+                'busynessess' => $busynessess,
                 'form' => $form->createView()
             ]);
         } else {
