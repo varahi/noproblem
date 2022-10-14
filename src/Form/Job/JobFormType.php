@@ -16,12 +16,14 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\IsTrue;
 
 class JobFormType extends AbstractType
@@ -46,7 +48,7 @@ class JobFormType extends AbstractType
                 'contactFullName',
                 TextType::class,
                 [
-                    'required' => false,
+                    'required' => true,
                     'attr' => [
                         'placeholder' => 'Contact Full Name',
                         'class' => 'text_input',
@@ -85,7 +87,7 @@ class JobFormType extends AbstractType
                 'age',
                 TextType::class,
                 [
-                    'required' => true,
+                    'required' => false,
                     'attr' => [
                         'placeholder' => 'Age',
                         'class' => 'form-control',
@@ -113,13 +115,13 @@ class JobFormType extends AbstractType
                     'class' => 'select_education nona',
                 ],
             ])
-            ->add('citizen', EntityType::class, [
+            /*->add('citizen', EntityType::class, [
                 'class' => Citizen::class,
                 'multiple'  => false,
                 'expanded'  => false,
                 'label' => false,
                 'required' => true,
-            ])
+            ])*/
             ->add('startNow', CheckboxType::class, [
                 'mapped' => false,
                 'required' => false,
@@ -140,7 +142,7 @@ class JobFormType extends AbstractType
                 'anotherTask',
                 TextType::class,
                 [
-                    'required' => true,
+                    'required' => false,
                     'attr' => [
                         'placeholder' => 'Another Task',
                         'class' => 'text_input other_help',
@@ -153,7 +155,7 @@ class JobFormType extends AbstractType
                 'anotherCitizen',
                 TextType::class,
                 [
-                    'required' => true,
+                    'required' => false,
                     'attr' => [
                         'placeholder' => 'Another Citizen',
                         'class' => 'text_input',
@@ -166,13 +168,10 @@ class JobFormType extends AbstractType
                 'label'     => false,
                 'required' => false,
                 'widget' => 'single_text',
-                //'format' => 'MM/DD/yyyy',
                 'format' => 'yyyy-MM-dd',
                 'html5' => true,
-                //'input'  => 'datetime_immutable',
                 'attr' => [
                     'class' => 'text_input date',
-                    //'placeholder' => 'Start Date',
                 ]
             ])
             ->add(
@@ -223,6 +222,31 @@ class JobFormType extends AbstractType
                 'label' => false,
                 'required' => true,
             ])*/
+
+            ->add('image', FileType::class, [
+                'required' => false,
+                'mapped' => false,
+                'constraints' => [
+                    new Image([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/gif',
+                            'image/jpeg',
+                            'image/pjpeg',
+                            'image/png',
+                            'image/webp',
+                            'image/vnd.wap.wbmp'
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid image document',
+                    ])
+                ],
+                'attr' => [
+                    //'onchange' => 'readURL(this);'
+                    'class' => 'field field__file'
+                ],
+                'label' => false,
+                'translation_domain' => 'forms',
+            ])
         ;
     }
 

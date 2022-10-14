@@ -15,6 +15,7 @@ use App\Repository\DistrictRepository;
 use App\Repository\JobRepository;
 use App\Repository\TaskRepository;
 use App\Repository\WorksheetRepository;
+use App\Service\FileUploader;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -61,47 +62,6 @@ class JobController extends AbstractController
     /**
      *
      * @IsGranted("ROLE_EMPLOYEE")
-     * @Route("/new-job_back", name="app_new_job_back")
-     */
-    public function newJobBack(
-        Request $request,
-        TranslatorInterface $translator,
-        NotifierInterface $notifier,
-        ManagerRegistry $doctrine
-    ): Response {
-        if ($this->isGranted(self::ROLE_EMPLOYEE)) {
-            $user = $this->security->getUser();
-
-            $job = new Job();
-            $form = $this->createForm(JobFormType::class, $job);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                $job->setOwner($user);
-                $entityManager = $doctrine->getManager();
-                $entityManager->persist($job);
-                $entityManager->flush();
-
-                $message = $translator->trans('New job created', array(), 'flash');
-                $notifier->send(new Notification($message, ['browser']));
-                $referer = $request->headers->get('referer');
-                return new RedirectResponse($referer);
-            }
-
-            return $this->render('job/new_back.html.twig', [
-                'user' => $user,
-                'form' => $form->createView()
-            ]);
-        } else {
-            $message = $translator->trans('Please login', array(), 'flash');
-            $notifier->send(new Notification($message, ['browser']));
-            return $this->redirectToRoute("app_main");
-        }
-    }
-
-    /**
-     *
-     * @IsGranted("ROLE_EMPLOYEE")
      * @Route("/new-job", name="app_new_job")
      */
     public function newJob(
@@ -115,7 +75,8 @@ class JobController extends AbstractController
         CitizenRepository $citizenRepository,
         AdditionalInfoRepository $additionalInfoRepository,
         AccommodationRepository $accommodationRepository,
-        BusynessRepository $busynessRepository
+        BusynessRepository $busynessRepository,
+        FileUploader $fileUploader
     ): Response {
         if ($this->isGranted(self::ROLE_EMPLOYEE)) {
             $user = $this->security->getUser();
@@ -127,14 +88,94 @@ class JobController extends AbstractController
             $accommodations = $accommodationRepository->findAll();
             $busynessess = $busynessRepository->findAll();
 
+            $entityManager = $doctrine->getManager();
             $job = new Job();
-            $form = $this->createForm(JobFormType::class, $job);
-            $form->handleRequest($request);
+            $url = $this->generateUrl('app_new_job');
+            $form = $this->createForm(JobFormType::class, $job, [
+                'action' => $url,
+                'method' => 'POST',
+            ]);
 
+            // Days array for scheduler
+            $daysArr = [
+                1 => 'Пн',
+                2 => 'Вт',
+                3 => 'Ср',
+                4 => 'Чт',
+
+            ];
+            $daysArr2 = [
+                5 => 'Пт',
+                6 => 'Сб',
+                7 => 'Вс',
+            ];
+
+            foreach ($daysArr as $key => $day) {
+                $days1[] = [
+                    "week" => $day,
+                    "startTime" => "12:00",
+                    "endTime" => "16:00",
+                    'checked' => 1,
+                    'key' => $key
+                ];
+            }
+            foreach ($daysArr2 as $key => $day) {
+                $days2[] = [
+                    "week" => $day,
+                    "startTime" => "12:00",
+                    "endTime" => "16:00",
+                    'checked' => 1,
+                    'key' => $key
+                ];
+            }
+
+            $form->handleRequest($request);
             if ($form->isSubmitted()) {
-                dd($_POST);
+                $post = $request->request->get('job_form');
+
                 $job->setOwner($user);
-                $entityManager = $doctrine->getManager();
+                if ($post['city'] !=='') {
+                    $city = $cityRepository->findOneBy(['id' => $post['city']]);
+                    $job->setCity($city);
+                }
+                if ($post['district'] !=='') {
+                    $district = $districtRepository->findOneBy(['id' => $post['district']]);
+                    $job->setDistrict($district);
+                }
+                if ($post['task'] !=='' && is_array($post['task'])) {
+                    foreach ($post['task'] as $taskId) {
+                        $task = $taskRepository->findOneBy(['id' => $taskId]);
+                        $job->addTask($task);
+                        $entityManager->persist($task);
+                    }
+                }
+                if ($post['citizenship'] !=='') {
+                    $citizen = $citizenRepository->findOneBy(['id' => $post['citizenship']]);
+                    $job->setCitizen($citizen);
+                }
+                if ($post['accommodation'] !=='') {
+                    $accommodation = $accommodationRepository->findOneBy(['id' => $post['accommodation']]);
+                    $job->addAccommodation($accommodation);
+                }
+                if ($post['busyness'] !=='') {
+                    $busyness = $busynessRepository->findOneBy(['id' => $post['busyness']]);
+                    $job->addBusyness($busyness);
+                }
+                if ($post['additionally'] && is_array($post['additionally'])) {
+                    foreach ($post['additionally'] as $additionalId) {
+                        $additionally = $additionalInfoRepository->findOneBy(['id' => $additionalId]);
+                        $job->addAdditional($additionally);
+                        $entityManager->persist($additionally);
+                    }
+                }
+
+                // File upload
+                $imageFile = $form->get('image')->getData();
+                if ($imageFile) {
+                    $imageFileName = $fileUploader->upload($imageFile);
+                    $job->setImage($imageFileName);
+                }
+
                 $entityManager->persist($job);
                 $entityManager->flush();
 
@@ -153,6 +194,8 @@ class JobController extends AbstractController
                 'additionals' => $additionals,
                 'accommodations' => $accommodations,
                 'busynessess' => $busynessess,
+                'days1' => $days1,
+                'days2' => $days2,
                 'form' => $form->createView()
             ]);
         } else {

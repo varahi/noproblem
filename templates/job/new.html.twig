@@ -13,13 +13,15 @@
             <a>/ Создать вакансию</a>
         </div>
 
+        {% include 'partials/_message.html.twig' %}
+
         {{ form_start(form, {'attr' : {'class': 'form', 'autocomplete': 'on'}} ) }}
             <div class="large_creating_form fon">
                 <div class="in_creating_form">
-                    <div class="hide" v-if="one">
+                    <div class="hide">
                         <div class="abouts_creating_form grid_creating_form">
                             <div class="dom_creating_form">
-                                <p>ФИО контактного лица</p>
+                                <p class="required">ФИО контактного лица</p>
                                 {{ form_row(form.contactFullName) }}
                             </div>
                         </div>
@@ -51,6 +53,7 @@
                                 <p class="required">Район</p>
                                 <select id="job_form_district" name="job_form[district]" class="text_input" required="required" disabled>
                                     {% for district in districts %}
+                                        <option>Выберите район</option>
                                         <option data-list-id="{{ district.city.id }}" value="{{ district.id }}">
                                             {{ district.name }}
                                         </option>
@@ -187,21 +190,20 @@
                         <p class="arm_creating_form">Или добавьте вручную</p>
                         <button class="choose_creating_form mobs accordion_filter_one_vacan">
                             <span>Добавьте вручную</span>
-                            <img src="{{ asset('assets/img/str.svg" src="/preload.gif') }}" class="lazyLoad">
+                            <img src="{{ asset('assets/img/str.svg" src="/preload.gif') }}" class="lazyLoad" alt="">
                         </button>
-
-                        {% include 'partials/job/_schediler.html.twig' %}
+                        {% include 'partials/job/_scheduler.html.twig' %}
                     </div>
 
                     <div class="hide">
                         <div class="foto_creatig_form">
                             <div class="add_creating_form">
-                                <img src="{{ asset('assets/img/plus.svg') }}">
+                                <img src="{{ asset('assets/img/plus.svg') }}" alt="">
                                 <span>Загрузить фотографию</span>
                             </div>
                             <div class="add_photo">
                                 <div class="field__wrapper">
-                                    <input name="file" type="file" id="field__file-2" class="field field__file" multiple>
+                                    {{ form_row(form.image) }}
                                     <label class="field__file-wrapper" for="field__file-2">
                                         <div class="field__file-fake">Файл не вбран</div>
                                         <div class="field__file-button">Выбрать</div>
@@ -214,7 +216,7 @@
                         </div>
                     </div>
                     <div class="but_creating_form send_message">
-                        <a href="">Отправить объявление</a>
+                        <button type="submit">Отправить объявление</button>
                     </div>
                 </div>
             </div>

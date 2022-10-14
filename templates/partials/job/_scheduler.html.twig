@@ -1,0 +1,71 @@
+<div class="panel_filter">
+    <div class="table_creating_form">
+        <div class="once">
+            {% for week in days1 %}
+                <div class="week_creating_form">
+                    <h5>{{ week.week }}</h5>
+                    <div class="time_creating_form">
+                        <div class="mins_creating_form">
+                            <input value="" class="mins_creating_form" placeholder="{{ week.startTime }}" name="job_form[week][{{ week.key }}][startTime]">
+                        </div>
+                        <p>-</p>
+                        <div class="mins_creating_form">
+                            <input value="" class="mins_creating_form" placeholder="{{ week.endTime }}" name="job_form[week][{{ week.key }}][endTime]">
+                        </div>
+                    </div>
+                    <div class="weekday_box">
+                        <label for="monday" class="weekday">
+                            <input type="checkbox" name="job_form[week][{{ week.key }}][check]" id="monday"  class="check-box" value="1">
+                            <span class="checkmark_day"></span>
+                        </label>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="once">
+            {% for week in days2 %}
+                <div class="week_creating_form">
+                    <h5>{{ week.week }}</h5>
+                    <div class="time_creating_form">
+                        <div class="mins_creating_form">
+                            <input value="" class="mins_creating_form" placeholder="{{ week.startTime }}" name="job_form[week][{{ week.key }}][startTime]">
+                        </div>
+                        <p>-</p>
+                        <div class="mins_creating_form">
+                            <input value="" class="mins_creating_form" placeholder="{{ week.endTime }}" name="job_form[week][{{ week.key }}][endTime]">
+                        </div>
+                    </div>
+                    <div class="weekday_box">
+                        <label for="monday" class="weekday">
+                            <input type="checkbox" name="job_form[week][{{ week.key }}][check]" id="monday"  class="check-box" value="1">
+                            <span class="checkmark_day"></span>
+                        </label>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="abouts_creating_form top2">
+        <p>Дополнительная информация:</p>
+        <button class="choose_creating_form mobs accordion_filter_one_vacan">
+            <span>Выберите из списка</span>
+            <img src="{{ asset('assets/img/str.svg" src="/preload.gif') }}" class="lazyLoad">
+        </button>
+        <div class="panel_filter">
+            <div class="need_creating_form">
+                {% for additional in additionals %}
+                    <label for="additionally{{ additional.id }}" class="tasks">
+                        <input type="checkbox" id="additionally{{ additional.id }}" name="job_form[additionally][]" value="{{ additional.id }}">
+                        <span>{{ additional.name }}</span>
+                    </label>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="did mobs">
+            <img src="assets/img/gala.svg">
+            <a href="">Выполнено</a>
+        </div>
+    </div>
+</div>
