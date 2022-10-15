@@ -14,8 +14,8 @@
                         </div>
                     </div>
                     <div class="weekday_box">
-                        <label for="monday" class="weekday">
-                            <input type="checkbox" name="job_form[week][{{ week.key }}][check]" id="monday"  class="check-box" value="1">
+                        <label for="week-{{ week.key }}" class="weekday">
+                            <input type="checkbox" name="job_form[weekCheck][]" id="week-{{ week.key }}"  class="check-box" value="{{ week.key }}">
                             <span class="checkmark_day"></span>
                         </label>
                     </div>
@@ -37,8 +37,8 @@
                         </div>
                     </div>
                     <div class="weekday_box">
-                        <label for="monday" class="weekday">
-                            <input type="checkbox" name="job_form[week][{{ week.key }}][check]" id="monday"  class="check-box" value="1">
+                        <label for="week-{{ week.key }}" class="weekday">
+                            <input type="checkbox" name="job_form[weekCheck][]" id="week-{{ week.key }}"  class="check-box" value="{{ week.key }}">
                             <span class="checkmark_day"></span>
                         </label>
                     </div>

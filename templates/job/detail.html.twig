@@ -1,0 +1,195 @@
+{% extends 'layouts/lk.html.twig' %}
+{% block title %}{{ job.name }} - Онлайн-сервис по подбору домашнего персонала{% endblock %}
+{% block body %}
+    {% include 'partials/header.html.twig' %}
+
+    <div class="content">
+        <div class="bread">
+            <a href="{{ path('app_main') }}" class="nuxt-link-active main_vavancies">Главная</a>
+            <a href="{{ path('app_all_jobs') }}" class="nuxt-link-active main_vavancies">Вакансии</a>
+            <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">{{ job.name }}</a>
+        </div>
+        <div class="mobfile mobs">
+            <p>Вакансия {{ job.name }}</p>
+        </div>
+        <div class="large_one_vacan fon">
+            <div class="in_one_vacan">
+                <div class="bord">
+                    <div class="starts_one_vacan">
+                        <div class="own_one_vacancy">
+                            <div  class="name_one_vacan">
+                                <div class="round_one_vacan">
+                                    <img src="{{ asset('assets/img/name.svg') }}" class="lazyLoad isLoaded" alt="">
+                                </div>
+                                <div class="about_one_vacan">
+                                    <div class="var_account">
+                                        <p class="point_one_vacan">{{ job.owner.firstName }} {{ job.owner.lastName }}</p>
+                                        <img class="verif_green lazyLoad isLoaded" src="{{ asset('assets/img/verif_green.svg') }}" alt="">
+                                    </div>
+                                    <div class="city_one_vacan"><span>Наниматель</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn_one_vacan nona">
+                                <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Написать сообщение</a>
+                            </div>
+{#                            <div class="btn_one_vacan mobs">#}
+{#                                <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Добавить в чат</a>#}
+{#                            </div>#}
+                        </div>
+                        <div class="owns nona">
+                            <div class="text_owns">
+                                <p>Телефон подтвержден</p>
+                                <p>Почта подтверждена</p>
+                                <p>Паспортные данные подтверждены</p>
+                            </div>
+                            <div class="btn_one_vacan2">
+                                <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Показать контакты</a>
+                            </div>
+                        </div>
+                        <div  class="owns nona">
+                            <div class="last">
+                                <div class="ones_vacan">
+                                    <h4>Зарегистрирован</h4>
+                                    <span>2 дня назад</span>
+                                </div>
+                                <div class="ones_vacan">
+                                    <h4>Был последний раз</h4>
+                                    <span >Сегодня</span>
+                                </div>
+                            </div>
+                            <div class="btn_one_vacan3">
+                                <img src="{{ asset('assets/img/like.svg') }}" class="lazyLoad isLoaded" alt="">
+                                <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Добавить в избранное</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="next_one_vacan">
+                    <div class="yet_one_vacan">
+                        <div class="like_one_vacan">
+                            <h3>{{ job.name }}</h3>
+                            <img class="img_like_mob mobs lazyLoad" src="{{ asset('assets/img/like.svg') }}" alt="">
+                        </div>
+                        <div class="dates mobs">
+                            <span>5 ноября</span>
+                        </div>
+                    </div>
+                    <div class="cols_one_vacan">
+                        <div class="line_one_vacan">
+                            <div class="city2_one_vacan">
+                                <img  src="{{ asset('assets/img/city_map.svg') }}" class="lazyLoad isLoaded" alt="">
+                                <span>{{ job.city.name }} {% if job.district %}, {{ job.district.name }} {% endif %}</span>
+                            </div>
+                            {% if job.payment %}
+                                <div class="city2_one_vacan">
+                                    <p>Оплата:</p>
+                                    <span>{{ job.payment }}</span>
+                                </div>
+                            {% endif %}
+
+                            <div class="city2_one_vacan">
+                                <p>Начать работу:</p>
+                                {% if job.startNow == 1 %}
+                                    <span>Сейчас</span>
+                                {% else %}
+                                    <span>{{ job.startDate|date("d.m.Y") }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="city2_one_vacan nona">
+                                <span>Возраст:</span>
+                                <p>{{ job.age }} лет</p>
+                            </div>
+                        </div>
+                        <div class="line_one_vacan bots">
+                            <div class="city2_one_vacan">
+                                <span>Образование:</span>
+                                <p>{{ job.education }}</p>
+                            </div>
+                            <div class="city2_one_vacan">
+                                <span>Опыт работы: </span>
+                                <p >{{ job.experience }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tit_one_vacan nona">
+                        <img src="{{ asset('assets/img/blockicon.svg') }}" class="lazyLoad isLoaded">
+                        <h4>Описание</h4>
+                    </div>
+                    <p class="up_one_vacan nona">{{ job.description|nl2br }}</p>
+                    <div class="more mobs">
+                        <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Подробнее</a>
+                    </div>
+
+{#                    <div class="road mobs">Here was a mobile box</div>#}
+
+                    <div  class="simple_one_vacan nona">
+                        {% for additional in job.additional %}
+                            <div class="sim">
+                                <img src="{{ asset('assets/img/Ellipse.svg') }}" class="lazyLoad isLoaded" alt="">
+                                <p>{{ additional.name }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div  class="tit_one_vacan img nona">
+                        <img src="{{ asset('assets/img/la_clipboard-list.svg') }}" class="lazyLoad isLoaded" alt="">
+                        <h4>Дополнительно</h4>
+                    </div>
+
+                    <div class="city2_one_vacan up2 nona">
+                        {% if job.accommodations|length > 0 %}
+                            <p >Место работы:</p>
+                            {% for accommodation in job.accommodations %}
+                                <span>{{ accommodation.name }}</span>
+                            {% endfor %}
+                        {% endif %}
+
+                        {% if job.busynesses|length > 0 %}
+                            <p >Занятость:</p>
+                            {% for busyness in job.busynesses %}
+                                <span>{{ busyness.name }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    {% include 'partials/job/_scheduler_detail.html.twig' %}
+                    
+                    <div class="tit_one_vacan img communication_method nona">
+                        <img src="{{ asset('assets/img/phone.svg') }}" class="lazyLoad isLoaded" alt="">
+                        <h4>Предпочитаемый способ связи</h4>
+                    </div>
+                    <div class="sim bigs nona">
+                        <img src="{{ asset('assets/img/Ellipse.svg') }}" class="lazyLoad isLoaded">
+                        <p>Звонок по телефону</p>
+                    </div>
+                    <div class="double_one_vacan nona">
+                        <div  class="btn_one_vacan">
+                            <a  href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Венуться к вакансиям</a>
+                        </div>
+                        <div class="btn_one_vacan2">
+                            <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Другие вакансии</a>
+                        </div>
+                    </div>
+
+                    {% if relatedJobs|length > 0 %}
+                        <h5 class="similar_jobs nona">Похожие вакансии</h5>
+                        <div class="owl-carousel owl-theme" id="slider_one_vacan">
+                            {% for job in relatedJobs %}
+                            <slide>
+                                <div class="box_account_one_vacan">
+                                    {% include 'partials/job/slider/_job_item.html.twig' %}
+                                </div>
+                            </slide>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}

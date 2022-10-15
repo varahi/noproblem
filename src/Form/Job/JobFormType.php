@@ -242,7 +242,7 @@ class JobFormType extends AbstractType
                 ],
                 'attr' => [
                     //'onchange' => 'readURL(this);'
-                    'class' => 'field _field__file cutom_file'
+                    'class' => 'field field__file',
                 ],
                 'label' => false,
                 'translation_domain' => 'forms',

@@ -59,6 +59,26 @@ class JobRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @param int $id
+     * @return int|mixed|string
+     */
+    public function findByCategory(int $id, $limit)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('j')
+            ->from(self::TABLE, 'j')
+            ->join('j.category', 'c')
+            ->where($qb->expr()->eq('c.id', $id))
+            ->setMaxResults($limit)
+            ->orderBy('c.id', 'ASC');
+        //->andWhere('j.status LIKE :status')
+        //->setParameter('status', $status)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Job[] Returns an array of Job objects
 //     */

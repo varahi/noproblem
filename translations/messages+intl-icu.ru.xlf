@@ -413,6 +413,10 @@
         <source>Busynnes</source>
         <target>Занятость</target>
       </trans-unit>
+      <trans-unit id="Schedule" resname="Schedule">
+        <source>Schedule</source>
+        <target>Расписание</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
