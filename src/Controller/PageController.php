@@ -106,7 +106,7 @@ class PageController extends AbstractController
         CategoryRepository $categoryRepository,
         Worksheet $worksheet
     ): Response {
-        return new Response($this->twig->render('worksheet/detail.html.twig', [
+        return new Response($this->twig->render('pages/worksheet/detail.html.twig', [
             'worksheet' => $worksheet
         ]));
     }
@@ -133,7 +133,6 @@ class PageController extends AbstractController
             $user = null;
         }
 
-
         if ($slug == '') {
             $worksheets = $worksheetRepository->findAll();
             $category = null;
@@ -142,23 +141,7 @@ class PageController extends AbstractController
             $worksheets = $worksheetRepository->findBy(['category' => $category]);
         }
 
-        /*$myArr = [
-            'Москва' => [
-                0 => 'Одинцово',
-                1 => 'Мытищи'
-            ],
-            'Санкт-Петербург' => [
-                2 => 'Невский',
-                3 => 'Петроградский'
-            ]
-        ];
-
-        $dList = [
-            2 => 'Невский',
-            3 => 'Петроградский'
-        ];*/
-
-        return new Response($this->twig->render('pages/all_profiles.html.twig', [
+        return new Response($this->twig->render('pages/worksheet/all_profiles.html.twig', [
             'cities' => $cities,
             'districts' => $districts,
             'worksheets' => $worksheets,

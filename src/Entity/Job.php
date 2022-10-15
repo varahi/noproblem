@@ -149,6 +149,11 @@ class Job
      */
     private $accommodations;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="featuredVacancies")
+     */
+    private $user;
+
     public function __construct()
     {
         $this->created = new \DateTime();
@@ -536,6 +541,18 @@ class Job
                 $accommodation->setJob(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

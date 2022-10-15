@@ -9,6 +9,7 @@ use App\Form\Worksheet\WorksheetFormType;
 use App\Repository\AccommodationRepository;
 use App\Repository\AdditionalInfoRepository;
 use App\Repository\BusynessRepository;
+use App\Repository\CategoryRepository;
 use App\Repository\CitizenRepository;
 use App\Repository\CityRepository;
 use App\Repository\DistrictRepository;
@@ -216,11 +217,41 @@ class JobController extends AbstractController
      */
     public function allJobs(
         Request $request,
-        TranslatorInterface $translator,
-        NotifierInterface $notifier,
-        ManagerRegistry $doctrine,
-        Job $job
+        CityRepository $cityRepository,
+        DistrictRepository $districtRepository,
+        WorksheetRepository $worksheetRepositorys,
+        CategoryRepository $categoryRepository,
+        JobRepository $jobRepository
     ): Response {
+        $slug = $request->query->get('category');
+        $cities = $cityRepository->findAll();
+        $districts = $districtRepository->findAll();
+        $categories = $categoryRepository->findAll();
+
+        if ($this->security->getUser()) {
+            $user = $this->security->getUser();
+        } else {
+            $user = null;
+        }
+
+        if ($slug == '') {
+            $jobs = $jobRepository->findAll();
+            $category = null;
+        } else {
+            $category = $categoryRepository->findOneBy(['slug' => $slug]);
+            $jobs = $jobRepository->findBy(['category' => $category]);
+        }
+
+        return new Response($this->twig->render('pages/job/all_jobs.html.twig', [
+            'cities' => $cities,
+            'districts' => $districts,
+            'jobs' => $jobs,
+            'categories' => $categories,
+            'category' => $category,
+            'user' => $user
+            //'myArr' => $myArr,
+            //'districtList' => $dList
+        ]));
     }
 
     /**
@@ -258,9 +289,12 @@ class JobController extends AbstractController
                     $dataKeys[] = $schedule['cheked'];
                 }
             }
+        } else {
+            $dataKeys = null;
+            $scheduleKeys = null;
         }
 
-        return new Response($this->twig->render('job/detail.html.twig', [
+        return new Response($this->twig->render('pages/job/detail.html.twig', [
             'job' => $job,
             'timesArray' => $timesArray,
             'daysArray' => $daysArray,

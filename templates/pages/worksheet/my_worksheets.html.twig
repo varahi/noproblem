@@ -6,7 +6,7 @@
     <div>
         <div class="main_account content">
             <div  class="bread">
-                <a  href="/" class="nuxt-link-active">{{ 'Main page'|trans }}</a>
+                <a href="/" class="nuxt-link-active">{{ 'Main page'|trans }}</a>
                 <a href="{{ path('app_lk') }}">/ {{ 'Personal area'|trans }}</a>
                 <a>/ {{ 'My jobs'|trans }}</a>
             </div>
@@ -14,9 +14,8 @@
                 <p>{{ 'Profile'|trans }}</p>
             </div>
             <div class="large_account fon"></div>
-            {% if is_granted('ROLE_EMPLOYEE') %}
-                {% include 'partials/user/_slider1.html.twig' %}
-                {#{% include 'partials/user/_slider2.html.twig' %}#}
+            {% if is_granted('ROLE_CUSTOMER') %}
+                {% include 'partials/worksheet/_slider1.html.twig' %}
             {% endif %}
         </div>
     </div>

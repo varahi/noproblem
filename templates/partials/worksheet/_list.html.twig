@@ -1,0 +1,49 @@
+<div class="box_account box_account_list">
+    <div class="box_account_content">
+        <h4>{{ job.name }}</h4>
+        <div class="box_person_information">
+            <div class="person_information_city">
+                <div class="city_icon">
+                    <img src="{{ asset('assets/img/city_map.svg') }}" class="lazyLoad isLoaded" alt="">
+                    <p class="city_box_account">{{ job.city }}, {{ job.district }}</p>
+                </div>
+                <p>Начать: <i class="data_box_account">{{ job.startDate|date("d.m.Y") }}</i></p>
+                <p>Опыт работы: {{ job.experience }} </p>
+            </div>
+            <div class="person_information_pay">
+                {% if job.payment %}
+                    <p>{{ 'Payment'|trans }}: <i class="data_box_account">{{ job.payment }}</i></p>
+                {% endif %}
+
+                {% if job.age %}
+                    <p>{{ 'Age'|trans }}: <i class="data_box_account">{{ job.age }}</i></p>
+                {% endif %}
+                {% if job.education %}
+                    <p>{{ 'Education'|trans }}: {{ job.education }} </i></p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="person_description">
+            <p>{{ job.description }}</p>
+        </div>
+        <div class="box_vacancies">
+            <div class="box_logo">
+                <img src="{{ asset('assets/img/ava_person_account.png') }}" alt="">
+            </div>
+            <div class="name_vacancies">
+                {% if is_granted('ROLE_CUSTOMER') %}
+                    <p class="name_vacancies_text">Анкета от частного лица</p>
+                    <p>{{ job.user.firstName }} {{ job.user.lastName }}</p>
+                {% endif %}
+                {% if is_granted('ROLE_EMPLOYEE') %}
+                    <p class="name_vacancies_text">Вакансия от частного лица</p>
+                    <p>{{ job.owner.firstName }} {{ job.owner.lastName }}</p>
+                {% endif %}
+
+            </div>
+        </div>
+        <div class="btn_box_account">
+            <a href="{{ path('app_detail_worksheet', { id: job.id}) }}"><button class="btn_box_account_one">Подробнее</button></a>
+        </div>
+    </div>
+</div>

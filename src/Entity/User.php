@@ -155,6 +155,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $worksheets;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $emailVerified;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $phoneVerified;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $passportVerified;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Job::class, mappedBy="user")
+     */
+    private $featuredVacancies;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $preferredContactMethod;
+
     public function __construct()
     {
         $this->tickets = new ArrayCollection();
@@ -163,6 +188,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->ownersJobs = new ArrayCollection();
         $this->created = new \DateTime();
         $this->worksheets = new ArrayCollection();
+        $this->featuredVacancies = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -596,6 +622,84 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $worksheet->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isEmailVerified(): ?bool
+    {
+        return $this->emailVerified;
+    }
+
+    public function setEmailVerified(bool $emailVerified): self
+    {
+        $this->emailVerified = $emailVerified;
+
+        return $this;
+    }
+
+    public function isPhoneVerified(): ?bool
+    {
+        return $this->phoneVerified;
+    }
+
+    public function setPhoneVerified(bool $phoneVerified): self
+    {
+        $this->phoneVerified = $phoneVerified;
+
+        return $this;
+    }
+
+    public function isPassportVerified(): ?bool
+    {
+        return $this->passportVerified;
+    }
+
+    public function setPassportVerified(bool $passportVerified): self
+    {
+        $this->passportVerified = $passportVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Job>
+     */
+    public function getFeaturedVacancies(): Collection
+    {
+        return $this->featuredVacancies;
+    }
+
+    public function addFeaturedVacancy(Job $featuredVacancy): self
+    {
+        if (!$this->featuredVacancies->contains($featuredVacancy)) {
+            $this->featuredVacancies[] = $featuredVacancy;
+            $featuredVacancy->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFeaturedVacancy(Job $featuredVacancy): self
+    {
+        if ($this->featuredVacancies->removeElement($featuredVacancy)) {
+            // set the owning side to null (unless already changed)
+            if ($featuredVacancy->getUser() === $this) {
+                $featuredVacancy->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPreferredContactMethod(): ?string
+    {
+        return $this->preferredContactMethod;
+    }
+
+    public function setPreferredContactMethod(?string $preferredContactMethod): self
+    {
+        $this->preferredContactMethod = $preferredContactMethod;
 
         return $this;
     }

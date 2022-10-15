@@ -15,7 +15,7 @@
                 <a href="/" class="nuxt-link-active main_vavancies" >Главная</a>
                 <a href="" class="nuxt-link-active" >Анкеты</a>
             </div>
-            {% include 'partials/pages/profiles/_top_menu.html.twig' %}
+            {% include 'partials/worksheet/_top_menu.html.twig' %}
             <div class="mains">
                 <div class="fon">
 
@@ -59,7 +59,7 @@
                             <div class="novacanse">
                                 {% if worksheets is not null %}
                                     {% for job in worksheets %}
-                                        {% include 'partials/pages/profiles/_list.html.twig' %}
+                                        {% include 'partials/worksheet/_list.html.twig' %}
                                     {% endfor %}
                                 {% else %}
                                     <p>По данному запросу анкет не найдено</p>
