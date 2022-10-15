@@ -1,40 +1,37 @@
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <img class="logo logo_menu" src="{{ asset('assets/img/logo.svg') }}">
+    <img class="logo logo_menu" src="{{ asset('assets/img/logo.svg') }}" alt="">
 
     <div class="sidenav_container">
-        {% if user is defined and user is not null %}
-            {% if 'ROLE_EMPLOYEE' in user.roles %}
-                <a href="{{ path('app_lk_employee') }}">Профиль</a>
-                <a href="{{ path('app_my_jobs') }}">Мои вакансии</a>
-                <a href="#">Избранные анкеты</a>
-                <a href="#">Мои курсы</a>
-                <a href="#">История платежей</a>
-                <a href="#">Служба поддержки</a>
-                <a href="#">Ваш город / <span>Город не выбран</span></a>
-                <a href="{{ path('app_logout') }}">Выход</a>
+        {% if is_granted('ROLE_EMPLOYEE') %}
+            <a href="{{ path('app_lk_employee') }}">Профиль</a>
+            <a href="{{ path('app_my_jobs') }}">Мои вакансии</a>
+            <a href="#">Избранные анкеты</a>
+            <a href="#">Мои курсы</a>
+            <a href="#">История платежей</a>
+            <a href="#">Служба поддержки</a>
+            <a href="#">Ваш город / <span>Город не выбран</span></a>
+            <a href="{{ path('app_logout') }}">Выход</a>
 
-            {% elseif 'ROLE_CUSTOMER' in user.roles %}
-                <a href="{{ path('app_lk_customer') }}">Профиль</a>
-                <a href="{{ path('app_my_worksheets') }}">Мои анкеты</a>
-                <a href="#">Избранные анкеты</a>
-                <a href="#">Мои курсы</a>
-                <a href="#">История платежей</a>
-                <a href="#">Служба поддержки</a>
-                <a href="#">Ваш город / <span>Город не выбран</span></a>
-                <a href="{{ path('app_logout') }}">Выход</a>
+        {% elseif is_granted('ROLE_CUSTOMER') %}
+            <a href="{{ path('app_lk_customer') }}">Профиль</a>
+            <a href="{{ path('app_my_worksheets') }}">Мои анкеты</a>
+            <a href="#">Избранные анкеты</a>
+            <a href="#">Мои курсы</a>
+            <a href="#">История платежей</a>
+            <a href="#">Служба поддержки</a>
+            <a href="#">Ваш город / <span>Город не выбран</span></a>
+            <a href="{{ path('app_logout') }}">Выход</a>
 
-            {% elseif 'ROLE_BUYER' in user.roles %}
-                <a href="{{ path('app_lk_buyer') }}">Профиль</a>
-                <a href="#">Мои вакансии</a>
-                <a href="#">Избранные анкеты</a>
-                <a href="#">Мои курсы</a>
-                <a href="#">История платежей</a>
-                <a href="#">Служба поддержки</a>
-                <a href="#">Ваш город / <span>Город не выбран</span></a>
-                <a href="{{ path('app_logout') }}">Выход</a>
-
-            {% endif %}
+        {% elseif is_granted('ROLE_BUYER') %}
+            <a href="{{ path('app_lk_buyer') }}">Профиль</a>
+            <a href="#">Мои вакансии</a>
+            <a href="#">Избранные анкеты</a>
+            <a href="#">Мои курсы</a>
+            <a href="#">История платежей</a>
+            <a href="#">Служба поддержки</a>
+            <a href="#">Ваш город / <span>Город не выбран</span></a>
+            <a href="{{ path('app_logout') }}">Выход</a>
         {% else %}
             <div id="menu-auth"></div>
             <a href="#">Регистрация</a>
@@ -48,13 +45,13 @@
 
     <div class="cocial_network">
         <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">
-            <img src="{{ asset('assets/img/instagram.svg') }}" class="lazyLoad isLoaded">
+            <img src="{{ asset('assets/img/instagram.svg') }}" class="lazyLoad isLoaded" alt="">
         </a>
         <a href="/vacancies" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">
-            <img data-v-75e54aca=""  src="{{ asset('assets/img/youtube.svg') }}" class="lazyLoad isLoaded">
+            <img data-v-75e54aca=""  src="{{ asset('assets/img/youtube.svg') }}" class="lazyLoad isLoaded" alt="">
         </a>
         <a href="/vacancies" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">
-            <img src="{{ asset('assets/img/facebook.svg') }}"class="lazyLoad isLoaded">
+            <img src="{{ asset('assets/img/facebook.svg') }}"class="lazyLoad isLoaded" alt="">
         </a>
     </div>
 </div>

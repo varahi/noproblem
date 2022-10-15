@@ -1,7 +1,7 @@
 <header>
     <div class="nav content">
         <a class="nav-link" href="{{ path('app_main') }}">
-            <img class="logo" src="{{ asset('assets/img/logo.svg') }}">
+            <img class="logo" src="{{ asset('assets/img/logo.svg') }}" alt="">
         </a>
         <div class="menu">
             {% include 'partials/header/top_navigation.html.twig' %}
@@ -13,7 +13,7 @@
                 <div id="login"></div>
             {% endif %}
             <div class="menus">
-                <img src="{{ asset('assets/img/burger.svg') }}" class="burger lazyLoad isLoaded" style="font-size:30px;cursor:pointer" onclick="openNav()";>
+                <img src="{{ asset('assets/img/burger.svg') }}" class="burger lazyLoad isLoaded" style="font-size:30px;cursor:pointer" onclick="openNav()"; alt="">
             </div>
         </div>
     </div>

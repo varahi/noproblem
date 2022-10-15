@@ -88,16 +88,15 @@ class JobController extends AbstractController
 
             // Days array for scheduler
             $daysArr = [
-                1 => 'Пн',
-                2 => 'Вт',
-                3 => 'Ср',
-                4 => 'Чт',
-
+                0 => 'Пн',
+                1 => 'Вт',
+                2 => 'Ср',
+                3 => 'Чт',
             ];
             $daysArr2 = [
-                5 => 'Пт',
-                6 => 'Сб',
-                7 => 'Вс',
+                4 => 'Пт',
+                5 => 'Сб',
+                6 => 'Вс',
             ];
             foreach ($daysArr as $key => $day) {
                 $days1[] = [
@@ -123,26 +122,17 @@ class JobController extends AbstractController
                 $post = $request->request->get('job_form');
 
                 // Week days start time and end time
-                if (!empty($post['week']) && is_array($post['week']) && !empty($post['weekCheck']) && is_array($post['weekCheck'])) {
+                if (!empty($post['week']) && is_array($post['week']) ||
+                    !empty($post['weekCheck']) && is_array($post['weekCheck'])) {
                     foreach ($post['week'] as $key => $week) {
                         if ($week['startTime'] !=='' && $week['endTime'] !=='') {
                             $weekArr[] = $week;
                         }
                     }
                 }
-                // Checked week days
-                if (!empty($post['weekCheck']) && is_array($post['weekCheck'])) {
-                    foreach ($post['weekCheck'] as $weekCheck) {
-                        $weekCheckArr[]['cheked'] = $weekCheck;
-                    }
-                }
-
                 // Generate json to put in database
-                if (isset($weekArr) && isset($weekCheckArr)) {
-                    $scheduleArr = array_merge($weekArr, $weekCheckArr);
-                    $scheduleArrJson = json_encode($scheduleArr);
-                } elseif (isset($weekCheckArr)) {
-                    $scheduleArrJson = json_encode($weekCheckArr);
+                if (isset($weekArr) && is_array($weekArr)) {
+                    $scheduleArrJson = json_encode($weekArr);
                 } else {
                     $scheduleArrJson = null;
                 }
@@ -222,7 +212,7 @@ class JobController extends AbstractController
 
     /**
      *
-     * @Route("/detail-job", name="app_all_jobs")
+     * @Route("/all-jobs", name="app_all_jobs")
      */
     public function allJobs(
         Request $request,
@@ -235,34 +225,49 @@ class JobController extends AbstractController
 
     /**
      *
-     * @IsGranted("ROLE_EMPLOYEE")
      * @Route("/detail-job/job-{id}", name="app_detail_job")
      */
     public function detailJob(
-        Request $request,
-        TranslatorInterface $translator,
-        NotifierInterface $notifier,
-        ManagerRegistry $doctrine,
         Job $job,
         JobRepository $jobRepository
     ): Response {
-        /*if ($this->isGranted(self::ROLE_EMPLOYEE)) {
-            $user = $this->security->getUser();
-            if ($user->getId() == $job->getOwner()->getId()) {
-
-            }
-        } else {
-            $message = $translator->trans('Please login', array(), 'flash');
-            $notifier->send(new Notification($message, ['browser']));
-            return $this->redirectToRoute("app_main");
-        }*/
-
         $category = $job->getCategory();
-        $relatedJobs = $jobRepository->findByCategory($category->getId(), '10');
+        $relatedJobs = $jobRepository->findByCategory($category->getId(), $job->getId(), '10');
+
+        // Times array
+        for ($i = 0; $i < 12; ++$i) {
+            $timesArray[] = $i + 10;
+        }
+        // Dates array
+        $daysArray = [
+            0 => 'Пн',
+            1 => 'Вт',
+            2 => 'Ср',
+            3 => 'Чт',
+            4 => 'Пт',
+            5 => 'Сб',
+            6 => 'Вс',
+        ];
+
+        $schedules = json_decode($job->getSchedule(), true);
+
+        if (is_array($schedules) && !empty($schedules)) {
+            foreach ($schedules as $key => $schedule) {
+                $scheduleKeys[] = $key;
+                if (array_key_exists('cheked', $schedule)) {
+                    $dataKeys[] = $schedule['cheked'];
+                }
+            }
+        }
 
         return new Response($this->twig->render('job/detail.html.twig', [
             'job' => $job,
-            'relatedJobs' => $relatedJobs
+            'timesArray' => $timesArray,
+            'daysArray' => $daysArray,
+            'relatedJobs' => $relatedJobs,
+            'schedules' => $schedules,
+            'dataKeys' => $dataKeys,
+            'scheduleKeys' => $scheduleKeys
         ]));
     }
 

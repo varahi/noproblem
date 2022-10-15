@@ -63,17 +63,17 @@ class JobRepository extends ServiceEntityRepository
      * @param int $id
      * @return int|mixed|string
      */
-    public function findByCategory(int $id, $limit)
+    public function findByCategory(int $id, $currentJob, $limit)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
+        $expr = $qb->expr();
         $qb->select('j')
             ->from(self::TABLE, 'j')
             ->join('j.category', 'c')
             ->where($qb->expr()->eq('c.id', $id))
+            ->andWhere($expr->neq('j.id', $currentJob))
             ->setMaxResults($limit)
             ->orderBy('c.id', 'ASC');
-        //->andWhere('j.status LIKE :status')
-        //->setParameter('status', $status)
         ;
 
         return $qb->getQuery()->getResult();
