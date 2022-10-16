@@ -10,6 +10,7 @@ use App\Http\Request\SignUpRequest;
 use App\Repository\JobRepository;
 use App\Repository\WorksheetRepository;
 use App\Service\FileUploader;
+use App\Service\ModalForms;
 use App\Service\SignUpValidator;
 use App\Service\UserCreator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -50,18 +51,28 @@ class UserController extends AbstractController
 
     private $security;
 
+    /**
+     * @param SignUpValidator $signUpValidator
+     * @param UserCreator $userCreator
+     * @param Security $security
+     * @param Environment $twig
+     * @param ManagerRegistry $doctrine
+     * @param ModalForms $modalForms
+     */
     public function __construct(
         SignUpValidator $signUpValidator,
         UserCreator $userCreator,
         Security $security,
         Environment $twig,
-        ManagerRegistry $doctrine
+        ManagerRegistry $doctrine,
+        ModalForms $modalForms
     ) {
         $this->userCreator = $userCreator;
         $this->signUpValidator = $signUpValidator;
         $this->security = $security;
         $this->twig = $twig;
         $this->doctrine = $doctrine;
+        $this->modalForms = $modalForms;
     }
 
     public function signUp(Request $request): Response
@@ -196,7 +207,8 @@ class UserController extends AbstractController
             {
                 return $this->render('user/lk_customer.html.twig', [
                     'user' => $user,
-                    'worksheets' => $worksheets
+                    'worksheets' => $worksheets,
+                    'ticketForm' => $this->modalForms->ticketForm($request)->createView()
                 ]);
             }
         } else {
@@ -224,7 +236,8 @@ class UserController extends AbstractController
             {
                 return $this->render('user/lk_customer.html.twig', [
                     'user' => $user,
-                    'jobs' => $jobs
+                    'jobs' => $jobs,
+                    'ticketForm' => $this->modalForms->ticketForm($request)->createView()
                 ]);
             }
         } else {
@@ -250,6 +263,7 @@ class UserController extends AbstractController
             {
                 return $this->render('user/lk_customer.html.twig', [
                     'user' => $user,
+                    'ticketForm' => $this->modalForms->ticketForm($request)->createView()
                 ]);
             }
         } else {
@@ -318,6 +332,7 @@ class UserController extends AbstractController
             return new Response($this->twig->render('user/edit_profile.html.twig', [
                 'user' => $user,
                 'form' => $form->createView(),
+                'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             ]));
         } else {
             $message = $translator->trans('Please login', array(), 'flash');

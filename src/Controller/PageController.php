@@ -29,6 +29,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Security;
 use Twig\Environment;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Service\ModalForms;
 
 class PageController extends AbstractController
 {
@@ -36,18 +37,23 @@ class PageController extends AbstractController
 
     private $security;
 
+
     /**
      * @param Environment $twig
      * @param ManagerRegistry $doctrine
+     * @param Security $security
+     * @param ModalForms $modalForms
      */
     public function __construct(
         Environment $twig,
         ManagerRegistry $doctrine,
-        Security $security
+        Security $security,
+        ModalForms $modalForms
     ) {
         $this->twig = $twig;
         $this->doctrine = $doctrine;
         $this->security = $security;
+        $this->modalForms = $modalForms;
     }
 
     /**
@@ -69,7 +75,8 @@ class PageController extends AbstractController
             'reviews' => $reviews,
             'categories' => $categories,
             'user' => $user,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }
 
@@ -82,6 +89,7 @@ class PageController extends AbstractController
         CategoryRepository $categoryRepository
     ): Response {
         return new Response($this->twig->render('pages/company.html.twig', [
+            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
 
@@ -94,6 +102,7 @@ class PageController extends AbstractController
         CategoryRepository $categoryRepository
     ): Response {
         return new Response($this->twig->render('pages/sign-up.html.twig', [
+            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
 
@@ -107,7 +116,8 @@ class PageController extends AbstractController
         Worksheet $worksheet
     ): Response {
         return new Response($this->twig->render('pages/worksheet/detail.html.twig', [
-            'worksheet' => $worksheet
+            'worksheet' => $worksheet,
+            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
 
@@ -120,15 +130,18 @@ class PageController extends AbstractController
         CategoryRepository $categoryRepository
     ): Response {
         return new Response($this->twig->render('pages/tarifs.html.twig', [
+            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
 
     /**
      * @Route("/home", name="app_home")
      */
-    public function home()
-    {
+    public function home(
+        Request $request
+    ) {
         return $this->render('pages/home.html.twig', [
+            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }
 
@@ -136,11 +149,13 @@ class PageController extends AbstractController
      * @Route("/articles", name="app_articles")
      */
     public function articles(
+        Request $request,
         ArticleRepository $articleRepository
     ) {
         $articles = $articleRepository->findAll();
         return $this->render('articles/index.html.twig', [
-            'articles' => $articles
+            'articles' => $articles,
+            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }
 
@@ -148,6 +163,7 @@ class PageController extends AbstractController
      * @Route("/blog", name="app_blog")
      */
     public function blogList(
+        Request $request,
         ArticleRepository $articleRepository,
         ArticleCategoryRepository $articleCategoryRepository
     ) {
@@ -155,7 +171,8 @@ class PageController extends AbstractController
         $categories = $articleCategoryRepository->findAll();
         return $this->render('pages/blog/list.html.twig', [
             'articles' => $articles,
-            'categories' => $categories
+            'categories' => $categories,
+            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }
 
@@ -163,6 +180,7 @@ class PageController extends AbstractController
      * @Route("/blog/category/{slug}", name="app_blog_list_by_category")
      */
     public function blogListByCategory(
+        Request $request,
         ArticleRepository $articleRepository,
         ArticleCategoryRepository $articleCategoryRepository,
         ArticleCategory $articleCategory
@@ -171,7 +189,8 @@ class PageController extends AbstractController
         $categories = $articleCategoryRepository->findAll();
         return $this->render('pages/blog/list_by_category.html.twig', [
             'articles' => $articles,
-            'categories' => $categories
+            'categories' => $categories,
+            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }
 
@@ -188,7 +207,8 @@ class PageController extends AbstractController
         $categories = $articleCategoryRepository->findAll();
         return new Response($this->twig->render('pages/blog/detail.html.twig', [
             'article' => $article,
-            'categories' => $categories
+            'categories' => $categories,
+            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
 
@@ -196,12 +216,14 @@ class PageController extends AbstractController
      * @Route("/courses", name="app_courses")
      */
     public function coursesList(
+        Request $request,
         ArticleRepository $articleRepository,
         ArticleCategoryRepository $articleCategoryRepository
     ) {
         //$articles = $articleRepository->findAll();
         //$categories = $articleCategoryRepository->findAll();
         return $this->render('pages/courses/list.html.twig', [
+            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             //'articles' => $articles,
             //'categories' => $categories
         ]);
@@ -218,6 +240,7 @@ class PageController extends AbstractController
     ): Response {
         return new Response($this->twig->render('pages/courses/detail.html.twig', [
             'course' => $course,
+            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
 }

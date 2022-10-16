@@ -31,7 +31,7 @@
             <div class="three">
                 <h3>Служба поддержки</h3>
                 <div class="button_footer">
-                    <nuxt-link to=""><a href="">Написать</a></nuxt-link>
+                    <a id="openModal" onclick="openModal()">Написать</a>
                 </div>
             </div>
         </div>
@@ -59,3 +59,5 @@
         </div>
     </div>
 </footer>
+
+{% include 'pages/modal/_ticket_form.html.twig' %}

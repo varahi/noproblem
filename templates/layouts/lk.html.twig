@@ -14,6 +14,11 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/owl.carousel.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/owl.theme.default.min.css') }}">
     {% endblock %}
+    {% block javascripts_header %}
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="{{ asset('assets/js/dependableList.js') }}"></script>
+        <script src="{{ asset('assets/js/jquery.maskedinput.min.js') }}"></script>
+    {% endblock %}
 </head>
 <body>
 {% block body %}{% endblock %}
@@ -21,6 +26,7 @@
     {{ encore_entry_script_tags('app') }}
 {% endblock %}#}
 {% block javascripts_footer %}
+    <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
 {% endblock %}
 </body>

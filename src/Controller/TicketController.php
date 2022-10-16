@@ -68,10 +68,14 @@ class TicketController extends AbstractController
         $user = $this->security->getUser();
         $ticket = new Ticket();
 
-        $form = $this->createForm(TicketFormType::class, $ticket);
-        $form->handleRequest($request);
+        $url = $this->generateUrl('app_ticket_new');
+        $ticketForm = $this->createForm(TicketFormType::class, $ticket, [
+            'action' => $url,
+            'method' => 'POST'
+        ]);
+        $ticketForm->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($ticketForm->isSubmitted() && $ticketForm->isValid()) {
             $entityManager = $doctrine->getManager();
             $ticket->setUser($user);
             $ticket->setStatus(0);
@@ -93,7 +97,7 @@ class TicketController extends AbstractController
 
         return $this->render('ticket/new_ticket.html.twig', [
             'user' => $user,
-            'form' => $form->createView()
+            'form' => $ticketForm->createView()
         ]);
     }
 }

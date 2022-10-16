@@ -1,0 +1,32 @@
+<div id="form" class="login modal-vue ticket-form">
+    <div class="overlay"></div>
+
+    <!-- Modal content -->
+    <div class="modal">
+        <div class="modal-title">
+            <h2>{{ 'Create ticket'|trans }}</h2>
+            <button class="close" onclick="closeModal()"><img src="{{ asset('assets/img/krest.svg') }}" alt=""></button>
+        </div>
+
+        <div class="modal-content">
+            {{ form_start(ticketForm, {'attr' : {'class': '_form-std ticket-form', 'autocomplete': 'off'}} ) }}
+                {{ form_widget(ticketForm.title) }}
+                {{ form_widget(ticketForm.email) }}
+                {{ form_widget(ticketForm.description) }}
+                {{ form_widget(ticketForm.priority) }}
+                <div class="btn_try btn_try_custom">
+                    <button type="submit" class="btn btn-success">{{ 'Create ticket'|trans }}</button>
+                </div>
+            {{ form_end(ticketForm) }}
+        </div>
+    </div>
+</div>
+
+<script>
+    function openModal() {
+        $("#form").css("display", "block");
+    }
+    function closeModal() {
+        $("#form").css("display", "none");
+    }
+</script>

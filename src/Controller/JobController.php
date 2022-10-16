@@ -17,6 +17,7 @@ use App\Repository\JobRepository;
 use App\Repository\TaskRepository;
 use App\Repository\WorksheetRepository;
 use App\Service\FileUploader;
+use App\Service\ModalForms;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -46,11 +47,13 @@ class JobController extends AbstractController
     public function __construct(
         Security $security,
         Environment $twig,
-        ManagerRegistry $doctrine
+        ManagerRegistry $doctrine,
+        ModalForms $modalForms
     ) {
         $this->security = $security;
         $this->twig = $twig;
         $this->doctrine = $doctrine;
+        $this->modalForms = $modalForms;
     }
 
     /**
@@ -112,7 +115,8 @@ class JobController extends AbstractController
             'category' => $category,
             'user' => $user,
             'cityId' => $cityId,
-            'districtId' => $districtId
+            'districtId' => $districtId,
+            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             //'myArr' => $myArr,
             //'districtList' => $dList
         ]));
@@ -220,7 +224,8 @@ class JobController extends AbstractController
                 'busynessess' => $busynessess,
                 'days1' => $days1,
                 'days2' => $days2,
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             ]);
         } else {
             $message = $translator->trans('Please login', array(), 'flash');
@@ -375,7 +380,8 @@ class JobController extends AbstractController
                 'accommodationArr' => $accommodationArr,
                 'busynessArr' => $busynessArr,
                 'additionalArr' => $additionalArr,
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             ]);
         } else {
             $message = $translator->trans('Please login', array(), 'flash');
@@ -470,6 +476,7 @@ class JobController extends AbstractController
      * @Route("/detail-job/job-{id}", name="app_detail_job")
      */
     public function detailJob(
+        Request $request,
         Job $job,
         JobRepository $jobRepository
     ): Response {
@@ -512,7 +519,8 @@ class JobController extends AbstractController
             'relatedJobs' => $relatedJobs,
             'schedules' => $schedules,
             'dataKeys' => $dataKeys,
-            'scheduleKeys' => $scheduleKeys
+            'scheduleKeys' => $scheduleKeys,
+            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
 
@@ -534,7 +542,8 @@ class JobController extends AbstractController
             {
                 return $this->render('pages/job/my_jobs.html.twig', [
                     'user' => $user,
-                    'jobs' => $jobs
+                    'jobs' => $jobs,
+                    'ticketForm' => $this->modalForms->ticketForm($request)->createView()
                 ]);
             }
         } else {

@@ -9,6 +9,7 @@ use App\Repository\CityRepository;
 use App\Repository\DistrictRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\WorksheetRepository;
+use App\Service\ModalForms;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,14 +36,22 @@ class WorkerController extends AbstractController
 
     public const LIMIT_PER_PAGE = '5';
 
+    /**
+     * @param Security $security
+     * @param Environment $twig
+     * @param ManagerRegistry $doctrine
+     * @param ModalForms $modalForms
+     */
     public function __construct(
         Security $security,
         Environment $twig,
-        ManagerRegistry $doctrine
+        ManagerRegistry $doctrine,
+        ModalForms $modalForms
     ) {
         $this->security = $security;
         $this->twig = $twig;
         $this->doctrine = $doctrine;
+        $this->modalForms = $modalForms;
     }
 
     /**
@@ -98,7 +107,8 @@ class WorkerController extends AbstractController
             'category' => $category,
             'user' => $user,
             'cityId' => $cityId,
-            'districtId' => $districtId
+            'districtId' => $districtId,
+            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             //'myArr' => $myArr,
             //'districtList' => $dList
         ]));
@@ -141,7 +151,8 @@ class WorkerController extends AbstractController
 
             return $this->render('worksheet/new.html.twig', [
                 'user' => $user,
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             ]);
         } else {
             $message = $translator->trans('Please login', array(), 'flash');
@@ -167,7 +178,8 @@ class WorkerController extends AbstractController
             $worksheets = $worksheetRepository->findByUser($user->getId());
             return $this->render('worksheet/my_worksheets.html.twig', [
                 'user' => $user,
-                'worksheets' => $worksheets
+                'worksheets' => $worksheets,
+                'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             ]);
         } else {
             $message = $translator->trans('Please login', array(), 'flash');
@@ -207,7 +219,8 @@ class WorkerController extends AbstractController
                 return new Response($this->twig->render('worksheet/edit.html.twig', [
                     'user' => $user,
                     'form' => $form->createView(),
-                    'worksheet' => $worksheet
+                    'worksheet' => $worksheet,
+                    'ticketForm' => $this->modalForms->ticketForm($request)->createView()
                 ]));
             } else {
                 $message = $translator->trans('Please login', array(), 'flash');
