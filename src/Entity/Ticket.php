@@ -59,6 +59,11 @@ class Ticket
      */
     private $answer;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $email;
+
     public function __construct()
     {
         $this->created = new \DateTime();
@@ -185,6 +190,18 @@ class Ticket
                 $answer->setTicket(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }

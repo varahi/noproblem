@@ -27,6 +27,7 @@
               {{ validationErrors.password }}
             </small>
           </div>
+          <div class="forgot-password"><a href="/reset-password">Забыли пароль?</a></div>
           <div class="btn_try btn_try_custom">
             <button type="submit" class="btn btn-success">Войти</button>
           </div>
@@ -91,6 +92,18 @@
   display: flex;
   max-width: 450px;
   column-gap: 25px;
+}
+
+.forgot-password {
+  text-align: center;
+  margin: 10px 0;
+  font-size: 20px;
+}
+.forgot-password a {
+  text-decoration: underline;
+}
+.forgot-password a:hover {
+  text-decoration: none;
 }
 
 /* Modal */

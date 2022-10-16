@@ -77,6 +77,14 @@
                 <source>Another Citizen</source>
                 <target>Другое гражданство</target>
             </trans-unit>
+            <trans-unit id="Ticket title" resname="Ticket title">
+                <source>Ticket title</source>
+                <target>Тема обращения</target>
+            </trans-unit>
+            <trans-unit id="Ticket description" resname="Ticket description">
+                <source>Ticket description</source>
+                <target>Текс обращения</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

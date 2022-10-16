@@ -27,7 +27,7 @@
               {{ validationErrors.password }}
             </small>
           </div>
-          <div class="forgot-password"><a href="/reset-password">Забыли пароь?</a></div>
+          <div class="forgot-password"><a href="/reset-password">Забыли пароль?</a></div>
           <div class="btn_try btn_try_custom">
             <button type="submit" class="btn btn-success">Войти</button>
           </div>

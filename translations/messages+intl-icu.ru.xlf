@@ -385,37 +385,49 @@
         <source>Cheers</source>
         <target>Спасибо</target>
       </trans-unit>
-      <trans-unit id="New password" resname="New password">
+      <trans-unit id="PdnfREH" resname="New password">
         <source>New password</source>
         <target>Новый пароль</target>
       </trans-unit>
-      <trans-unit id="Repeat password" resname="Repeat password">
+      <trans-unit id="t0Bw_Q6" resname="Repeat password">
         <source>Repeat password</source>
         <target>Поворить пароль</target>
       </trans-unit>
-      <trans-unit id="Tasks" resname="Tasks">
+      <trans-unit id="s6YOYaU" resname="Tasks">
         <source>Tasks</source>
         <target>Задачи</target>
       </trans-unit>
-      <trans-unit id="Task" resname="Task">
+      <trans-unit id="S8dLITV" resname="Task">
         <source>Task</source>
         <target>Задача</target>
       </trans-unit>
-      <trans-unit id="Additional Info" resname="Additional Info">
+      <trans-unit id="UDxG7pY" resname="Additional Info">
         <source>Additional Info</source>
         <target>Дополнительная информация</target>
       </trans-unit>
-      <trans-unit id="Accommodation" resname="Accommodation">
+      <trans-unit id="lIszQE2" resname="Accommodation">
         <source>Accommodation</source>
         <target>Проживание</target>
       </trans-unit>
-      <trans-unit id="Busynnes" resname="Busynnes">
+      <trans-unit id="nxlP1Ei" resname="Busynnes">
         <source>Busynnes</source>
         <target>Занятость</target>
       </trans-unit>
-      <trans-unit id="Schedule" resname="Schedule">
+      <trans-unit id="9IMKHa4" resname="Schedule">
         <source>Schedule</source>
         <target>Расписание</target>
+      </trans-unit>
+      <trans-unit id="X6g_R9G" resname="Support request">
+        <source>Support request</source>
+        <target>Заявка в тех поддержку</target>
+      </trans-unit>
+      <trans-unit id="nWMiwfT" resname="Login">
+        <source>Login</source>
+        <target>Вход в систему</target>
+      </trans-unit>
+      <trans-unit id="6Db8lex" resname="Create ticket">
+        <source>Create ticket</source>
+        <target>Создать обращение</target>
       </trans-unit>
     </body>
   </file>
