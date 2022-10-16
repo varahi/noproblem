@@ -24,8 +24,11 @@
                                 <div class="about_one_vacan">
                                     <div class="var_account">
                                         <p class="point_one_vacan">{{ job.owner.firstName }} {{ job.owner.lastName }}</p>
+                                        <!-- ToDo -->
                                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                                             <img class="verif_green lazyLoad isLoaded" src="{{ asset('assets/img/verif_green.svg') }}" alt="">
+                                        {% else %}
+                                            <img class="verif_green lazyLoad isLoaded" src="{{ asset('assets/img/verif.svg') }}" alt="">
                                         {% endif %}
                                     </div>
                                     <div class="city_one_vacan"><span>Наниматель</span>
@@ -167,10 +170,10 @@
                     </div>
                     <div class="double_one_vacan nona">
                         <div  class="btn_one_vacan">
-                            <a  href="{{ path('app_all_jobs') }}" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Венуться к вакансиям</a>
+                            <a  href="{{ path('app_my_jobs') }}" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Венуться к вакансиям</a>
                         </div>
                         <div class="btn_one_vacan2">
-                            <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Другие вакансии</a>
+                            <a href="{{ path('app_all_jobs') }}" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Другие вакансии</a>
                         </div>
                     </div>
 

@@ -31,15 +31,8 @@
                 <img src="{{ asset('assets/img/ava_person_account.png') }}" alt="">
             </div>
             <div class="name_vacancies">
-                {% if is_granted('ROLE_CUSTOMER') %}
-                    <p class="name_vacancies_text">Анкета от частного лица</p>
-                    <p>{{ job.user.firstName }} {{ job.user.lastName }}</p>
-                {% endif %}
-                {% if is_granted('ROLE_EMPLOYEE') %}
-                    <p class="name_vacancies_text">Вакансия от частного лица</p>
-                    <p>{{ job.owner.firstName }} {{ job.owner.lastName }}</p>
-                {% endif %}
-
+                <p class="name_vacancies_text">Анкета от частного лица</p>
+                <p>{{ job.user.firstName }} {{ job.user.lastName }}</p>
             </div>
         </div>
         <div class="btn_box_account">

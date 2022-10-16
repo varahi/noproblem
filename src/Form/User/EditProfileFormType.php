@@ -91,7 +91,7 @@ class EditProfileFormType extends AbstractType
                 'about',
                 TextareaType::class,
                 [
-                    'required' => true,
+                    'required' => false,
                     'attr' => [
                         'placeholder' => 'About',
                         'class' => 'form-control textarea-form-control',

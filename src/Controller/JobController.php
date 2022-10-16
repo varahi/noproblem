@@ -52,6 +52,50 @@ class JobController extends AbstractController
 
     /**
      *
+     * @Route("/all-jobs", name="app_all_jobs")
+     */
+    public function allJobs(
+        Request $request,
+        CityRepository $cityRepository,
+        DistrictRepository $districtRepository,
+        WorksheetRepository $worksheetRepositorys,
+        CategoryRepository $categoryRepository,
+        JobRepository $jobRepository
+    ): Response {
+        $slug = $request->query->get('category');
+        $cities = $cityRepository->findAll();
+        $districts = $districtRepository->findAll();
+        $categories = $categoryRepository->findAll();
+
+        if ($this->security->getUser()) {
+            $user = $this->security->getUser();
+        } else {
+            $user = null;
+        }
+
+        if ($slug == '') {
+            $jobs = $jobRepository->findAll();
+            $category = null;
+        } else {
+            $category = $categoryRepository->findOneBy(['slug' => $slug]);
+            $jobs = $jobRepository->findBy(['category' => $category]);
+        }
+
+        return new Response($this->twig->render('pages/job/all_jobs.html.twig', [
+            'cities' => $cities,
+            'districts' => $districts,
+            'jobs' => $jobs,
+            'categories' => $categories,
+            'category' => $category,
+            'user' => $user
+            //'myArr' => $myArr,
+            //'districtList' => $dList
+        ]));
+    }
+
+
+    /**
+     *
      * @IsGranted("ROLE_EMPLOYEE")
      * @Route("/new-job", name="app_new_job")
      */
@@ -120,70 +164,19 @@ class JobController extends AbstractController
 
             $form->handleRequest($request);
             if ($form->isSubmitted()) {
-                $post = $request->request->get('job_form');
-
-                // Week days start time and end time
-                if (!empty($post['week']) && is_array($post['week']) ||
-                    !empty($post['weekCheck']) && is_array($post['weekCheck'])) {
-                    foreach ($post['week'] as $key => $week) {
-                        if ($week['startTime'] !=='' && $week['endTime'] !=='') {
-                            $weekArr[] = $week;
-                        }
-                    }
-                }
-                // Generate json to put in database
-                if (isset($weekArr) && is_array($weekArr)) {
-                    $scheduleArrJson = json_encode($weekArr);
-                } else {
-                    $scheduleArrJson = null;
-                }
-
-                $job->setOwner($user);
-                $job->setSchedule($scheduleArrJson);
-                if ($post['city'] !=='') {
-                    $city = $cityRepository->findOneBy(['id' => $post['city']]);
-                    $job->setCity($city);
-                }
-                if ($post['district'] !=='') {
-                    $district = $districtRepository->findOneBy(['id' => $post['district']]);
-                    $job->setDistrict($district);
-                }
-                if ($post['task'] !=='' && is_array($post['task'])) {
-                    foreach ($post['task'] as $taskId) {
-                        $task = $taskRepository->findOneBy(['id' => $taskId]);
-                        $job->addTask($task);
-                        $entityManager->persist($task);
-                    }
-                }
-                if ($post['citizenship'] !=='') {
-                    $citizen = $citizenRepository->findOneBy(['id' => $post['citizenship']]);
-                    $job->setCitizen($citizen);
-                }
-                if ($post['accommodation'] !=='') {
-                    $accommodation = $accommodationRepository->findOneBy(['id' => $post['accommodation']]);
-                    $job->addAccommodation($accommodation);
-                }
-                if ($post['busyness'] !=='') {
-                    $busyness = $busynessRepository->findOneBy(['id' => $post['busyness']]);
-                    $job->addBusyness($busyness);
-                }
-                if ($post['additionally'] && is_array($post['additionally'])) {
-                    foreach ($post['additionally'] as $additionalId) {
-                        $additionally = $additionalInfoRepository->findOneBy(['id' => $additionalId]);
-                        $job->addAdditional($additionally);
-                        $entityManager->persist($additionally);
-                    }
-                }
-
-                // File upload
-                $imageFile = $form->get('image')->getData();
-                if ($imageFile) {
-                    $imageFileName = $fileUploader->upload($imageFile);
-                    $job->setImage($imageFileName);
-                }
-
-                $entityManager->persist($job);
-                $entityManager->flush();
+                $this->updateFields(
+                    $request,
+                    $form,
+                    $job,
+                    $cityRepository,
+                    $districtRepository,
+                    $taskRepository,
+                    $citizenRepository,
+                    $additionalInfoRepository,
+                    $accommodationRepository,
+                    $busynessRepository,
+                    $fileUploader
+                );
 
                 $message = $translator->trans('New job created', array(), 'flash');
                 $notifier->send(new Notification($message, ['browser']));
@@ -191,7 +184,7 @@ class JobController extends AbstractController
                 return new RedirectResponse($referer);
             }
 
-            return $this->render('job/new.html.twig', [
+            return $this->render('pages/job/new.html.twig', [
                 'user' => $user,
                 'tasks' => $tasks,
                 'cities' => $cities,
@@ -213,45 +206,238 @@ class JobController extends AbstractController
 
     /**
      *
-     * @Route("/all-jobs", name="app_all_jobs")
+     * @IsGranted("ROLE_EMPLOYEE")
+     * @Route("/edit-job/job-{id}", name="app_edit_job")
      */
-    public function allJobs(
+    public function editJob(
         Request $request,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier,
+        ManagerRegistry $doctrine,
+        TaskRepository $taskRepository,
         CityRepository $cityRepository,
         DistrictRepository $districtRepository,
-        WorksheetRepository $worksheetRepositorys,
-        CategoryRepository $categoryRepository,
-        JobRepository $jobRepository
+        CitizenRepository $citizenRepository,
+        AdditionalInfoRepository $additionalInfoRepository,
+        AccommodationRepository $accommodationRepository,
+        BusynessRepository $busynessRepository,
+        FileUploader $fileUploader,
+        Job $job
     ): Response {
-        $slug = $request->query->get('category');
-        $cities = $cityRepository->findAll();
-        $districts = $districtRepository->findAll();
-        $categories = $categoryRepository->findAll();
-
-        if ($this->security->getUser()) {
+        if ($this->isGranted(self::ROLE_EMPLOYEE)) {
             $user = $this->security->getUser();
+            // Redirect if not owner
+            if ($user->getId() !== $job->getOwner()->getId()) {
+                $message = $translator->trans('Please login', array(), 'flash');
+                $notifier->send(new Notification($message, ['browser']));
+                return $this->redirectToRoute("app_main");
+            }
+
+            $tasks = $taskRepository->findAllOrder(['id' => 'ASC']);
+            $citizens = $citizenRepository->findAllOrder(['id' => 'ASC']);
+            $cities = $cityRepository->findLimitOrder('999', '0');
+            $districts = $districtRepository->findLimitOrder('999', '0');
+            $additionals = $additionalInfoRepository->findAll();
+            $accommodations = $accommodationRepository->findAll();
+            $busynessess = $busynessRepository->findAll();
+
+            $url = $this->generateUrl('app_edit_job', ['id' => $job->getId()]);
+            $form = $this->createForm(JobFormType::class, $job, [
+                'action' => $url,
+                'method' => 'POST',
+            ]);
+
+            // Get selected checkboxes
+            if (count($job->getTasks()) > 0) {
+                foreach ($job->getTasks() as $task) {
+                    $selectedTasksArr[] = $task->getId();
+                }
+            } else {
+                $selectedTasksArr = null;
+            }
+
+            if (count($job->getAccommodations()) > 0) {
+                foreach ($job->getAccommodations() as $accommodation) {
+                    $accommodationArr[] = $accommodation->getId();
+                }
+            } else {
+                $accommodationArr = null;
+            }
+
+            if (count($job->getBusynesses()) > 0) {
+                foreach ($job->getBusynesses() as $busyness) {
+                    $busynessArr[] = $busyness->getId();
+                }
+            } else {
+                $busynessArr = null;
+            }
+
+            if (count($job->getAdditional()) > 0) {
+                foreach ($job->getAdditional() as $additional) {
+                    $additionalArr[] = $additional->getId();
+                }
+            } else {
+                $additionalArr = null;
+            }
+
+            // Days array for scheduler
+            $daysArr = [
+                0 => 'Пн',
+                1 => 'Вт',
+                2 => 'Ср',
+                3 => 'Чт',
+            ];
+            $daysArr2 = [
+                4 => 'Пт',
+                5 => 'Сб',
+                6 => 'Вс',
+            ];
+            foreach ($daysArr as $key => $day) {
+                $days1[] = [
+                    "week" => $day,
+                    "startTime" => "12:00",
+                    "endTime" => "16:00",
+                    'checked' => 1,
+                    'key' => $key
+                ];
+            }
+            foreach ($daysArr2 as $key => $day) {
+                $days2[] = [
+                    "week" => $day,
+                    "startTime" => "12:00",
+                    "endTime" => "16:00",
+                    'checked' => 1,
+                    'key' => $key
+                ];
+            }
+
+            $form->handleRequest($request);
+            if ($form->isSubmitted()) {
+                //$post = $request->request->get('job_form');
+                $this->updateFields(
+                    $request,
+                    $form,
+                    $job,
+                    $cityRepository,
+                    $districtRepository,
+                    $taskRepository,
+                    $citizenRepository,
+                    $additionalInfoRepository,
+                    $accommodationRepository,
+                    $busynessRepository,
+                    $fileUploader
+                );
+
+                $message = $translator->trans('Job updated', array(), 'flash');
+                $notifier->send(new Notification($message, ['browser']));
+                $referer = $request->headers->get('referer');
+                return new RedirectResponse($referer);
+            }
+
+            return $this->render('pages/job/edit.html.twig', [
+                'user' => $user,
+                'job' => $job,
+                'tasks' => $tasks,
+                'cities' => $cities,
+                'districts' => $districts,
+                'citizens' => $citizens,
+                'additionals' => $additionals,
+                'accommodations' => $accommodations,
+                'busynessess' => $busynessess,
+                'days1' => $days1,
+                'days2' => $days2,
+                'selectedTasksArr' => $selectedTasksArr,
+                'accommodationArr' => $accommodationArr,
+                'busynessArr' => $busynessArr,
+                'additionalArr' => $additionalArr,
+                'form' => $form->createView()
+            ]);
         } else {
-            $user = null;
+            $message = $translator->trans('Please login', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_main");
+        }
+    }
+
+    private function updateFields(
+        Request $request,
+        $form,
+        Job $job,
+        CityRepository $cityRepository,
+        DistrictRepository $districtRepository,
+        TaskRepository $taskRepository,
+        CitizenRepository $citizenRepository,
+        AdditionalInfoRepository $additionalInfoRepository,
+        AccommodationRepository $accommodationRepository,
+        BusynessRepository $busynessRepository,
+        FileUploader $fileUploader
+    ) {
+        $entityManager = $this->doctrine->getManager();
+        $user = $this->security->getUser();
+        $post = $request->request->get('job_form');
+
+        // Week days start time and end time
+        if (!empty($post['week']) && is_array($post['week']) ||
+            !empty($post['weekCheck']) && is_array($post['weekCheck'])) {
+            foreach ($post['week'] as $key => $week) {
+                if ($week['startTime'] !=='' && $week['endTime'] !=='') {
+                    $weekArr[] = $week;
+                }
+            }
+        }
+        // Generate json to put in database
+        if (isset($weekArr) && is_array($weekArr)) {
+            $scheduleArrJson = json_encode($weekArr);
+        } else {
+            $scheduleArrJson = null;
         }
 
-        if ($slug == '') {
-            $jobs = $jobRepository->findAll();
-            $category = null;
-        } else {
-            $category = $categoryRepository->findOneBy(['slug' => $slug]);
-            $jobs = $jobRepository->findBy(['category' => $category]);
+        $job->setOwner($user);
+        $job->setSchedule($scheduleArrJson);
+        if ($post['city'] !=='') {
+            $city = $cityRepository->findOneBy(['id' => $post['city']]);
+            $job->setCity($city);
+        }
+        if ($post['district'] !=='') {
+            $district = $districtRepository->findOneBy(['id' => $post['district']]);
+            $job->setDistrict($district);
+        }
+        if ($post['task'] !=='' && is_array($post['task'])) {
+            foreach ($post['task'] as $taskId) {
+                $task = $taskRepository->findOneBy(['id' => $taskId]);
+                $job->addTask($task);
+                $entityManager->persist($task);
+            }
+        }
+        if ($post['citizenship'] !=='') {
+            $citizen = $citizenRepository->findOneBy(['id' => $post['citizenship']]);
+            $job->setCitizen($citizen);
+        }
+        if ($post['accommodation'] !=='') {
+            $accommodation = $accommodationRepository->findOneBy(['id' => $post['accommodation']]);
+            $job->addAccommodation($accommodation);
+        }
+        if ($post['busyness'] !=='') {
+            $busyness = $busynessRepository->findOneBy(['id' => $post['busyness']]);
+            $job->addBusyness($busyness);
+        }
+        if ($post['additionally'] && is_array($post['additionally'])) {
+            foreach ($post['additionally'] as $additionalId) {
+                $additionally = $additionalInfoRepository->findOneBy(['id' => $additionalId]);
+                $job->addAdditional($additionally);
+                $entityManager->persist($additionally);
+            }
         }
 
-        return new Response($this->twig->render('pages/job/all_jobs.html.twig', [
-            'cities' => $cities,
-            'districts' => $districts,
-            'jobs' => $jobs,
-            'categories' => $categories,
-            'category' => $category,
-            'user' => $user
-            //'myArr' => $myArr,
-            //'districtList' => $dList
-        ]));
+        // File upload
+        $imageFile = $form->get('image')->getData();
+        if ($imageFile) {
+            $imageFileName = $fileUploader->upload($imageFile);
+            $job->setImage($imageFileName);
+        }
+
+        $entityManager->persist($job);
+        $entityManager->flush();
     }
 
     /**
@@ -308,60 +494,6 @@ class JobController extends AbstractController
     /**
      *
      * @IsGranted("ROLE_EMPLOYEE")
-     * @Route("/edit-job/job-{id}", name="app_edit_job")
-     */
-    public function editJob(
-        Request $request,
-        TranslatorInterface $translator,
-        NotifierInterface $notifier,
-        ManagerRegistry $doctrine,
-        Job $job
-    ): Response {
-        if ($this->isGranted(self::ROLE_EMPLOYEE)) {
-            $user = $this->security->getUser();
-            $skills = [
-                'Нет' => null,
-                'Менее 6 месяцев' => '1',
-                '6-12 месяцев' => '2',
-                '2-5 лет' => '3',
-                'более 5 лет' => '4',
-            ];
-
-            if ($user->getId() == $job->getOwner()->getId()) {
-                $form = $this->createForm(JobFormType::class, $job);
-                $form->handleRequest($request);
-
-                if ($form->isSubmitted() && $form->isValid()) {
-                    $entityManager = $doctrine->getManager();
-                    $entityManager->persist($job);
-                    $entityManager->flush();
-
-                    $message = $translator->trans('Job updated', array(), 'flash');
-                    $notifier->send(new Notification($message, ['browser']));
-                    $referer = $request->headers->get('referer');
-                    return new RedirectResponse($referer);
-                }
-                return new Response($this->twig->render('job/edit.html.twig', [
-                    'user' => $user,
-                    'form' => $form->createView(),
-                    'skills' => $skills,
-                    'job' => $job
-                ]));
-            } else {
-                $message = $translator->trans('Please login', array(), 'flash');
-                $notifier->send(new Notification($message, ['browser']));
-                return $this->redirectToRoute("app_main");
-            }
-        } else {
-            $message = $translator->trans('Please login', array(), 'flash');
-            $notifier->send(new Notification($message, ['browser']));
-            return $this->redirectToRoute("app_main");
-        }
-    }
-
-    /**
-     *
-     * @IsGranted("ROLE_EMPLOYEE")
      * @Route("/profile/my-jobs", name="app_my_jobs")
      */
     public function myJobs(
@@ -375,127 +507,10 @@ class JobController extends AbstractController
             $user = $this->security->getUser();
             $jobs = $jobRepository->findByUser($user->getId());
             {
-                return $this->render('job/my_jobs.html.twig', [
+                return $this->render('pages/job/my_jobs.html.twig', [
                     'user' => $user,
                     'jobs' => $jobs
                 ]);
-            }
-        } else {
-            $message = $translator->trans('Please login', array(), 'flash');
-            $notifier->send(new Notification($message, ['browser']));
-            return $this->redirectToRoute("app_main");
-        }
-    }
-
-    /**
-     *
-     * @IsGranted("ROLE_CUSTOMER")
-     * @Route("/new-worksheet", name="app_new_worksheet")
-     */
-    public function newWorksheet(
-        Request $request,
-        TranslatorInterface $translator,
-        NotifierInterface $notifier,
-        ManagerRegistry $doctrine
-    ): Response {
-        if ($this->isGranted(self::ROLE_CUSTOMER)) {
-            $user = $this->security->getUser();
-            $worksheet = new Worksheet();
-            $form = $this->createForm(WorksheetFormType::class, $worksheet);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                if ($_POST['startDate'] !== '') {
-                    $datetime = new \DateTime();
-                    $startDate = $datetime->createFromFormat('Y-m-d', $_POST['startDate']);
-                    $worksheet->setStartDate($startDate);
-                }
-                $worksheet->setUser($user);
-                $worksheet->setHidden('0');
-                $entityManager = $doctrine->getManager();
-                $entityManager->persist($worksheet);
-                $entityManager->flush();
-
-                $message = $translator->trans('New worksheet created', array(), 'flash');
-                $notifier->send(new Notification($message, ['browser']));
-                $referer = $request->headers->get('referer');
-                return new RedirectResponse($referer);
-            }
-
-            return $this->render('worksheet/new.html.twig', [
-                'user' => $user,
-                'form' => $form->createView()
-            ]);
-        } else {
-            $message = $translator->trans('Please login', array(), 'flash');
-            $notifier->send(new Notification($message, ['browser']));
-            return $this->redirectToRoute("app_main");
-        }
-    }
-
-    /**
-     *
-     * @IsGranted("ROLE_CUSTOMER")
-     * @Route("/my-worksheets", name="app_my_worksheets")
-     */
-    public function myWorksheet(
-        Request $request,
-        TranslatorInterface $translator,
-        NotifierInterface $notifier,
-        ManagerRegistry $doctrine,
-        WorksheetRepository $worksheetRepository
-    ): Response {
-        if ($this->isGranted(self::ROLE_CUSTOMER)) {
-            $user = $this->security->getUser();
-            $worksheets = $worksheetRepository->findByUser($user->getId());
-            return $this->render('worksheet/my_worksheets.html.twig', [
-                'user' => $user,
-                'worksheets' => $worksheets
-            ]);
-        } else {
-            $message = $translator->trans('Please login', array(), 'flash');
-            $notifier->send(new Notification($message, ['browser']));
-            return $this->redirectToRoute("app_main");
-        }
-    }
-
-    /**
-     *
-     * @IsGranted("ROLE_CUSTOMER")
-     * @Route("/edit-worksheet/worksheet-{id}", name="app_edit_worksheet")
-     */
-    public function editWorksheet(
-        Request $request,
-        TranslatorInterface $translator,
-        NotifierInterface $notifier,
-        ManagerRegistry $doctrine,
-        Worksheet $worksheet
-    ): Response {
-        if ($this->isGranted(self::ROLE_CUSTOMER)) {
-            $user = $this->security->getUser();
-            if ($user->getId() == $worksheet->getUser()->getId()) {
-                $form = $this->createForm(WorksheetFormType::class, $worksheet);
-                $form->handleRequest($request);
-
-                if ($form->isSubmitted() && $form->isValid()) {
-                    $entityManager = $doctrine->getManager();
-                    $entityManager->persist($worksheet);
-                    $entityManager->flush();
-
-                    $message = $translator->trans('Worksheet updated', array(), 'flash');
-                    $notifier->send(new Notification($message, ['browser']));
-                    $referer = $request->headers->get('referer');
-                    return new RedirectResponse($referer);
-                }
-                return new Response($this->twig->render('worksheet/edit.html.twig', [
-                    'user' => $user,
-                    'form' => $form->createView(),
-                    'worksheet' => $worksheet
-                ]));
-            } else {
-                $message = $translator->trans('Please login', array(), 'flash');
-                $notifier->send(new Notification($message, ['browser']));
-                return $this->redirectToRoute("app_main");
             }
         } else {
             $message = $translator->trans('Please login', array(), 'flash');

@@ -3,7 +3,9 @@
     <div class="need_creating_form">
         {% for accommodation in accommodations %}
             <label for="accommodation{{ accommodation.id }}" class="accommodation_chk">
-                <input type="checkbox" id="accommodation{{ accommodation.id }}" name="job_form[accommodation]" value="{{ accommodation.id }}" onclick="onlyOneAccommodation(this)">
+                <input type="checkbox" id="accommodation{{ accommodation.id }}" name="job_form[accommodation]"
+                    {% if accommodationArr is defined %}{% if accommodation.id in accommodationArr %} checked {% endif %}{% endif %}
+                       value="{{ accommodation.id }}" onclick="onlyOneAccommodation(this)">
                 <span>{{ accommodation.name }}</span>
             </label>
         {% endfor %}

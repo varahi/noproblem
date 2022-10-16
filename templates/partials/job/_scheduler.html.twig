@@ -57,7 +57,9 @@
             <div class="need_creating_form">
                 {% for additional in additionals %}
                     <label for="additionally{{ additional.id }}" class="tasks">
-                        <input type="checkbox" id="additionally{{ additional.id }}" name="job_form[additionally][]" value="{{ additional.id }}">
+                        <input type="checkbox" id="additionally{{ additional.id }}" name="job_form[additionally][]"
+                                {% if additionalArr is defined %}{% if additional.id in additionalArr %} checked {% endif %}{% endif %}
+                               value="{{ additional.id }}">
                         <span>{{ additional.name }}</span>
                     </label>
                 {% endfor %}
