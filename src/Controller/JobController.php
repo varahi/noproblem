@@ -29,6 +29,7 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Twig\Environment;
+use Knp\Component\Pager\PaginatorInterface;
 
 class JobController extends AbstractController
 {
@@ -39,6 +40,8 @@ class JobController extends AbstractController
     public const ROLE_BUYER = 'ROLE_BUYER';
 
     private $security;
+
+    public const LIMIT_PER_PAGE = '5';
 
     public function __construct(
         Security $security,
@@ -52,20 +55,25 @@ class JobController extends AbstractController
 
     /**
      *
-     * @Route("/all-jobs", name="app_all_jobs")
+     * @Route("/vacancies", name="app_all_jobs")
      */
     public function allJobs(
         Request $request,
         CityRepository $cityRepository,
         DistrictRepository $districtRepository,
-        WorksheetRepository $worksheetRepositorys,
         CategoryRepository $categoryRepository,
-        JobRepository $jobRepository
+        JobRepository $jobRepository,
+        PaginatorInterface $paginator
     ): Response {
         $slug = $request->query->get('category');
         $cities = $cityRepository->findAll();
         $districts = $districtRepository->findAll();
         $categories = $categoryRepository->findAll();
+
+        $cityId = trim($request->query->get('city'));
+        $districtId = trim($request->query->get('district'));
+        $city = $cityRepository->findOneBy(['id' => $cityId]);
+        $district = $districtRepository->findOneBy(['id' => $districtId]);
 
         if ($this->security->getUser()) {
             $user = $this->security->getUser();
@@ -74,12 +82,27 @@ class JobController extends AbstractController
         }
 
         if ($slug == '') {
-            $jobs = $jobRepository->findAll();
+            $queryJobs = $jobRepository->findAll();
             $category = null;
+            if ($cityId !== '' && $districtId !== '' || $cityId !== '') {
+                $queryJobs = $jobRepository->findByParams($city, $district);
+            }
         } else {
             $category = $categoryRepository->findOneBy(['slug' => $slug]);
-            $jobs = $jobRepository->findBy(['category' => $category]);
+            $queryJobs = $jobRepository->findBy(['category' => $category]);
+
+            /*if($cityId !== '' && $districtId !== '' || $cityId !== '' ) {
+                $jobs = $jobRepository->findByParams($city, $district, $slug);
+            } else {
+                $jobs = $jobRepository->findBy(['category' => $category]);
+            }*/
         }
+
+        $jobs = $paginator->paginate(
+            $queryJobs,
+            $request->query->getInt('page', 1),
+            self::LIMIT_PER_PAGE
+        );
 
         return new Response($this->twig->render('pages/job/all_jobs.html.twig', [
             'cities' => $cities,
@@ -87,7 +110,9 @@ class JobController extends AbstractController
             'jobs' => $jobs,
             'categories' => $categories,
             'category' => $category,
-            'user' => $user
+            'user' => $user,
+            'cityId' => $cityId,
+            'districtId' => $districtId
             //'myArr' => $myArr,
             //'districtList' => $dList
         ]));

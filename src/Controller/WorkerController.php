@@ -4,8 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Worksheet;
 use App\Form\Worksheet\WorksheetFormType;
+use App\Repository\CategoryRepository;
+use App\Repository\CityRepository;
+use App\Repository\DistrictRepository;
+use App\Repository\ReviewRepository;
 use App\Repository\WorksheetRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +23,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Twig\Environment;
 
-class CustomerController extends AbstractController
+class WorkerController extends AbstractController
 {
     public const ROLE_EMPLOYEE = 'ROLE_EMPLOYEE';
 
@@ -28,6 +33,8 @@ class CustomerController extends AbstractController
 
     private $security;
 
+    public const LIMIT_PER_PAGE = '5';
+
     public function __construct(
         Security $security,
         Environment $twig,
@@ -36,6 +43,65 @@ class CustomerController extends AbstractController
         $this->security = $security;
         $this->twig = $twig;
         $this->doctrine = $doctrine;
+    }
+
+    /**
+     * @Route("/workers", name="app_all_workers")
+     */
+    public function allWorkers(
+        Request $request,
+        ReviewRepository $reviewRepository,
+        CategoryRepository $categoryRepository,
+        CityRepository $cityRepository,
+        DistrictRepository $districtRepository,
+        WorksheetRepository $worksheetRepository,
+        PaginatorInterface $paginator
+    ): Response {
+        $slug = $request->query->get('category');
+        $cities = $cityRepository->findAll();
+        $districts = $districtRepository->findAll();
+        $categories = $categoryRepository->findAll();
+
+        $cityId = trim($request->query->get('city'));
+        $districtId = trim($request->query->get('district'));
+        $city = $cityRepository->findOneBy(['id' => $cityId]);
+        $district = $districtRepository->findOneBy(['id' => $districtId]);
+
+        if ($this->security->getUser()) {
+            $user = $this->security->getUser();
+        } else {
+            $user = null;
+        }
+
+        if ($slug == '') {
+            $query = $worksheetRepository->findAll();
+            $category = null;
+            if ($cityId !== '' && $districtId !== '' || $cityId !== '') {
+                $query = $worksheetRepository->findByParams($city, $district);
+            }
+        } else {
+            $category = $categoryRepository->findOneBy(['slug' => $slug]);
+            $query = $worksheetRepository->findBy(['category' => $category]);
+        }
+
+        $worksheets = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            self::LIMIT_PER_PAGE
+        );
+
+        return new Response($this->twig->render('pages/worksheet/all_workers.html.twig', [
+            'cities' => $cities,
+            'districts' => $districts,
+            'worksheets' => $worksheets,
+            'categories' => $categories,
+            'category' => $category,
+            'user' => $user,
+            'cityId' => $cityId,
+            'districtId' => $districtId
+            //'myArr' => $myArr,
+            //'districtList' => $dList
+        ]));
     }
 
     /**

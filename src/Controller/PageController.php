@@ -112,48 +112,6 @@ class PageController extends AbstractController
     }
 
     /**
-     * @Route("/all-profiles", name="app_all_profiles")
-     */
-    public function employeePage(
-        Request $request,
-        ReviewRepository $reviewRepository,
-        CategoryRepository $categoryRepository,
-        CityRepository $cityRepository,
-        DistrictRepository $districtRepository,
-        WorksheetRepository $worksheetRepository
-    ): Response {
-        $slug = $request->query->get('category');
-        $cities = $cityRepository->findAll();
-        $districts = $districtRepository->findAll();
-        $categories = $categoryRepository->findAll();
-
-        if ($this->security->getUser()) {
-            $user = $this->security->getUser();
-        } else {
-            $user = null;
-        }
-
-        if ($slug == '') {
-            $worksheets = $worksheetRepository->findAll();
-            $category = null;
-        } else {
-            $category = $categoryRepository->findOneBy(['slug' => $slug]);
-            $worksheets = $worksheetRepository->findBy(['category' => $category]);
-        }
-
-        return new Response($this->twig->render('pages/worksheet/all_profiles.html.twig', [
-            'cities' => $cities,
-            'districts' => $districts,
-            'worksheets' => $worksheets,
-            'categories' => $categories,
-            'category' => $category,
-            'user' => $user
-            //'myArr' => $myArr,
-            //'districtList' => $dList
-        ]));
-    }
-
-    /**
      * @Route("/tarifs", name="app_tarifs")
      */
     public function tarifsPage(

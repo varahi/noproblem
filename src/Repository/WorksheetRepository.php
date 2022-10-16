@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Job;
 use App\Entity\Worksheet;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -57,6 +58,27 @@ class WorksheetRepository extends ServiceEntityRepository
         //->andWhere('j.status LIKE :status')
         //->setParameter('status', $status)
         ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param Job $job
+     */
+    public function findByParams($city, $district)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $expr = $qb->expr();
+        $qb->select('w')
+            ->from(self::TABLE, 'w')
+        ;
+
+        if ($city && $district) {
+            $qb->andWhere($qb->expr()->eq('w.city', $city->getId()));
+            $qb->andWhere($qb->expr()->eq('w.district', $district->getId()));
+        } elseif ($city) {
+            $qb->andWhere($qb->expr()->eq('w.city', $city->getId()));
+        }
 
         return $qb->getQuery()->getResult();
     }

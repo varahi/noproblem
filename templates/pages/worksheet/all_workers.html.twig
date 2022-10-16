@@ -2,7 +2,7 @@
 {% block title %}Анкеты - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block body %}
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=22bbec55-f932-4a17-beb2-c5927a172692" type="text/javascript"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <style>
         html, body, #map {
             width: 100%; height: 100%; padding: 0; margin: 0;
@@ -21,7 +21,7 @@
 
                     <button class="accordion_filter"><span>Фильтр анкет</span></button>
                     <div class="panel_filter">
-                        {% include 'partials/pages/profiles/_side_filter.html.twig' %}
+                        {% include 'partials/pages/_side_filter.html.twig' %}
 
                         <!--  <div class="sort mobs">
                            <p >Сортировать по:</p>

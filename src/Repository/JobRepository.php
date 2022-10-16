@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Job;
+use App\Entity\Task;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -75,6 +76,27 @@ class JobRepository extends ServiceEntityRepository
             ->setMaxResults($limit)
             ->orderBy('c.id', 'ASC');
         ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param Job $job
+     */
+    public function findByParams($city, $district)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $expr = $qb->expr();
+        $qb->select('j')
+            ->from(self::TABLE, 'j')
+            ;
+
+        if ($city && $district) {
+            $qb->andWhere($qb->expr()->eq('j.city', $city->getId()));
+            $qb->andWhere($qb->expr()->eq('j.district', $district->getId()));
+        } elseif ($city) {
+            $qb->andWhere($qb->expr()->eq('j.city', $city->getId()));
+        }
 
         return $qb->getQuery()->getResult();
     }

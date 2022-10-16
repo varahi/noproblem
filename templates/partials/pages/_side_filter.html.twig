@@ -1,0 +1,81 @@
+<script src="{{ asset('assets/js/dependableList.js') }}"></script>
+
+<form class="form-search" autocomplete="off" action="">
+    <div class="inside_city">
+        <div class="block_emp">
+            <p>Город</p>
+            <select name="city" id="city">
+                <option>Выберите город</option>
+                {% for city in cities %}
+                    <option value="{{ city.id }}" {% if city.id == cityId %} selected {% endif %}>{{ city.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="block_emp">
+            <p>Район</p>
+            <select name="district" disabled id="district">
+                {% for district in districts %}
+                    <option>Выберите район</option>
+                    <option data-list-id="{{ district.city.id }}" value="{{ district.id }}" {% if district.id == districtId %} selected {% endif %}>
+                        {{ district.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+{#        <div class="block_emp" ><p>Почасовая ставка</p>#}
+{#            <div class="mob_bet">#}
+{#                <div class="mob_bet_number">#}
+{#                    <span>от</span>#}
+{#                    <input type="number" placeholder="350">#}
+{#                </div>#}
+{#                <div class="mob_bet_number">#}
+{#                    <span >до</span>#}
+{#                    <input type="number" placeholder="1000">#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+
+
+{#        <div class="block_emp mobs" ><p>Проживание:</p> <select name="select" >#}
+{#                <option value="value1" >С проживанием</option>#}
+{#                <option value="value2" selected="selected" >С проживанием</option>#}
+{#                <option value="value3" >С проживанием</option></select>#}
+{#        </div>#}
+{#        #}
+{#        <div class="block_emp mobs" >#}
+{#            <p >Оплата:</p>#}
+{#            <div class="both" >#}
+{#                <select name="select" >#}
+{#                    <option value="value1" >Почасовая</option>#}
+{#                    <option value="value2" selected="selected" >Почасовая</option>#}
+{#                    <option value="value3" >Почасовая</option>#}
+{#                </select>#}
+{#                <div class="mob_bet">#}
+{#                    <div class="mob_bet_number">#}
+{#                        <div class="hour" ><span >от</span>#}
+{#                            <input type="number" name="numbers" placeholder="350р" >#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="mob_bet_number">#}
+{#                        <div class="hour" ><span >до</span>#}
+{#                            <input type="number" name="numberss" placeholder="900р">#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+
+
+    </div>
+    <div class="btn_try btn_try_side_filter">
+        <button type="submit" class="btn">Поиск</button>
+    </div>
+</form>
+
+<script>
+    createDependableList ( '#city', '#district' );
+    $('#city').change(function() {
+        $('#district').prop('disabled', false);
+    });
+</script>
