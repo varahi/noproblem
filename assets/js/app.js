@@ -2,6 +2,7 @@
 import Courses from './components/Pages/Courses/CourseList';
 import Announcements from './components/User/Announcements';
 import TryAndRegister from './components/TryAndRegister';
+import Register from './components/Register';
 import MenuAuth from './components/MenuAuth';
 import Login from './components/Login';
 import Vue from 'vue';
@@ -27,4 +28,9 @@ new Vue({
 new Vue({
     el: '#menu-auth',
     render: h => h(MenuAuth)
+});
+
+new Vue({
+    el: '#menu-registration',
+    render: h => h(Register)
 });
