@@ -14,6 +14,7 @@ use App\Repository\ArticleCategoryRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\CityRepository;
 use App\Repository\DistrictRepository;
+use App\Repository\PageRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\WorksheetRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -242,5 +243,34 @@ class PageController extends AbstractController
             'course' => $course,
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
+    }
+
+    /**
+     * @Route("/politica", name="app_page_politica")
+     */
+    public function privacyPage(
+        Request $request,
+        PageRepository $pageRepository
+    ): Response {
+        //$user = $this->security->getUser();
+        $content = $pageRepository->findById(2);
+        return $this->render('pages/privacy.html.twig', [
+            'content' => $content,
+            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/personal-data", name="app_page_personal_data")
+     */
+    public function personalDataPage(
+        Request $request,
+        PageRepository $pageRepository
+    ): Response {
+        $content = $pageRepository->findById(1);
+        return $this->render('pages/personal.html.twig', [
+            'content' => $content,
+            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
+        ]);
     }
 }

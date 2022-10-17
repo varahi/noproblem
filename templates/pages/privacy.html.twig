@@ -1,0 +1,20 @@
+{% extends 'layouts/base.html.twig' %}
+{% block title %}Политика конфиденциальности - Онлайн-сервис по подбору домашнего персонала{% endblock %}
+{% block body %}
+    {% include 'partials/header.html.twig' %}
+
+
+    <div class="main_account content">
+        <div class="large_account fon">
+            <div class="in_account">
+                <h2>{{ content.0.name }}</h2>
+                {{ content.0.bodytext|raw }}
+            </div>
+        </div>
+    </div>
+
+    {% include 'partials/footer.html.twig' %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+{% endblock %}

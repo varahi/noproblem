@@ -2,30 +2,30 @@
     <div class="podval content">
         <div class="top">
             <div class="one">
-                <img class="logo" src="{{ asset('assets/img/logo.svg') }}">
+                <img class="logo" src="{{ asset('assets/img/logo.svg') }}" alt="">
                 <a href="tel:+79295959428">+7(929)59-59-428</a>
                 <div class="conf">
-                    <p>Политика конфиденциальности</p>
-                    <p>Обработка персональных данных</p>
+                    <p><a href="{{ path('app_page_politica') }}">Политика конфиденциальности</a></p>
+                    <p><a href="{{ path('app_page_personal_data') }}">Обработка персональных данных</a></p>
                 </div>
             </div>
 
             <div class="two move footer-link">
                 <h3>Вакансии</h3>
-                <p><nuxt-link to="/vacancies"><a href="">Все вакансии</a></nuxt-link></p>
-                <p><nuxt-link to="/vacancies/nyanya"><a href="">Для нянь</a></nuxt-link></p>
-                <p><nuxt-link to="/vacancies/sidelki"><a href="">Для сиделок</a></nuxt-link></p>
-                <p><nuxt-link to="/vacancies/domrabotnica"><a href="">Для домработниц</a></nuxt-link></p>
-                <p><nuxt-link to="/vacancies/master-na-chas"><a href="">Для психологов</a></nuxt-link></p>
+                <p><a href="{{ path('app_all_jobs') }}">Все вакансии</a></p>
+                <p><a href="{{ path('app_all_jobs', { category: 'nyanya'}) }}">Для нянь</a></p>
+                <p><a href="{{ path('app_all_jobs', { category: 'sidelka'}) }}">Для сиделок</a></p>
+                <p><a href="{{ path('app_all_jobs', { category: 'domrabotnica'}) }}">Для домработниц</a></p>
+                <p><a href="{{ path('app_all_jobs', { category: 'master-na-chas'}) }}">Мастер на час</a></p>
             </div>
 
             <div class="two footer-link">
                 <h3>Анкеты</h3>
-                <p><nuxt-link to="/employee"><a href="">Все анкеты</a> </nuxt-link></p>
-                <p><nuxt-link to="/employee/nyanya"><a href="">Няни</a></nuxt-link></p>
-                <p><nuxt-link to="/employee/sidelki"><a href="">Сиделки</a></nuxt-link></p>
-                <p><nuxt-link to="/employee/domrabotnica"><a href="">Домработницы</a></nuxt-link></p>
-                <p><nuxt-link to="/employee/master-na-chas"><a href="">Психологи</a></nuxt-link></p>
+                <p><a href="{{ path('app_all_workers') }}">Все анкеты</a></p>
+                <p><a href="{{ path('app_all_workers', { category: 'nyanya'}) }}">Няни</a></p>
+                <p><a href="{{ path('app_all_workers', { category: 'sidelka'}) }}">Сиделки</a></p>
+                <p><a href="{{ path('app_all_workers', { category: 'domrabotnica'}) }}">Домработницы</a></p>
+                <p><a href="{{ path('app_all_workers', { category: 'master-na-chas'}) }}">Мастер на час</a></p>
             </div>
 
             <div class="three">
@@ -40,21 +40,14 @@
             <div class="go">
                 <p>Присоеденяйтесь к нам</p>
                 <div class="sety">
-                    <nuxt-link to="">
-                        <img src="{{ asset('assets/img/ant-design_instagram-filled.svg') }}">
-                    </nuxt-link>
-                    <nuxt-link to="">
-                        <img src="{{ asset('assets/img/akar-icons_youtube-fill.svg') }}">
-                    </nuxt-link>
-                    <nuxt-link to="">
-                        <img src="{{ asset('assets/img/bi_facebook.svg') }}">
-                    </nuxt-link>
+                    <img src="{{ asset('assets/img/ant-design_instagram-filled.svg') }}" alt="">
+                    <img src="{{ asset('assets/img/akar-icons_youtube-fill.svg') }}" alt="">
+                    <img src="{{ asset('assets/img/bi_facebook.svg') }}" alt="">
                 </div>
             </div>
-
             <div class="inet">
-                <img src="{{ asset('assets/img/googleplay.svg') }}">
-                <img src="{{ asset('assets/img/appstore.svg') }}">
+                <img src="{{ asset('assets/img/googleplay.svg') }}" alt="">
+                <img src="{{ asset('assets/img/appstore.svg') }}" alt="">
             </div>
         </div>
     </div>

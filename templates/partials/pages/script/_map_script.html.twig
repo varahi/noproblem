@@ -1,0 +1,22 @@
+<script>
+    var changeSizeButton = document.getElementById('changeSize');
+
+    DG.then(function() {
+        var map, enabled = false;
+
+        map = DG.map('map', {
+            center: [54.98, 82.89],
+            zoom: 15,
+            animate: true
+        });
+
+        DG.marker([54.98, 82.89]).addTo(map).bindPopup('Описание компании');
+
+        changeSizeButton.onclick = function() {
+            var mapDiv = document.getElementById('map');
+            mapDiv.style.height = (enabled ? '300' : '600') + 'px';
+            // обновление карты
+            map.invalidateSize();
+        }
+    });
+</script>

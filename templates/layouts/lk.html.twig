@@ -22,9 +22,9 @@
 </head>
 <body>
 {% block body %}{% endblock %}
-{#{% block javascripts %}
+{% block javascripts %}
     {{ encore_entry_script_tags('app') }}
-{% endblock %}#}
+{% endblock %}
 {% block javascripts_footer %}
     <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
