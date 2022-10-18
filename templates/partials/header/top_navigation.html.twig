@@ -1,16 +1,20 @@
 <div class="regs">
-    <div class="vhod"  style="cursor:pointer"><span>Сообщения</span><img src="{{ asset('assets/img/bi_chat.svg') }}"></div>
+    {% if is_granted('ROLE_EMPLOYEE') or is_granted('ROLE_CUSTOMER') or is_granted('ROLE_BUYER') %}
+        <div class="vhod"  style="cursor:pointer"><span>Сообщения</span>
+            <img src="{{ asset('assets/img/bi_chat.svg') }}" alt="">
+        </div>
+    {% endif %}
 </div>
 <div class="regs" >
     <div class="vhod" style="cursor:pointer">
         <a href="{{ path('app_blog') }}"><span>Блог</span></a>
-        <img src="{{ asset('assets/img/blockicon.svg') }}">
+        <img src="{{ asset('assets/img/blockicon.svg') }}" alt="">
     </div>
 </div>
 <div class="regs">
     <div class="vhod" style="cursor:pointer">
         <a href="{{ path('app_courses') }}"><span>Список курсов</span></a>
-        <img src="{{ asset('assets/img/courseicon.svg') }}">
+        <img src="{{ asset('assets/img/courseicon.svg') }}" alt="">
     </div>
 </div>
 
