@@ -22,7 +22,7 @@
         {% for job in jobs %}
         {% if job.city is not null %}
         DG.marker([{{ job.latitude }},
-            {{ job.longitude }}]).addTo(map).bindPopup( '<div class="map-popup"><h4>{{ job.name }}</h4>ID Вакансии: {{ job.id }}<br /><br />Разместил(а): <br />{{ job.user }}  <img class="rounded map-img" src="{{ asset('uploads/files/' ~ job.user.avatar) }}" width="50" height="50"/> <br /><br />Стоимость:{{ job.payment }} <br /><br /><a href="{{ path('app_detail_job', { id: job.id}) }}">Подробнее ...</a></div>' );
+            {{ job.longitude }}]).addTo(map).bindPopup( '<div class="map-popup"><h4>{{ job.name }}</h4>ID Вакансии: {{ job.id }}<br /><br />Разместил(а): <br />{{ job.user }}  <img class="rounded map-img" src="{{ asset('uploads/files/' ~ job.user.avatar) }}" width="50" height="50"/> <br /><br />Стоимость:{{ job.payment }} <br /><br /><a href="{{ path('app_detail_worksheet', { id: job.id}) }}">Подробнее ...</a></div>' );
         {% endif %}
         {% endfor %}
 
