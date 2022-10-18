@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 
 class CityCrudController extends AbstractCrudController
 {
@@ -33,6 +34,8 @@ class CityCrudController extends AbstractCrudController
         yield BooleanField::new('isHidden');
         yield TextField::new('name')->setColumns('col-md-10');
         yield TextareaField::new('description')->setColumns('col-md-10');
+        yield NumberField::new('latitude')->hideOnIndex()->setFormTypeOption('scale', 8)->setColumns('col-md-10');
+        yield NumberField::new('longitude')->hideOnIndex()->setFormTypeOption('scale', 8)->setColumns('col-md-10');
         yield AssociationField::new('districts')->setColumns('col-md-6')->hideOnIndex();
     }
 

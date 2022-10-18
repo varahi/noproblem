@@ -154,6 +154,16 @@ class Job
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="decimal", precision=9, scale=7, nullable=true)
+     */
+    private $latitude;
+
+    /**
+     * @ORM\Column(type="decimal", precision=9, scale=7, nullable=true)
+     */
+    private $longitude;
+
     public function __construct()
     {
         $this->created = new \DateTime();
@@ -553,6 +563,30 @@ class Job
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?string
+    {
+        return $this->latitude;
+    }
+
+    public function setLatitude(?string $latitude): self
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    public function getLongitude(): ?string
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(?string $longitude): self
+    {
+        $this->longitude = $longitude;
 
         return $this;
     }

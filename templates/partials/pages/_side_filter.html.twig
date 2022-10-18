@@ -14,8 +14,8 @@
         <div class="block_emp">
             <p>Район</p>
             <select name="district" disabled id="district">
+                <option>Выберите район</option>
                 {% for district in districts %}
-                    <option>Выберите район</option>
                     <option data-list-id="{{ district.city.id }}" value="{{ district.id }}" {% if district.id == districtId %} selected {% endif %}>
                         {{ district.name }}
                     </option>
