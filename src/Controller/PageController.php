@@ -95,21 +95,6 @@ class PageController extends AbstractController
     }
 
     /**
-     * @Route("/detail-worksheet-{id}", name="app_detail_worksheet")
-     */
-    public function worksheetDetailPage(
-        Request $request,
-        ReviewRepository $reviewRepository,
-        CategoryRepository $categoryRepository,
-        Worksheet $worksheet
-    ): Response {
-        return new Response($this->twig->render('pages/worksheet/detail.html.twig', [
-            'worksheet' => $worksheet,
-            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
-        ]));
-    }
-
-    /**
      * @Route("/tarifs", name="app_tarifs")
      */
     public function tarifsPage(

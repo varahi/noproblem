@@ -34,7 +34,7 @@ class WorkerController extends AbstractController
 
     private $security;
 
-    public const LIMIT_PER_PAGE = '5';
+    public const LIMIT_PER_PAGE = '10';
 
     /**
      * @param Security $security
@@ -67,7 +67,7 @@ class WorkerController extends AbstractController
         PaginatorInterface $paginator
     ): Response {
         $slug = $request->query->get('category');
-        $cities = $cityRepository->findAll();
+        $cities = $cityRepository->findLimitOrder('999', '0');
         $districts = $districtRepository->findAll();
         $categories = $categoryRepository->findAll();
 
@@ -101,6 +101,7 @@ class WorkerController extends AbstractController
 
         return new Response($this->twig->render('pages/worksheet/all_workers.html.twig', [
             'cities' => $cities,
+            'city' => $city,
             'districts' => $districts,
             'worksheets' => $worksheets,
             'categories' => $categories,
@@ -232,5 +233,23 @@ class WorkerController extends AbstractController
             $notifier->send(new Notification($message, ['browser']));
             return $this->redirectToRoute("app_main");
         }
+    }
+
+    /**
+     * @Route("/detail-questionare/questionare-{id}", name="app_detail_worksheet")
+     */
+    public function worksheetDetailPage(
+        Request $request,
+        Worksheet $worksheet,
+        WorksheetRepository $worksheetRepository
+    ): Response {
+        $category = $worksheet->getCategory();
+        $relatedJobs = $worksheetRepository->findByCategory($category->getId(), $worksheet->getId(), '10');
+
+        return new Response($this->twig->render('pages/worksheet/detail.html.twig', [
+            'worksheet' => $worksheet,
+            'relatedJobs' => $relatedJobs,
+            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
+        ]));
     }
 }
