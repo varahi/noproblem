@@ -88,8 +88,9 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Appeals');
         yield MenuItem::subMenu('Appeals', 'fa fa-reorder')->setSubItems([
             MenuItem::linkToCrud('Tickets', 'fa fa-ticket', Ticket::class),
-            MenuItem::linkToCrud('Answers', 'fa fa fa-support', Answer::class),
+            //MenuItem::linkToCrud('Answers', 'fa fa fa-support', Answer::class),
             MenuItem::linkToCrud('Notifications', 'fa fa fa fa-bell', Notification::class),
+            MenuItem::linkToRoute('Tickets list', 'fa fa-support', 'app_ticket_list')
         ]);
 
         yield MenuItem::section('Users');

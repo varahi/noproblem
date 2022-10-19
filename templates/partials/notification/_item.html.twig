@@ -1,0 +1,18 @@
+<div class="box_account_vacan box-notification">
+    <div class="notification">
+        <div class="status">
+            {% if notification.isRead == '0' %}
+                <a href="{{ path('app_mark_as_read', { id: notification.id}) }}" title="Отметить как прочитанное">
+                    <img src="{{ asset('assets/img/verif.svg') }}" alt="" width="15" height="15">
+                </a>
+            {% else %}
+                <img src="{{ asset('assets/img/verif_green.svg') }}" alt="" width="15" height="15">
+            {% endif %}
+        </div>
+        <div class="date">{{ notification.created|date("H:i d.m.Y") }}</div>
+        {% if notification.type == 10 %}
+            <div class="notification-title">{{ notification.message }}</div>
+            <div class="desc">Уведомление отправлено администратором сайта</div>
+        {% endif %}
+    </div>
+</div>

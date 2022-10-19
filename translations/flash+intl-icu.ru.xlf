@@ -33,6 +33,14 @@
         <source>Profile updated</source>
         <target>Профиль обновлен</target>
       </trans-unit>
+      <trans-unit id="Notification mark as read" resname="Notification mark as read">
+        <source>Notification mark as read</source>
+        <target>Уведомление отмечено как прочитанное</target>
+      </trans-unit>
+      <trans-unit id="Notifications sent" resname="Notifications sent">
+        <source>Notifications sent</source>
+        <target>Уведомления отправлены</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

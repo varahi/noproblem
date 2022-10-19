@@ -133,7 +133,7 @@ class Ticket
         return $this->closed;
     }
 
-    public function setClosed(\DateTimeInterface $closed): self
+    public function setClosed(?\DateTimeInterface $closed): self
     {
         $this->closed = $closed;
 

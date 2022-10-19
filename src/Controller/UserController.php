@@ -7,6 +7,8 @@ namespace App\Controller;
 use App\ImageOptimizer;
 use App\Repository\JobRepository;
 use App\Repository\WorksheetRepository;
+use App\Repository\NotificationRepository;
+use App\Repository\UserRepository;
 use App\Service\FileUploader;
 use App\Service\ModalForms;
 use App\Service\SignUpValidator;
@@ -28,6 +30,11 @@ use App\Form\User\EditProfileFormType;
 
 class UserController extends AbstractController
 {
+    /**
+     * Time in seconds 3600 - one hour
+     */
+    public const CACHE_MAX_AGE = '3600';
+
     public const ROLE_EMPLOYEE = 'ROLE_EMPLOYEE';
 
     public const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
@@ -88,7 +95,7 @@ class UserController extends AbstractController
      * Require ROLE_CUSTOMER for *every* controller method in this class.
      *
      * @IsGranted("ROLE_CUSTOMER")
-     * @Route("/lk-customer", name="app_lk_customer")
+     * @Route("/lk/customer", name="app_lk_customer")
      */
     public function customerProfile(
         Request $request,
@@ -123,7 +130,7 @@ class UserController extends AbstractController
      * Require ROLE_EMPLOYEE for *every* controller method in this class.
      *
      * @IsGranted("ROLE_EMPLOYEE")
-     * @Route("/lk-employee", name="app_lk_employee")
+     * @Route("/lk/employer", name="app_lk_employee")
      */
     public function employeeProfile(
         Request $request,
@@ -158,7 +165,7 @@ class UserController extends AbstractController
      * Require ROLE_BUYER for *every* controller method in this class.
      *
      * @IsGranted("ROLE_BUYER")
-     * @Route("/lk-buyer", name="app_lk_buyer")
+     * @Route("/lk/buyer", name="app_lk_buyer")
      */
     public function buyerProfile(
         Request $request,
@@ -188,7 +195,7 @@ class UserController extends AbstractController
 
     /**
      *
-     * @Route("/edit-profile", name="app_edit_profile")
+     * @Route("/lk/edit-profile", name="app_edit_profile")
      */
     public function editProfile(
         Request $request,

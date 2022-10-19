@@ -1,7 +1,19 @@
 <div class="regs">
     {% if is_granted('ROLE_EMPLOYEE') or is_granted('ROLE_CUSTOMER') or is_granted('ROLE_BUYER') %}
-        <div class="vhod"  style="cursor:pointer"><span>Сообщения</span>
-            <img src="{{ asset('assets/img/bi_chat.svg') }}" alt="">
+        {% set nts = 0 %}
+        {% if user.notifications %}
+            {% for notification in user.notifications %}
+                {% if notification.isRead == 0 %}
+                    {% set nts = nts + 1 %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        <div class="vhod"  style="cursor:pointer">
+            <a href="{{ path('app_notifications') }}" class="notif">
+                <span>Сообщения</span>
+                <img src="{{ asset('assets/img/bi_chat.svg') }}" alt="">{% if nts > 0 %}
+                <span class="count">{{ nts }}</span>{% endif %}
+            </a>
         </div>
     {% endif %}
 </div>

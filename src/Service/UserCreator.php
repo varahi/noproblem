@@ -75,7 +75,7 @@ class UserCreator extends AbstractController
                 ->from(new Address('webmaster@noproblem.ru', 'Admin'))
                 ->to($user->getEmail())
                 ->subject('Please Confirm your Email')
-                ->htmlTemplate('registration/_confirmation_email_back.html.twig')
+                ->htmlTemplate('registration/_confirmation_email.html.twig')
         );
 
         // Verify email

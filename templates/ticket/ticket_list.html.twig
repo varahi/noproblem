@@ -1,0 +1,83 @@
+{% extends 'layouts/base.html.twig' %}
+{% block title %}Список тикетов - Онлайн-сервис по подбору домашнего персонала{% endblock %}
+{% block body %}
+{#    {% include 'partials/header.html.twig' %}#}
+
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css'>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap.min.css') }}">
+
+    <div class="main_account content">
+        <div class="large_account fon">
+            <div class="btn_account">
+                <a href="{{ path('admin') }}">{{ 'To admin panel'|trans }}</a>
+            </div>
+
+            <div class="in_account">
+                <section id="list_items">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>{{ 'New tickets'|trans }}</h3>
+                            </div>
+                        </div>
+                        {% if newTickets is not empty %}
+                            {% include 'partials/ticket/_list_table.html.twig' with {'tickets': newTickets, 'id': 'new-tickets'} %}
+                        {% else %}
+                            <p>{{ 'Empty orders list'|trans }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>{{ 'Active tickets'|trans }}</h3>
+                            </div>
+                        </div>
+                        {% if activeTickets is not empty %}
+                            {% include 'partials/ticket/_list_table.html.twig' with {'tickets': activeTickets, 'id': 'active-tickets'} %}
+                        {% else %}
+                            <p>{{ 'Empty orders list'|trans }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>{{ 'Completed tickets'|trans }}</h3>
+                            </div>
+                        </div>
+                        {% if completedTickets is not empty %}
+                            {% include 'partials/ticket/_list_table.html.twig' with {'tickets': completedTickets, 'id': 'completed-tickets'} %}
+                        {% else %}
+                            <p>{{ 'Empty orders list'|trans }}</p>
+                        {% endif %}
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+
+    <script src='https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js'></script>
+    <script>
+        $(document).ready(function() {
+            $("#new-tickets").DataTable({
+                "paging": false,
+                "info": false,
+                "searching": false
+            });
+            $("#active-tickets").DataTable({
+                "paging": false,
+                "info": false,
+                "searching": false
+            });
+            $("#completed-tickets").DataTable({
+                "paging": false,
+                "info": false,
+                "searching": false
+            });
+        });
+    </script>
+
+{#    {% include 'partials/footer.html.twig' %}#}
+{% endblock %}

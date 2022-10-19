@@ -439,7 +439,7 @@
       </trans-unit>
       <trans-unit id="lpzL089" resname="Email">
         <source>Email</source>
-        <target>__Email</target>
+        <target>Email</target>
       </trans-unit>
       <trans-unit id="588_9PF" resname="Password">
         <source>Password</source>
@@ -452,6 +452,106 @@
       <trans-unit id="u3I07BJ" resname="Register">
         <source>Register</source>
         <target>Регистрация</target>
+      </trans-unit>
+      <trans-unit id="b2QDr3P" resname="Ticket list">
+        <source>Ticket list</source>
+        <target>Тех. поддержка</target>
+      </trans-unit>
+      <trans-unit id="ftPcGAo" resname="Your request has been answered">
+        <source>Your request has been answered</source>
+        <target>На ваш запрос был получен ответ</target>
+      </trans-unit>
+      <trans-unit id="1RdjB.p" resname="Ticket id">
+        <source>Ticket id</source>
+        <target>Id заявки</target>
+      </trans-unit>
+      <trans-unit id="1wueJLy" resname="Created">
+        <source>Created</source>
+        <target>Создано</target>
+      </trans-unit>
+      <trans-unit id="v.LMSWB" resname="Ttile">
+        <source>Ttile</source>
+        <target>Заголовок</target>
+      </trans-unit>
+      <trans-unit id="Wr00RYI" resname="Answer ticket">
+        <source>Answer ticket</source>
+        <target>Ответить</target>
+      </trans-unit>
+      <trans-unit id="VRetK._" resname="To admin panel">
+        <source>To admin panel</source>
+        <target>В панель управления</target>
+      </trans-unit>
+      <trans-unit id="kXK069Z" resname="Detail ticket">
+        <source>Detail ticket</source>
+        <target>Описание заявки</target>
+      </trans-unit>
+      <trans-unit id="ksfur.V" resname="No answers">
+        <source>No answers</source>
+        <target>Нет ответов на заявку</target>
+      </trans-unit>
+      <trans-unit id="H8EIQgr" resname="Answer the question">
+        <source>Answer the question</source>
+        <target>Ответить на заявку</target>
+      </trans-unit>
+      <trans-unit id="i0VW.ZT" resname="Active tickets">
+        <source>Active tickets</source>
+        <target>Заявки в работе</target>
+      </trans-unit>
+      <trans-unit id="tADaUbt" resname="Completed tickets">
+        <source>Completed tickets</source>
+        <target>Завершенные заявки</target>
+      </trans-unit>
+      <trans-unit id="OoFk5tV" resname="To ticket list">
+        <source>To ticket list</source>
+        <target>К списку заявок</target>
+      </trans-unit>
+      <trans-unit id="tcMVaZZ" resname="Close ticket">
+        <source>Close ticket</source>
+        <target>Закрыть заявку</target>
+      </trans-unit>
+      <trans-unit id="qSi5dsi" resname="Are you sure you want to activate ticket">
+        <source>Are you sure you want to activate ticket</source>
+        <target>Вы уверены, что хотите актвировать заявку</target>
+      </trans-unit>
+      <trans-unit id="jiWOYye" resname="Activate ticket">
+        <source>Activate ticket</source>
+        <target>Активировать заявку</target>
+      </trans-unit>
+      <trans-unit id="GP3VSbL" resname="New">
+        <source>New</source>
+        <target>Новый</target>
+      </trans-unit>
+      <trans-unit id="kjQGlYm" resname="Active">
+        <source>Active</source>
+        <target>В работе</target>
+      </trans-unit>
+      <trans-unit id="KGozGfT" resname="Show all active tickets">
+        <source>Show all active tickets</source>
+        <target>Показать все активные заявки</target>
+      </trans-unit>
+      <trans-unit id="F6dnZBb" resname="Show all completed tickets">
+        <source>Show all completed tickets</source>
+        <target>Показать все завершенные заявки</target>
+      </trans-unit>
+      <trans-unit id="1H18sOT" resname="More">
+        <source>More</source>
+        <target>Подробнее</target>
+      </trans-unit>
+      <trans-unit id="1g27oHk" resname="Priority">
+        <source>Priority</source>
+        <target>Срочность</target>
+      </trans-unit>
+      <trans-unit id="Iqlw0uW" resname="Completed">
+        <source>Completed</source>
+        <target>Завершено</target>
+      </trans-unit>
+      <trans-unit id="2r.xpsh" resname="New tickets">
+        <source>New tickets</source>
+        <target>Новые заявки</target>
+      </trans-unit>
+      <trans-unit id="rS9mOfI" resname="Empty orders list">
+        <source>Empty orders list</source>
+        <target>Список заявок пуст</target>
       </trans-unit>
     </body>
   </file>
