@@ -18,6 +18,12 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class SecurityController extends AbstractController
 {
+    public const ROLE_EMPLOYEE = 'ROLE_EMPLOYEE';
+
+    public const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
+
+    public const ROLE_BUYER = 'ROLE_BUYER';
+
     /**
      * @var ValidatorInterface
      */
@@ -33,8 +39,6 @@ class SecurityController extends AbstractController
         $this->loginValidator = $loginValidator;
         $this->serializer = $serializer;
     }
-
-    //@Route("/login", name="app_login", methods={"POST"})
 
     /**
      * @Route("/api/login", name="app_api_login", methods={"POST"})
@@ -52,7 +56,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login", name="app_login")
      */
-    public function loginBack(AuthenticationUtils $authenticationUtils): Response
+    public function pageLogin(AuthenticationUtils $authenticationUtils): Response
     {
         // if ($this->getUser()) {
         //     return $this->redirectToRoute('target_path');
@@ -63,7 +67,22 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        $user = $this->getUser();
+        if ($user != null && in_array(self::ROLE_CUSTOMER, $user->getRoles())) {
+            return $this->redirectToRoute("app_lk_customer");
+        } elseif ($user != null && in_array(self::ROLE_EMPLOYEE, $user->getRoles())) {
+            return $this->redirectToRoute("app_lk_employee");
+        } elseif ($user != null && in_array(self::ROLE_BUYER, $user->getRoles())) {
+            return $this->redirectToRoute("app_lk_buyer");
+        } else {
+            return $this->render(
+                'security/login.html.twig',
+                [
+                    'last_username' => $lastUsername,
+                    'error' => $error
+                ]
+            );
+        }
     }
 
     /**

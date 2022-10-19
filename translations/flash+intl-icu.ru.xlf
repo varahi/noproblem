@@ -29,6 +29,10 @@
         <source>Ticket created</source>
         <target>Обращение создано</target>
       </trans-unit>
+      <trans-unit id="Profile updated" resname="Profile updated">
+        <source>Profile updated</source>
+        <target>Профиль обновлен</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

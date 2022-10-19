@@ -14,6 +14,8 @@
             </div>
             <div class="large_account fon">
                 <div class="in_account">
+                    {% include 'partials/_message.html.twig' %}
+
                     <h2>Редактировать профиль
                         {% if is_granted('ROLE_EMPLOYEE') %}
                             работодателя

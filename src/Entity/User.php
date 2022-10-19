@@ -156,17 +156,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $worksheets;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $emailVerified;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $phoneVerified;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $passportVerified;
 
@@ -180,6 +180,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $preferredContactMethod;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Notification::class, mappedBy="user")
+     */
+    private $notifications;
+
     public function __construct()
     {
         $this->tickets = new ArrayCollection();
@@ -189,6 +194,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->created = new \DateTime();
         $this->worksheets = new ArrayCollection();
         $this->featuredVacancies = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -700,6 +706,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPreferredContactMethod(?string $preferredContactMethod): self
     {
         $this->preferredContactMethod = $preferredContactMethod;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notification>
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications[] = $notification;
+            $notification->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): self
+    {
+        if ($this->notifications->removeElement($notification)) {
+            // set the owning side to null (unless already changed)
+            if ($notification->getUser() === $this) {
+                $notification->setUser(null);
+            }
+        }
 
         return $this;
     }

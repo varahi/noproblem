@@ -429,6 +429,30 @@
         <source>Create ticket</source>
         <target>Создать обращение</target>
       </trans-unit>
+      <trans-unit id="eIARgzp" resname="Notifications">
+        <source>Notifications</source>
+        <target>Системные уведомления</target>
+      </trans-unit>
+      <trans-unit id="fTG4MxO" resname="Notification">
+        <source>Notification</source>
+        <target>Уведомление</target>
+      </trans-unit>
+      <trans-unit id="lpzL089" resname="Email">
+        <source>Email</source>
+        <target>__Email</target>
+      </trans-unit>
+      <trans-unit id="588_9PF" resname="Password">
+        <source>Password</source>
+        <target>Пароль</target>
+      </trans-unit>
+      <trans-unit id="x5Pg2aH" resname="Registration">
+        <source>Registration</source>
+        <target>Регистрация</target>
+      </trans-unit>
+      <trans-unit id="u3I07BJ" resname="Register">
+        <source>Register</source>
+        <target>Регистрация</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

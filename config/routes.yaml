@@ -6,13 +6,13 @@ signUp:
   controller: App\Controller\UserController::signUp
 signUpHandlerEmployer:
   path: /sign-up-handler-employer
-  controller: App\Controller\UserController::signUpHandlerEmployer
+  controller: App\Controller\RegistrationController::signUpHandlerEmployer
   methods: POST
 signUpHandlerCustomer:
   path: /sign-up-handler-customer
-  controller: App\Controller\UserController::signUpHandlerCustomer
+  controller: App\Controller\RegistrationController::signUpHandlerCustomer
   methods: POST
 signUpHandlerBuyer:
   path: /sign-up-handler-buyer
-  controller: App\Controller\UserController::signUpHandlerBuyer
+  controller: App\Controller\RegistrationController::signUpHandlerBuyer
   methods: POST

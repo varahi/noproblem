@@ -4,23 +4,18 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\Job;
-use App\Form\Job\JobFormType;
-use App\Http\Request\SignUpRequest;
+use App\ImageOptimizer;
 use App\Repository\JobRepository;
 use App\Repository\WorksheetRepository;
 use App\Service\FileUploader;
 use App\Service\ModalForms;
 use App\Service\SignUpValidator;
 use App\Service\UserCreator;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\Security;
@@ -39,135 +34,35 @@ class UserController extends AbstractController
 
     public const ROLE_BUYER = 'ROLE_BUYER';
 
-    /**
-     * @var ValidatorInterface
-     */
-    private $signUpValidator;
-
-    /**
-     * @var SignUpValidator
-     */
-    private $userCreator;
-
     private $security;
 
     /**
-     * @param SignUpValidator $signUpValidator
-     * @param UserCreator $userCreator
      * @param Security $security
      * @param Environment $twig
      * @param ManagerRegistry $doctrine
      * @param ModalForms $modalForms
+     * @param ImageOptimizer $imageOptimizer
+     * @param string $targetDirectory
      */
     public function __construct(
-        SignUpValidator $signUpValidator,
-        UserCreator $userCreator,
         Security $security,
         Environment $twig,
         ManagerRegistry $doctrine,
-        ModalForms $modalForms
+        ModalForms $modalForms,
+        ImageOptimizer $imageOptimizer,
+        string $targetDirectory
     ) {
-        $this->userCreator = $userCreator;
-        $this->signUpValidator = $signUpValidator;
         $this->security = $security;
         $this->twig = $twig;
         $this->doctrine = $doctrine;
         $this->modalForms = $modalForms;
+        $this->imageOptimizer = $imageOptimizer;
+        $this->targetDirectory = $targetDirectory;
     }
 
     public function signUp(Request $request): Response
     {
         return $this->render('profile/sign-up.html.twig');
-    }
-
-    /**
-     * @ParamConverter(
-     *      "signUpRequest",
-     *      converter="fos_rest.request_body",
-     *      class="App\Http\Request\SignUpRequest"
-     * )
-     *
-     * @param SignUpRequest $signUpRequest
-     *
-     * @return JsonResponse
-     * @throws \Exception
-     */
-    public function signUpHandlerEmployer(SignUpRequest $signUpRequest): JsonResponse
-    {
-        if (!$this->signUpValidator->validate($signUpRequest)) {
-            return new JsonResponse([
-                'status' => Response::HTTP_BAD_REQUEST,
-                'errors' => $this->signUpValidator->getErrors()
-            ]);
-        }
-
-        $role = array('ROLE_EMPLOYEE');
-        $user = $this->userCreator->createUser($signUpRequest, $role);
-
-        return new JsonResponse([
-            'status' => Response::HTTP_OK,
-            'entity' => $user->getId()
-        ]);
-    }
-
-    /**
-     * @ParamConverter(
-     *      "signUpRequest",
-     *      converter="fos_rest.request_body",
-     *      class="App\Http\Request\SignUpRequest"
-     * )
-     *
-     * @param SignUpRequest $signUpRequest
-     *
-     * @return JsonResponse
-     * @throws \Exception
-     */
-    public function signUpHandlerCustomer(SignUpRequest $signUpRequest): JsonResponse
-    {
-        if (!$this->signUpValidator->validate($signUpRequest)) {
-            return new JsonResponse([
-                'status' => Response::HTTP_BAD_REQUEST,
-                'errors' => $this->signUpValidator->getErrors()
-            ]);
-        }
-
-        $role = array('ROLE_CUSTOMER');
-        $user = $this->userCreator->createUser($signUpRequest, $role);
-
-        return new JsonResponse([
-            'status' => Response::HTTP_OK,
-            'entity' => $user->getId()
-        ]);
-    }
-
-    /**
-     * @ParamConverter(
-     *      "signUpRequest",
-     *      converter="fos_rest.request_body",
-     *      class="App\Http\Request\SignUpRequest"
-     * )
-     *
-     * @param SignUpRequest $signUpRequest
-     *
-     * @return JsonResponse
-     * @throws \Exception
-     */
-    public function signUpHandlerBuyer(SignUpRequest $signUpRequest): JsonResponse
-    {
-        if (!$this->signUpValidator->validate($signUpRequest)) {
-            return new JsonResponse([
-                'status' => Response::HTTP_BAD_REQUEST,
-                'errors' => $this->signUpValidator->getErrors()
-            ]);
-        }
-
-        $role = array('ROLE_BUYER');
-        $user = $this->userCreator->createUser($signUpRequest, $role);
-
-        return new JsonResponse([
-            'status' => Response::HTTP_OK,
-            'entity' => $user->getId()
-        ]);
     }
 
     /**
@@ -204,6 +99,12 @@ class UserController extends AbstractController
         if ($this->isGranted(self::ROLE_CUSTOMER)) {
             $user = $this->security->getUser();
             $worksheets = $worksheetRepository->findByUser($user->getId());
+
+            // Resize avatar if exist
+            if ($user->getAvatar()) {
+                $this->imageOptimizer->resize($this->targetDirectory.'/'.$user->getAvatar());
+            }
+
             {
                 return $this->render('user/lk_customer.html.twig', [
                     'user' => $user,
@@ -233,6 +134,12 @@ class UserController extends AbstractController
         if ($this->isGranted(self::ROLE_EMPLOYEE)) {
             $user = $this->security->getUser();
             $jobs = $jobRepository->findByUser($user->getId());
+
+            // Resize avatar if exist
+            if ($user->getAvatar()) {
+                $this->imageOptimizer->resize($this->targetDirectory.'/'.$user->getAvatar());
+            }
+
             {
                 return $this->render('user/lk_customer.html.twig', [
                     'user' => $user,
@@ -260,6 +167,12 @@ class UserController extends AbstractController
     ): Response {
         if ($this->isGranted(self::ROLE_BUYER)) {
             $user = $this->security->getUser();
+
+            // Resize avatar if exist
+            if ($user->getAvatar()) {
+                $this->imageOptimizer->resize($this->targetDirectory.'/'.$user->getAvatar());
+            }
+
             {
                 return $this->render('user/lk_customer.html.twig', [
                     'user' => $user,
@@ -294,7 +207,7 @@ class UserController extends AbstractController
             $form->handleRequest($request);
             $entityManager = $this->doctrine->getManager();
 
-            if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted()) {
                 $post = $request->request->get('edit_profile_form');
                 // Set new password if changed
                 if ($post['plainPassword']['first'] !=='' && $post['plainPassword']['second'] !=='') {

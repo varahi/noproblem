@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+    {% if app.user %}
+        <div class="mb-3">
+            {{ 'You logged as'|trans }} {{ app.user.username }} <br /><br />
+            <a href="{{ path('app_logout') }}"><button>{{ 'Logout'|trans }}</button></a>
+        </div>
+    {% else %}
+        <form class="form-std" method="post" autocomplete="off">
+            {% for message in app.flashes('notification') %}
+                <div class="alert-success alert alert-dismissible" role="alert">
+                    <p>{{ message }}</p>
+                    {#<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button>#}
+                </div>
+            {% endfor %}
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" placeholder="E-mail" autocomplete="email" required autofocus>
+            <input type="password" name="password" id="inputPassword" placeholder="Пароль" autocomplete="current-password" required>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <button>{{ 'Enter'|trans }}</button>
+        </form>
+    {% endif %}
+{% endblock %}

@@ -4,27 +4,133 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Http\Request\SignUpRequest;
 use App\Security\AppAuthenticator;
 use App\Security\EmailVerifier;
+use App\Service\SignUpValidator;
+use App\Service\UserCreator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class RegistrationController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
 
-    public function __construct(EmailVerifier $emailVerifier)
-    {
+    /**
+     * @var ValidatorInterface
+     */
+    private $signUpValidator;
+
+    public function __construct(
+        EmailVerifier $emailVerifier,
+        SignUpValidator $signUpValidator,
+        UserCreator $userCreator
+    ) {
         $this->emailVerifier = $emailVerifier;
+        $this->signUpValidator = $signUpValidator;
+        $this->userCreator = $userCreator;
+    }
+
+    /**
+     * @ParamConverter(
+     *      "signUpRequest",
+     *      converter="fos_rest.request_body",
+     *      class="App\Http\Request\SignUpRequest"
+     * )
+     *
+     * @param SignUpRequest $signUpRequest
+     *
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function signUpHandlerEmployer(SignUpRequest $signUpRequest): JsonResponse
+    {
+        if (!$this->signUpValidator->validate($signUpRequest)) {
+            return new JsonResponse([
+                'status' => Response::HTTP_BAD_REQUEST,
+                'errors' => $this->signUpValidator->getErrors()
+            ]);
+        }
+
+        $role = array('ROLE_EMPLOYEE');
+        $user = $this->userCreator->createUser($signUpRequest, $role);
+
+        return new JsonResponse([
+            'status' => Response::HTTP_OK,
+            'entity' => $user->getId()
+        ]);
+    }
+
+    /**
+     * @ParamConverter(
+     *      "signUpRequest",
+     *      converter="fos_rest.request_body",
+     *      class="App\Http\Request\SignUpRequest"
+     * )
+     *
+     * @param SignUpRequest $signUpRequest
+     *
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function signUpHandlerCustomer(SignUpRequest $signUpRequest): JsonResponse
+    {
+        if (!$this->signUpValidator->validate($signUpRequest)) {
+            return new JsonResponse([
+                'status' => Response::HTTP_BAD_REQUEST,
+                'errors' => $this->signUpValidator->getErrors()
+            ]);
+        }
+
+        $role = array('ROLE_CUSTOMER');
+        $user = $this->userCreator->createUser($signUpRequest, $role);
+
+        return new JsonResponse([
+            'status' => Response::HTTP_OK,
+            'entity' => $user->getId()
+        ]);
+    }
+
+    /**
+     * @ParamConverter(
+     *      "signUpRequest",
+     *      converter="fos_rest.request_body",
+     *      class="App\Http\Request\SignUpRequest"
+     * )
+     *
+     * @param SignUpRequest $signUpRequest
+     *
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function signUpHandlerBuyer(SignUpRequest $signUpRequest): JsonResponse
+    {
+        if (!$this->signUpValidator->validate($signUpRequest)) {
+            return new JsonResponse([
+                'status' => Response::HTTP_BAD_REQUEST,
+                'errors' => $this->signUpValidator->getErrors()
+            ]);
+        }
+
+        $role = array('ROLE_BUYER');
+        $user = $this->userCreator->createUser($signUpRequest, $role);
+
+        return new JsonResponse([
+            'status' => Response::HTTP_OK,
+            'entity' => $user->getId()
+        ]);
     }
 
     /**
