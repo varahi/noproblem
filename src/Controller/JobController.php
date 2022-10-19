@@ -499,6 +499,7 @@ class JobController extends AbstractController
     ): Response {
         $category = $job->getCategory();
         $relatedJobs = $jobRepository->findByCategory($category->getId(), $job->getId(), '10');
+        $user = $this->security->getUser();
 
         // Times array
         for ($i = 0; $i < 12; ++$i) {
@@ -530,6 +531,7 @@ class JobController extends AbstractController
         }
 
         return new Response($this->twig->render('pages/job/detail.html.twig', [
+            'user' => $user,
             'job' => $job,
             'timesArray' => $timesArray,
             'daysArray' => $daysArray,

@@ -1,0 +1,100 @@
+{% extends 'layouts/base.html.twig' %}
+{% block body %}
+
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css'>
+    <section id="list_jobs">
+        <div class="container">
+            {% include 'partials/_message.html.twig' %}
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>{{ 'Support'|trans }}</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="md-6" style="margin-right: 30px">
+                    <div class="btn_profile_edit">
+                        <a href="{{ path('admin') }}"><button>{{ 'To admin panel'|trans }}</button></a>
+                    </div>
+                </div>
+                <div class="md-6">
+                    <div class="btn_profile_edit">
+                        <a href="{{ path('app_ticket_list') }}"><button>{{ 'To ticket list'|trans }}</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="list_items">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>{{ 'Detail ticket'|trans }}</h3>
+                </div>
+            </div>
+            <div class="job_item">
+                <div class="top_item">
+                    <div class="item_left">
+                        <h2>{{ ticket.title }}</h2>
+                    </div>
+                    <div class="item_right">
+                        <div class="id_item">
+                            ID {{ ticket.id }}
+                        </div>
+                        <div class="raiting">
+                            <p>Срочность</p>
+                            {% include 'partials/ticket/_ticket_stars.html.twig' %}
+                        </div>
+                    </div>
+                </div>
+                <div class="description">
+                    <blockquote>
+                        <p>{{ ticket.description }}</p>
+                        <cite>
+                            {% if ticket.user %}{{ ticket.user.firstName }} {{ ticket.user.lastName }}{% endif %} <br />
+                            {{ ticket.user.phone }}
+                        </cite>
+                    </blockquote>
+                </div>
+
+                {% if ticket.answer is not empty %}
+                    <div class="answers">
+                        {% set value = '15' %}
+                        {% for key, answer in ticket.answer %}
+                            {% set newValue = key * value %}
+                            <div class="answer" style="margin-left: {{ newValue }}px;">
+                                <p>{% if ticket.user %}{{ ticket.user.firstName }} {{ ticket.user.lastName }}{% endif %} - {{ answer.created|date("d.m.Y - H:i") }}</p>
+                                <p>{{ answer.answer }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>{{ 'No answers'|trans }}</p>
+                {% endif %}
+            </div>
+
+            {{ form_start(answerForm, {'attr' : {'class': 'form-std', 'autocomplete': 'off'}} ) }}
+            <div class="col-md-12">
+                <div class="reg_contact">
+                    <h3>{{ 'Answer the question'|trans }}</h3>
+                    {{ form_widget(answerForm.answer) }}
+                </div>
+                <div style="text-align: center">
+                    <label class="checkbox">
+                        <input type="checkbox" name="answer_form[closeTicket]" value="0">
+                        <span>{{ 'Close ticket'|trans }}</span>
+                    </label>
+                    <div style="margin: 20px 0;">
+                        <button id="myBtn">{{ 'Answer the question'|trans }}</button>
+                    </div>
+                </div>
+                {{ form_end(answerForm) }}
+            </div>
+        </div>
+    </section>
+{% endblock %}

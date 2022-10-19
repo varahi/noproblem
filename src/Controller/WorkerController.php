@@ -244,9 +244,11 @@ class WorkerController extends AbstractController
         WorksheetRepository $worksheetRepository
     ): Response {
         $category = $worksheet->getCategory();
+        $user = $this->security->getUser();
         $relatedJobs = $worksheetRepository->findByCategory($category->getId(), $worksheet->getId(), '10');
 
         return new Response($this->twig->render('pages/worksheet/detail.html.twig', [
+            'user' => $user,
             'worksheet' => $worksheet,
             'relatedJobs' => $relatedJobs,
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()

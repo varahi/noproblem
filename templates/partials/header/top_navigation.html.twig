@@ -1,5 +1,6 @@
 <div class="regs">
     {% if is_granted('ROLE_EMPLOYEE') or is_granted('ROLE_CUSTOMER') or is_granted('ROLE_BUYER') %}
+        {% if user is defined %}
         {% set nts = 0 %}
         {% if user.notifications %}
             {% for notification in user.notifications %}
@@ -15,6 +16,7 @@
                 <span class="count">{{ nts }}</span>{% endif %}
             </a>
         </div>
+        {% endif %}
     {% endif %}
 </div>
 <div class="regs" >

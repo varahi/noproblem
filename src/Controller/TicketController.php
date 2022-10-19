@@ -170,8 +170,8 @@ class TicketController extends AbstractController
             $entityManager->persist($ticket);
             $entityManager->flush();
 
-            $subject = $translator->trans('Your request has been answered', array(), 'messages');
-            $mailer->sendAnswerEmail($ticket->getUser(), $subject, 'emails/answer_ticket_to_user.html.twig', $answer, $ticket);
+            //$subject = $translator->trans('Your request has been answered', array(), 'messages');
+            //$mailer->sendAnswerEmail($ticket->getUser(), $subject, 'emails/answer_ticket_to_user.html.twig', $answer, $ticket);
 
             $message = $translator->trans('Answered', array(), 'flash');
             $notifier->send(new Notification($message, ['browser']));
