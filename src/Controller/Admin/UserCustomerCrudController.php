@@ -56,6 +56,12 @@ class UserCustomerCrudController extends AbstractCrudController
             ->setDefaultSort(['id' => 'DESC']);
     }
 
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->disable('new');
+    }
+
     public function configureFields(string $pageName): iterable
     {
         yield FormField::addPanel('Main info')->setIcon('fa fa-info')->setCssClass('col-sm-6');

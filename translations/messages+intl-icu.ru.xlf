@@ -185,6 +185,10 @@
         <source>Customers</source>
         <target>Работники</target>
       </trans-unit>
+      <trans-unit id="vzdjODq" resname="Customer">
+        <source>Customer</source>
+        <target>Работник</target>
+      </trans-unit>
       <trans-unit id="hMt4cbd" resname="Reviews">
         <source>Reviews</source>
         <target>Отзывы</target>
@@ -239,7 +243,7 @@
       </trans-unit>
       <trans-unit id="VKO2TGf" resname="Employer">
         <source>Employer</source>
-        <target>Работник</target>
+        <target>Работодатель</target>
       </trans-unit>
       <trans-unit id="OWC6ckk" resname="General information">
         <source>General information</source>
@@ -552,6 +556,26 @@
       <trans-unit id="rS9mOfI" resname="Empty orders list">
         <source>Empty orders list</source>
         <target>Список заявок пуст</target>
+      </trans-unit>
+      <trans-unit id="PRMTaLQ" resname="Tickets">
+        <source>Tickets</source>
+        <target>Заявки в тех. поддержку</target>
+      </trans-unit>
+      <trans-unit id="StCgpq5" resname="Answers">
+        <source>Answers</source>
+        <target>Ответы тех. поддержки</target>
+      </trans-unit>
+      <trans-unit id="0C2W1Se" resname="Tickets list">
+        <source>Tickets list</source>
+        <target>Тех. поддержка</target>
+      </trans-unit>
+      <trans-unit id="fozSBW2" resname="Title">
+        <source>Title</source>
+        <target>Заголовок</target>
+      </trans-unit>
+      <trans-unit id="vpGUC3n" resname="Support">
+        <source>Support</source>
+        <target>Тех. поддержка</target>
       </trans-unit>
     </body>
   </file>
