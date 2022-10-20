@@ -95,19 +95,6 @@ class PageController extends AbstractController
     }
 
     /**
-     * @Route("/vacancies", name="app_vacancies")
-     */
-    public function vacanciesPage(
-        Request $request,
-        ReviewRepository $reviewRepository,
-        CategoryRepository $categoryRepository
-    ): Response {
-        return new Response($this->twig->render('pages/sign-up.html.twig', [
-            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
-        ]));
-    }
-
-    /**
      * @Route("/detail-worksheet-{id}", name="app_detail_worksheet")
      */
     public function worksheetDetailPage(
