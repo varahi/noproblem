@@ -31,7 +31,7 @@ class UserCrudController extends AbstractCrudController
 
     public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): \Doctrine\ORM\QueryBuilder
     {
-        $role = 'ROLE_ADMIN';
+        $role = 'ROLE_SUPER_AMIN';
         $qb = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
         $qb->where('entity.roles LIKE :roles');
         $qb->setParameter('roles', '%"'.$role.'"%');

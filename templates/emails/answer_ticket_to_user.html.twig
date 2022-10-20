@@ -1,0 +1,69 @@
+<h1>Сообщение с сайта noproblem.ru</h1>
+
+<p>На ваше обращение в службу поддержки получен ответ</p>
+
+<h2>Обращение</h2>
+<table>
+    {#    <tr>
+        <td>
+            Id обращения:
+        </td>
+        <td>
+            {{ ticket.id }}
+        </td>
+    </tr>#}
+    <tr>
+        <td>
+            Дата обращения:
+        </td>
+        <td>
+            {{ ticket.created|date("d.m.Y - H:i") }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Заголовок:
+        </td>
+        <td>
+            {{ ticket.title }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Описание:
+        </td>
+        <td>
+            {{ ticket.description }}
+        </td>
+    </tr>
+</table>
+
+<hr />
+
+<h2>Ответ</h2>
+<table>
+    <tr>
+        <td>
+            Дата ответа:
+        </td>
+        <td>
+            {{ ticket.created|date("d.m.Y - H:i") }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Ответ:
+        </td>
+        <td>
+            {{ answer.answer }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Ответил:
+        </td>
+        <td>
+            {{ answer.user.firstName }} {{ answer.user.lastName }} {{ answer.user.email }}
+        </td>
+    </tr>
+</table>

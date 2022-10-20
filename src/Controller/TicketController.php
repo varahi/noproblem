@@ -68,24 +68,24 @@ class TicketController extends AbstractController
         NotifierInterface $notifier,
         TranslatorInterface $translator
     ): Response {
-        //if ($this->isGranted(self::ROLE_SUPER_ADMIN)) {
-        $user = $this->security->getUser();
+        if ($this->isGranted(self::ROLE_SUPER_ADMIN)) {
+            $user = $this->security->getUser();
 
-        $newTickets = $ticketRepository->findAllByStatus(self::STATUS_NEW);
-        $activeTickets = $ticketRepository->findAllByStatus(self::STATUS_ACTIVE);
-        $completedTickets = $ticketRepository->findAllByStatus(self::STATUS_COMPLETED);
+            $newTickets = $ticketRepository->findAllByStatus(self::STATUS_NEW);
+            $activeTickets = $ticketRepository->findAllByStatus(self::STATUS_ACTIVE);
+            $completedTickets = $ticketRepository->findAllByStatus(self::STATUS_COMPLETED);
 
-        return $this->render('ticket/ticket_list.html.twig', [
+            return $this->render('ticket/ticket_list.html.twig', [
                 'user' => $user,
                 'newTickets' => $newTickets,
                 'activeTickets' => $activeTickets,
                 'completedTickets' => $completedTickets,
             ]);
-        //} else {
-        //    $message = $translator->trans('Please login', array(), 'flash');
-        //    $notifier->send(new Notification($message, ['browser']));
-        //    return $this->redirectToRoute("app_login");
-        //}
+        } else {
+            $message = $translator->trans('Please login', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_login");
+        }
     }
 
     /**
@@ -146,48 +146,77 @@ class TicketController extends AbstractController
         ManagerRegistry $doctrine,
         Mailer $mailer
     ): Response {
-        //if ($this->isGranted(self::ROLE_SUPER_ADMIN) || $this->isGranted(self::ROLE_EDITOR)) {
-        $user = $this->security->getUser();
-        $answer = new Answer();
-        $form = $this->createForm(AnswerFormType::class, $answer);
-        $form->handleRequest($request);
+        if ($this->isGranted(self::ROLE_SUPER_ADMIN)) {
+            $user = $this->security->getUser();
 
-        if ($form->isSubmitted()) {
-            $post = $request->request->get('answer_form');
-            $entityManager = $doctrine->getManager();
-            $ticket->setStatus(self::STATUS_ACTIVE);
-            $answer->setTicket($ticket);
+            $answer = new Answer();
+            $form = $this->createForm(AnswerFormType::class, $answer);
+            $form->handleRequest($request);
 
-            // Close ticket
-            if (isset($post['closeTicket']) && $post['closeTicket'] !=='') {
-                $ticket->setClosed(new \DateTime());
-                $ticket->setStatus(self::STATUS_COMPLETED);
+            if ($form->isSubmitted()) {
+                $post = $request->request->get('answer_form');
+                $entityManager = $doctrine->getManager();
+                $ticket->setStatus(self::STATUS_ACTIVE);
+                $answer->setTicket($ticket);
+
+                // Close ticket
+                if (isset($post['closeTicket']) && $post['closeTicket'] !=='') {
+                    $ticket->setClosed(new \DateTime());
+                    $ticket->setStatus(self::STATUS_COMPLETED);
+                }
+
+                // Set answered user
+                $answer->setUser($user);
+                $entityManager->persist($answer);
+                $entityManager->persist($ticket);
+                $entityManager->flush();
+
+                $subject = $translator->trans('Your request has been answered', array(), 'messages');
+                $mailer->sendAnswerEmail($ticket->getUser(), $subject, 'emails/answer_ticket_to_user.html.twig', $answer, $ticket);
+
+                $message = $translator->trans('Answered', array(), 'flash');
+                $notifier->send(new Notification($message, ['browser']));
+                return $this->redirectToRoute("app_ticket_list");
+                //$referer = $request->headers->get('referer');
+            //return new RedirectResponse($referer);
             }
 
-            // Set answered user
-            $answer->setUser($user);
-            $entityManager->persist($answer);
-            $entityManager->persist($ticket);
-            $entityManager->flush();
-
-            //$subject = $translator->trans('Your request has been answered', array(), 'messages');
-            //$mailer->sendAnswerEmail($ticket->getUser(), $subject, 'emails/answer_ticket_to_user.html.twig', $answer, $ticket);
-
-            $message = $translator->trans('Answered', array(), 'flash');
-            $notifier->send(new Notification($message, ['browser']));
-            return $this->redirectToRoute("app_ticket_list");
-            //$referer = $request->headers->get('referer');
-                //return new RedirectResponse($referer);
-        }
-
-        return $this->render('ticket/ticket_edit.html.twig', [
+            return $this->render('ticket/ticket_edit.html.twig', [
                 'ticket' => $ticket,
                 'answerForm' => $form->createView()
             ]);
-        //} else {
-        //    $message = $translator->trans('Please login', array(), 'flash');
-        //    $notifier->send(new Notification($message, ['browser']));
-        //    return $this->redirectToRoute("app_login");
-        //}
+        } else {
+            $message = $translator->trans('Please login', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_login");
+        }
+    }
+
+    /**
+     * @IsGranted("ROLE_SUPER_ADMIN")
+     * @Route("/activate-ticket/ticket-{id}", name="app_activate_ticket")
+     */
+    public function activateTicket(
+        Request $request,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier,
+        Ticket $ticket,
+        ManagerRegistry $doctrine
+    ) {
+        if ($this->isGranted(self::ROLE_SUPER_ADMIN)) {
+            $entityManager = $doctrine->getManager();
+            $ticket->setStatus(self::STATUS_ACTIVE);
+            $entityManager->persist($ticket);
+            $entityManager->flush();
+
+            $message = $translator->trans('Ticket activated again', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            $referer = $request->headers->get('referer');
+            return new RedirectResponse($referer);
+        } else {
+            $message = $translator->trans('Please login', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_login");
+        }
     }
 }

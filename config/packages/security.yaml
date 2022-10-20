@@ -46,7 +46,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         ### ROLE_ADMIN - access to admin panel
-         #- { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/admin, roles: ROLE_SUPER_ADMIN }
          ### Front-end user groups
          - { path: ^/lk-employer, roles: ROLE_EMPLOYEE } # работодатель
          - { path: ^/lk-customer, roles: ROLE_CUSTOMER } # работник

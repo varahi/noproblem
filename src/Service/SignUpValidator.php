@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class SignUpValidator
 {
-    private const ERROR_MESSAGE_UNIQUE = 'User with such %s already registered';
+    private const ERROR_MESSAGE_UNIQUE = 'Пользователь с таким %s уже зарегестрирован';
 
     private const FIELD_EMAIL = 'email';
     private const FIELD_USERNAME = 'username';
