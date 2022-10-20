@@ -1,177 +1,179 @@
 {% extends 'layouts/base.html.twig' %}
-{% block title %}Тарифы - Онлайн-сервис по подбору домашнего персонала{% endblock %}
+{% block title %}Тарифы - Онлайн-сервис по подбору домашнего персонала
+{% endblock %}
 {% block body %}
-    {% include 'partials/header.html.twig' %}
-    <main>
-        <section class="benefit container">
-            <h1 class="benefit_header"></h1>
-            <div class="benefit_box">
-                <h2 class="benefit_box-header">Почему выгоднее работать с нами?</h2>
-                <ul class="benefit_list">
+	{% include 'partials/header.html.twig' %}
+	<main>
+		<section class="benefit container">
+			<h1 class="benefit_header"></h1>
+			<div class="benefit_box">
+				<h2 class="benefit_box-header">Почему выгоднее работать с нами?</h2>
+				<ul class="benefit_list">
 
-                    <li class="benefit_item">
-                        <span class="benefit_item-number">01</span>
-                        <p class="benefit_item-text">Нам важно, чтобы ваш помощник выполнял свою работу хорошо,и вы были довольны, поэтому предоставляем возможность каждому помощнику пройти обучение на нашей платформе и повысить свою квалификацию</p>
-                    </li>
+					<li class="benefit_item">
+						<span class="benefit_item-number">01</span>
+						<p class="benefit_item-text">Нам важно, чтобы ваш помощник выполнял свою работу хорошо,и вы были довольны, поэтому предоставляем возможность каждому помощнику пройти обучение на нашей платформе и повысить свою квалификацию</p>
+					</li>
 
-                    <li class="benefit_item">
-                        <span class="benefit_item-number">02</span>
-                        <p class="benefit_item-text">Мы проверяем паспортные данные сотрудников, при необходимости делаем дополнительные проверки по различным базам</p>
-                    </li>
+					<li class="benefit_item">
+						<span class="benefit_item-number">02</span>
+						<p class="benefit_item-text">Мы проверяем паспортные данные сотрудников, при необходимости делаем дополнительные проверки по различным базам</p>
+					</li>
 
-                    <li class="benefit_item">
-                        <span class="benefit_item-number">03</span>
-                        <p class="benefit_item-text">Стоимость доступа к платформе ниже, чем у конкурентов</p>
-                    </li>
+					<li class="benefit_item">
+						<span class="benefit_item-number">03</span>
+						<p class="benefit_item-text">Стоимость доступа к платформе ниже, чем у конкурентов</p>
+					</li>
 
-                    <li class="benefit_item">
-                        <span class="benefit_item-number">04</span>
-                        <p class="benefit_item-text">У нас есть реальные отзывы</p>
-                    </li>
+					<li class="benefit_item">
+						<span class="benefit_item-number">04</span>
+						<p class="benefit_item-text">У нас есть реальные отзывы</p>
+					</li>
 
-                </ul>
-            </div>
-        </section>
+				</ul>
+			</div>
+		</section>
 
-        <section class="employer container">
-            <div class="employer_select-box">
-                <span class="employer_select-text">Для работодателя</span>
-                <button class="worker_select-btn accordion1" type="button">
-                    <img class="worker_select-icon" src="{{ asset('assets/img/downs.svg') }}" width="40" height="40" alt="arrow">
-                </button>
-            </div>
-            <ul class="employer_card-list panel1" style="display:flex;">
-                <li class="employer_card-item">
-                    <p class="employer_card-header">Приветственный доступ</p>
-                    <p class="employer_card-text">Доступ к базе сотрудников</p>
-                    <div class="employer_card-box-price">
-                        <span class="employer_card-price">75р/сутки</span>
-                    </div>
-                    <p class="employer_card-price-comment">далее 90р/сутки, при оплате посуточно</p>
-                    <button class="employer_card-btn" type="button">Приобрести</button>
-                </li>
+		<section class="employer container">
+			<div class="employer_select-box">
+				<span class="employer_select-text">Для работодателя</span>
+				<button class="worker_select-btn accordion1" type="button">
+					<img class="worker_select-icon" src="{{ asset('assets/img/downs.svg') }}" width="40" height="40" alt="arrow">
+				</button>
+			</div>
+			<ul class="employer_card-list panel1" style="display:flex;">
+				<li class="employer_card-item">
+					<p class="employer_card-header">Приветственный доступ</p>
+					<p class="employer_card-text">Доступ к базе сотрудников</p>
+					<div class="employer_card-box-price">
+						<span class="employer_card-price">75р/сутки</span>
+					</div>
+					<p class="employer_card-price-comment">далее 90р/сутки, при оплате посуточно</p>
+					<a class="employer_card-btn" href="pay/new?amount=7500&tariff=emloyer_1_day" type="button">Приобрести</a>
+				</li>
 
-                <li class="employer_card-item">
-                    <p class="employer_card-header">Доступ на 14 дней</p>
-                    <p class="employer_card-text">Доступ к базе сотрудников</p>
-                    <div class="employer_card-box-price">
-                        <span class="employer_card-price">690р</span>
-                        <span class="employer_card-price-sale">1.600р</span>
-                    </div>
-                    <button class="employer_card-btn" type="button">Приобрести</button>
-                </li>
+				<li class="employer_card-item">
+					<p class="employer_card-header">Доступ на 14 дней</p>
+					<p class="employer_card-text">Доступ к базе сотрудников</p>
+					<div class="employer_card-box-price">
+						<span class="employer_card-price">690р</span>
+						<span class="employer_card-price-sale">1.600р</span>
+					</div>
+					<a class="employer_card-btn" href="pay/new?amount=69000&tariff=emloyer_14_days" type="button">Приобрести</a>
 
-                <li class="employer_card-item">
-                    <p class="employer_card-header">Доступ на 30 дней</p>
-                    <p class="employer_card-text">Доступ к базе сотрудников</p>
-                    <div class="employer_card-box-price">
-                        <span class="employer_card-price">990р</span>
-                        <span class="employer_card-price-sale">2.700р</span>
-                    </div>
-                    <button class="employer_card-btn" type="button">Приобрести</button>
-                </li>
+				</li>
 
-                <li class="employer_card-item">
-                    <p class="employer_card-header">Проверка 1-го пользователя по базам</p>
-                    <p class="employer_card-text">Проверка 1-го пользователя по базам</p>
-                    <div class="employer_card-box-price">
-                        <span class="employer_card-price">550р</span>
-                    </div>
-                    <button class="employer_card-btn" type="button">Приобрести</button>
-                </li>
+				<li class="employer_card-item">
+					<p class="employer_card-header">Доступ на 30 дней</p>
+					<p class="employer_card-text">Доступ к базе сотрудников</p>
+					<div class="employer_card-box-price">
+						<span class="employer_card-price">990р</span>
+						<span class="employer_card-price-sale">2.700р</span>
+					</div>
+					<a class="employer_card-btn" href="pay/new?amount=99000&tariff=emloyer_30_days" type="button">Приобрести</a>
+				</li>
 
-
-                <li class="employer_card-item">
-                    <p class="employer_card-header">Доступ к базе на 1 мес, без ограничений в кол-ве объявлений</p>
-                    <p class="employer_card-text">Доступ к базе на 1 мес, без ограничений в кол-ве объявлений + проверка 3-х соискателей + выделенное объявление</p>
-                    <div class="employer_card-box-price">
-                        <span class="employer_card-price">1.890р</span>
-                        <span class="employer_card-price-sale">4.350р</span>
-                    </div>
-                    <button class="employer_card-btn" type="button">Приобрести</button>
-                </li>
-
-                <li class="employer_card-item">
-                    <p class="employer_card-header">«Личный менеджер» по подбору кандидата (подбор 5–10 кандидатов)</p>
-                    <p class="employer_card-text">«Личный менеджер» по подбору кандидата (подбор 5-10 кандидатов) , подходящих под необходимые параметры, которые указал клиент (с гарантией, если кандидат в течение 2-х недель не подойдёт, сделаем повторную подборку бесплатно)</p>
-                    <div class="employer_card-box-price">
-                        <span class="employer_card-price">20.000р</span>
-                    </div>
-                    <button class="employer_card-btn" type="button">Приобрести</button>
-                </li>
-            </ul>
-        </section>
-
-        <section class="worker container">
-            <div class="worker_select-box">
-                <span class="worker_select-text">Для работника</span>
-                <button class="worker_select-btn accordion"  type="button">
-                    <img class="worker_select-icon" src="{{ asset('assets/img/downs.svg') }}" width="40" height="40" alt="arrow">
-                </button>
-            </div>
-
-            <ul class="worker_card-list panel">
-
-                <li class="worker_card-item">
-                    <p class="worker_card-header">Приветственный доступ</p>
-                    <p class="worker_card-text">Доступ к базе сотрудников</p>
-                    <div class="worker_card-box-price">
-                        <span class="worker_card-price">75р/сутки</span>
-                    </div>
-                    <p class="worker_card-price-comment">далее 90р/сутки, при оплате посуточно</p>
-                    <button class="worker_card-btn" type="button">Приобрести</button>
-                </li>
-
-                <li class="worker_card-item">
-                    <p class="worker_card-header">Доступ на 14 дней</p>
-                    <p class="worker_card-text">Доступ к базе сотрудников</p>
-                    <div class="worker_card-box-price">
-                        <span class="worker_card-price">690р</span>
-                        <span class="worker_card-price-sale">1.600р</span>
-                    </div>
-                    <button class="worker_card-btn" type="button">Приобрести</button>
-                </li>
-
-                <li class="worker_card-item">
-                    <p class="worker_card-header">Доступ на 30 дней</p>
-                    <p class="worker_card-text">Доступ к базе сотрудников</p>
-                    <div class="worker_card-box-price">
-                        <span class="worker_card-price">990р</span>
-                        <span class="worker_card-price-sale">2.700р</span>
-                    </div>
-                    <button class="worker_card-btn" type="button">Приобрести</button>
-                </li>
-
-                <li class="worker_card-item">
-                    <p class="worker_card-header">Проверка 1-го пользователя по базам</p>
-                    <p class="worker_card-text">Проверка 1-го пользователя по базам</p>
-                    <div class="worker_card-box-price">
-                        <span class="worker_card-price">550р</span>
-                    </div>
-                    <button class="worker_card-btn" type="button">Приобрести</button>
-                </li>
+				<li class="employer_card-item">
+					<p class="employer_card-header">Проверка 1-го пользователя по базам</p>
+					<p class="employer_card-text">Проверка 1-го пользователя по базам</p>
+					<div class="employer_card-box-price">
+						<span class="employer_card-price">550р</span>
+					</div>
+					<a class="employer_card-btn" href="pay/new?amount=55000&tariff=emloyer_1_person" type="button">Приобрести</a>
+				</li>
 
 
-                <li class="worker_card-item">
-                    <p class="worker_card-header">Доступ к базе на 1 мес, без ограничений в кол-ве объявлений</p>
-                    <p class="worker_card-text">Доступ к базе на 1 мес, без ограничений в кол-ве объявлений + проверка 3-х соискателей + выделенное объявление</p>
-                    <div class="worker_card-box-price">
-                        <span class="worker_card-price">1.890р</span>
-                        <span class="worker_card-price-sale">4.350р</span>
-                    </div>
-                    <button class="worker_card-btn" type="button">Приобрести</button>
-                </li>
+				<li class="employer_card-item">
+					<p class="employer_card-header">Доступ к базе на 1 мес, без ограничений в кол-ве объявлений</p>
+					<p class="employer_card-text">Доступ к базе на 1 мес, без ограничений в кол-ве объявлений + проверка 3-х соискателей + выделенное объявление</p>
+					<div class="employer_card-box-price">
+						<span class="employer_card-price">1.890р</span>
+						<span class="employer_card-price-sale">4.350р</span>
+					</div>
+					<a class="employer_card-btn" href="pay/new?amount=189000&tariff=emloyer_1_month" type="button">Приобрести</a>
+				</li>
 
-                <li class="worker_card-item">
-                    <p class="worker_card-header">«Личный менеджер» по подбору кандидата (подбор 5–10 кандидатов)</p>
-                    <p class="worker_card-text">«Личный менеджер» по подбору кандидата (подбор 5-10 кандидатов) , подходящих под необходимые параметры, которые указал клиент (с гарантией, если кандидат в течение 2-х недель не подойдёт, сделаем повторную подборку бесплатно)</p>
-                    <div class="worker_card-box-price">
-                        <span class="worker_card-price">20.000р</span>
-                    </div>
-                    <button class="worker_card-btn" type="button">Приобрести</button>
-                </li>
-            </ul>
-        </section>
-    </main>
-    {% include 'partials/footer.html.twig' %}
+				<li class="employer_card-item">
+					<p class="employer_card-header">«Личный менеджер» по подбору кандидата (подбор 5–10 кандидатов)</p>
+					<p class="employer_card-text">«Личный менеджер» по подбору кандидата (подбор 5-10 кандидатов) , подходящих под необходимые параметры, которые указал клиент (с гарантией, если кандидат в течение 2-х недель не подойдёт, сделаем повторную подборку бесплатно)</p>
+					<div class="employer_card-box-price">
+						<span class="employer_card-price">20.000р</span>
+					</div>
+					<a class="employer_card-btn" href="pay/new?amount=2000000&tariff=emloyer_personal_manager" type="button">Приобрести</a>
+				</li>
+			</ul>
+		</section>
+
+		<section class="worker container">
+			<div class="worker_select-box">
+				<span class="worker_select-text">Для работника</span>
+				<button class="worker_select-btn accordion" type="button">
+					<img class="worker_select-icon" src="{{ asset('assets/img/downs.svg') }}" width="40" height="40" alt="arrow">
+				</button>
+			</div>
+
+			<ul class="worker_card-list panel">
+
+				<li class="worker_card-item">
+					<p class="worker_card-header">Приветственный доступ</p>
+					<p class="worker_card-text">Доступ к базе сотрудников</p>
+					<div class="worker_card-box-price">
+						<span class="worker_card-price">75р/сутки</span>
+					</div>
+					<p class="worker_card-price-comment">далее 90р/сутки, при оплате посуточно</p>
+					<button class="worker_card-btn" type="button">Приобрести</button>
+				</li>
+
+				<li class="worker_card-item">
+					<p class="worker_card-header">Доступ на 14 дней</p>
+					<p class="worker_card-text">Доступ к базе сотрудников</p>
+					<div class="worker_card-box-price">
+						<span class="worker_card-price">690р</span>
+						<span class="worker_card-price-sale">1.600р</span>
+					</div>
+					<button class="worker_card-btn" type="button">Приобрести</button>
+				</li>
+
+				<li class="worker_card-item">
+					<p class="worker_card-header">Доступ на 30 дней</p>
+					<p class="worker_card-text">Доступ к базе сотрудников</p>
+					<div class="worker_card-box-price">
+						<span class="worker_card-price">990р</span>
+						<span class="worker_card-price-sale">2.700р</span>
+					</div>
+					<button class="worker_card-btn" type="button">Приобрести</button>
+				</li>
+
+				<li class="worker_card-item">
+					<p class="worker_card-header">Проверка 1-го пользователя по базам</p>
+					<p class="worker_card-text">Проверка 1-го пользователя по базам</p>
+					<div class="worker_card-box-price">
+						<span class="worker_card-price">550р</span>
+					</div>
+					<button class="worker_card-btn" type="button">Приобрести</button>
+				</li>
+
+
+				<li class="worker_card-item">
+					<p class="worker_card-header">Доступ к базе на 1 мес, без ограничений в кол-ве объявлений</p>
+					<p class="worker_card-text">Доступ к базе на 1 мес, без ограничений в кол-ве объявлений + проверка 3-х соискателей + выделенное объявление</p>
+					<div class="worker_card-box-price">
+						<span class="worker_card-price">1.890р</span>
+						<span class="worker_card-price-sale">4.350р</span>
+					</div>
+					<button class="worker_card-btn" type="button">Приобрести</button>
+				</li>
+
+				<li class="worker_card-item">
+					<p class="worker_card-header">«Личный менеджер» по подбору кандидата (подбор 5–10 кандидатов)</p>
+					<p class="worker_card-text">«Личный менеджер» по подбору кандидата (подбор 5-10 кандидатов) , подходящих под необходимые параметры, которые указал клиент (с гарантией, если кандидат в течение 2-х недель не подойдёт, сделаем повторную подборку бесплатно)</p>
+					<div class="worker_card-box-price">
+						<span class="worker_card-price">20.000р</span>
+					</div>
+					<button class="worker_card-btn" type="button">Приобрести</button>
+				</li>
+			</ul>
+		</section>
+	</main>
+	{% include 'partials/footer.html.twig' %}
 {% endblock %}
