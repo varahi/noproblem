@@ -41,6 +41,8 @@ class UserController extends AbstractController
 
     public const ROLE_BUYER = 'ROLE_BUYER';
 
+    public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+
     private $security;
 
     /**
@@ -86,6 +88,8 @@ class UserController extends AbstractController
             return $this->redirectToRoute("app_lk_employee");
         } elseif ($user != null && in_array(self::ROLE_BUYER, $user->getRoles())) {
             return $this->redirectToRoute("app_lk_buyer");
+        } elseif ($user != null && in_array(self::ROLE_SUPER_ADMIN, $user->getRoles())) {
+            return $this->redirectToRoute("admin");
         } else {
             return $this->redirectToRoute("app_main");
         }
