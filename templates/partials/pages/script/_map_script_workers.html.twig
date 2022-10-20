@@ -1,0 +1,37 @@
+<script>
+    var changeSizeButton = document.getElementById('changeSize');
+
+    DG.then(function() {
+        var map, enabled = false;
+
+        {% if city is not null %}
+        map = DG.map('map', {
+            center: [{{ city.latitude }}, {{ city.longitude }}],
+            zoom: 10,
+            animate: true
+        });
+
+        {% else %}
+        map = DG.map('map', {
+            center: [55.751244, 37.618423],
+            zoom: 6,
+            animate: true
+        });
+        {% endif %}
+
+        {% for job in jobs %}
+        {% if job.city is not null %}
+        DG.marker([{{ job.latitude }},
+            {{ job.longitude }}]).addTo(map).bindPopup( '<div class="map-popup"><h4>{{ job.name }}</h4>ID Вакансии: {{ job.id }}<br /><br />Разместил(а): <br />{{ job.user }}  <img class="rounded map-img" src="{{ asset('uploads/files/' ~ job.user.avatar) }}" width="50" height="50"/> <br /><br />Стоимость:{{ job.payment }} <br /><br /><a href="{{ path('app_detail_worksheet', { id: job.id}) }}">Подробнее ...</a></div>' );
+        {% endif %}
+        {% endfor %}
+
+        changeSizeButton.onclick = function() {
+            var mapDiv = document.getElementById('map');
+            mapDiv.style.height = (enabled ? '200' : '600') + 'px';
+            // обновление карты
+            map.invalidateSize();
+            $("#changeSize").css("display", "none");
+        }
+    });
+</script>

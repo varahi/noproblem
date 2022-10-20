@@ -30,6 +30,7 @@ use App\Entity\Experience;
 use App\Entity\Citizen;
 use App\Entity\Busyness;
 use App\Entity\Accommodation;
+use App\Entity\Notification;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -47,7 +48,7 @@ class DashboardController extends AbstractDashboardController
     {
         return Dashboard::new()
             //->setTitle('Noproblem')
-            ->setTitle('<img src="assets/img/logo.svg" class="img-fluid d-block mx-auto" style="max-width:150px; width:100%;"><h2 class="mt-3 fw-bold text-black text-center" style="font-size: 22px;"></h2>')
+            ->setTitle('<img src="assets/img/logo.svg" class="img-fluid d-block mx-auto" style="max-width:150px; width:100%;" alt=""><h2 class="mt-3 fw-bold text-black text-center" style="font-size: 22px;"></h2>')
             ->renderContentMaximized()
             ;
     }
@@ -88,6 +89,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Appeals', 'fa fa-reorder')->setSubItems([
             MenuItem::linkToCrud('Tickets', 'fa fa-ticket', Ticket::class),
             MenuItem::linkToCrud('Answers', 'fa fa fa-support', Answer::class),
+            MenuItem::linkToCrud('Notifications', 'fa fa fa fa-bell', Notification::class),
+            MenuItem::linkToRoute('Tickets list', 'fa fa-support', 'app_ticket_list')
         ]);
 
         yield MenuItem::section('Users');

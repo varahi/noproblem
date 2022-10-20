@@ -83,6 +83,28 @@ class WorksheetRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @param int $id
+     * @return int|mixed|string
+     */
+    public function findByCategory(int $id, $currentJob, $limit)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $expr = $qb->expr();
+        $qb->select('w')
+            ->from(self::TABLE, 'w')
+            ->join('w.category', 'c')
+            ->where($qb->expr()->eq('c.id', $id))
+            ->setMaxResults($limit)
+            ->orderBy('w.created', 'DESC');
+
+        if ($currentJob) {
+            $qb->andWhere($expr->neq('w.id', $currentJob));
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Worksheet[] Returns an array of Worksheet objects
 //     */

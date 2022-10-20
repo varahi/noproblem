@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\WorksheetRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -73,7 +75,7 @@ class Worksheet
     private $description;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\ManyToMany(targetEntity=AdditionalInfo::class, inversedBy="jobs")
      */
     private $additional;
 
@@ -103,13 +105,35 @@ class Worksheet
     private $created;
 
     /**
+     * @ORM\Column(type="decimal", precision=9, scale=7, nullable=true)
+     */
+    private $latitude;
+
+    /**
+     * @ORM\Column(type="decimal", precision=9, scale=7, nullable=true)
+     */
+    private $longitude;
+
+    /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $hidden;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Task::class, inversedBy="jobs")
+     */
+    private $tasks;
+
     public function __construct()
     {
         $this->created = new \DateTime();
+        $this->additional = new ArrayCollection();
+        $this->tasks = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 
     public function getId(): ?int
@@ -249,14 +273,26 @@ class Worksheet
         return $this;
     }
 
-    public function getAdditional(): ?string
+    /**
+     * @return Collection<int, AdditionalInfo>
+     */
+    public function getAdditional(): Collection
     {
         return $this->additional;
     }
 
-    public function setAdditional(?string $additional): self
+    public function addAdditional(AdditionalInfo $additional): self
     {
-        $this->additional = $additional;
+        if (!$this->additional->contains($additional)) {
+            $this->additional[] = $additional;
+        }
+
+        return $this;
+    }
+
+    public function removeAdditional(AdditionalInfo $additional): self
+    {
+        $this->additional->removeElement($additional);
 
         return $this;
     }
@@ -329,6 +365,54 @@ class Worksheet
     public function setHidden(?bool $hidden): self
     {
         $this->hidden = $hidden;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?string
+    {
+        return $this->latitude;
+    }
+
+    public function setLatitude(?string $latitude): self
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    public function getLongitude(): ?string
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(?string $longitude): self
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Task>
+     */
+    public function getTasks(): Collection
+    {
+        return $this->tasks;
+    }
+
+    public function addTask(Task $task): self
+    {
+        if (!$this->tasks->contains($task)) {
+            $this->tasks[] = $task;
+        }
+
+        return $this;
+    }
+
+    public function removeTask(Task $task): self
+    {
+        $this->tasks->removeElement($task);
 
         return $this;
     }

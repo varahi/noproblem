@@ -25,24 +25,18 @@
                         <h2>Все вакансии {% if category is not null %}- {{ category }} {% endif %}</h2>
                     </div>
                     <div id="map" style="width: 100%; height: 300px;"></div>
-                    <div class="open_map" id="changeSize">Изменить размер</div>
+                    <div class="open_map" id="changeSize">Раскрыть карту</div>
                     <div class="large fon">
                         <div class="in" >
-                            <div class="formob">
-                            </div>
-                            <div class="novacanse">
-                                {% if jobs is not null %}
-                                    {% for job in jobs %}
-                                        {% include 'partials/pages/job/_list_job_item.html.twig' %}
-                                    {% endfor %}
-                                {% else %}
-                                    <p>По данному запросу анкет не найдено</p>
-                                {% endif %}
-
-                                <div class="navigation">
-                                    {{ knp_pagination_render(jobs) }}
-                                </div>
-
+                            {% if jobs is not null %}
+                                {% for job in jobs %}
+                                    {% include 'partials/pages/job/_list_job_item.html.twig' %}
+                                {% endfor %}
+                            {% else %}
+                                <p>По данному запросу анкет не найдено</p>
+                            {% endif %}
+                            <div class="pagination">
+                                {{ knp_pagination_render(jobs) }}
                             </div>
                         </div>
                     </div>

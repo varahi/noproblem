@@ -89,22 +89,9 @@ class PageController extends AbstractController
         ReviewRepository $reviewRepository,
         CategoryRepository $categoryRepository
     ): Response {
+        $user = $this->security->getUser();
         return new Response($this->twig->render('pages/company.html.twig', [
-            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
-        ]));
-    }
-
-    /**
-     * @Route("/detail-worksheet-{id}", name="app_detail_worksheet")
-     */
-    public function worksheetDetailPage(
-        Request $request,
-        ReviewRepository $reviewRepository,
-        CategoryRepository $categoryRepository,
-        Worksheet $worksheet
-    ): Response {
-        return new Response($this->twig->render('pages/worksheet/detail.html.twig', [
-            'worksheet' => $worksheet,
+            'user' => $user,
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
@@ -117,34 +104,11 @@ class PageController extends AbstractController
         ReviewRepository $reviewRepository,
         CategoryRepository $categoryRepository
     ): Response {
+        $user = $this->security->getUser();
         return new Response($this->twig->render('pages/tarifs.html.twig', [
+            'user' => $user,
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
-    }
-
-    /**
-     * @Route("/home", name="app_home")
-     */
-    public function home(
-        Request $request
-    ) {
-        return $this->render('pages/home.html.twig', [
-            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
-        ]);
-    }
-
-    /**
-     * @Route("/articles", name="app_articles")
-     */
-    public function articles(
-        Request $request,
-        ArticleRepository $articleRepository
-    ) {
-        $articles = $articleRepository->findAll();
-        return $this->render('articles/index.html.twig', [
-            'articles' => $articles,
-            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
-        ]);
     }
 
     /**
@@ -157,9 +121,11 @@ class PageController extends AbstractController
     ) {
         $articles = $articleRepository->findLimitOrder('999', '0');
         $categories = $articleCategoryRepository->findAll();
+        $user = $this->security->getUser();
         return $this->render('pages/blog/list.html.twig', [
             'articles' => $articles,
             'categories' => $categories,
+            'user' => $user,
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }
@@ -175,9 +141,12 @@ class PageController extends AbstractController
     ) {
         $articles = $articleRepository->findByCategory($articleCategory->getId());
         $categories = $articleCategoryRepository->findAll();
+        $user = $this->security->getUser();
+
         return $this->render('pages/blog/list_by_category.html.twig', [
             'articles' => $articles,
             'categories' => $categories,
+            'user' => $user,
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }
@@ -193,9 +162,11 @@ class PageController extends AbstractController
         ArticleCategoryRepository $articleCategoryRepository
     ): Response {
         $categories = $articleCategoryRepository->findAll();
+        $user = $this->security->getUser();
         return new Response($this->twig->render('pages/blog/detail.html.twig', [
             'article' => $article,
             'categories' => $categories,
+            'user' => $user,
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
@@ -210,8 +181,10 @@ class PageController extends AbstractController
     ) {
         //$articles = $articleRepository->findAll();
         //$categories = $articleCategoryRepository->findAll();
+        $user = $this->security->getUser();
         return $this->render('pages/courses/list.html.twig', [
-            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
+            'ticketForm' => $this->modalForms->ticketForm($request)->createView(),
+            'user' => $user
             //'articles' => $articles,
             //'categories' => $categories
         ]);
@@ -226,8 +199,10 @@ class PageController extends AbstractController
         NotifierInterface $notifier,
         Course $course
     ): Response {
+        $user = $this->security->getUser();
         return new Response($this->twig->render('pages/courses/detail.html.twig', [
             'course' => $course,
+            'user' => $user,
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
@@ -241,8 +216,10 @@ class PageController extends AbstractController
     ): Response {
         //$user = $this->security->getUser();
         $content = $pageRepository->findById(2);
+        $user = $this->security->getUser();
         return $this->render('pages/privacy.html.twig', [
             'content' => $content,
+            'user' => $user,
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }
@@ -255,8 +232,10 @@ class PageController extends AbstractController
         PageRepository $pageRepository
     ): Response {
         $content = $pageRepository->findById(1);
+        $user = $this->security->getUser();
         return $this->render('pages/personal.html.twig', [
             'content' => $content,
+            'user' => $user,
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }

@@ -7,11 +7,10 @@
         <div class="bread">
             <a href="{{ path('app_main') }}" class="nuxt-link-active main_vavancies">Главная</a>
             <a href="{{ path('app_all_workers') }}" class="nuxt-link-active main_vavancies">Анкеты</a>
-<!--            <a href="" class="main_vavancies">Няня</a>-->
             <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">{{ worksheet.name }}</a>
         </div>
         <div class="mobfile mobs">
-            <p>{{ worksheet.user.firstName }} {{ worksheet.user.lastName }}</p>
+            <p>Вакансия {{ worksheet.name }}</p>
         </div>
         <div class="large_one_vacan fon">
             <div class="in_one_vacan">
@@ -20,12 +19,17 @@
                         <div class="own_one_vacancy">
                             <div  class="name_one_vacan">
                                 <div class="round_one_vacan">
-                                    <img src="{{ asset('assets/img/name.svg') }}" class="lazyLoad isLoaded">
+                                    <img src="{{ asset('assets/img/name.svg') }}" class="lazyLoad isLoaded" alt="">
                                 </div>
                                 <div class="about_one_vacan">
                                     <div class="var_account">
                                         <p class="point_one_vacan">{{ worksheet.user.firstName }} {{ worksheet.user.lastName }}</p>
-                                        <img class="verif_green lazyLoad isLoaded" src="{{ asset('assets/img/verif_green.svg') }}">
+                                        <!-- ToDo -->
+                                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                                            <img class="verif_green lazyLoad isLoaded" src="{{ asset('assets/img/verif_green.svg') }}" alt="">
+                                        {% else %}
+                                            <img class="verif_green lazyLoad isLoaded" src="{{ asset('assets/img/verif.svg') }}" alt="">
+                                        {% endif %}
                                     </div>
                                     <div class="city_one_vacan"><span>Наниматель</span>
                                     </div>
@@ -34,9 +38,9 @@
                             <div class="btn_one_vacan nona">
                                 <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Написать сообщение</a>
                             </div>
-                            <div class="btn_one_vacan mobs">
-                                <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Добавить в чат</a>
-                            </div>
+                            {#                            <div class="btn_one_vacan mobs">#}
+                            {#                                <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Добавить в чат</a>#}
+                            {#                            </div>#}
                         </div>
                         <div class="owns nona">
                             <div class="text_owns">
@@ -52,28 +56,33 @@
                             <div class="last">
                                 <div class="ones_vacan">
                                     <h4>Зарегистрирован</h4>
-                                    <span>2 дня назад</span>
+                                    <span class="timeago" title="{{ worksheet.user.created|date("Y-m-d H:i:s") }}"></span>
                                 </div>
                                 <div class="ones_vacan">
                                     <h4>Был последний раз</h4>
                                     <span >Сегодня</span>
                                 </div>
                             </div>
-                            <div class="btn_one_vacan3">
-                                <img src="{{ asset('assets/img/like.svg') }}" class="lazyLoad isLoaded">
-                                <a href="#" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">
-                                    Добавить в избранное
-                                </a>
-                            </div>
+                            {% if app.user %}
+                                <div class="btn_one_vacan3">
+                                    <img src="{{ asset('assets/img/like.svg') }}" class="lazyLoad isLoaded" alt="">
+                                    <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Добавить в избранное</a>
+                                </div>
+                            {% else %}
+                                <div class="btn_one_vacan3">
+                                    <!-- ToDo: enter to system -->
+                                    <img src="{{ asset('assets/img/like.svg') }}" class="lazyLoad isLoaded" alt="">
+                                    <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Добавить в избранное</a>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
                 <div class="next_one_vacan">
-
                     <div class="yet_one_vacan">
                         <div class="like_one_vacan">
                             <h3>{{ worksheet.name }}</h3>
-                            <img class="img_like_mob mobs" src="assets/img/like.svg" class="mobs lazyLoad" src="/preload.gif">
+                            <img class="img_like_mob mobs lazyLoad" src="{{ asset('assets/img/like.svg') }}" alt="">
                         </div>
                         <div class="dates mobs">
                             <span>5 ноября</span>
@@ -82,16 +91,23 @@
                     <div class="cols_one_vacan">
                         <div class="line_one_vacan">
                             <div class="city2_one_vacan">
-                                <img  src="{{ asset('assets/img/city_map.svg') }}" class="lazyLoad isLoaded">
-                                <span>{{ worksheet.city.name }}, {{ worksheet.district.name }}</span>
+                                <img  src="{{ asset('assets/img/city_map.svg') }}" class="lazyLoad isLoaded" alt="">
+                                <span>{{ worksheet.city.name }} {% if worksheet.district %}, {{ worksheet.district.name }} {% endif %}</span>
                             </div>
-                            <div class="city2_one_vacan">
-                                <p>Оплата:</p>
-                                <span>{{ worksheet.payment }}</span>
-                            </div>
+                            {% if worksheet.payment %}
+                                <div class="city2_one_vacan">
+                                    <p>Оплата:</p>
+                                    <span>{{ worksheet.payment }}</span>
+                                </div>
+                            {% endif %}
+
                             <div class="city2_one_vacan">
                                 <p>Начать работу:</p>
-                                <span>{{ worksheet.startDate|date("d.m.Y") }}</span>
+                                {% if worksheet.startNow == 1 %}
+                                    <span>Сейчас</span>
+                                {% else %}
+                                    <span>{{ worksheet.startDate|date("d.m.Y") }}</span>
+                                {% endif %}
                             </div>
                             <div class="city2_one_vacan nona">
                                 <span>Возраст:</span>
@@ -105,117 +121,55 @@
                             </div>
                             <div class="city2_one_vacan">
                                 <span>Опыт работы: </span>
-                                <p>{{ worksheet.experience }}</p>
+                                <p >{{ worksheet.experience }}</p>
                             </div>
                         </div>
                     </div>
-
                     <div class="tit_one_vacan nona">
-                        <img src="{{ asset('assets/img/blockicon.svg') }}" class="lazyLoad isLoaded">
+                        <img src="{{ asset('assets/img/blockicon.svg') }}" class="lazyLoad isLoaded" alt="">
                         <h4>Описание</h4>
                     </div>
                     <p class="up_one_vacan nona">{{ worksheet.description|nl2br }}</p>
                     <div class="more mobs">
                         <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Подробнее</a>
                     </div>
-                    <div class="road mobs">
 
-                        <button class="accordion_filter_one_vacan want_one_vacan">
-                            <img src="assets/img/roads.svg" src="/preload.gif" class="lazyLoad">
-                            <span>Обязанности</span>
-                            <img src="assets/img/str2.svg" src="/preload.gif" class="lazyLoad">
-                        </button>
-                        <div class="panel_filter">
-                            <div class="inside_creating_vacan" v-if="one">
-                                <div class="need_creating_form">
-                                    <div class="but_creating_form">
-                                        <a href="">Приготовление еды</a>
-                                    </div>
-                                    <div class="but_creating_form hi_creating_form">
-                                        <a href="">Прогулка</a>
-                                    </div>
-                                    <div class="but_creating_form hi_creating_form">
-                                        <a href="">Игры</a>
-                                    </div>
-                                    <div class="but_creating_form hi_creating_form">
-                                        <a href="">Кормление</a>
-                                    </div>
-                                    <div class="but_creating_form hi_creating_form">
-                                        <a href="">Развивающие занятия</a>
-                                    </div>
-                                    <div class="but_creating_form hi_creating_form">
-                                        <a href="">Гигиена ребенка</a>
-                                    </div>
-                                    <div class="but_creating_form hi_creating_form">
-                                        <a href="">Разовые поручения</a>
-                                    </div>
-                                </div>
+                    {#<div class="road mobs">Here was a mobile box</div>#}
 
+                    <div  class="simple_one_vacan nona">
+                        {% for additional in worksheet.additional %}
+                            <div class="sim">
+                                <img src="{{ asset('assets/img/Ellipse.svg') }}" class="lazyLoad isLoaded" alt="">
+                                <p>{{ additional.name }}</p>
                             </div>
-                        </div>
-                        <!---->
-
-                        {% include 'partials/pages/profiles/temp/_scheduler_mobie.html.twig' %}
-
-                        <!---->
-                        <button class="accordion_filter_one_vacan want_one_vacan">
-                            <img src="assets/img/la_clipboard-listss.svg" src="/preload.gif" class="lazyLoad">
-                            <span>Дополнительно</span>
-                            <img src="assets/img/str2.svg" src="/preload.gif" class="lazyLoad">
-                        </button>
-                        <div class="panel_filter">
-                            <div class="inside_creating_vacan" v-if="three">
-                                <div class="win_one_vacan">
-                                    <p>Есть загран паспорт</p>
-                                </div>
-                                <div class="win_one_vacan">
-                                    <p>Есть автомобиль</p>
-                                </div>
-                                <div class="win_one_vacan">
-                                    <p>Есть водительские права</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!---->
-                        <button class="accordion_filter_one_vacan want_one_vacan">
-                            <img src="{{ asset('assets/img/Groupsis.svg" src="/preload.gif') }}" class="lazyLoad">
-                            <span>Способ связи</span>
-                            <img src="{{ asset('assets/img/str2.svg" src="/preload.gif" src="/preload.gif') }}" class="lazyLoad">
-                        </button>
-                        <div class="panel_filter">
-
-                            <div class="inside_creating_vacan" v-if="four">
-                                <div class="week_creating_form">
-                                    <p>Звонок по телефону</p>
-                                </div>
-                                <div class="week_creating_form">
-                                    <p>Telegram</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!---->
-                        <div class="btn_contact_mob">
-                            <a href="#" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Показать контакты</a>
-                        </div>
+                        {% endfor %}
                     </div>
-
-                    {% include 'partials/pages/profiles/temp/_simple_list.html.twig' %}
 
                     <div  class="tit_one_vacan img nona">
-                        <img src="{{ asset('assets/img/la_clipboard-list.svg') }}" class="lazyLoad isLoaded">
+                        <img src="{{ asset('assets/img/la_clipboard-list.svg') }}" class="lazyLoad isLoaded" alt="">
                         <h4>Дополнительно</h4>
                     </div>
-                    <div class="city2_one_vacan up2 nona">
-                        <p >Место работы:</p>
-                        <span>без проживания</span>
-                    </div>
 
-                    {% include 'partials/pages/profiles/temp/_scheduler.html.twig' %}
+{#                    <div class="city2_one_vacan up2 nona">#}
+{#                        {% if worksheet.accommodations|length > 0 %}#}
+{#                            <p >Место работы:</p>#}
+{#                            {% for accommodation in worksheet.accommodations %}#}
+{#                                <span>{{ accommodation.name }}</span>#}
+{#                            {% endfor %}#}
+{#                        {% endif %}#}
+
+{#                        {% if worksheet.busynesses|length > 0 %}#}
+{#                            <p >Занятость:</p>#}
+{#                            {% for busyness in worksheet.busynesses %}#}
+{#                                <span>{{ busyness.name }}</span>#}
+{#                            {% endfor %}#}
+{#                        {% endif %}#}
+{#                    </div>#}
+
+{#                    {% include 'partials/pages/job/_scheduler_detail.html.twig' %}#}
 
                     <div class="tit_one_vacan img communication_method nona">
-                        <img src="{{ asset('assets/img/phone.svg') }}" class="lazyLoad isLoaded">
+                        <img src="{{ asset('assets/img/phone.svg') }}" class="lazyLoad isLoaded" alt="">
                         <h4>Предпочитаемый способ связи</h4>
                     </div>
                     <div class="sim bigs nona">
@@ -224,19 +178,37 @@
                     </div>
                     <div class="double_one_vacan nona">
                         <div  class="btn_one_vacan">
-                            <a href="{{ path('app_all_workers') }}" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Венуться к вакансиям</a>
+                            <a  href="{{ path('app_my_worksheets') }}" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Венуться к анкетам</a>
                         </div>
                         <div class="btn_one_vacan2">
-                            <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Другие вакансии</a>
+                            <a href="{{ path('app_all_workers') }}" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Другие анкеты</a>
                         </div>
                     </div>
-                    {#{% include 'partials/worksheet/_related.html.twig' %}#}
+
+                    {% if relatedJobs|length > 0 %}
+                        <h5 class="similar_jobs nona">Похожие вакансии</h5>
+                        <div class="owl-carousel owl-theme" id="slider_one_vacan">
+                            {% for worksheet in relatedJobs %}
+                                <slide>
+                                    <div class="box_account_one_vacan">
+                                        {% include 'partials/pages/worksheet/slider/_job_item.html.twig' %}
+                                    </div>
+                                </slide>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
                 </div>
             </div>
         </div>
     </div>
-    </div>
 
+    <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            jQuery("span.timeago").timeago();
+        });
+    </script>
     {% include 'partials/footer.html.twig' %}
 {% endblock %}
-

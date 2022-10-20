@@ -1,16 +1,34 @@
 <div class="regs">
-    <div class="vhod"  style="cursor:pointer"><span>Сообщения</span><img src="{{ asset('assets/img/bi_chat.svg') }}"></div>
+    {% if is_granted('ROLE_EMPLOYEE') or is_granted('ROLE_CUSTOMER') or is_granted('ROLE_BUYER') %}
+        {% if user is defined %}
+        {% set nts = 0 %}
+        {% if user.notifications %}
+            {% for notification in user.notifications %}
+                {% if notification.isRead == 0 %}
+                    {% set nts = nts + 1 %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        <div class="vhod"  style="cursor:pointer">
+            <a href="{{ path('app_notifications') }}" class="notif">
+                <span>Сообщения</span>
+                <img src="{{ asset('assets/img/bi_chat.svg') }}" alt="">{% if nts > 0 %}
+                <span class="count">{{ nts }}</span>{% endif %}
+            </a>
+        </div>
+        {% endif %}
+    {% endif %}
 </div>
 <div class="regs" >
     <div class="vhod" style="cursor:pointer">
         <a href="{{ path('app_blog') }}"><span>Блог</span></a>
-        <img src="{{ asset('assets/img/blockicon.svg') }}">
+        <img src="{{ asset('assets/img/blockicon.svg') }}" alt="">
     </div>
 </div>
 <div class="regs">
     <div class="vhod" style="cursor:pointer">
         <a href="{{ path('app_courses') }}"><span>Список курсов</span></a>
-        <img src="{{ asset('assets/img/courseicon.svg') }}">
+        <img src="{{ asset('assets/img/courseicon.svg') }}" alt="">
     </div>
 </div>
 

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Job;
 use App\Entity\Task;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -43,6 +44,15 @@ class JobRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param array $order
+     * @return Job[]
+     */
+    public function findAllOrder(array $order)
+    {
+        return $this->findBy([], $order);
+    }
+
+    /**
      * @param int $id
      * @return int|mixed|string
      */
@@ -72,10 +82,12 @@ class JobRepository extends ServiceEntityRepository
             ->from(self::TABLE, 'j')
             ->join('j.category', 'c')
             ->where($qb->expr()->eq('c.id', $id))
-            ->andWhere($expr->neq('j.id', $currentJob))
             ->setMaxResults($limit)
-            ->orderBy('c.id', 'ASC');
-        ;
+            ->orderBy('j.created', 'DESC');
+
+        if ($currentJob) {
+            $qb->andWhere($expr->neq('j.id', $currentJob));
+        }
 
         return $qb->getQuery()->getResult();
     }
@@ -89,6 +101,7 @@ class JobRepository extends ServiceEntityRepository
         $expr = $qb->expr();
         $qb->select('j')
             ->from(self::TABLE, 'j')
+            ->orderBy('j.created', 'DESC')
             ;
 
         if ($city && $district) {

@@ -1,21 +1,28 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Register{% endblock %}
-
+{% extends 'layouts/base.html.twig' %}
+{% block title %}вход в систему - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
+    {% include 'partials/header.html.twig' %}
 
-    <h1>Register</h1>
+<div class="main_account content">
+    <div class="large_account fon">
+        <div class="in_account">
+            <h2 class="b_center">{{ 'Registration'|trans }}</h2>
+            <div class="reset-form-content login-form-content">
+                {{ form_start(registrationForm, {'attr' : {'class': 'form-std form-std-custom repair-password', 'autocomplete': 'on'}} ) }}
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.plainPassword) }}
+{#                {{ form_row(registrationForm.plainPassword, {label: 'Password'}) }}#}
+{#                {{ form_row(registrationForm.agreeTerms) }}#}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+                <div class="btn_try btn_try_custom">
+                    <button type="submit" class="btn btn-success">{{ 'Register'|trans }}</button>
+                </div>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+                {{ form_end(registrationForm) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+    {% include 'partials/footer.html.twig' %}
 {% endblock %}

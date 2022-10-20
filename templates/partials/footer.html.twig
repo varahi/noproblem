@@ -53,4 +53,6 @@
     </div>
 </footer>
 
-{% include 'pages/modal/_ticket_form.html.twig' %}
+{% if ticketForm is defined %}
+    {% include 'partials/modal/_ticket_form.html.twig' %}
+{% endif %}

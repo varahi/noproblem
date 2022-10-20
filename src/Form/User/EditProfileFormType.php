@@ -156,9 +156,10 @@ class EditProfileFormType extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new Image([
-                        'maxSize' => '1024k',
+                        'maxSize' => '2048k',
                         'mimeTypes' => [
                             'image/gif',
+                            'image/jpg',
                             'image/jpeg',
                             'image/pjpeg',
                             'image/png',

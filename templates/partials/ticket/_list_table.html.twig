@@ -1,0 +1,38 @@
+<table id="{{ id }}" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+    <tr>
+        <th scope="col" data-id="id" data-header>{{ 'Ticket id'|trans }}</th>
+        <th scope="col" data-id="name" sortable>{{ 'Created'|trans }}</th>
+        <th scope="col" data-id="price" sortable>{{ 'Ttile'|trans }}</th>
+        <th scope="col" data-id="weight" sortable>{{ 'Description'|trans }}</th>
+        <th scope="col" data-id="weight" sortable>{{ 'User'|trans }}</th>
+        <th scope="col" data-id="weight" sortable>{{ 'Priority'|trans }}</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for ticket in tickets %}
+        <tr>
+            <th scope="row">{{ ticket.id }}</th>
+            <td>{{ ticket.created|date("d.m.Y - H:i") }}</td>
+            <td>{{ ticket.title }}</td>
+            <td>{{ ticket.description|raw }}</td>
+            <td>{% if ticket.user %}{{ ticket.user.firstName }} {{ ticket.user.lastName }}{% endif %}</td>
+            <td>
+                {% include 'partials/ticket/_ticket_stars.html.twig' %}
+                <div style="display: none">{{ ticket.priority }}</div>
+            </td>
+            {% if id == 'active-tickets' or id  == 'new-tickets' %}
+                <td><a href="{{ path('app_edit_ticket', { id: ticket.id}) }}">{{ 'Answer ticket'|trans }}</a></td>
+            {% else %}
+                <td>
+                    <a href="{{ path('app_activate_ticket', { id: ticket.id}) }}" onclick="return confirm('{{ 'Are you sure you want to activate ticket'|trans }}')">
+                        {{ 'Activate ticket'|trans }}
+                    </a>
+                </td>
+            {% endif %}
+
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

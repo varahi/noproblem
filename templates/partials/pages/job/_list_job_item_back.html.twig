@@ -31,12 +31,12 @@
                 <img src="{{ asset('assets/img/ava_person_account.png') }}" alt="">
             </div>
             <div class="name_vacancies">
-                <p class="name_vacancies_text">Анкета от частного лица</p>
-                <p>{{ job.user.firstName }} {{ job.user.lastName }}</p>
+                <p class="name_vacancies_text">Вакансия от частного лица</p>
+                <p>{{ job.owner.firstName }} {{ job.owner.lastName }}</p>
             </div>
         </div>
         <div class="btn_box_account">
-            <a href="{{ path('app_detail_worksheet', { id: job.id}) }}"><button class="btn_box_account_one">Подробнее</button></a>
+            <a href="{{ path('app_detail_job', { id: job.id}) }}"><button class="btn_box_account_one">Подробнее</button></a>
         </div>
     </div>
 </div>

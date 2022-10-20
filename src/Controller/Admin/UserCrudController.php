@@ -31,7 +31,7 @@ class UserCrudController extends AbstractCrudController
 
     public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): \Doctrine\ORM\QueryBuilder
     {
-        $role = 'ROLE_ADMIN';
+        $role = 'ROLE_SUPER_ADMIN';
         $qb = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
         $qb->where('entity.roles LIKE :roles');
         $qb->setParameter('roles', '%"'.$role.'"%');
@@ -54,12 +54,19 @@ class UserCrudController extends AbstractCrudController
         yield EmailField::new('email');
         yield TextField::new('firstName');
         yield TextField::new('lastName');
-        yield TextField::new('email');
-        yield TextField::new('phone');
+        //yield TextField::new('email');
+        //yield TextField::new('phone');
         yield ArrayField::new('roles')->hideOnIndex()->setFormTypeOption('disabled', 'disabled');
-        yield ImageField::new('avatar')
-            ->setBasePath('/uploads/files')
-            ->setLabel('Avatar')
-            ->onlyOnIndex();
+//        yield ImageField::new('avatar')
+//            ->setBasePath('/uploads/files')
+//            ->setLabel('Avatar')
+//            ->onlyOnIndex();
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            //->disable('new', 'edit', 'delete');
+            ->disable('new', 'delete');
     }
 }

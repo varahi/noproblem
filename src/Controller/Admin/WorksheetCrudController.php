@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Worksheet;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -13,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
@@ -58,7 +60,7 @@ class WorksheetCrudController extends AbstractCrudController
         yield BooleanField::new('hidden');
         yield TextField::new('name')->setColumns('col-md-8');
         yield TextareaField::new('description')->setColumns('col-md-8')->hideOnIndex();
-        yield TextareaField::new('additional')->setColumns('col-md-8')->hideOnIndex();
+        //yield TextareaField::new('additional')->setColumns('col-md-8')->hideOnIndex();
         yield TextField::new('payment')->setColumns('col-md-8');
         /*yield ImageField::new('image')
             ->setBasePath('uploads/')
@@ -72,6 +74,8 @@ class WorksheetCrudController extends AbstractCrudController
         yield AssociationField::new('district')->hideOnIndex()->setColumns('col-md-12');
         yield AssociationField::new('category')->hideOnIndex()->setColumns('col-md-12');
         yield AssociationField::new('user')->setColumns('col-md-12')->setLabel('Profile owner')->hideOnIndex();
+        yield AssociationField::new('tasks')->setColumns('col-md-12')->setLabel('Tasks')->hideOnIndex();
+        yield AssociationField::new('additional')->setColumns('col-md-12')->setLabel('Additional info')->hideOnIndex();
 
         yield FormField::addPanel('General requirements')->setIcon('fa fa-gear');
         yield FormField::addRow();
@@ -82,5 +86,10 @@ class WorksheetCrudController extends AbstractCrudController
         yield AssociationField::new('citizen')->setColumns('col-md-4')->hideOnIndex();
         yield BooleanField::new('startNow')->hideOnIndex();
         yield DateField::new('startDate')->hideOnIndex();
+
+        yield FormField::addPanel('Geo')->setIcon('fa fa-map-marker');
+        yield FormField::addRow();
+        yield NumberField::new('latitude')->hideOnIndex()->setFormTypeOption('scale', 8)->setColumns('col-md-4');
+        yield NumberField::new('longitude')->hideOnIndex()->setFormTypeOption('scale', 8)->setColumns('col-md-4');
     }
 }

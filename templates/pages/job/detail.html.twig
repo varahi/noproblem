@@ -1,4 +1,4 @@
-{% extends 'layouts/lk.html.twig' %}
+{% extends 'layouts/base.html.twig' %}
 {% block title %}{{ job.name }} - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block body %}
     {% include 'partials/header.html.twig' %}
@@ -56,7 +56,7 @@
                             <div class="last">
                                 <div class="ones_vacan">
                                     <h4>Зарегистрирован</h4>
-                                    <span>2 дня назад</span>
+                                    <span class="timeago" title="{{ job.owner.created|date("Y-m-d H:i:s") }}"></span>
                                 </div>
                                 <div class="ones_vacan">
                                     <h4>Был последний раз</h4>
@@ -126,7 +126,7 @@
                         </div>
                     </div>
                     <div class="tit_one_vacan nona">
-                        <img src="{{ asset('assets/img/blockicon.svg') }}" class="lazyLoad isLoaded">
+                        <img src="{{ asset('assets/img/blockicon.svg') }}" class="lazyLoad isLoaded" alt="">
                         <h4>Описание</h4>
                     </div>
                     <p class="up_one_vacan nona">{{ job.description|nl2br }}</p>
@@ -166,7 +166,7 @@
                         {% endif %}
                     </div>
 
-                    {% include 'partials/job/_scheduler_detail.html.twig' %}
+                    {% include 'partials/pages/job/_scheduler_detail.html.twig' %}
                     
                     <div class="tit_one_vacan img communication_method nona">
                         <img src="{{ asset('assets/img/phone.svg') }}" class="lazyLoad isLoaded" alt="">
@@ -191,7 +191,7 @@
                             {% for job in relatedJobs %}
                             <slide>
                                 <div class="box_account_one_vacan">
-                                    {% include 'partials/job/slider/_job_item.html.twig' %}
+                                    {% include 'partials/pages/job/slider/_job_item.html.twig' %}
                                 </div>
                             </slide>
                             {% endfor %}
@@ -203,5 +203,11 @@
     </div>
 
     <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            jQuery("span.timeago").timeago();
+        });
+    </script>
     {% include 'partials/footer.html.twig' %}
 {% endblock %}

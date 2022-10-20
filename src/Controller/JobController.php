@@ -31,6 +31,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Twig\Environment;
 use Knp\Component\Pager\PaginatorInterface;
+use App\ImageOptimizer;
 
 class JobController extends AbstractController
 {
@@ -42,18 +43,22 @@ class JobController extends AbstractController
 
     private $security;
 
-    public const LIMIT_PER_PAGE = '5';
+    public const LIMIT_PER_PAGE = '10';
 
     public function __construct(
         Security $security,
         Environment $twig,
         ManagerRegistry $doctrine,
-        ModalForms $modalForms
+        ModalForms $modalForms,
+        ImageOptimizer $imageOptimizer,
+        string $targetDirectory
     ) {
         $this->security = $security;
         $this->twig = $twig;
         $this->doctrine = $doctrine;
         $this->modalForms = $modalForms;
+        $this->imageOptimizer = $imageOptimizer;
+        $this->targetDirectory = $targetDirectory;
     }
 
     /**
@@ -69,7 +74,7 @@ class JobController extends AbstractController
         PaginatorInterface $paginator
     ): Response {
         $slug = $request->query->get('category');
-        $cities = $cityRepository->findAll();
+        $cities = $cityRepository->findLimitOrder('999', '0');
         $districts = $districtRepository->findAll();
         $categories = $categoryRepository->findAll();
 
@@ -85,14 +90,14 @@ class JobController extends AbstractController
         }
 
         if ($slug == '') {
-            $queryJobs = $jobRepository->findAll();
+            $queryJobs = $jobRepository->findAllOrder(['created' => 'DESC']);
             $category = null;
             if ($cityId !== '' && $districtId !== '' || $cityId !== '') {
                 $queryJobs = $jobRepository->findByParams($city, $district);
             }
         } else {
             $category = $categoryRepository->findOneBy(['slug' => $slug]);
-            $queryJobs = $jobRepository->findBy(['category' => $category]);
+            $queryJobs = $jobRepository->findByCategory($category->getId(), '', '999');
 
             /*if($cityId !== '' && $districtId !== '' || $cityId !== '' ) {
                 $jobs = $jobRepository->findByParams($city, $district, $slug);
@@ -107,8 +112,20 @@ class JobController extends AbstractController
             self::LIMIT_PER_PAGE
         );
 
+        // Resize avatar if exist
+        if ($jobs) {
+            foreach ($jobs as $job) {
+                if ($job->getOwner() && $job->getOwner()->getAvatar()) {
+                    $this->imageOptimizer->resize($this->targetDirectory.'/'.$job->getOwner()->getAvatar());
+                }
+            }
+        }
+
+        //dd($city);
+
         return new Response($this->twig->render('pages/job/all_jobs.html.twig', [
             'cities' => $cities,
+            'city' => $city,
             'districts' => $districts,
             'jobs' => $jobs,
             'categories' => $categories,
@@ -482,6 +499,7 @@ class JobController extends AbstractController
     ): Response {
         $category = $job->getCategory();
         $relatedJobs = $jobRepository->findByCategory($category->getId(), $job->getId(), '10');
+        $user = $this->security->getUser();
 
         // Times array
         for ($i = 0; $i < 12; ++$i) {
@@ -513,6 +531,7 @@ class JobController extends AbstractController
         }
 
         return new Response($this->twig->render('pages/job/detail.html.twig', [
+            'user' => $user,
             'job' => $job,
             'timesArray' => $timesArray,
             'daysArray' => $daysArray,

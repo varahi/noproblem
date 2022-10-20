@@ -1,28 +1,48 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Log in!{% endblock %}
-
+{% extends 'layouts/base.html.twig' %}
+{% block title %}вход в систему - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block body %}
-    {% if app.user %}
-        <div class="mb-3">
-            {{ 'You logged as'|trans }} {{ app.user.username }} <br /><br />
-            <a href="{{ path('app_logout') }}"><button>{{ 'Logout'|trans }}</button></a>
+    {% include 'partials/header.html.twig' %}
+
+<div class="main_account content">
+    <div class="large_account fon">
+        <div class="in_account">
+            <h2 class="b_center">{{ 'Login'|trans }}</h2>
+            <div class="reset-form-content login-form-content">
+                {% if app.user %}
+                    <div class="mb-3">
+                        {{ 'You logged as'|trans }} {{ app.user.username }} <br /><br />
+                        <a href="{{ path('app_logout') }}"><button>{{ 'Logout'|trans }}</button></a>
+                    </div>
+                {% else %}
+                    <form class="form-std form-std-custom" method="post" autocomplete="off">
+                        {% for message in app.flashes('notification') %}
+                            <div class="alert-success alert alert-dismissible" role="alert">
+                                <p>{{ message }}</p>
+                                {#<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button>#}
+                            </div>
+                        {% endfor %}
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+
+                        <label class="required">{{ 'Email'|trans }}</label>
+                        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" placeholder="E-mail" autocomplete="email" required autofocus>
+
+                        <label class="required">{{ 'Password'|trans }}</label>
+                        <input type="password" name="password" id="inputPassword" placeholder="Пароль" autocomplete="current-password" required>
+
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                        <div class="btn_try btn_try_custom">
+                            <button type="submit" class="btn btn-success">{{ 'Enter'|trans }}</button>
+                        </div>
+                    </form>
+                {% endif %}
+            </div>
         </div>
-    {% else %}
-        <form class="form-std" method="post" autocomplete="off">
-            {% for message in app.flashes('notification') %}
-                <div class="alert-success alert alert-dismissible" role="alert">
-                    <p>{{ message }}</p>
-                    {#<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button>#}
-                </div>
-            {% endfor %}
-            {% if error %}
-                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-            {% endif %}
-            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" placeholder="E-mail" autocomplete="email" required autofocus>
-            <input type="password" name="password" id="inputPassword" placeholder="Пароль" autocomplete="current-password" required>
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-            <button>{{ 'Enter'|trans }}</button>
-        </form>
-    {% endif %}
+    </div>
+</div>
+
+    {% include 'partials/footer.html.twig' %}
 {% endblock %}
+

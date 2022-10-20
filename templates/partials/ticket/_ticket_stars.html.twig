@@ -1,0 +1,7 @@
+{% for i in 1..5 %}
+    {% if i <= ticket.priority %}
+        <img src="{{ asset('assets/img/star_full.svg') }}" alt="">
+    {% else %}
+        <img src="{{ asset('assets/img/star_empty.svg') }}" alt="">
+    {% endif %}
+{% endfor %}

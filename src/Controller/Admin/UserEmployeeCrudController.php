@@ -58,6 +58,12 @@ class UserEmployeeCrudController extends AbstractCrudController
             ->setDefaultSort(['id' => 'DESC']);
     }
 
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->disable('new');
+    }
+
     public function configureAssets(Assets $assets): Assets
     {
         return $assets
@@ -87,7 +93,7 @@ class UserEmployeeCrudController extends AbstractCrudController
         yield EmailField::new('email')->setColumns('col-md-10');
         yield ImageField::new('avatar')
             ->setBasePath('uploads/files/')
-            ->setUploadDir('public_html/uploadsfiles')
+            ->setUploadDir('public_html/uploads/files')
             ->setFormType(FileUploadType::class)
             ->setRequired(false);
 

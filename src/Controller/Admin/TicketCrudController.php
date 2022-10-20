@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
@@ -42,7 +43,7 @@ class TicketCrudController extends AbstractCrudController
         yield DateTimeField::new('created');
         yield DateTimeField::new('closed')->hideOnIndex();
         yield TextField::new('title');
-        yield TextEditorField::new('description')->hideOnIndex();
+        yield TextareaField::new('description')->hideOnIndex();
         yield IntegerField::new('priority')->hideOnIndex();
         yield IntegerField::new('status')->hideOnIndex();
         yield AssociationField::new('user');

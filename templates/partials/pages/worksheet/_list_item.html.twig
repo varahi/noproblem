@@ -1,0 +1,47 @@
+<div class="box_account_vacan">
+    <div class="box_account_content">
+        <div class="box_vacancies_bord ">
+            <div class="box_logo">
+                {% if job.user.avatar %}
+                    <img id="avatar" src="{{ asset('uploads/files/' ~ job.user.avatar) }}" class="rounded" width="50" height="50"  alt=""/>
+                {% else %}
+                    <img src="{{ asset('assets/img/ava_person_account.png') }}" alt="">
+                {% endif %}
+
+            </div>
+            <div class="name_vacancies">
+                <div class="name_verif">
+                    <p>{{ job.user }}</p>
+                    <img class="verif_green" src="{{ asset('assets/img/verif_green.svg') }}" alt="">
+                </div>
+                <div class="city_icon_vacan">
+                    <img src="{{ asset('assets/img/city_map.svg') }}" class="lazyLoad isLoaded" alt="">
+                    <p class="city_box_account">{{ job.city }} {% if job.district %}, {{ job.district }} {% endif %}</p>
+                </div>
+            </div>
+            <div class="header_box_vacan">
+                <div class="data_box_vacan">
+                    <p>Оплата: <i class="data_box_account">{{ job.payment }}</i></p>
+                    <p class="start_work">Начать работу: <i class="data_box_account">{{ job.startDate|date("d.m.Y") }}</i></p>
+                </div>
+            </div>
+        </div>
+        <div class="title_vacan_box">
+            <div class="title_vacan">
+                <h4>{{ job.name }}</h4>
+                <img src="{{ asset('assets/img/like.svg') }}" alt="like">
+            </div>
+            <div class="date_vacan">
+                <p>{{ job.created|format_datetime(locale='ru') }}</p>
+            </div>
+        </div>
+        <div class="person_description_vacan">
+            <p>{{ job.description|length > 150 ? job.description|slice(0, 150) ~ '...' : job.description }}</p>
+        </div>
+
+        <div class="btn_box_account">
+            <button class="btn_box_account_one_vacan">Получить контакты</button>
+            <button class="btn_box_account_two_vacan"><a href="{{ path('app_detail_worksheet', { id: job.id}) }}">Подробнее</a></button>
+        </div>
+    </div>
+</div>

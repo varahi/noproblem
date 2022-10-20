@@ -15,6 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TelephoneField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
@@ -95,56 +96,17 @@ class JobCrudController extends AbstractCrudController
         yield FormField::addPanel('General requirements')->setIcon('fa fa-gear');
         yield FormField::addRow();
         yield TextField::new('age')->setColumns('col-md-4');
-        /*yield ChoiceField::new('experience')->setChoices(
-            [
-                'Нет' => null,
-                'Менее 6 месяцев' => '1',
-                '6-12 месяцев' => '2',
-                '2-5 лет' => '3',
-                'более 5 лет' => '4',
-            ]
-        )
-            ->hideOnIndex()
-            ->setColumns('col-md-4');*/
-
-        /*yield ChoiceField::new('education')->setChoices(
-            [
-                'Нет' => null,
-                'Начальное' => '1',
-                'Среднее' => '2',
-                'Техническое' => '3',
-                'Неполное высшее' => '4',
-                'Высшее' => '5',
-            ]
-        )
-            ->hideOnIndex()
-            ->setColumns('col-md-4');*/
-
         yield AssociationField::new('experience')->setColumns('col-md-4')->hideOnIndex();
         yield AssociationField::new('education')->setColumns('col-md-4')->hideOnIndex();
 
         yield FormField::addRow();
-        /*yield ChoiceField::new('citizen')->setChoices(
-            [
-                'Нет' => null,
-                'РФ' => '1',
-                'Белоруссия' => '2',
-                'Армения' => '3',
-                'Азербайджан' => '4',
-                'Грузия' => '5',
-                'Казахстан' => '6',
-                'Киргизия' => '7',
-                'Молодова' => '8',
-                'Таджикистан' => '9',
-                'Узбекистан' => '10',
-                'Страны ЕС' => '11',
-            ]
-        )
-            ->hideOnIndex()
-            ->setColumns('col-md-4');*/
-
         yield AssociationField::new('citizen')->setColumns('col-md-4')->hideOnIndex();
         yield BooleanField::new('startNow')->hideOnIndex();
         yield DateField::new('startDate')->hideOnIndex();
+
+        yield FormField::addPanel('Geo')->setIcon('fa fa-map-marker');
+        yield FormField::addRow();
+        yield NumberField::new('latitude')->hideOnIndex()->setFormTypeOption('scale', 8)->setColumns('col-md-4');
+        yield NumberField::new('longitude')->hideOnIndex()->setFormTypeOption('scale', 8)->setColumns('col-md-4');
     }
 }

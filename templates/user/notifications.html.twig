@@ -1,0 +1,53 @@
+{% extends 'layouts/lk.html.twig' %}
+{% block title %}Личный кабинет - Онлайн-сервис по подбору домашнего персонала{% endblock %}
+{% block body %}
+    {% include 'partials/header.html.twig' %}
+
+    <div>
+        <div class="main_account content">
+            <div  class="bread">
+                <a  href="{{ path('app_main') }}" class="nuxt-link-active">Главная</a>
+                <a href="{{ path('app_lk') }}">/ {{ 'Personal area'|trans }}</a>
+                <a>/ Уведомления</a>
+            </div>
+
+            <div class="mobfile mobs">
+                <p>{{ 'Notifications'|trans }}</p>
+            </div>
+            <div class="large_account fon">
+                <div class="in_account">
+
+                    {% if newNotifications or viewedNotifications %}
+                        {% if newNotifications %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h2>Новые уведомления</h2>
+                                    {% for notification in newNotifications %}
+                                        {% include 'partials/notification/_item.html.twig' %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if viewedNotifications %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h2>Просмотренные уведомления</h2>
+                                    {% for notification in viewedNotifications %}
+                                        {% include 'partials/notification/_item.html.twig' %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <p>У вас пока нет уведомлений</p>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}
