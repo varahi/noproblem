@@ -150,7 +150,7 @@ class WorkerController extends AbstractController
                 return new RedirectResponse($referer);
             }
 
-            return $this->render('worksheet/new.html.twig', [
+            return $this->render('pages/worksheet/new.html.twig', [
                 'user' => $user,
                 'form' => $form->createView(),
                 'ticketForm' => $this->modalForms->ticketForm($request)->createView()
@@ -217,7 +217,7 @@ class WorkerController extends AbstractController
                     $referer = $request->headers->get('referer');
                     return new RedirectResponse($referer);
                 }
-                return new Response($this->twig->render('worksheet/edit.html.twig', [
+                return new Response($this->twig->render('pages/worksheet/edit.html.twig', [
                     'user' => $user,
                     'form' => $form->createView(),
                     'worksheet' => $worksheet,
