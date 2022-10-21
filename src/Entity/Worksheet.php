@@ -124,6 +124,21 @@ class Worksheet
      */
     private $tasks;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $address;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $contactFullName;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $paymentByAgreement;
+
     public function __construct()
     {
         $this->created = new \DateTime();
@@ -413,6 +428,42 @@ class Worksheet
     public function removeTask(Task $task): self
     {
         $this->tasks->removeElement($task);
+
+        return $this;
+    }
+
+    public function getContactFullName(): ?string
+    {
+        return $this->contactFullName;
+    }
+
+    public function setContactFullName(?string $contactFullName): self
+    {
+        $this->contactFullName = $contactFullName;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function isPaymentByAgreement(): ?bool
+    {
+        return $this->paymentByAgreement;
+    }
+
+    public function setPaymentByAgreement(?bool $paymentByAgreement): self
+    {
+        $this->paymentByAgreement = $paymentByAgreement;
 
         return $this;
     }

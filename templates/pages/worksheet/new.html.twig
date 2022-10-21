@@ -3,30 +3,392 @@
 {% block body %}
     {% include 'partials/header.html.twig' %}
 
-<div>
-    <div class="main_account content">
-        <div  class="bread">
-            <a href="/" class="nuxt-link-active">Главная</a>
+    <div class=" content">
+        <div class="bread_personal_account">
+            <a href="{{ path('app_main') }}" class="nuxt-link-active">Главная</a>
             <a href="{{ path('app_lk') }}">/ Личный кабинет</a>
             <a>/ Создать анкету</a>
         </div>
-        <div class="mobfile mobs">
-            <p>Мой профиль</p>
-        </div>
-        <div class="large_account fon">
-            <div class="in_account">
-                {% include 'partials/_message.html.twig' %}
-                <h2>Создать анкету</h2>
-                {{ form_start(form, {'attr' : {'class': 'form-std form-std-custom', 'autocomplete': 'off'}} ) }}
-                {% include 'partials/pages/worksheet/_worksheet_fields.html.twig' %}
-                <div class="btn_try btn_try_custom">
-                    <button type="submit" class="btn btn-success">Создать вакансию</button>
+
+        {{ form_start(form, {'attr' : {'class': 'form-std form-std-custom', 'autocomplete': 'off'}} ) }}
+            <div class="large_creating_form fon">
+                <div class="in_creating_form">
+                    <div class="hide" v-if="one">
+                        <div class="abouts_creating_form grid_creating_form">
+                            <div class="dom_creating_form">
+                                <p>ФИО контактного лица</p>
+                                {{ form_row(form.contactFullName) }}
+                            </div>
+
+{#                            <div class="dom_creating_form">#}
+{#                                <p>Район работы</p>#}
+{#                                <select name="select">#}
+{#                                    <option value="value1">Станция метро</option>#}
+{#                                    <option value="value2" selected>Станция метро</option>#}
+{#                                    <option value="value3">Станция метро</option>#}
+{#                                </select>#}
+{#                            </div>#}
+{#                            <div class="location_creting_form search_location_ques">#}
+{#                                <img src="assets/img/locats.svg">#}
+{#                                <span class="nona">Поиск по геолокации</span>#}
+{#                                <span class="mobs">Геолокация</span>#}
+{#                            </div>#}
+
+
+                        </div>
+
+                        <div class="abouts_creating_form grid_creating_form">
+                            <div class="dom_creating_form">
+                                <p class="required">Город</p>
+                                <select id="worksheet_form_city" name="worksheet_form[city]" class="text_input" required="required">
+                                    <option>Выберите город</option>
+                                    {% for city in cities %}
+                                        <option value="{{ city.id }}">{{ city.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="dom_creating_form">
+                                <p>Район</p>
+                                <select id="worksheet_form_district" name="worksheet_form[district]" class="text_input" disabled>
+                                    {% for district in districts %}
+                                        <option>Выберите район</option>
+                                        <option data-list-id="{{ district.city.id }}" value="{{ district.id }}">
+                                            {{ district.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="dom_creating_form">
+                                <p class="required">Адрес</p>
+                                {{ form_row(form.address) }}
+                            </div>
+                        </div>
+
+                        <div class="abouts_creating_form grid_creating_form">
+                            <div class="dom_creating_form">
+                                <p class="required">Категория</p>
+                                {{ form_row(form.category) }}
+                            </div>
+                            <div class="dom_creating_form">
+                                <p class="required">Краткое описание анкеты</p>
+                                {{ form_row(form.name) }}
+                            </div>
+                            <div class="dom_creating_form">
+                                <p>Ваши требования</p>
+                                {{ form_row(form.description) }}
+                            </div>
+                        </div>
+
+                        <div class="did mobs">
+                            <img src="{{ asset('assets/img/gala.svg') }}" alt="">
+                            <a href="">Выполнено</a>
+                        </div>
+                    </div>
+
+                    <div class="hide">
+                        <div class="abouts_creating_form">
+                            <p>Когда вы можете приступить к работе</p>
+                            <div class="date_creating_form">
+                                {{ form_widget(form.startDate) }}
+                                <div class="but_creating_form">
+                                    <label for="checkbox" class="work_start_now">Незамедлительно
+                                        {{ form_widget(form.startNow) }}
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="contract_ques">
+                            <div class="abouts_creating_form">
+                                <p>Оплата</p>
+                                <div class="ques_creating_form">
+                                    {{ form_row(form.payment) }}
+{#                                    <input type="text" id="worksheet_form_payment" name="" placeholder="в рублях / в час / в месяц" class="form-control">#}
+                                    <div class="but_creating_form">
+                                        <label for="checkbox" class="work_contract_ques">По договорённости
+                                            {{ form_widget(form.paymentByAgreement) }}
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="advertisement_creating_form">
+                            <p>Объявление:</p>
+                            <textarea class="vacancy_description" id="advertisement_form_description" name="" placeholder="Расскажите о себе, это поможет найти клиентов" class="text_input"></textarea>
+                        </div>
+
+                        <div class="reviews_creating_form">
+                            <p>Отзывы</p>
+                            <textarea class="vacancy_description" id="advertisement_form_description" name="" placeholder="Вставьте ссылку на отзывы о вашей работе" class="text_input"></textarea>
+                        </div>
+
+
+                        <div class="did mobs">
+                            <img src="assets/img/gala.svg">
+                            <a href="">Выполнено</a>
+                        </div>
+                    </div>
+
+                    <div class="hide" v-if="three">
+                        <div class="tops">
+                            <div class="only">
+                                <p>Навыки:</p>
+                            </div>
+                            <button class="choose_creating_form mobs accordion_filter_one_vacan">
+                                <span>Выберите из списка</span>
+                                <img src="assets/img/str.svg" src="/preload.gif" class="lazyLoad">
+                            </button>
+                            <div class="panel_filter">
+                                <div class="need_creating_form">
+                                    <label for="skills1" class="tasks">
+                                        <input type="checkbox" id="skills1" name="skills" value="1">
+                                        <span>Бытовые услуги</span></label>
+                                    <label for="skills2" class="tasks">
+                                        <input type="checkbox" id="skills2" name="skills"value="2">
+                                        <span>Сантехника</span></label>
+                                    <label for="skills3" class="tasks">
+                                        <input type="checkbox" id="skills3" name="skills" value="3">
+                                        <span>Отделочные работы</span></label>
+                                    <label for="skills4" class="tasks">
+                                        <input type="checkbox" id="skills4" name="skills" value="4">
+                                        <span>Сборка мебели</span></label>
+                                    <label for="skills5" class="tasks">
+                                        <input type="checkbox" id="skills5" name="skills" value="5">
+                                        <span>Уборка после проведённой работы</span></label>
+                                    <label for="skills6" class="tasks">
+                                        <input type="checkbox" id="skills6" name="skills" value="6">
+                                        <span>Ремонт в квартире/доме</span></label>
+                                    <label for="skills7" class="tasks">
+                                        <input type="checkbox" id="skills7" name="skills" value="7">
+                                        <span>Электрика</span></label>
+                                    <label for="skills8" class="tasks">
+                                        <input type="checkbox" id="skills8" name="skills" value="8">
+                                        <span>Плотник</span></label>
+                                    <!--   <div class="knopka mobs">
+                                       <a href="">Применить</a>
+                                     </div> -->
+                                </div>
+                                <div class="abouts_creating_form">
+                                    <input class="other_help" type="text" name="text" placeholder="Другое">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="hide" v-if="four">
+                        <div class="abouts_creating_form">
+                            <div class="only">
+                                <p>График работы:</p>
+                            </div>
+                            <div class="need_creating_form">
+                                <label for="work_schedule1" class="work_schedule_chk">
+                                    <input type="checkbox" id="work_schedule1" name="work_schedule" value="1">
+                                    <span>Полная занятость</span></label>
+                                <label for="work_schedule2" class="work_schedule_chk">
+                                    <input type="checkbox" id="work_schedule2" name="busyness" value="2">
+                                    <span>Частичная занятость</span></label>
+                            </div>
+                        </div>
+                        <p class="arm_creating_form">Или добавьте вручную</p>
+                        <button class="choose_creating_form mobs accordion_filter_one_vacan">
+                            <span>Добавьте вручную</span>
+                            <img src="assets/img/str.svg" src="/preload.gif" class="lazyLoad">
+                        </button>
+                        <div class="panel_filter">
+                            <div class="table_creating_form">
+                                <div class="once">
+                                    <div class="week_creating_form">
+                                        <h5>Пн</h5>
+                                        <div class="time_creating_form">
+                                            <div class="mins_creating_form">
+                                                <input value="" class="mins_creating_form" placeholder="12:00" name="monday_start_time_">
+                                            </div>
+                                            <p>-</p>
+                                            <div class="mins_creating_form">
+                                                <input value="" class="mins_creating_form" placeholder="16:00" name="monday_end_time">
+                                            </div>
+                                        </div>
+                                        <div class="weekday_box">
+                                            <label for="monday" class="weekday">
+                                                <input type="checkbox" name="" id="monday"  class="check-box" value="1"><span class="checkmark_day"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="week_creating_form">
+                                        <h5>Вт</h5>
+                                        <div class="time_creating_form">
+                                            <div class="mins_creating_form">
+                                                <input value="" class="mins_creating_form" placeholder="12:00" name="tuesday_start_time">
+                                            </div>
+                                            <p>-</p>
+                                            <div class="mins_creating_form">
+                                                <input value="" class="mins_creating_form" placeholder="16:00" name="tuesday_end_time">
+                                            </div>
+                                        </div>
+                                        <div class="weekday_box">
+                                            <label for="tuesday" class="weekday">
+                                                <input type="checkbox" name=""  class="check-box" id="tuesday" value="2"><span class="checkmark_day"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="week_creating_form">
+                                        <h5>Ср</h5>
+                                        <div class="time_creating_form">
+                                            <div class="mins_creating_form">
+                                                <input value="" class="mins_creating_form" placeholder="12:00" name="Wednesday_start_time">
+                                            </div>
+                                            <p>-</p>
+                                            <div class="mins_creating_form">
+                                                <input value="" class="mins_creating_form" placeholder="16:00" name="wednesday_end_time">
+                                            </div>
+                                        </div>
+                                        <div class="weekday_box">
+                                            <label for="wendsday" class="weekday">
+                                                <input type="checkbox" name="" id="wendsday"  class="check-box" value="3"><span class="checkmark_day"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="week_creating_form">
+                                        <h5>Чт</h5>
+                                        <div class="time_creating_form">
+                                            <div class="mins_creating_form">
+                                                <input value="" class="mins_creating_form" placeholder="12:00" name="thursday_start_time">
+                                            </div>
+                                            <p>-</p>
+                                            <div class="mins_creating_form">
+                                                <input value="" class="mins_creating_form" placeholder="16:00" name="thursday_end_time">
+                                            </div>
+                                        </div>
+                                        <div class="weekday_box">
+                                            <label for="thursday" class="weekday">
+                                                <input type="checkbox" name=""  id="thursday"  class="check-box" value="4"><span class="checkmark_day"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="once">
+                                    <div class="week_creating_form">
+                                        <h5>Пт</h5>
+                                        <div class="time_creating_form">
+                                            <div class="mins_creating_form">
+                                                <input value="" class="mins_creating_form" placeholder="12:00" name="friday_start_time">
+                                            </div>
+                                            <p>-</p>
+                                            <div class="mins_creating_form">
+                                                <input value="" class="mins_creating_form" placeholder="16:00" name="friday_end_time">
+                                            </div>
+                                        </div>
+                                        <div class="weekday_box">
+                                            <label for="friday" class="weekday">
+                                                <input type="checkbox" name="" id="friday"  class="check-box" value="5"><span class="checkmark_day"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="week_creating_form">
+                                        <h5 class="light_creating_form">Сб</h5>
+                                        <div class="time_creating_form">
+                                            <div class="mins_creating_form">
+                                                <input value="" class="mins_creating_form" placeholder="" name="saturday_start_time">
+                                            </div>
+                                            <p>-</p>
+                                            <div class="mins_creating_form">
+                                                <input value="" class="mins_creating_form" placeholder="" name="saturday_end_time">
+                                            </div>
+                                        </div>
+                                        <div class="weekday_box">
+                                            <label for="saturday" class="weekday">
+                                                <input type="checkbox" name="" id="saturday"  class="check-box" value="6"><span class="checkmark_day"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="week_creating_form">
+                                        <h5 class="light_creating_form">Вс</h5>
+                                        <div class="time_creating_form">
+                                            <div class="mins_creating_form">
+                                                <input value="" class="mins_creating_form" placeholder="" name="sunday_start_time">
+                                            </div>
+                                            <p>-</p>
+                                            <div class="mins_creating_form">
+                                                <input value="" class="mins_creating_form" placeholder="" name="sunday_end_time">
+                                            </div>
+                                        </div>
+                                        <div class="weekday_box">
+                                            <label for="sunday" class="weekday">
+                                                <input type="checkbox" name="" id="sunday"  class="check-box" value="7"><span class="checkmark_day"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="did mobs">
+                                <img src="assets/img/gala.svg">
+                                <a href="">Выполнено</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hide">
+                        <div class="foto_creatig_form">
+                            <div class="add_creating_form">
+                                <img src="assets/img/plus.svg">
+                                <span>Загрузить фотографию</span>
+                            </div>
+                            <div class="add_photo">
+                                <div class="field__wrapper">
+                                    <input name="file" type="file" name="file" id="field__file-2" class="field field__file" multiple>
+                                    <label class="field__file-wrapper" for="field__file-2">
+                                        <div class="field__file-fake">Файл не вбран</div>
+                                        <div class="field__file-button">Выбрать</div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="face">
+                                <span>Добавьте фото и получите бесплатный доступ<br> к платформе на 3 дня</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn_save_publish">
+                        <div class="but_creating_form send_message">
+                            <a href="">Сохранить</a>
+                        </div>
+                        <div class="but_creating_form send_message publish">
+                            <a href="">Опубликовать</a>
+                        </div>
+                    </div>
                 </div>
-                {{ form_end(form) }}
             </div>
-        </div>
+        {{ form_end(form) }}
     </div>
-</div>
+
+    <script>
+        createDependableList ( '#worksheet_form_city', '#worksheet_form_district' );
+        $('#worksheet_form_city').change(function() {
+            $('#worksheet_form_district').prop('disabled', false);
+        });
+        function onlyOne(checkbox) {
+            var checkboxes = document.getElementsByName('worksheet_form[citizenship]')
+            checkboxes.forEach((item) => {
+                if (item !== checkbox) item.checked = false
+            })
+        }
+        function onlyOneAccommodation(checkbox) {
+            var checkboxes = document.getElementsByName('worksheet_form[accommodation]')
+            checkboxes.forEach((item) => {
+                if (item !== checkbox) item.checked = false
+            })
+        }
+        function onlyOneBusyness(checkbox) {
+            var checkboxes = document.getElementsByName('worksheet_form[busyness]')
+            checkboxes.forEach((item) => {
+                if (item !== checkbox) item.checked = false
+            })
+        }
+    </script>
 
     {% include 'partials/footer.html.twig' %}
 {% endblock %}

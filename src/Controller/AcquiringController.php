@@ -21,8 +21,6 @@ use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Voronkovich\SberbankAcquiring\OrderStatus;
 
-
-
 class AcquiringController extends AbstractController
 {
     use DataTrait;
@@ -61,7 +59,7 @@ class AcquiringController extends AbstractController
         // $cookies = $request->cookies;
         // if ($cookies->has('PHPSESSID')) {
         //     $orderId = $cookies->get('PHPSESSID');
-        // } 
+        // }
         $orderAmount = $request->get('amount') ?? 1;
         $tariff = $request->get('tariff') ?? "";
         $returnUrl   = 'https://noproblem.ru/pay/proceed/'.$orderId;
@@ -94,7 +92,6 @@ class AcquiringController extends AbstractController
         ]);
 
         if (OrderStatus::isApproved($result['orderStatus'])) {
-
             $cookies = $request->cookies;
             if ($cookies->has('orderId')) {
                 $orderId = $cookies->get('orderId');

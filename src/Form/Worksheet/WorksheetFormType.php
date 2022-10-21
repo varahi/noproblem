@@ -32,8 +32,34 @@ class WorksheetFormType extends AbstractType
                         'placeholder' => '',
                         'class' => 'form-control',
                     ],
-                    'label' => 'Title of the job',
+                    //'label' => 'Title of the job',
+                    'label' => false,
                     'translation_domain' => 'forms',
+                ]
+            )
+            ->add(
+                'contactFullName',
+                TextType::class,
+                [
+                    'required' => true,
+                    'attr' => [
+                        'placeholder' => 'Contact Full Name',
+                        'class' => 'text_input',
+                    ],
+                    'label' => false,
+                    'translation_domain' => 'forms',
+                ]
+            )
+            ->add(
+                'address',
+                TextType::class,
+                [
+                    'required' => true,
+                    'attr' => [
+                        'placeholder' => 'Address',
+                        'class' => 'text_input',
+                    ],
+                    'label' => false
                 ]
             )
             ->add(
@@ -45,10 +71,37 @@ class WorksheetFormType extends AbstractType
                         'placeholder' => '',
                         'class' => 'form-control',
                     ],
-                    'label' => 'Requirements',
+                    //'label' => 'Requirements',
+                    'label' => false,
                     'translation_domain' => 'forms',
                 ]
             )
+            ->add('startDate', DateType::class, [
+                'label'     => false,
+                'required' => false,
+                'widget' => 'single_text',
+                'format' => 'yyyy-MM-dd',
+                'html5' => true,
+                'attr' => [
+                    'class' => 'text_input date',
+                ]
+            ])
+            ->add('startNow', CheckboxType::class, [
+                'mapped' => false,
+                'required' => false,
+                'label' => false,
+                'attr' => [
+                    'class' => 'white',
+                ],
+            ])
+            ->add('paymentByAgreement', CheckboxType::class, [
+                'mapped' => false,
+                'required' => false,
+                'label' => false,
+                'attr' => [
+                    'class' => 'white',
+                ],
+            ])
             ->add(
                 'payment',
                 TextType::class,
@@ -58,7 +111,8 @@ class WorksheetFormType extends AbstractType
                         'placeholder' => '',
                         'class' => 'form-control',
                     ],
-                    'label' => 'Payment',
+                    //'label' => 'Payment',
+                    'label' => false,
                     'translation_domain' => 'messages',
                 ]
             )
@@ -137,7 +191,7 @@ class WorksheetFormType extends AbstractType
                 'class' => Category::class,
                 'multiple'  => false,
                 'expanded'  => false,
-                'label' => 'Category',
+                'label' => false,
                 'required' => true,
             ])
         ;

@@ -124,10 +124,15 @@ class WorkerController extends AbstractController
         Request $request,
         TranslatorInterface $translator,
         NotifierInterface $notifier,
-        ManagerRegistry $doctrine
+        ManagerRegistry $doctrine,
+        CityRepository $cityRepository,
+        DistrictRepository $districtRepository
     ): Response {
         if ($this->isGranted(self::ROLE_CUSTOMER)) {
             $user = $this->security->getUser();
+            $cities = $cityRepository->findLimitOrder('999', '0');
+            $districts = $districtRepository->findLimitOrder('999', '0');
+
             $worksheet = new Worksheet();
             $form = $this->createForm(WorksheetFormType::class, $worksheet);
             $form->handleRequest($request);
@@ -153,6 +158,8 @@ class WorkerController extends AbstractController
             return $this->render('pages/worksheet/new.html.twig', [
                 'user' => $user,
                 'form' => $form->createView(),
+                'cities' => $cities,
+                'districts' => $districts,
                 'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             ]);
         } else {
