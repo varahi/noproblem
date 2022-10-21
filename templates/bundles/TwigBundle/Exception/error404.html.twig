@@ -1,23 +1,24 @@
 {# templates/bundles/TwigBundle/Exception/error404.html.twig #}
 {% extends 'layouts/base.html.twig' %}
-{% block title %}Ошибка 404 - Страница не найдена - Онлайн-сервис по подбору домашнего персонала{% endblock %}
-{% block body %}
-    {% include 'partials/header.html.twig' %}
-
-    <div class="main_account content">
-        <div class="large_account fon">
-            <div class="in_account">
-                <div class="_reset-form-content">
-                    <h2 class="b_center">Ошибка 404 - Страница не найдена</h2>
-                    <p style="text-align: center">
-                        Запрашиваемая страница не найдена. Провертье ваш url или начните с <a style="text-decoration: underline" href="{{ path('app_main') }}">главной страницы</a>
-                    </p>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {% include 'partials/footer.html.twig' %}
+{% block title %}Ошибка 404 - Страница не найдена - Онлайн-сервис по подбору домашнего персонала
 {% endblock %}
+{% block body %}
+	{% include 'partials/header.html.twig' %}
 
+	<div class="main_account content">
+		<div class="large_account fon">
+			<div class="in_account">
+				<div class="_reset-form-content">
+					<h2 class="b_center">Ошибка 404 - Страница не найдена</h2>
+					<p style="text-align: center">
+						Запрашиваемая страница не найдена. Провертье ваш url или начните с
+						<a style="text-decoration: underline" href="{{ path('app_main') }}">главной страницы</a>
+					</p>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{% include 'partials/footer.html.twig' %}
+{% endblock %}
