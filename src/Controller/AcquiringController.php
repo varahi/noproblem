@@ -64,12 +64,10 @@ class AcquiringController extends AbstractController
         // } 
         $orderAmount = $request->get('amount') ?? 1;
         $tariff = $request->get('tariff') ?? "";
-        $returnUrl   = 'https://google.com';
+        $returnUrl   = 'https://noproblem.ru/pay/proceed/'.$orderId;
 
         // You can pass additional parameters like a currency code and etc.
         $params['currency'] = Currency::RUB;
-        $params['failUrl']  =
-            'https://google.com';
         $params['description'] = $tariff;
 
         $result = $client->registerOrder($orderId, $orderAmount, $returnUrl, $params);
