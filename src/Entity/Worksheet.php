@@ -139,6 +139,22 @@ class Worksheet
      */
     private $paymentByAgreement;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $reviews;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $anotherTask;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $image;
+
+
     public function __construct()
     {
         $this->created = new \DateTime();
@@ -464,6 +480,42 @@ class Worksheet
     public function setPaymentByAgreement(?bool $paymentByAgreement): self
     {
         $this->paymentByAgreement = $paymentByAgreement;
+
+        return $this;
+    }
+
+    public function getReviews(): ?string
+    {
+        return $this->reviews;
+    }
+
+    public function setReviews(?string $reviews): self
+    {
+        $this->reviews = $reviews;
+
+        return $this;
+    }
+
+    public function getAnotherTask(): ?string
+    {
+        return $this->anotherTask;
+    }
+
+    public function setAnotherTask(?string $anotherTask): self
+    {
+        $this->anotherTask = $anotherTask;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

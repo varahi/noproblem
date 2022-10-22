@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Worksheet;
 use App\Form\Worksheet\WorksheetFormType;
+use App\Repository\BusynessRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\CityRepository;
 use App\Repository\DistrictRepository;
 use App\Repository\ReviewRepository;
+use App\Repository\TaskRepository;
 use App\Repository\WorksheetRepository;
 use App\Service\ModalForms;
 use Doctrine\Persistence\ManagerRegistry;
@@ -126,12 +128,16 @@ class WorkerController extends AbstractController
         NotifierInterface $notifier,
         ManagerRegistry $doctrine,
         CityRepository $cityRepository,
-        DistrictRepository $districtRepository
+        DistrictRepository $districtRepository,
+        TaskRepository $taskRepository,
+        BusynessRepository $busynessRepository
     ): Response {
         if ($this->isGranted(self::ROLE_CUSTOMER)) {
             $user = $this->security->getUser();
             $cities = $cityRepository->findLimitOrder('999', '0');
             $districts = $districtRepository->findLimitOrder('999', '0');
+            $tasks = $taskRepository->findAllOrder(['id' => 'ASC']);
+            $busynessess = $busynessRepository->findAll();
 
             $worksheet = new Worksheet();
             $form = $this->createForm(WorksheetFormType::class, $worksheet);
@@ -160,6 +166,8 @@ class WorkerController extends AbstractController
                 'form' => $form->createView(),
                 'cities' => $cities,
                 'districts' => $districts,
+                'tasks' => $tasks,
+                'busynessess' => $busynessess,
                 'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             ]);
         } else {

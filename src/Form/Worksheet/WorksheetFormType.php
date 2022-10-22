@@ -13,10 +13,12 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 
 class WorksheetFormType extends AbstractType
 {
@@ -68,8 +70,22 @@ class WorksheetFormType extends AbstractType
                 [
                     'required' => false,
                     'attr' => [
-                        'placeholder' => '',
-                        'class' => 'form-control',
+                        'placeholder' => 'Расскажите о себе, это поможет найти клиентов',
+                        'class' => 'text_input',
+                    ],
+                    //'label' => 'Requirements',
+                    'label' => false,
+                    'translation_domain' => 'forms',
+                ]
+            )
+            ->add(
+                'reviews',
+                TextareaType::class,
+                [
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Вставьте ссылку на отзывы о вашей работе',
+                        'class' => 'text_input',
                     ],
                     //'label' => 'Requirements',
                     'label' => false,
@@ -116,7 +132,7 @@ class WorksheetFormType extends AbstractType
                     'translation_domain' => 'messages',
                 ]
             )
-            ->add(
+            /*->add(
                 'age',
                 TextType::class,
                 [
@@ -128,8 +144,8 @@ class WorksheetFormType extends AbstractType
                     'label' => 'Age',
                     'translation_domain' => 'messages',
                 ]
-            )
-            ->add('experience', EntityType::class, [
+            )*/
+            /*->add('experience', EntityType::class, [
                 'class' => Experience::class,
                 'multiple'  => false,
                 'expanded'  => false,
@@ -149,7 +165,7 @@ class WorksheetFormType extends AbstractType
                 'expanded'  => false,
                 'label' => 'Citizen',
                 'required' => true,
-            ])
+            ])*/
             ->add('startNow', CheckboxType::class, [
                 'mapped' => false,
                 'required' => false,
@@ -173,7 +189,7 @@ class WorksheetFormType extends AbstractType
                 ]
             ])*/
 
-            ->add('city', EntityType::class, [
+            /*->add('city', EntityType::class, [
                 'class' => City::class,
                 'multiple'  => false,
                 'expanded'  => false,
@@ -186,13 +202,51 @@ class WorksheetFormType extends AbstractType
                 'expanded'  => false,
                 'label' => 'District',
                 'required' => true,
-            ])
+            ])*/
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'multiple'  => false,
                 'expanded'  => false,
                 'label' => false,
                 'required' => true,
+                'placeholder' => 'Выберите категорию'
+            ])
+            ->add(
+                'anotherTask',
+                TextType::class,
+                [
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Другое',
+                        'class' => 'other_help',
+                    ],
+                    'label' => false,
+                    'translation_domain' => 'forms',
+                ]
+            )
+            ->add('image', FileType::class, [
+                'required' => false,
+                'mapped' => false,
+                'constraints' => [
+                    new Image([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/gif',
+                            'image/jpeg',
+                            'image/pjpeg',
+                            'image/png',
+                            'image/webp',
+                            'image/vnd.wap.wbmp'
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid image document',
+                    ])
+                ],
+                'attr' => [
+                    //'onchange' => 'readURL(this);'
+                    'class' => 'field field__file',
+                ],
+                'label' => false,
+                'translation_domain' => 'forms',
             ])
         ;
     }

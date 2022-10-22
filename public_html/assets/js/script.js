@@ -203,10 +203,23 @@ $('.vacancy_description').on('input', function(e){
         $('section label').show();
         $('#job_form_category').each(function(){
             var val=this.value
-            if (val!='') {
+            if (val!=='') {
                 val=this.id.valueOf()[0]+'-'+val;
                 $('section label:not([data-game*="'+val+'"])').hide();
-            };
+            }
+        });
+    });
+});
+
+$(function(){
+    $('select#worksheet_form_category').change(function(){
+        $('section label').show();
+        $('#worksheet_form_category').each(function(){
+            var val=this.value
+            if (val!=='') {
+                val=this.id.valueOf()[0]+'-'+val;
+                //$('section label:not([data-work*="'+val+'"])').hide();
+            }
         });
     });
 });

@@ -68,14 +68,20 @@
                             <div class="dom_creating_form">
                                 <p class="required">Категория</p>
                                 {{ form_row(form.category) }}
+
+
+{#                                <select id="worksheet_form_category" name="worksheet_form_category[category]" required="required">#}
+{#                                    <option value="" selected="selected">Выберите категорию</option>#}
+{#                                    <option value="1">Мастер на час</option>#}
+{#                                    <option value="2">Домработница</option>#}
+{#                                    <option value="3">Няня</option>#}
+{#                                    <option value="4">Сиделка</option>#}
+{#                                </select>#}
+
                             </div>
                             <div class="dom_creating_form">
                                 <p class="required">Краткое описание анкеты</p>
                                 {{ form_row(form.name) }}
-                            </div>
-                            <div class="dom_creating_form">
-                                <p>Ваши требования</p>
-                                {{ form_row(form.description) }}
                             </div>
                         </div>
 
@@ -114,20 +120,17 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="advertisement_creating_form">
                             <p>Объявление:</p>
-                            <textarea class="vacancy_description" id="advertisement_form_description" name="" placeholder="Расскажите о себе, это поможет найти клиентов" class="text_input"></textarea>
+                            {{ form_widget(form.description) }}
                         </div>
-
                         <div class="reviews_creating_form">
                             <p>Отзывы</p>
-                            <textarea class="vacancy_description" id="advertisement_form_description" name="" placeholder="Вставьте ссылку на отзывы о вашей работе" class="text_input"></textarea>
+                            {{ form_widget(form.reviews) }}
                         </div>
 
-
                         <div class="did mobs">
-                            <img src="assets/img/gala.svg">
+                            <img src="{{ asset('assets/img/gala.svg') }}" alt="">
                             <a href="">Выполнено</a>
                         </div>
                     </div>
@@ -139,209 +142,177 @@
                             </div>
                             <button class="choose_creating_form mobs accordion_filter_one_vacan">
                                 <span>Выберите из списка</span>
-                                <img src="assets/img/str.svg" src="/preload.gif" class="lazyLoad">
+                                <img src="{{ asset('assets/img/str.svg') }}" class="lazyLoad" alt="">
                             </button>
                             <div class="panel_filter">
                                 <div class="need_creating_form">
-                                    <label for="skills1" class="tasks">
-                                        <input type="checkbox" id="skills1" name="skills" value="1">
-                                        <span>Бытовые услуги</span></label>
-                                    <label for="skills2" class="tasks">
-                                        <input type="checkbox" id="skills2" name="skills"value="2">
-                                        <span>Сантехника</span></label>
-                                    <label for="skills3" class="tasks">
-                                        <input type="checkbox" id="skills3" name="skills" value="3">
-                                        <span>Отделочные работы</span></label>
-                                    <label for="skills4" class="tasks">
-                                        <input type="checkbox" id="skills4" name="skills" value="4">
-                                        <span>Сборка мебели</span></label>
-                                    <label for="skills5" class="tasks">
-                                        <input type="checkbox" id="skills5" name="skills" value="5">
-                                        <span>Уборка после проведённой работы</span></label>
-                                    <label for="skills6" class="tasks">
-                                        <input type="checkbox" id="skills6" name="skills" value="6">
-                                        <span>Ремонт в квартире/доме</span></label>
-                                    <label for="skills7" class="tasks">
-                                        <input type="checkbox" id="skills7" name="skills" value="7">
-                                        <span>Электрика</span></label>
-                                    <label for="skills8" class="tasks">
-                                        <input type="checkbox" id="skills8" name="skills" value="8">
-                                        <span>Плотник</span></label>
-                                    <!--   <div class="knopka mobs">
-                                       <a href="">Применить</a>
-                                     </div> -->
-                                </div>
-                                <div class="abouts_creating_form">
-                                    <input class="other_help" type="text" name="text" placeholder="Другое">
+                                    <section>
+                                        {% for task in tasks %}
+                                            <label for="chk{{ task.id }}" class="tasks" data-work="{% if task.category %}{% for category in task.category %}j-{{ category.id }} {% endfor %}{% endif %}">
+                                                <input type="checkbox" id="chk{{ task.id }}" name="worksheet_form_category[task][]" value="{{ task.id }}">
+                                                <span>{{ task.name }}</span></label>
+                                        {% endfor %}
+                                    </section>
+                                    <div class="abouts_creating_form">
+                                        {{ form_widget(form.anotherTask) }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-
-                    <div class="hide" v-if="four">
-                        <div class="abouts_creating_form">
-                            <div class="only">
-                                <p>График работы:</p>
-                            </div>
-                            <div class="need_creating_form">
-                                <label for="work_schedule1" class="work_schedule_chk">
-                                    <input type="checkbox" id="work_schedule1" name="work_schedule" value="1">
-                                    <span>Полная занятость</span></label>
-                                <label for="work_schedule2" class="work_schedule_chk">
-                                    <input type="checkbox" id="work_schedule2" name="busyness" value="2">
-                                    <span>Частичная занятость</span></label>
-                            </div>
-                        </div>
+                    <div class="hide">
+                        {% include 'partials/pages/job/_busyness.html.twig' %}
                         <p class="arm_creating_form">Или добавьте вручную</p>
                         <button class="choose_creating_form mobs accordion_filter_one_vacan">
                             <span>Добавьте вручную</span>
-                            <img src="assets/img/str.svg" src="/preload.gif" class="lazyLoad">
+                            <img src="{{ asset('assets/img/str.svg') }}" class="lazyLoad" alt="">
                         </button>
-                        <div class="panel_filter">
-                            <div class="table_creating_form">
-                                <div class="once">
-                                    <div class="week_creating_form">
-                                        <h5>Пн</h5>
-                                        <div class="time_creating_form">
-                                            <div class="mins_creating_form">
-                                                <input value="" class="mins_creating_form" placeholder="12:00" name="monday_start_time_">
-                                            </div>
-                                            <p>-</p>
-                                            <div class="mins_creating_form">
-                                                <input value="" class="mins_creating_form" placeholder="16:00" name="monday_end_time">
-                                            </div>
-                                        </div>
-                                        <div class="weekday_box">
-                                            <label for="monday" class="weekday">
-                                                <input type="checkbox" name="" id="monday"  class="check-box" value="1"><span class="checkmark_day"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="week_creating_form">
-                                        <h5>Вт</h5>
-                                        <div class="time_creating_form">
-                                            <div class="mins_creating_form">
-                                                <input value="" class="mins_creating_form" placeholder="12:00" name="tuesday_start_time">
-                                            </div>
-                                            <p>-</p>
-                                            <div class="mins_creating_form">
-                                                <input value="" class="mins_creating_form" placeholder="16:00" name="tuesday_end_time">
-                                            </div>
-                                        </div>
-                                        <div class="weekday_box">
-                                            <label for="tuesday" class="weekday">
-                                                <input type="checkbox" name=""  class="check-box" id="tuesday" value="2"><span class="checkmark_day"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="week_creating_form">
-                                        <h5>Ср</h5>
-                                        <div class="time_creating_form">
-                                            <div class="mins_creating_form">
-                                                <input value="" class="mins_creating_form" placeholder="12:00" name="Wednesday_start_time">
-                                            </div>
-                                            <p>-</p>
-                                            <div class="mins_creating_form">
-                                                <input value="" class="mins_creating_form" placeholder="16:00" name="wednesday_end_time">
-                                            </div>
-                                        </div>
-                                        <div class="weekday_box">
-                                            <label for="wendsday" class="weekday">
-                                                <input type="checkbox" name="" id="wendsday"  class="check-box" value="3"><span class="checkmark_day"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="week_creating_form">
-                                        <h5>Чт</h5>
-                                        <div class="time_creating_form">
-                                            <div class="mins_creating_form">
-                                                <input value="" class="mins_creating_form" placeholder="12:00" name="thursday_start_time">
-                                            </div>
-                                            <p>-</p>
-                                            <div class="mins_creating_form">
-                                                <input value="" class="mins_creating_form" placeholder="16:00" name="thursday_end_time">
-                                            </div>
-                                        </div>
-                                        <div class="weekday_box">
-                                            <label for="thursday" class="weekday">
-                                                <input type="checkbox" name=""  id="thursday"  class="check-box" value="4"><span class="checkmark_day"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
+{#                        <div class="panel_filter">#}
+{#                            <div class="table_creating_form">#}
+{#                                <div class="once">#}
+{#                                    <div class="week_creating_form">#}
+{#                                        <h5>Пн</h5>#}
+{#                                        <div class="time_creating_form">#}
+{#                                            <div class="mins_creating_form">#}
+{#                                                <input value="" class="mins_creating_form" placeholder="12:00" name="monday_start_time_">#}
+{#                                            </div>#}
+{#                                            <p>-</p>#}
+{#                                            <div class="mins_creating_form">#}
+{#                                                <input value="" class="mins_creating_form" placeholder="16:00" name="monday_end_time">#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="weekday_box">#}
+{#                                            <label for="monday" class="weekday">#}
+{#                                                <input type="checkbox" name="" id="monday"  class="check-box" value="1"><span class="checkmark_day"></span>#}
+{#                                            </label>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="week_creating_form">#}
+{#                                        <h5>Вт</h5>#}
+{#                                        <div class="time_creating_form">#}
+{#                                            <div class="mins_creating_form">#}
+{#                                                <input value="" class="mins_creating_form" placeholder="12:00" name="tuesday_start_time">#}
+{#                                            </div>#}
+{#                                            <p>-</p>#}
+{#                                            <div class="mins_creating_form">#}
+{#                                                <input value="" class="mins_creating_form" placeholder="16:00" name="tuesday_end_time">#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="weekday_box">#}
+{#                                            <label for="tuesday" class="weekday">#}
+{#                                                <input type="checkbox" name=""  class="check-box" id="tuesday" value="2"><span class="checkmark_day"></span>#}
+{#                                            </label>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="week_creating_form">#}
+{#                                        <h5>Ср</h5>#}
+{#                                        <div class="time_creating_form">#}
+{#                                            <div class="mins_creating_form">#}
+{#                                                <input value="" class="mins_creating_form" placeholder="12:00" name="Wednesday_start_time">#}
+{#                                            </div>#}
+{#                                            <p>-</p>#}
+{#                                            <div class="mins_creating_form">#}
+{#                                                <input value="" class="mins_creating_form" placeholder="16:00" name="wednesday_end_time">#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="weekday_box">#}
+{#                                            <label for="wendsday" class="weekday">#}
+{#                                                <input type="checkbox" name="" id="wendsday"  class="check-box" value="3"><span class="checkmark_day"></span>#}
+{#                                            </label>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="week_creating_form">#}
+{#                                        <h5>Чт</h5>#}
+{#                                        <div class="time_creating_form">#}
+{#                                            <div class="mins_creating_form">#}
+{#                                                <input value="" class="mins_creating_form" placeholder="12:00" name="thursday_start_time">#}
+{#                                            </div>#}
+{#                                            <p>-</p>#}
+{#                                            <div class="mins_creating_form">#}
+{#                                                <input value="" class="mins_creating_form" placeholder="16:00" name="thursday_end_time">#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="weekday_box">#}
+{#                                            <label for="thursday" class="weekday">#}
+{#                                                <input type="checkbox" name=""  id="thursday"  class="check-box" value="4"><span class="checkmark_day"></span>#}
+{#                                            </label>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
 
-                                <div class="once">
-                                    <div class="week_creating_form">
-                                        <h5>Пт</h5>
-                                        <div class="time_creating_form">
-                                            <div class="mins_creating_form">
-                                                <input value="" class="mins_creating_form" placeholder="12:00" name="friday_start_time">
-                                            </div>
-                                            <p>-</p>
-                                            <div class="mins_creating_form">
-                                                <input value="" class="mins_creating_form" placeholder="16:00" name="friday_end_time">
-                                            </div>
-                                        </div>
-                                        <div class="weekday_box">
-                                            <label for="friday" class="weekday">
-                                                <input type="checkbox" name="" id="friday"  class="check-box" value="5"><span class="checkmark_day"></span>
-                                            </label>
-                                        </div>
-                                    </div>
+{#                                <div class="once">#}
+{#                                    <div class="week_creating_form">#}
+{#                                        <h5>Пт</h5>#}
+{#                                        <div class="time_creating_form">#}
+{#                                            <div class="mins_creating_form">#}
+{#                                                <input value="" class="mins_creating_form" placeholder="12:00" name="friday_start_time">#}
+{#                                            </div>#}
+{#                                            <p>-</p>#}
+{#                                            <div class="mins_creating_form">#}
+{#                                                <input value="" class="mins_creating_form" placeholder="16:00" name="friday_end_time">#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="weekday_box">#}
+{#                                            <label for="friday" class="weekday">#}
+{#                                                <input type="checkbox" name="" id="friday"  class="check-box" value="5"><span class="checkmark_day"></span>#}
+{#                                            </label>#}
+{#                                        </div>#}
+{#                                    </div>#}
 
-                                    <div class="week_creating_form">
-                                        <h5 class="light_creating_form">Сб</h5>
-                                        <div class="time_creating_form">
-                                            <div class="mins_creating_form">
-                                                <input value="" class="mins_creating_form" placeholder="" name="saturday_start_time">
-                                            </div>
-                                            <p>-</p>
-                                            <div class="mins_creating_form">
-                                                <input value="" class="mins_creating_form" placeholder="" name="saturday_end_time">
-                                            </div>
-                                        </div>
-                                        <div class="weekday_box">
-                                            <label for="saturday" class="weekday">
-                                                <input type="checkbox" name="" id="saturday"  class="check-box" value="6"><span class="checkmark_day"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="week_creating_form">
-                                        <h5 class="light_creating_form">Вс</h5>
-                                        <div class="time_creating_form">
-                                            <div class="mins_creating_form">
-                                                <input value="" class="mins_creating_form" placeholder="" name="sunday_start_time">
-                                            </div>
-                                            <p>-</p>
-                                            <div class="mins_creating_form">
-                                                <input value="" class="mins_creating_form" placeholder="" name="sunday_end_time">
-                                            </div>
-                                        </div>
-                                        <div class="weekday_box">
-                                            <label for="sunday" class="weekday">
-                                                <input type="checkbox" name="" id="sunday"  class="check-box" value="7"><span class="checkmark_day"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="did mobs">
-                                <img src="assets/img/gala.svg">
-                                <a href="">Выполнено</a>
-                            </div>
-                        </div>
+{#                                    <div class="week_creating_form">#}
+{#                                        <h5 class="light_creating_form">Сб</h5>#}
+{#                                        <div class="time_creating_form">#}
+{#                                            <div class="mins_creating_form">#}
+{#                                                <input value="" class="mins_creating_form" placeholder="" name="saturday_start_time">#}
+{#                                            </div>#}
+{#                                            <p>-</p>#}
+{#                                            <div class="mins_creating_form">#}
+{#                                                <input value="" class="mins_creating_form" placeholder="" name="saturday_end_time">#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="weekday_box">#}
+{#                                            <label for="saturday" class="weekday">#}
+{#                                                <input type="checkbox" name="" id="saturday"  class="check-box" value="6"><span class="checkmark_day"></span>#}
+{#                                            </label>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="week_creating_form">#}
+{#                                        <h5 class="light_creating_form">Вс</h5>#}
+{#                                        <div class="time_creating_form">#}
+{#                                            <div class="mins_creating_form">#}
+{#                                                <input value="" class="mins_creating_form" placeholder="" name="sunday_start_time">#}
+{#                                            </div>#}
+{#                                            <p>-</p>#}
+{#                                            <div class="mins_creating_form">#}
+{#                                                <input value="" class="mins_creating_form" placeholder="" name="sunday_end_time">#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="weekday_box">#}
+{#                                            <label for="sunday" class="weekday">#}
+{#                                                <input type="checkbox" name="" id="sunday"  class="check-box" value="7"><span class="checkmark_day"></span>#}
+{#                                            </label>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="did mobs">#}
+{#                                <img src="assets/img/gala.svg">#}
+{#                                <a href="">Выполнено</a>#}
+{#                            </div>#}
+{#                        </div>#}
                     </div>
                     <div class="hide">
                         <div class="foto_creatig_form">
                             <div class="add_creating_form">
-                                <img src="assets/img/plus.svg">
+                                <img src="{{ asset('assets/img/plus.svg') }}" alt="">
                                 <span>Загрузить фотографию</span>
                             </div>
                             <div class="add_photo">
                                 <div class="field__wrapper">
-                                    <input name="file" type="file" name="file" id="field__file-2" class="field field__file" multiple>
-                                    <label class="field__file-wrapper" for="field__file-2">
+{#                                    <input name="file" type="file" name="file" id="field__file-2" class="field field__file" multiple>#}
+                                    {{ form_widget(form.image) }}
+                                    <label class="field__file-wrapper" for="worksheet_form_image">
                                         <div class="field__file-fake">Файл не вбран</div>
                                         <div class="field__file-button">Выбрать</div>
                                     </label>
@@ -383,7 +354,7 @@
             })
         }
         function onlyOneBusyness(checkbox) {
-            var checkboxes = document.getElementsByName('worksheet_form[busyness]')
+            var checkboxes = document.getElementsByName('job_form[busyness]')
             checkboxes.forEach((item) => {
                 if (item !== checkbox) item.checked = false
             })
