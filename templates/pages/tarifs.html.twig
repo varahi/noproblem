@@ -95,7 +95,7 @@
 							<p class="employer_card-price-comment">{{ tariff.priceComment }}</p>
 						{% endif %}
 
-						{% if is_granted('ROLE_EMPLOYEE') %}
+						{% if is_granted('ROLE_CUSTOMER') %}
 							<a class="employer_card-btn" href="pay/new?amount={{ tariff.amount }}&tariff={{ tariff.id }}" type="button">Приобрести</a>
 						{% else %}
 							<a class="employer_card-btn" href="{{ path('app_login') }}" type="button">Приобрести</a>
