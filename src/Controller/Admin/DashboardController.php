@@ -23,6 +23,7 @@ use App\Entity\ArticleCategory;
 use App\Entity\Course;
 use App\Entity\Page;
 use App\Entity\Tariff;
+use App\Entity\Order;
 use App\Entity\Review;
 use App\Entity\Ticket;
 use App\Entity\Education;
@@ -107,6 +108,7 @@ class DashboardController extends AbstractDashboardController
         ]);
 
         yield MenuItem::section('Tariffs');
-        yield MenuItem::linkToCrud('Tariff', 'fa fa-volume-up', Tariff::class);
+        yield MenuItem::linkToCrud('Tariffs', 'fa fa-volume-up', Tariff::class);
+        yield MenuItem::linkToCrud('Orders', 'fa fa-clone   ', Order::class);
     }
 }

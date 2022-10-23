@@ -25,14 +25,9 @@ class Tariff
     private $name;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $price;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $discountPrice;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -54,9 +49,30 @@ class Tariff
      */
     private $users;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $oldPrice;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $priceComment;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="tariff")
+     */
+    private $orders;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $amount;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->orders = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -81,26 +97,14 @@ class Tariff
         return $this;
     }
 
-    public function getPrice(): ?float
+    public function getPrice(): ?string
     {
         return $this->price;
     }
 
-    public function setPrice(float $price): self
+    public function setPrice(?string $price): self
     {
         $this->price = $price;
-
-        return $this;
-    }
-
-    public function getDiscountPrice(): ?float
-    {
-        return $this->discountPrice;
-    }
-
-    public function setDiscountPrice(?float $discountPrice): self
-    {
-        $this->discountPrice = $discountPrice;
 
         return $this;
     }
@@ -167,6 +171,72 @@ class Tariff
                 $user->setTariff(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOldPrice(): ?string
+    {
+        return $this->oldPrice;
+    }
+
+    public function setOldPrice(?string $oldPrice): self
+    {
+        $this->oldPrice = $oldPrice;
+
+        return $this;
+    }
+
+    public function getPriceComment(): ?string
+    {
+        return $this->priceComment;
+    }
+
+    public function setPriceComment(?string $priceComment): self
+    {
+        $this->priceComment = $priceComment;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Order>
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders[] = $order;
+            $order->setTariff($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            // set the owning side to null (unless already changed)
+            if ($order->getTariff() === $this) {
+                $order->setTariff(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getAmount(): ?int
+    {
+        return $this->amount;
+    }
+
+    public function setAmount(int $amount): self
+    {
+        $this->amount = $amount;
 
         return $this;
     }

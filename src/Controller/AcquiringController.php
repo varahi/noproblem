@@ -51,9 +51,7 @@ class AcquiringController extends AbstractController
     ): Response {
         // TODO: fill token, domain
 
-
         $client = new Client($this->acq_array);
-
         $orderId     = uniqid("", true);
         // // Required arguments
         // $cookies = $request->cookies;
@@ -97,6 +95,12 @@ class AcquiringController extends AbstractController
                 $orderId = $cookies->get('orderId');
                 if ($orderId == $id) {
                     // TODO: logic of succeed
+                    // 1. Create an order
+                    // 2. Get tariff name for parameters
+                    // 3. Find tariff in databse from parameter
+                    // 4. Set tariff to user
+                    // 5. Set order to user
+                    // 6. Persist all data
                     return $this->json(['data' => "Order was approved! and it's working!"]);
                 }
             }

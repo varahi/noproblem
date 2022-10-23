@@ -42,65 +42,30 @@
 				</button>
 			</div>
 			<ul class="employer_card-list panel1" style="display:flex;">
-				<li class="employer_card-item">
-					<p class="employer_card-header">Приветственный доступ</p>
-					<p class="employer_card-text">Доступ к базе сотрудников</p>
-					<div class="employer_card-box-price">
-						<span class="employer_card-price">75р/сутки</span>
-					</div>
-					<p class="employer_card-price-comment">далее 90р/сутки, при оплате посуточно</p>
-					<a class="employer_card-btn" href="pay/new?amount=7500&tariff=emloyer_1_day" type="button">Приобрести</a>
-				</li>
+				{% for tariff in tariffs %}
+					<li class="employer_card-item">
+						{% if tariff.name %}
+							<p class="employer_card-header">{{ tariff.name }}</p>
+						{% endif %}
+						{% if tariff.description %}
+							<p class="employer_card-text">{{ tariff.description }}</p>
+						{% endif %}
+						{% if tariff.price %}
+							<div class="employer_card-box-price">
+								<span class="employer_card-price">{{ tariff.price }}</span>
+							</div>
+						{% endif %}
+						{% if tariff.priceComment %}
+							<p class="employer_card-price-comment">{{ tariff.priceComment }}</p>
+						{% endif %}
 
-				<li class="employer_card-item">
-					<p class="employer_card-header">Доступ на 14 дней</p>
-					<p class="employer_card-text">Доступ к базе сотрудников</p>
-					<div class="employer_card-box-price">
-						<span class="employer_card-price">690р</span>
-						<span class="employer_card-price-sale">1.600р</span>
-					</div>
-					<a class="employer_card-btn" href="pay/new?amount=69000&tariff=emloyer_14_days" type="button">Приобрести</a>
-
-				</li>
-
-				<li class="employer_card-item">
-					<p class="employer_card-header">Доступ на 30 дней</p>
-					<p class="employer_card-text">Доступ к базе сотрудников</p>
-					<div class="employer_card-box-price">
-						<span class="employer_card-price">990р</span>
-						<span class="employer_card-price-sale">2.700р</span>
-					</div>
-					<a class="employer_card-btn" href="pay/new?amount=99000&tariff=emloyer_30_days" type="button">Приобрести</a>
-				</li>
-
-				<li class="employer_card-item">
-					<p class="employer_card-header">Проверка 1-го пользователя по базам</p>
-					<p class="employer_card-text">Проверка 1-го пользователя по базам</p>
-					<div class="employer_card-box-price">
-						<span class="employer_card-price">550р</span>
-					</div>
-					<a class="employer_card-btn" href="pay/new?amount=55000&tariff=emloyer_1_person" type="button">Приобрести</a>
-				</li>
-
-
-				<li class="employer_card-item">
-					<p class="employer_card-header">Доступ к базе на 1 мес, без ограничений в кол-ве объявлений</p>
-					<p class="employer_card-text">Доступ к базе на 1 мес, без ограничений в кол-ве объявлений + проверка 3-х соискателей + выделенное объявление</p>
-					<div class="employer_card-box-price">
-						<span class="employer_card-price">1.890р</span>
-						<span class="employer_card-price-sale">4.350р</span>
-					</div>
-					<a class="employer_card-btn" href="pay/new?amount=189000&tariff=emloyer_1_month" type="button">Приобрести</a>
-				</li>
-
-				<li class="employer_card-item">
-					<p class="employer_card-header">«Личный менеджер» по подбору кандидата (подбор 5–10 кандидатов)</p>
-					<p class="employer_card-text">«Личный менеджер» по подбору кандидата (подбор 5-10 кандидатов) , подходящих под необходимые параметры, которые указал клиент (с гарантией, если кандидат в течение 2-х недель не подойдёт, сделаем повторную подборку бесплатно)</p>
-					<div class="employer_card-box-price">
-						<span class="employer_card-price">20.000р</span>
-					</div>
-					<a class="employer_card-btn" href="pay/new?amount=2000000&tariff=emloyer_personal_manager" type="button">Приобрести</a>
-				</li>
+						{% if is_granted('ROLE_EMPLOYEE') %}
+							<a class="employer_card-btn" href="pay/new?amount={{ tariff.amount }}&tariff={{ tariff.id }}" type="button">Приобрести</a>
+						{% else %}
+							<a class="employer_card-btn" href="{{ path('app_login') }}" type="button">Приобрести</a>
+						{% endif %}
+					</li>
+				{% endfor %}
 			</ul>
 		</section>
 
@@ -113,65 +78,30 @@
 			</div>
 
 			<ul class="worker_card-list panel">
+				{% for tariff in tariffs %}
+					<li class="employer_card-item">
+						{% if tariff.name %}
+							<p class="employer_card-header">{{ tariff.name }}</p>
+						{% endif %}
+						{% if tariff.description %}
+							<p class="employer_card-text">{{ tariff.description }}</p>
+						{% endif %}
+						{% if tariff.price %}
+							<div class="employer_card-box-price">
+								<span class="employer_card-price">{{ tariff.price }}</span>
+							</div>
+						{% endif %}
+						{% if tariff.priceComment %}
+							<p class="employer_card-price-comment">{{ tariff.priceComment }}</p>
+						{% endif %}
 
-				<li class="worker_card-item">
-					<p class="worker_card-header">Приветственный доступ</p>
-					<p class="worker_card-text">Доступ к базе сотрудников</p>
-					<div class="worker_card-box-price">
-						<span class="worker_card-price">75р/сутки</span>
-					</div>
-					<p class="worker_card-price-comment">далее 90р/сутки, при оплате посуточно</p>
-					<button class="worker_card-btn" type="button">Приобрести</button>
-				</li>
-
-				<li class="worker_card-item">
-					<p class="worker_card-header">Доступ на 14 дней</p>
-					<p class="worker_card-text">Доступ к базе сотрудников</p>
-					<div class="worker_card-box-price">
-						<span class="worker_card-price">690р</span>
-						<span class="worker_card-price-sale">1.600р</span>
-					</div>
-					<button class="worker_card-btn" type="button">Приобрести</button>
-				</li>
-
-				<li class="worker_card-item">
-					<p class="worker_card-header">Доступ на 30 дней</p>
-					<p class="worker_card-text">Доступ к базе сотрудников</p>
-					<div class="worker_card-box-price">
-						<span class="worker_card-price">990р</span>
-						<span class="worker_card-price-sale">2.700р</span>
-					</div>
-					<button class="worker_card-btn" type="button">Приобрести</button>
-				</li>
-
-				<li class="worker_card-item">
-					<p class="worker_card-header">Проверка 1-го пользователя по базам</p>
-					<p class="worker_card-text">Проверка 1-го пользователя по базам</p>
-					<div class="worker_card-box-price">
-						<span class="worker_card-price">550р</span>
-					</div>
-					<button class="worker_card-btn" type="button">Приобрести</button>
-				</li>
-
-
-				<li class="worker_card-item">
-					<p class="worker_card-header">Доступ к базе на 1 мес, без ограничений в кол-ве объявлений</p>
-					<p class="worker_card-text">Доступ к базе на 1 мес, без ограничений в кол-ве объявлений + проверка 3-х соискателей + выделенное объявление</p>
-					<div class="worker_card-box-price">
-						<span class="worker_card-price">1.890р</span>
-						<span class="worker_card-price-sale">4.350р</span>
-					</div>
-					<button class="worker_card-btn" type="button">Приобрести</button>
-				</li>
-
-				<li class="worker_card-item">
-					<p class="worker_card-header">«Личный менеджер» по подбору кандидата (подбор 5–10 кандидатов)</p>
-					<p class="worker_card-text">«Личный менеджер» по подбору кандидата (подбор 5-10 кандидатов) , подходящих под необходимые параметры, которые указал клиент (с гарантией, если кандидат в течение 2-х недель не подойдёт, сделаем повторную подборку бесплатно)</p>
-					<div class="worker_card-box-price">
-						<span class="worker_card-price">20.000р</span>
-					</div>
-					<button class="worker_card-btn" type="button">Приобрести</button>
-				</li>
+						{% if is_granted('ROLE_EMPLOYEE') %}
+							<a class="employer_card-btn" href="pay/new?amount={{ tariff.amount }}&tariff={{ tariff.id }}" type="button">Приобрести</a>
+						{% else %}
+							<a class="employer_card-btn" href="{{ path('app_login') }}" type="button">Приобрести</a>
+						{% endif %}
+					</li>
+				{% endfor %}
 			</ul>
 		</section>
 	</main>

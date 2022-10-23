@@ -577,6 +577,14 @@
         <source>Support</source>
         <target>Тех. поддержка</target>
       </trans-unit>
+        <trans-unit id="Orders" resname="Orders">
+            <source>Orders</source>
+            <target>Заявки</target>
+        </trans-unit>
+        <trans-unit id="Order" resname="Order">
+            <source>Order</source>
+            <target>Заявка</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>

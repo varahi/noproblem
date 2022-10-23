@@ -16,6 +16,7 @@ use App\Repository\CityRepository;
 use App\Repository\DistrictRepository;
 use App\Repository\PageRepository;
 use App\Repository\ReviewRepository;
+use App\Repository\TariffRepository;
 use App\Repository\WorksheetRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -102,11 +103,14 @@ class PageController extends AbstractController
     public function tarifsPage(
         Request $request,
         ReviewRepository $reviewRepository,
-        CategoryRepository $categoryRepository
+        CategoryRepository $categoryRepository,
+        TariffRepository $tariffRepository
     ): Response {
         $user = $this->security->getUser();
+        $tariffs = $tariffRepository->findAll();
         return new Response($this->twig->render('pages/tarifs.html.twig', [
             'user' => $user,
+            'tariffs' => $tariffs,
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }

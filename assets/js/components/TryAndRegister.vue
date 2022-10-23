@@ -5,8 +5,7 @@
       <div class="btn_try" style="cursor:pointer">
         <a @click="showModal = true">Попробовать</a>
       </div>
-      <div class="main_background">
-      </div>
+<!--      <div class="main_background"></div>-->
     </div>
 
     <!-- overlays -->
@@ -36,7 +35,7 @@
       </div>
     </div>
 
-    <div class="indexa modal-vue registration">
+    <div class="modal-vue registration">
 
       <!-- Registration emploayer modal box -->
       <div class="modal" v-if="showModalEmployer">

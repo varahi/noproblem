@@ -2,44 +2,38 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Tariff;
+use App\Entity\Order;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 
-class TariffCrudController extends AbstractCrudController
+class OrderCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Tariff::class;
+        return Order::class;
     }
 
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Tariff')
-            ->setEntityLabelInPlural('Tariff')
-            ->setSearchFields(['task'])
+            ->setEntityLabelInSingular('Order')
+            ->setEntityLabelInPlural('Order')
+            ->setSearchFields(['name'])
             ->setDefaultSort(['name' => 'ASC']);
     }
 
     public function configureFields(string $pageName): iterable
     {
         yield IntegerField::new('id')->setFormTypeOption('disabled', 'disabled');
-        yield BooleanField::new('hidden');
+        yield DateTimeField::new('created')->setFormTypeOption('disabled', 'disabled');
         yield TextField::new('name')->setColumns('col-md-10');
-        yield TextareaField::new('description')->setColumns('col-md-10');
-        yield TextareaField::new('price')->setColumns('col-md-10');
-        yield TextareaField::new('priceComment')->setColumns('col-md-10');
-        yield TextareaField::new('oldPrice')->setColumns('col-md-10');
-        yield IntegerField::new('amount')->setColumns('col-md-10');
-        yield AssociationField::new('orders')->setColumns('col-md-10');
+        yield AssociationField::new('user')->setColumns('col-md-10');
+        yield AssociationField::new('tariff')->setColumns('col-md-10');
     }
-
 
     /*
     public function configureFields(string $pageName): iterable
