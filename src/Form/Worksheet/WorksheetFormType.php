@@ -92,7 +92,7 @@ class WorksheetFormType extends AbstractType
                     'translation_domain' => 'forms',
                 ]
             )
-            ->add('startDate', DateType::class, [
+            /*->add('startDate', DateType::class, [
                 'label'     => false,
                 'required' => false,
                 'widget' => 'single_text',
@@ -101,7 +101,7 @@ class WorksheetFormType extends AbstractType
                 'attr' => [
                     'class' => 'text_input date',
                 ]
-            ])
+            ])*/
             ->add('startNow', CheckboxType::class, [
                 'mapped' => false,
                 'required' => false,

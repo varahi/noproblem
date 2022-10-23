@@ -105,6 +105,15 @@ class WorksheetRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @param array $order
+     * @return Worksheet[]
+     */
+    public function findAllOrder(array $order)
+    {
+        return $this->findBy([], $order);
+    }
+
 //    /**
 //     * @return Worksheet[] Returns an array of Worksheet objects
 //     */

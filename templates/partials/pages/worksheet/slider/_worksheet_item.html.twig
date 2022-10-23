@@ -1,0 +1,43 @@
+<div class="box_account_content">
+    <h4>{{ worksheet.name }}</h4>
+    <div class="box_person_information">
+        <div class="person_information_city">
+            <div class="city_icon">
+                <img src="{{ asset('assets/img/city_map.svg') }}" class="lazyLoad isLoaded" alt="">
+                <p class="city_box_account">{{ worksheet.city }}, {{ worksheet.district }}</p>
+            </div>
+            <p>Начать: <i class="data_box_account">{{ worksheet.startDate|date("d.m.Y") }}</i></p>
+            <p>Опыт работы: {{ worksheet.experience }} </p>
+        </div>
+        <div class="person_information_pay">
+            {% if worksheet.payment %}
+                <p>{{ 'Payment'|trans }}: <i class="data_box_account">{{ worksheet.payment }}</i></p>
+            {% endif %}
+
+            {% if worksheet.age %}
+                <p>{{ 'Age'|trans }}: <i class="data_box_account">{{ worksheet.age }}</i></p>
+            {% endif %}
+            {% if worksheet.education %}
+                <p>{{ 'Education'|trans }}: {{ worksheet.education }} </i></p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="person_description">
+        <p>{{ worksheet.description }}</p>
+    </div>
+    <div class="box_vacancies">
+        <div class="box_logo">
+            <img src="{{ asset('assets/img/ava_person_account.png') }}" alt="">
+        </div>
+        <div class="name_vacancies">
+            <p class="name_vacancies_text">Вакансия от частного лица</p>
+            <p>{{ worksheet.user.firstName }} {{ worksheet.user.lastName }}</p>
+        </div>
+    </div>
+    {% if is_granted('ROLE_CUSTOMER') %}
+        <div class="btn_box_account">
+            <a href="{{ path('app_detail_worksheet', { id: worksheet.id}) }}"><button class="btn_box_account_one">Подробнее</button></a>
+            <a href="{{ path('app_edit_worksheet', { id: worksheet.id}) }}"><button class="btn_box_account_two">Редактировать</button></a>
+        </div>
+    {% endif %}
+</div>

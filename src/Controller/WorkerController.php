@@ -25,6 +25,7 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Twig\Environment;
+use App\Service\FileUploader;
 
 class WorkerController extends AbstractController
 {
@@ -85,7 +86,8 @@ class WorkerController extends AbstractController
         }
 
         if ($slug == '') {
-            $query = $worksheetRepository->findAll();
+            //$query = $worksheetRepository->findAll();
+            $query = $worksheetRepository->findAllOrder(['created' => 'DESC']);
             $category = null;
             if ($cityId !== '' && $districtId !== '' || $cityId !== '') {
                 $query = $worksheetRepository->findByParams($city, $district);
@@ -130,7 +132,8 @@ class WorkerController extends AbstractController
         CityRepository $cityRepository,
         DistrictRepository $districtRepository,
         TaskRepository $taskRepository,
-        BusynessRepository $busynessRepository
+        BusynessRepository $busynessRepository,
+        FileUploader $fileUploader
     ): Response {
         if ($this->isGranted(self::ROLE_CUSTOMER)) {
             $user = $this->security->getUser();
@@ -138,17 +141,23 @@ class WorkerController extends AbstractController
             $districts = $districtRepository->findLimitOrder('999', '0');
             $tasks = $taskRepository->findAllOrder(['id' => 'ASC']);
             $busynessess = $busynessRepository->findAll();
+            $entityManager = $this->doctrine->getManager();
 
             $worksheet = new Worksheet();
             $form = $this->createForm(WorksheetFormType::class, $worksheet);
             $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                if ($_POST['startDate'] !== '') {
-                    $datetime = new \DateTime();
-                    $startDate = $datetime->createFromFormat('Y-m-d', $_POST['startDate']);
-                    $worksheet->setStartDate($startDate);
-                }
+            if ($form->isSubmitted()) {
+                $this->updateFields(
+                    $request,
+                    $form,
+                    $worksheet,
+                    $cityRepository,
+                    $districtRepository,
+                    $taskRepository,
+                    $fileUploader
+                );
+
                 $worksheet->setUser($user);
                 $worksheet->setHidden('0');
                 $entityManager = $doctrine->getManager();
@@ -175,6 +184,61 @@ class WorkerController extends AbstractController
             $notifier->send(new Notification($message, ['browser']));
             return $this->redirectToRoute("app_main");
         }
+    }
+
+    /**
+     * @param Request $request
+     * @param $form
+     * @param Worksheet $worksheet
+     * @param CityRepository $cityRepository
+     * @param DistrictRepository $districtRepository
+     * @param TaskRepository $taskRepository
+     * @param FileUploader $fileUploader
+     * @return void
+     */
+    private function updateFields(
+        Request $request,
+        $form,
+        Worksheet $worksheet,
+        CityRepository $cityRepository,
+        DistrictRepository $districtRepository,
+        TaskRepository $taskRepository,
+        FileUploader $fileUploader
+    ) {
+        $entityManager = $this->doctrine->getManager();
+        $post = $request->request->get('worksheet_form');
+
+        if (isset($post['startDate']) && $post['startDate'] !=='') {
+            $datetime = new \DateTime();
+            $startDate = $datetime->createFromFormat('Y-m-d', $post['startDate']);
+            $worksheet->setStartDate($startDate);
+        }
+
+        if ($post['city'] !=='') {
+            $city = $cityRepository->findOneBy(['id' => $post['city']]);
+            $worksheet->setCity($city);
+        }
+        if ($post['district'] !=='') {
+            $district = $districtRepository->findOneBy(['id' => $post['district']]);
+            $worksheet->setDistrict($district);
+        }
+        if ($post['task'] !=='' && is_array($post['task'])) {
+            foreach ($post['task'] as $taskId) {
+                $task = $taskRepository->findOneBy(['id' => $taskId]);
+                $worksheet->addTask($task);
+                $entityManager->persist($task);
+            }
+        }
+
+        // File upload
+        $imageFile = $form->get('image')->getData();
+        if ($imageFile) {
+            $imageFileName = $fileUploader->upload($imageFile);
+            $worksheet->setImage($imageFileName);
+        }
+
+        $entityManager->persist($worksheet);
+        $entityManager->flush();
     }
 
     /**
@@ -214,13 +278,40 @@ class WorkerController extends AbstractController
         TranslatorInterface $translator,
         NotifierInterface $notifier,
         ManagerRegistry $doctrine,
-        Worksheet $worksheet
+        Worksheet $worksheet,
+        CityRepository $cityRepository,
+        DistrictRepository $districtRepository,
+        TaskRepository $taskRepository,
+        BusynessRepository $busynessRepository,
+        FileUploader $fileUploader
     ): Response {
         if ($this->isGranted(self::ROLE_CUSTOMER)) {
             $user = $this->security->getUser();
+            $cities = $cityRepository->findLimitOrder('999', '0');
+            $districts = $districtRepository->findLimitOrder('999', '0');
+            $tasks = $taskRepository->findAllOrder(['id' => 'ASC']);
+            $busynessess = $busynessRepository->findAll();
+
             if ($user->getId() == $worksheet->getUser()->getId()) {
                 $form = $this->createForm(WorksheetFormType::class, $worksheet);
                 $form->handleRequest($request);
+
+                // Get selected checkboxes
+                if (count($worksheet->getTasks()) > 0) {
+                    foreach ($worksheet->getTasks() as $task) {
+                        $selectedTasksArr[] = $task->getId();
+                    }
+                } else {
+                    $selectedTasksArr = null;
+                }
+
+                if (count($worksheet->getBusynesses()) > 0) {
+                    foreach ($worksheet->getBusynesses() as $busyness) {
+                        $busynessArr[] = $busyness->getId();
+                    }
+                } else {
+                    $busynessArr = null;
+                }
 
                 if ($form->isSubmitted() && $form->isValid()) {
                     $entityManager = $doctrine->getManager();
@@ -234,6 +325,12 @@ class WorkerController extends AbstractController
                 }
                 return new Response($this->twig->render('pages/worksheet/edit.html.twig', [
                     'user' => $user,
+                    'cities' => $cities,
+                    'districts' => $districts,
+                    'tasks' => $tasks,
+                    'busynessess' => $busynessess,
+                    'selectedTasksArr' => $selectedTasksArr,
+                    'busynessArr' => $busynessArr,
                     'form' => $form->createView(),
                     'worksheet' => $worksheet,
                     'ticketForm' => $this->modalForms->ticketForm($request)->createView()

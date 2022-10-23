@@ -407,6 +407,20 @@ class JobController extends AbstractController
         }
     }
 
+    /**
+     * @param Request $request
+     * @param $form
+     * @param Job $job
+     * @param CityRepository $cityRepository
+     * @param DistrictRepository $districtRepository
+     * @param TaskRepository $taskRepository
+     * @param CitizenRepository $citizenRepository
+     * @param AdditionalInfoRepository $additionalInfoRepository
+     * @param AccommodationRepository $accommodationRepository
+     * @param BusynessRepository $busynessRepository
+     * @param FileUploader $fileUploader
+     * @return void
+     */
     private function updateFields(
         Request $request,
         $form,

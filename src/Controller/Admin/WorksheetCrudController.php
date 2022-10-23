@@ -62,11 +62,11 @@ class WorksheetCrudController extends AbstractCrudController
         yield TextareaField::new('description')->setColumns('col-md-8')->hideOnIndex();
         //yield TextareaField::new('additional')->setColumns('col-md-8')->hideOnIndex();
         yield TextField::new('payment')->setColumns('col-md-8');
-        /*yield ImageField::new('image')
-            ->setBasePath('uploads/')
-            ->setUploadDir('public_html/uploads')
+        yield ImageField::new('image')
+            ->setBasePath('uploads/files/')
+            ->setUploadDir('public_html/uploads/files')
             ->setFormType(FileUploadType::class)
-            ->setRequired(false);*/
+            ->setRequired(false);
 
         yield FormField::addPanel('Additional info')->setIcon('fa fa-info-circle')->setCssClass('col-sm-4');
         //yield FormField::addRow();
@@ -76,6 +76,11 @@ class WorksheetCrudController extends AbstractCrudController
         yield AssociationField::new('user')->setColumns('col-md-12')->setLabel('Profile owner')->hideOnIndex();
         yield AssociationField::new('tasks')->setColumns('col-md-12')->setLabel('Tasks')->hideOnIndex();
         yield AssociationField::new('additional')->setColumns('col-md-12')->setLabel('Additional info')->hideOnIndex();
+
+        yield AssociationField::new('busynesses')
+            ->setFormTypeOptions([
+                'by_reference' => false,
+            ])->hideOnIndex()->setColumns('col-md-12')->setLabel('Busynnes')->hideOnIndex();
 
         yield FormField::addPanel('General requirements')->setIcon('fa fa-gear');
         yield FormField::addRow();

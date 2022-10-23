@@ -22,15 +22,20 @@ class Busyness
      */
     private $name;
 
-    public function __toString(): string
-    {
-        return $this->name;
-    }
-
     /**
      * @ORM\ManyToOne(targetEntity=Job::class, inversedBy="busynesses")
      */
     private $job;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Worksheet::class, inversedBy="busynesses")
+     */
+    private $worksheet;
+
+    public function __toString(): string
+    {
+        return $this->name;
+    }
 
     public function getId(): ?int
     {
@@ -57,6 +62,18 @@ class Busyness
     public function setJob(?Job $job): self
     {
         $this->job = $job;
+
+        return $this;
+    }
+
+    public function getWorksheet(): ?Worksheet
+    {
+        return $this->worksheet;
+    }
+
+    public function setWorksheet(?Worksheet $worksheet): self
+    {
+        $this->worksheet = $worksheet;
 
         return $this;
     }

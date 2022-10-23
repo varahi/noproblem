@@ -186,12 +186,12 @@
                     </div>
 
                     {% if relatedJobs|length > 0 %}
-                        <h5 class="similar_jobs nona">Похожие вакансии</h5>
+                        <h5 class="similar_jobs nona">Похожие анкеты</h5>
                         <div class="owl-carousel owl-theme" id="slider_one_vacan">
                             {% for worksheet in relatedJobs %}
                                 <slide>
                                     <div class="box_account_one_vacan">
-                                        {% include 'partials/pages/worksheet/slider/_job_item.html.twig' %}
+                                        {% include 'partials/pages/worksheet/slider/_worksheet_item.html.twig' %}
                                     </div>
                                 </slide>
                             {% endfor %}

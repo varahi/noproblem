@@ -154,12 +154,18 @@ class Worksheet
      */
     private $image;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Busyness::class, mappedBy="worksheet")
+     */
+    private $busynesses;
+
 
     public function __construct()
     {
         $this->created = new \DateTime();
         $this->additional = new ArrayCollection();
         $this->tasks = new ArrayCollection();
+        $this->busynesses = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -516,6 +522,36 @@ class Worksheet
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Busyness>
+     */
+    public function getBusynesses(): Collection
+    {
+        return $this->busynesses;
+    }
+
+    public function addBusyness(Busyness $busyness): self
+    {
+        if (!$this->busynesses->contains($busyness)) {
+            $this->busynesses[] = $busyness;
+            $busyness->setWorksheet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBusyness(Busyness $busyness): self
+    {
+        if ($this->busynesses->removeElement($busyness)) {
+            // set the owning side to null (unless already changed)
+            if ($busyness->getWorksheet() === $this) {
+                $busyness->setWorksheet(null);
+            }
+        }
 
         return $this;
     }

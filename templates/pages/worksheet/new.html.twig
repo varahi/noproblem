@@ -19,22 +19,6 @@
                                 <p>ФИО контактного лица</p>
                                 {{ form_row(form.contactFullName) }}
                             </div>
-
-{#                            <div class="dom_creating_form">#}
-{#                                <p>Район работы</p>#}
-{#                                <select name="select">#}
-{#                                    <option value="value1">Станция метро</option>#}
-{#                                    <option value="value2" selected>Станция метро</option>#}
-{#                                    <option value="value3">Станция метро</option>#}
-{#                                </select>#}
-{#                            </div>#}
-{#                            <div class="location_creting_form search_location_ques">#}
-{#                                <img src="assets/img/locats.svg">#}
-{#                                <span class="nona">Поиск по геолокации</span>#}
-{#                                <span class="mobs">Геолокация</span>#}
-{#                            </div>#}
-
-
                         </div>
 
                         <div class="abouts_creating_form grid_creating_form">
@@ -68,16 +52,6 @@
                             <div class="dom_creating_form">
                                 <p class="required">Категория</p>
                                 {{ form_row(form.category) }}
-
-
-{#                                <select id="worksheet_form_category" name="worksheet_form_category[category]" required="required">#}
-{#                                    <option value="" selected="selected">Выберите категорию</option>#}
-{#                                    <option value="1">Мастер на час</option>#}
-{#                                    <option value="2">Домработница</option>#}
-{#                                    <option value="3">Няня</option>#}
-{#                                    <option value="4">Сиделка</option>#}
-{#                                </select>#}
-
                             </div>
                             <div class="dom_creating_form">
                                 <p class="required">Краткое описание анкеты</p>
@@ -95,7 +69,7 @@
                         <div class="abouts_creating_form">
                             <p>Когда вы можете приступить к работе</p>
                             <div class="date_creating_form">
-                                {{ form_widget(form.startDate) }}
+                                <input type="date" id="worksheet_form_startDate" name="worksheet_form[startDate]" class="text_input date">
                                 <div class="but_creating_form">
                                     <label for="checkbox" class="work_start_now">Незамедлительно
                                         {{ form_widget(form.startNow) }}
@@ -149,7 +123,7 @@
                                     <section>
                                         {% for task in tasks %}
                                             <label for="chk{{ task.id }}" class="tasks" data-work="{% if task.category %}{% for category in task.category %}j-{{ category.id }} {% endfor %}{% endif %}">
-                                                <input type="checkbox" id="chk{{ task.id }}" name="worksheet_form_category[task][]" value="{{ task.id }}">
+                                                <input type="checkbox" id="chk{{ task.id }}" name="worksheet_form[task][]" value="{{ task.id }}">
                                                 <span>{{ task.name }}</span></label>
                                         {% endfor %}
                                     </section>
@@ -310,7 +284,6 @@
                             </div>
                             <div class="add_photo">
                                 <div class="field__wrapper">
-{#                                    <input name="file" type="file" name="file" id="field__file-2" class="field field__file" multiple>#}
                                     {{ form_widget(form.image) }}
                                     <label class="field__file-wrapper" for="worksheet_form_image">
                                         <div class="field__file-fake">Файл не вбран</div>
@@ -323,14 +296,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="btn_save_publish">
-                        <div class="but_creating_form send_message">
-                            <a href="">Сохранить</a>
-                        </div>
-                        <div class="but_creating_form send_message publish">
-                            <a href="">Опубликовать</a>
-                        </div>
+
+                    <div class="but_creating_form send_message">
+                        <button type="submit">Опубликовать</button>
                     </div>
+
+{#                    <div class="btn_save_publish">#}
+{#                        <div class="but_creating_form send_message">#}
+{#                            <a href="">Сохранить</a>#}
+{#                        </div>#}
+{#                        <div class="but_creating_form send_message publish">#}
+{#                            <a href="">Опубликовать</a>#}
+{#                        </div>#}
+{#                    </div>#}
                 </div>
             </div>
         {{ form_end(form) }}

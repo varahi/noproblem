@@ -34,8 +34,10 @@
             <p>{{ job.owner.firstName }} {{ job.owner.lastName }}</p>
         </div>
     </div>
-    <div class="btn_box_account">
-        <a href="{{ path('app_detail_job', { id: job.id}) }}"><button class="btn_box_account_one">Подробнее</button></a>
-        <a href="{{ path('app_edit_job', { id: job.id}) }}"><button class="btn_box_account_two">Редактировать</button></a>
-    </div>
+    {% if is_granted('ROLE_EMPLOYEE') %}
+        <div class="btn_box_account">
+            <a href="{{ path('app_detail_job', { id: job.id}) }}"><button class="btn_box_account_one">Подробнее</button></a>
+            <a href="{{ path('app_edit_job', { id: job.id}) }}"><button class="btn_box_account_two">Редактировать</button></a>
+        </div>
+    {% endif %}
 </div>

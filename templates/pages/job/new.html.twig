@@ -141,7 +141,7 @@
                                 <section>
                                     {% for task in tasks %}
                                         <label for="chk{{ task.id }}" class="tasks" data-game="{% if task.category %}{% for category in task.category %}j-{{ category.id }} {% endfor %}{% endif %}">
-                                            <input type="checkbox" id="chk{{ task.id }}" name="job_form[task][]" value="{{ task.id }}">
+                                            <input type="checkbox" id="chk{{ task.id }}" name="worksheet_form[task][]" value="{{ task.id }}">
                                             <span>{{ task.name }}</span></label>
                                     {% endfor %}
                                 </section>

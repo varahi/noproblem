@@ -18,15 +18,196 @@
                     {% include 'partials/_message.html.twig' %}
                     <h2>Редактировать анкету</h2>
                     {{ form_start(form, {'attr' : {'class': 'form-std form-std-custom', 'autocomplete': 'off'}} ) }}
-                    {% include 'partials/pages/worksheet/_worksheet_fields.html.twig' %}
-                    <div class="btn_try btn_try_custom">
-                        <button type="submit" class="btn btn-success">Обновить анкету</button>
+
+                    <div class="large_creating_form fon">
+                        <div class="in_creating_form">
+                            <div class="hide" v-if="one">
+                                <div class="abouts_creating_form grid_creating_form">
+                                    <div class="dom_creating_form">
+                                        <p>ФИО контактного лица</p>
+                                        {{ form_row(form.contactFullName) }}
+                                    </div>
+                                </div>
+
+                                <div class="abouts_creating_form grid_creating_form">
+                                    <div class="dom_creating_form">
+                                        <p class="required">Город</p>
+                                        <select id="worksheet_form_city" name="worksheet_form[city]" class="text_input" required="required">
+                                            <option>Выберите город</option>
+                                            {% for city in cities %}
+                                                <option value="{{ city.id }}" {% if city.id == worksheet.city.id %} selected {% endif %}>{{ city.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="dom_creating_form">
+                                        <p>Район</p>
+                                        <select id="worksheet_form_district" name="worksheet_form[district]" class="text_input" disabled>
+                                            {% for district in districts %}
+                                                <option>Выберите район</option>
+                                                <option data-list-id="{{ district.city.id }}" value="{{ district.id }}" {% if district.id == worksheet.district.id %} selected {% endif %}>
+                                                    {{ district.name }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="dom_creating_form">
+                                        <p class="required">Адрес</p>
+                                        {{ form_row(form.address) }}
+                                    </div>
+                                </div>
+
+                                <div class="abouts_creating_form grid_creating_form">
+                                    <div class="dom_creating_form">
+                                        <p class="required">Категория</p>
+                                        {{ form_row(form.category) }}
+                                    </div>
+                                    <div class="dom_creating_form">
+                                        <p class="required">Краткое описание анкеты</p>
+                                        {{ form_row(form.name) }}
+                                    </div>
+                                </div>
+
+                                <div class="did mobs">
+                                    <img src="{{ asset('assets/img/gala.svg') }}" alt="">
+                                    <a href="">Выполнено</a>
+                                </div>
+                            </div>
+
+                            <div class="hide">
+                                <div class="abouts_creating_form">
+                                    <p>Когда вы можете приступить к работе</p>
+                                    <div class="date_creating_form">
+                                        <input type="date" id="worksheet_form_startDate" name="worksheet_form[startDate]" class="text_input date">
+                                        <div class="but_creating_form">
+                                            <label for="checkbox" class="work_start_now">Незамедлительно
+                                                {{ form_widget(form.startNow) }}
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="contract_ques">
+                                    <div class="abouts_creating_form">
+                                        <p>Оплата</p>
+                                        <div class="ques_creating_form">
+                                            {{ form_row(form.payment) }}
+                                            <div class="but_creating_form">
+                                                <label for="checkbox" class="work_contract_ques">По договорённости
+                                                    {{ form_widget(form.paymentByAgreement) }}
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="advertisement_creating_form">
+                                    <p>Объявление:</p>
+                                    {{ form_widget(form.description) }}
+                                </div>
+                                <div class="reviews_creating_form">
+                                    <p>Отзывы</p>
+                                    {{ form_widget(form.reviews) }}
+                                </div>
+
+                                <div class="did mobs">
+                                    <img src="{{ asset('assets/img/gala.svg') }}" alt="">
+                                    <a href="">Выполнено</a>
+                                </div>
+                            </div>
+
+                            <div class="hide" v-if="three">
+                                <div class="tops">
+                                    <div class="only">
+                                        <p>Навыки:</p>
+                                    </div>
+                                    <button class="choose_creating_form mobs accordion_filter_one_vacan">
+                                        <span>Выберите из списка</span>
+                                        <img src="{{ asset('assets/img/str.svg') }}" class="lazyLoad" alt="">
+                                    </button>
+                                    <div class="panel_filter">
+                                        <div class="need_creating_form">
+                                            <section>
+                                                {% for task in tasks %}
+                                                    <label for="chk{{ task.id }}" class="tasks"
+                                                           data-work="{% if task.category %}{% for category in task.category %}j-{{ category.id }} {% endfor %}{% endif %}">
+                                                        <input type="checkbox" id="chk{{ task.id }}" name="worksheet_form[task][]" value="{{ task.id }}"
+                                                                {% if task.id in selectedTasksArr %} checked {% endif %}>
+                                                        <span>{{ task.name }}</span></label>
+                                                {% endfor %}
+                                            </section>
+                                            <div class="abouts_creating_form">
+                                                {{ form_widget(form.anotherTask) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="hide">
+                                {% include 'partials/pages/worksheet/_busyness.html.twig' %}
+                                <p class="arm_creating_form">Или добавьте вручную</p>
+                                <button class="choose_creating_form mobs accordion_filter_one_vacan">
+                                    <span>Добавьте вручную</span>
+                                    <img src="{{ asset('assets/img/str.svg') }}" class="lazyLoad" alt="">
+                                </button>
+                            </div>
+                            <div class="hide">
+                                <div class="foto_creatig_form">
+                                    <div class="add_creating_form">
+                                        <img src="{{ asset('assets/img/plus.svg') }}" alt="">
+                                        <span>Загрузить фотографию</span>
+                                    </div>
+                                    <div class="add_photo">
+                                        <div class="field__wrapper">
+                                            {{ form_widget(form.image) }}
+                                            <label class="field__file-wrapper" for="worksheet_form_image">
+                                                <div class="field__file-fake">Файл не вбран</div>
+                                                <div class="field__file-button">Выбрать</div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="face">
+                                        <span>Добавьте фото и получите бесплатный доступ<br> к платформе на 3 дня</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="but_creating_form send_message">
+                                <button type="submit">Обновить анкету</button>
+                            </div>
+                        </div>
                     </div>
                     {{ form_end(form) }}
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        createDependableList ( '#worksheet_form_city', '#worksheet_form_district' );
+        $('#worksheet_form_city').change(function() {
+            $('#worksheet_form_district').prop('disabled', false);
+        });
+        function onlyOne(checkbox) {
+            var checkboxes = document.getElementsByName('worksheet_form[citizenship]')
+            checkboxes.forEach((item) => {
+                if (item !== checkbox) item.checked = false
+            })
+        }
+        function onlyOneAccommodation(checkbox) {
+            var checkboxes = document.getElementsByName('worksheet_form[accommodation]')
+            checkboxes.forEach((item) => {
+                if (item !== checkbox) item.checked = false
+            })
+        }
+        function onlyOneBusyness(checkbox) {
+            var checkboxes = document.getElementsByName('worksheet_form[busyness]')
+            checkboxes.forEach((item) => {
+                if (item !== checkbox) item.checked = false
+            })
+        }
+    </script>
 
     {% include 'partials/footer.html.twig' %}
 {% endblock %}
