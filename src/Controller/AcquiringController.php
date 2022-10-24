@@ -2,6 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Order;
+use App\Entity\Tariff;
+use App\Repository\TariffRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Notifier\Notification\Notification;
@@ -34,10 +38,12 @@ class AcquiringController extends AbstractController
 
     public function __construct(
         Security $security,
-        string $defailtDomain
+        string $defailtDomain,
+        ManagerRegistry $doctrine
     ) {
         $this->security = $security;
         $this->defailtDomain = $defailtDomain;
+        $this->doctrine = $doctrine;
     }
 
     // private $security;
@@ -97,9 +103,11 @@ class AcquiringController extends AbstractController
      */
     public function proceedPayment(
         Request $request,
-        string $id
+        string $id,
+        TariffRepository $tariffRepository
     ): Response {
         $client = new Client($this->acq_array);
+        $entityManager = $this->doctrine->getManager();
 
         $result = $client->execute('/payment/rest/getOrderStatusExtended.do', [
             'orderNumber' => $id,
@@ -110,14 +118,18 @@ class AcquiringController extends AbstractController
             if ($cookies->has('orderId')) {
                 $orderId = $cookies->get('orderId');
                 if ($orderId == $id) {
+
                     // TODO: logic of succeed
-                    // 1. Create an order
-                    // 2. Get tariff name for parameters
-                    // 3. Find tariff in databse from parameter
-                    // 4. Get user
-                    // 5. Set tariff to user
-                    // 6. Set order to user
-                    // 7. Persist all data
+                    // Создаем новый заказ
+                    //$user = $this->security->getUser();
+                    // Необходимо получить id тарифа и найти его в БД
+                    //$tariff = $tariffRepository->findOneBy(['id' => $tariff]);
+                    //$order = new Order();
+                    //$order->setUser($user);
+                    //$order->setTariff($tariff);
+                    //$entityManager->persist($order);
+                    //$entityManager->flush();
+
                     return $this->json(['data' => "Order was approved! and it's working!"]);
                 }
             }
