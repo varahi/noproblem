@@ -2,19 +2,15 @@
 
 namespace App\Controller;
 
-use App\Controller\Traits\DataTrait;
-use App\Repository\ArticleRepository;
-use App\Repository\CategoryRepository;
-use App\Repository\ArticleCategoryRepository;
-use App\Repository\CourseRepository;
-use App\Repository\JobRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Notifier\Notification\Notification;
+use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Voronkovich\SberbankAcquiring\Client;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Voronkovich\SberbankAcquiring\Currency;
 use Voronkovich\SberbankAcquiring\HttpClient\HttpClientInterface as AcqHttpClientInterface;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -23,8 +19,6 @@ use Voronkovich\SberbankAcquiring\OrderStatus;
 
 class AcquiringController extends AbstractController
 {
-    use DataTrait;
-
     private $acq_array = [
         'userName' => 'T7736337091-api',
         'password' => 'T7736337091',
@@ -33,6 +27,18 @@ class AcquiringController extends AbstractController
         'apiUri' => Client::API_URI_TEST,
         'httpMethod' => AcqHttpClientInterface::METHOD_GET,
     ];
+
+    private $security;
+
+    private $defailtDomain;
+
+    public function __construct(
+        Security $security,
+        string $defailtDomain
+    ) {
+        $this->security = $security;
+        $this->defailtDomain = $defailtDomain;
+    }
 
     // private $security;
 
@@ -47,9 +53,18 @@ class AcquiringController extends AbstractController
      * @return Response
      */
     public function newPayment(
-        Request $request
+        Request $request,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier
     ): Response {
         // TODO: fill token, domain
+
+        $user = $this->security->getUser();
+        if ((int)$user->getId() !== (int)$request->get('user')) {
+            $message = $translator->trans('Access denied for this operation', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_main");
+        }
 
         $client = new Client($this->acq_array);
         $orderId     = uniqid("", true);
@@ -60,11 +75,12 @@ class AcquiringController extends AbstractController
         // }
         $orderAmount = $request->get('amount') ?? 1;
         $tariff = $request->get('tariff') ?? "";
-        $returnUrl   = 'https://noproblem.ru/pay/proceed/'.$orderId;
+        $returnUrl   = 'https://'.$this->defailtDomain.'/pay/proceed/'.$orderId;
 
         // You can pass additional parameters like a currency code and etc.
         $params['currency'] = Currency::RUB;
         $params['description'] = $tariff;
+        $params['user'] = $user;
 
         $result = $client->registerOrder($orderId, $orderAmount, $returnUrl, $params);
 
@@ -98,9 +114,10 @@ class AcquiringController extends AbstractController
                     // 1. Create an order
                     // 2. Get tariff name for parameters
                     // 3. Find tariff in databse from parameter
-                    // 4. Set tariff to user
-                    // 5. Set order to user
-                    // 6. Persist all data
+                    // 4. Get user
+                    // 5. Set tariff to user
+                    // 6. Set order to user
+                    // 7. Persist all data
                     return $this->json(['data' => "Order was approved! and it's working!"]);
                 }
             }

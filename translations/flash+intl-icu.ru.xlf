@@ -41,6 +41,10 @@
         <source>Notifications sent</source>
         <target>Уведомления отправлены</target>
       </trans-unit>
+      <trans-unit id="Access denied for this operation" resname="Access denied for this operation">
+        <source>Access denied for this operation</source>
+        <target>Доступ запрещен для этой операции</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

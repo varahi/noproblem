@@ -18,6 +18,7 @@ services:
         bind:
             $targetDirectory: "%kernel.project_dir%/public_html/uploads/files"
             $adminEmail: "%env(string:default:default_admin_email:ADMIN_EMAIL)%"
+            $defailtDomain: 'noproblem.ru'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

@@ -152,10 +152,11 @@ input[required] + label:after {
 
 .alert-dismissable .close,
 .alert-dismissible .close {
-    position: relative;
+/*    position: relative;
     top: -2px;
     right: -21px;
-    color: inherit;
+    color: inherit;*/
+    display: none;
 }
 
 .alert-success {
