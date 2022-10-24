@@ -1,0 +1,28 @@
+{% extends 'layouts/main.html.twig' %}
+{% block title %}Главная - Онлайн-сервис по подбору домашнего персонала{% endblock %}
+{% block content %}
+
+    {% include 'partials/header.html.twig' %}
+    {% include 'partials/_message.html.twig' %}
+
+    {% for message in app.flashes('notification') %}
+        <div class="alert-success alert alert-dismissible" role="alert">
+            <p>{{ message }}</p>
+            {#<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button>#}
+        </div>
+    {% endfor %}
+
+    <div>
+        <div id="app">
+            <try-and-register></try-and-register>
+        </div>
+        {% include 'partials/pages/main/why.html.twig' %}
+    </div>
+    {% include 'partials/pages/main/_block3.html.twig' %}
+    {% include 'partials/pages/main/_block4.html.twig' %}
+    {% include 'partials/pages/main/_block5.html.twig' %}
+    {% include 'partials/pages/main/_block6.html.twig' %}
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}
+
+

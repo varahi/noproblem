@@ -236,6 +236,12 @@ transition: .2s;
 
 /*block1*/
 
+.search_work {
+  background: var(--violet) !important;
+}
+
+
+
 .cart{padding: 52px 31px 32px;
 box-shadow:  1px 1px 11px 4px rgb(219 219 219 / 25%);
 background-image: url(../img/points.png);
@@ -245,7 +251,9 @@ background-color: #fff;
 position: relative;
 border-radius: 10px;}
 
-.cart h2{margin-bottom: 49px;}
+.cart h2{margin-bottom: 49px;
+ text-align: center;
+ color: #fff;}
 
 .grid{display: grid;
 grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
@@ -285,14 +293,14 @@ font-weight: 400;}
 /*block2*/
 
 
-.block2{background: var(--violet);
+.block2{background: #ffffff;
 height: auto;
 margin-top: -371px;
 padding-bottom: 80px;}
 
 .poisk{padding-top: 430px}
 
-.poisk h2{color: #fff;
+.poisk h2{color: #000;
 text-align: center;
 margin-bottom: 70px;}
 
