@@ -1,179 +1,242 @@
 {% extends 'layouts/main.html.twig' %}
 {% block title %}Главная - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block content %}
-
     {% include 'partials/header.html.twig' %}
     {% include 'partials/_message.html.twig' %}
 
     {% for message in app.flashes('notification') %}
         <div class="alert-success alert alert-dismissible" role="alert">
             <p>{{ message }}</p>
-            {#<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span></button>#}
         </div>
     {% endfor %}
-    
-    <div>
-        <div id="app">
-            <try-and-register></try-and-register>
+
+    <div >
+        <div class="indexa">
+            <div class="main content">
+                <h2>Найдите надежного работника<br> или работу самостоятельно<br> <b>без посредников</b></h2>
+                <div class="btn_try" style="cursor:pointer">
+                    <a>Попробовать</a>
+                </div>
+                <div class="main_background">
+                </div>
+            </div>
         </div>
-        {% include 'partials/pages/main/why.html.twig' %}
+
+        <div class="block1 content">
+            <div class="cart fon">
+                <h2>Почему no problem?</h2>
+                <div class="grid">
+
+                    <div class="dom">
+                        <div class="image ones">
+                            <img src="assets/img/free-icon-checkeds.svg">
+                        </div>
+                        <h4>Верификация каждого пользователя</h4>
+                        <p>У нас нет ботов - каждый человек реален. Защита данных. Мы не передаём Ваши данные третьим лицам без Вашего согласия</p>
+                    </div>
+
+                    <div class="dom">
+                        <div class="image two">
+                            <img src="assets/img/arm.svg">
+                        </div>
+                        <h4>Помощь в проведении собеседований</h4>
+                        <p>У нас есть все необходимые материалы, для того, чтобы Вы успешно провели собеседование и могли выбрать максимально подходящий вариант</p>
+                    </div>
+
+                    <div class="dom">
+                        <div class="image three">
+                            <img src="assets/img/premium-icon.svg">
+                        </div>
+                        <h4>Ценность гораздо выше цены</h4>
+                        <p>Убедитесь в этом уже сегодня!Стоимость доступа к платформе всего от 75 р/сутки. Но чем больше времени Вам понадобится для поиска, тем ниже стоимость доступа!</p>
+                    </div>
+
+                    <div class="dom">
+                        <div class="image four">
+                            <img src="assets/img/girl.svg">
+                        </div>
+                        <h4>Услуга “персональный менеджер”</h4>
+                        <p>Он внимательно выслушает все Ваши пожелания и подберет для Вас несколько подходящих кандидатов</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
-    {% include 'partials/pages/main/_block3.html.twig' %}
 
+    <div class="block2">
+        <div class="poisk content">
+            <h2>Поиск работника или работы</h2>
+            <div class="work">
+                <div  class="bob"><div class="inside">
+                        <img src="assets/img/master.png" class="lazyLoad isLoaded">
+                        <h3>Мастер на час</h3>
+                        <div class="backgroundfon" style="display: none;"><div class="okno fon">
+                                <div class="okno fon oneblock"><div class="in">
+                                        <div  class="title"><h2 >Чем мы можем вам помочь?</h2>
+                                            <div  class="krest"><img  data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAzNiAzNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTM0LjY2NjMgMS4zMzMzM0wxLjMzMzAxIDM0LjY2NjdNMzQuNjY2MyAzNC42NjY3TDEuMzMzMDEgMS4zMzMzM0wzNC42NjYzIDM0LjY2NjdaIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" src="/preload.gif" class="lazyLoad">
+                                            </div>
+                                        </div>
+                                        <div  class="double">
+                                            <div  class="button" style="cursor: pointer;"><a >Ищу работу</a>
+                                            </div>
+                                            <div  class="button" style="cursor: pointer;">
+                                                <a>Ищу работника</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bob">
+                    <div class="inside">
+                        <img src="assets/img/housekeep.png" class="lazyLoad isLoaded">
+                        <h3>Домработница</h3>
+                        <div  class="backgroundfon" style="display: none;">
+                            <div class="okno fon"><div class="okno fon oneblock">
+                                    <div  class="in">
+                                        <div  class="title">
+                                            <h2 >Чем мы можем вам помочь?</h2>
+                                            <div data-v-3aa54415="" class="krest">
+                                                <img data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAzNiAzNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTM0LjY2NjMgMS4zMzMzM0wxLjMzMzAxIDM0LjY2NjdNMzQuNjY2MyAzNC42NjY3TDEuMzMzMDEgMS4zMzMzM0wzNC42NjYzIDM0LjY2NjdaIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" src="/preload.gif" class="lazyLoad"></div>
+                                        </div>
+                                        <div  class="double">
+                                            <div  class="button" style="cursor: pointer;">
+                                                <a>Ищу работу</a>
+                                            </div>
+                                            <div class="button" style="cursor: pointer;"><a >Ищу работника</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bob">
+                    <div class="inside">
+                        <img src="assets/img/babysit.png" class="lazyLoad isLoaded">
+                        <h3>Няня</h3>
+                        <div  class="backgroundfon" style="display: none;">
+                            <div  class="okno fon">
+                                <div  class="okno fon oneblock">
+                                    <div  class="in">
+                                        <div class="title">
+                                            <h2 >Чем мы можем вам помочь?</h2>
+                                            <div  class="krest">
+                                                <img  data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAzNiAzNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTM0LjY2NjMgMS4zMzMzM0wxLjMzMzAxIDM0LjY2NjdNMzQuNjY2MyAzNC42NjY3TDEuMzMzMDEgMS4zMzMzM0wzNC42NjYzIDM0LjY2NjdaIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" src="/preload.gif" class="lazyLoad">
+                                            </div>
+                                        </div>
+                                        <div  class="double">
+                                            <div class="button" style="cursor: pointer;">
+                                                <a >Ищу работу</a>
+                                            </div>
+                                            <div class="button" style="cursor: pointer;">
+                                                <a >Ищу работника</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div  class="bob">
+                    <div class="inside">
+                        <img src="assets/img/nurse.png" class="lazyLoad isLoaded">
+                        <h3>Сиделка</h3>
+                        <div  class="backgroundfon" style="display: none;">
+                            <div  class="okno fon">
+                                <div class="okno fon oneblock"><div class="in">
+                                        <div  class="title">
+                                            <h2 data-v-3aa54415="">Чем мы можем вам помочь?</h2>
+                                            <div  class="krest"><img  data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAzNiAzNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTM0LjY2NjMgMS4zMzMzM0wxLjMzMzAxIDM0LjY2NjdNMzQuNjY2MyAzNC42NjY3TDEuMzMzMDEgMS4zMzMzM0wzNC42NjYzIDM0LjY2NjdaIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" src="/preload.gif" class="lazyLoad">
+                                            </div>
+                                        </div>
+                                        <div  class="double">
+                                            <div  class="button" style="cursor: pointer;"><a >Ищу работу</a>
+                                            </div>
+                                            <div  class="button" style="cursor: pointer;">
+                                                <a >Ищу работника</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block3">
+        <div class="how content">
+            <img class="point" src="assets/img/pointstwo.png">
+            <img class="point2" src="assets/img/points3.png">
+            <h2>Как это работает</h2>
+            <div class="video">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/9h5nEQpErJg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <img class="point3" src="assets/img/pointsthree.png">
+            </div>
 
-{#    <div class="block1 content">#}
-{#        <div class="cart fon">#}
-{#            <h2>Почему no problem?</h2>#}
-{#            <div class="grid">#}
+            <div class="store">
+                <div class="play">
+                    <p>Скачайте наше приложение</p>
+                    <div class="app">
+                        <img src="assets/img/googleplay.png">
+                        <img src="assets/img/appstores.svg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block4">
+        <div class="platform content">
+            <h2>Отзывы о работе платформы</h2>
+            <img class="point4" src="assets/img/fox.svg">
+            <img class="point5" src="assets/img/Decosds.svg">
+            <img class="point6" src="assets/img/Decodfg.svg">
 
-{#                <div class="dom">#}
-{#                    <div class="image ones">#}
-{#                        <img src="assets/img/free-icon-checkeds.svg">#}
-{#                    </div>#}
-{#                    <h4>Верификация каждого пользователя</h4>#}
-{#                    <p>У нас нет ботов - каждый человек реален. Защита данных. Мы не передаём Ваши данные третьим лицам без Вашего согласия</p>#}
-{#                </div>#}
+            <!--    <sliderthree />-->
+        </div>
+    </div>
+    <div class="block5 content">
+        <div class="help">
+            <h2>Помогите нам стать лучше</h2>
+            <p>Ваше мнение очень важно для нас!</p>
+            <img class="str" src="assets/img/sarrow-back.svg">
+            <img class="buts" src="assets/img/wisw.svg">
+            <div class="button_block5">
+                <nuxt-link to=""><a href="">Написать предложение</a></nuxt-link>
+            </div>
+            <img class="buts2" src="assets/img/goes.png">
+            <img class="buts3" src="assets/img/buts3.png">
+        </div>
+    </div>
+    <img class="buts4" src="assets/img/buts4.png">
 
-{#                <div class="dom">#}
-{#                    <div class="image two">#}
-{#                        <img src="assets/img/arm.svg">#}
-{#                    </div>#}
-{#                    <h4>Помощь в проведении собеседований</h4>#}
-{#                    <p>У нас есть все необходимые материалы, для того, чтобы Вы успешно провели собеседование и могли выбрать максимально подходящий вариант</p>#}
-{#                </div>#}
+    <div class="block6">
+        <div class="shows content">
+            <img class="frame" src="assets/img/Frameses.svg">
+            <div class="phone">
+                <img class="our" src="assets/img/our.svg">
+                <img src="assets/img/phoness.svg">
+            </div>
+            <div class="infa">
+                <h2>Быстрее просматривайте анкеты и вакансии с нашим приложением</h2>
+                <p>Скачать можно здесь</p>
 
-{#                <div class="dom">#}
-{#                    <div class="image three">#}
-{#                        <img src="assets/img/premium-icon.svg">#}
-{#                    </div>#}
-{#                    <h4>Ценность гораздо выше цены</h4>#}
-{#                    <p>Убедитесь в этом уже сегодня!Стоимость доступа к платформе всего от 75 р/сутки. Но чем больше времени Вам понадобится для поиска, тем ниже стоимость доступа!</p>#}
-{#                </div>#}
+                <div class="app">
+                    <img src="assets/img/googleplay.png">
+                    <img src="assets/img/appstores.svg">
+                </div>
 
-{#                <div class="dom">#}
-{#                    <div class="image four">#}
-{#                        <img src="assets/img/girl.svg">#}
-{#                    </div>#}
-{#                    <h4>Услуга “персональный менеджер”</h4>#}
-{#                    <p>Он внимательно выслушает все Ваши пожелания и подберет для Вас несколько подходящих кандидатов</p>#}
-{#                </div>#}
+            </div>
+        </div>
+    </div>
 
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-{#    </div>#}
-{#    <div class="block2">#}
-{#        <div class="poisk content">#}
-{#            <h2>Поиск работника или работы</h2>#}
-{#            <div class="work">#}
-{#                <div  class="bob"><div class="inside">#}
-{#                        <img src="assets/img/master.png" class="lazyLoad isLoaded">#}
-{#                        <h3>Мастер на час</h3>#}
-{#                        <div class="backgroundfon" style="display: none;"><div class="okno fon">#}
-{#                                <div class="okno fon oneblock"><div class="in">#}
-{#                                        <div  class="title"><h2 >Чем мы можем вам помочь?</h2>#}
-{#                                            <div  class="krest"><img  data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAzNiAzNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTM0LjY2NjMgMS4zMzMzM0wxLjMzMzAxIDM0LjY2NjdNMzQuNjY2MyAzNC42NjY3TDEuMzMzMDEgMS4zMzMzM0wzNC42NjYzIDM0LjY2NjdaIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" src="/preload.gif" class="lazyLoad">#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                        <div  class="double">#}
-{#                                            <div  class="button" style="cursor: pointer;"><a >Ищу работу</a>#}
-{#                                            </div>#}
-{#                                            <div  class="button" style="cursor: pointer;">#}
-{#                                                <a>Ищу работника</a>#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="bob">#}
-{#                    <div class="inside">#}
-{#                        <img src="assets/img/housekeep.png" class="lazyLoad isLoaded">#}
-{#                        <h3>Домработница</h3>#}
-{#                        <div  class="backgroundfon" style="display: none;">#}
-{#                            <div class="okno fon"><div class="okno fon oneblock">#}
-{#                                    <div  class="in">#}
-{#                                        <div  class="title">#}
-{#                                            <h2 >Чем мы можем вам помочь?</h2>#}
-{#                                            <div data-v-3aa54415="" class="krest">#}
-{#                                                <img data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAzNiAzNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTM0LjY2NjMgMS4zMzMzM0wxLjMzMzAxIDM0LjY2NjdNMzQuNjY2MyAzNC42NjY3TDEuMzMzMDEgMS4zMzMzM0wzNC42NjYzIDM0LjY2NjdaIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" src="/preload.gif" class="lazyLoad"></div>#}
-{#                                        </div>#}
-{#                                        <div  class="double">#}
-{#                                            <div  class="button" style="cursor: pointer;">#}
-{#                                                <a>Ищу работу</a>#}
-{#                                            </div>#}
-{#                                            <div class="button" style="cursor: pointer;"><a >Ищу работника</a>#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="bob">#}
-{#                    <div class="inside">#}
-{#                        <img src="assets/img/babysit.png" class="lazyLoad isLoaded">#}
-{#                        <h3>Няня</h3>#}
-{#                        <div  class="backgroundfon" style="display: none;">#}
-{#                            <div  class="okno fon">#}
-{#                                <div  class="okno fon oneblock">#}
-{#                                    <div  class="in">#}
-{#                                        <div class="title">#}
-{#                                            <h2 >Чем мы можем вам помочь?</h2>#}
-{#                                            <div  class="krest">#}
-{#                                                <img  data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAzNiAzNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTM0LjY2NjMgMS4zMzMzM0wxLjMzMzAxIDM0LjY2NjdNMzQuNjY2MyAzNC42NjY3TDEuMzMzMDEgMS4zMzMzM0wzNC42NjYzIDM0LjY2NjdaIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" src="/preload.gif" class="lazyLoad">#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                        <div  class="double">#}
-{#                                            <div class="button" style="cursor: pointer;">#}
-{#                                                <a >Ищу работу</a>#}
-{#                                            </div>#}
-{#                                            <div class="button" style="cursor: pointer;">#}
-{#                                                <a >Ищу работника</a>#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div  class="bob">#}
-{#                    <div class="inside">#}
-{#                        <img src="assets/img/nurse.png" class="lazyLoad isLoaded">#}
-{#                        <h3>Сиделка</h3>#}
-{#                        <div  class="backgroundfon" style="display: none;">#}
-{#                            <div  class="okno fon">#}
-{#                                <div class="okno fon oneblock"><div class="in">#}
-{#                                        <div  class="title">#}
-{#                                            <h2 data-v-3aa54415="">Чем мы можем вам помочь?</h2>#}
-{#                                            <div  class="krest"><img  data-src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAzNiAzNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTM0LjY2NjMgMS4zMzMzM0wxLjMzMzAxIDM0LjY2NjdNMzQuNjY2MyAzNC42NjY3TDEuMzMzMDEgMS4zMzMzM0wzNC42NjYzIDM0LjY2NjdaIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" src="/preload.gif" class="lazyLoad">#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                        <div  class="double">#}
-{#                                            <div  class="button" style="cursor: pointer;"><a >Ищу работу</a>#}
-{#                                            </div>#}
-{#                                            <div  class="button" style="cursor: pointer;">#}
-{#                                                <a >Ищу работника</a>#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-
-    {% include 'partials/pages/main/_block3.html.twig' %}
-    {% include 'partials/pages/main/_block4.html.twig' %}
-    {% include 'partials/pages/main/_block5.html.twig' %}
-    {% include 'partials/pages/main/_block6.html.twig' %}
     {% include 'partials/footer.html.twig' %}
 {% endblock %}
 
