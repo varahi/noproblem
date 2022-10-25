@@ -4815,7 +4815,7 @@ background-position: top;
 }
 
 .main {
-  height: 450px;
+  height: 270px;
 }
 
 .cart {
@@ -6272,7 +6272,8 @@ font-size: 12px;
   padding: 10px 18px;
 }
 
-.block1 {
+.block2 {
+
   display: none;
 }
 
