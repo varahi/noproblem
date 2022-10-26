@@ -558,3 +558,24 @@ blockquote p::after {
     font-size: 14px !important;
     color: #8c8c8c;
 }
+
+/* 820px 1024px: маленькие экраны, ноутбуки; */
+@media (min-width: 820px) and (max-width: 1024px) {
+
+}
+
+/* 585px 768px: планшеты; */
+@media (min-width: 585px) and (max-width: 820px) {
+
+}
+
+/* 320px 480px: мобильные устройства; */
+@media (min-width: 320px) and (max-width: 584px) {
+    .three {
+        max-width: 400px;
+        width: auto;
+    }
+    .top {
+        border-bottom: none;
+    }
+}
