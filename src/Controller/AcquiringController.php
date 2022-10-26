@@ -128,6 +128,7 @@ class AcquiringController extends AbstractController
                     $tariff = $result['orderDescription'];
                     $tariff = $tariffRepository->findOneBy(['id' => $tariff]);
                     $order = new Order();
+                    $order->setName('Order #' .'User ID - '. $user->getId() .' Tariff ID - '. $tariff->getName());
                     $order->setUser($user);
                     $order->setTariff($tariff);
                     $entityManager->persist($order);
