@@ -106,7 +106,9 @@ class AcquiringController extends AbstractController
     public function proceedPayment(
         Request $request,
         string $id,
-        TariffRepository $tariffRepository
+        TariffRepository $tariffRepository,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier
     ){
         $client = new Client($this->acq_array);
         $entityManager = $this->doctrine->getManager();
@@ -121,7 +123,7 @@ class AcquiringController extends AbstractController
                 $orderId = $cookies->get('orderId');
                 if ($orderId == $id) {
 
-                    // TODO: logic of succeed
+                    // logic of succeed
                     // Создаем новый заказ
                     $user = $this->security->getUser();
                     // Необходимо получить id тарифа и найти его в БД
@@ -133,8 +135,12 @@ class AcquiringController extends AbstractController
                     $order->setTariff($tariff);
                     $entityManager->persist($order);
                     $entityManager->flush();
+                    // Redirect to lk with message
+                    $message = $translator->trans('Order was approved', array(), 'flash');
+                    $notifier->send(new Notification($message, ['browser']));
+                    return $this->redirectToRoute("app_lk");
 
-                    return $this->json(['data' => "Order was approved! and it's working!"]);
+                    //return $this->json(['data' => "Order was approved! and it's working!"]);
                 }
             }
             return $this->json(['data' => "Order was approved!"]);
