@@ -61,8 +61,9 @@ class AcquiringController extends AbstractController
     public function newPayment(
         Request $request,
         TranslatorInterface $translator,
-        NotifierInterface $notifier
-    ): Response {
+        NotifierInterface $notifier,
+        TariffRepository $tariffRepository
+    ) {
         // TODO: fill token, domain
 
         $user = $this->security->getUser();
@@ -79,19 +80,20 @@ class AcquiringController extends AbstractController
         // if ($cookies->has('PHPSESSID')) {
         //     $orderId = $cookies->get('PHPSESSID');
         // }
-        $orderAmount = $request->get('amount') ?? 1;
-        $tariff = $request->get('tariff') ?? "";
+        
+        $tariff = $tariffRepository->findOneBy(['id' => $tariff]);
+        $orderAmount = $tariff->getAmount();
         $returnUrl   = 'https://'.$this->defailtDomain.'/pay/proceed/'.$orderId;
 
         // You can pass additional parameters like a currency code and etc.
         $params['currency'] = Currency::RUB;
-        $params['description'] = $tariff;
+        $params['description'] = $tariff->getId();
         $params['user'] = $user;
 
         $result = $client->registerOrder($orderId, $orderAmount, $returnUrl, $params);
 
         $response = new RedirectResponse($result['formUrl']);
-        $cookie = new Cookie('orderId', $orderId, strtotime('now + 60 minutes'));
+        $cookie = new Cookie('orderId', $orderId, strtotime('now + 2 days'));
         $response->headers->setCookie($cookie);
 
         return $response;
@@ -105,7 +107,7 @@ class AcquiringController extends AbstractController
         Request $request,
         string $id,
         TariffRepository $tariffRepository
-    ): Response {
+    ){
         $client = new Client($this->acq_array);
         $entityManager = $this->doctrine->getManager();
 
@@ -121,14 +123,15 @@ class AcquiringController extends AbstractController
 
                     // TODO: logic of succeed
                     // Создаем новый заказ
-                    //$user = $this->security->getUser();
+                    $user = $this->security->getUser();
                     // Необходимо получить id тарифа и найти его в БД
-                    //$tariff = $tariffRepository->findOneBy(['id' => $tariff]);
-                    //$order = new Order();
-                    //$order->setUser($user);
-                    //$order->setTariff($tariff);
-                    //$entityManager->persist($order);
-                    //$entityManager->flush();
+                    $tariff = $result['orderDescription'];
+                    $tariff = $tariffRepository->findOneBy(['id' => $tariff]);
+                    $order = new Order();
+                    $order->setUser($user);
+                    $order->setTariff($tariff);
+                    $entityManager->persist($order);
+                    $entityManager->flush();
 
                     return $this->json(['data' => "Order was approved! and it's working!"]);
                 }
