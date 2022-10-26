@@ -544,15 +544,17 @@ blockquote p::after {
     margin-top: 15px;
 }
 .button_footer {
-    margin-top: -30px;
+    /*margin-top: 0px;*/
 }
 .three {
     width: 400px;
 }
 .three .comapny-info {
-    margin-top: 60px;
+    position: relative;
+    top: 40px;
 }
 .three .comapny-info p {
     padding-bottom: 5px;
-    font-size: 17px !important;
+    font-size: 14px !important;
+    color: #8c8c8c;
 }
