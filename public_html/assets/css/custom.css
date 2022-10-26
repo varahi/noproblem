@@ -558,6 +558,9 @@ blockquote p::after {
     font-size: 14px !important;
     color: #8c8c8c;
 }
+.point4 {
+    display: none;
+}
 
 @media only screen and (max-width: 800px) {
     .fon {
@@ -571,12 +574,25 @@ blockquote p::after {
         grid-gap: 15px;
     }
 }
-/*@media (min-width: 320px) and (max-width: 584px) {
+
+/* 320px 480px: мобильные устройства; */
+@media (min-width: 320px) and (max-width: 584px) {
+    .frame {
+        z-index: -1;
+        display: none;
+    }
     .bob {
         width: 47%;
         height: 170px;
     }
-}*/
+    .three {
+        max-width: 400px;
+        width: auto;
+    }
+    .top {
+        border-bottom: none;
+    }
+}
 
 /* 820px 1024px: маленькие экраны, ноутбуки; */
 /*@media (min-width: 820px) and (max-width: 1024px) {
@@ -588,13 +604,4 @@ blockquote p::after {
 
 }*/
 
-/* 320px 480px: мобильные устройства; */
-@media (min-width: 320px) and (max-width: 584px) {
-    .three {
-        max-width: 400px;
-        width: auto;
-    }
-    .top {
-        border-bottom: none;
-    }
-}
+
