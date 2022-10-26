@@ -25,12 +25,13 @@
         <img src="{{ asset('assets/img/blockicon.svg') }}" alt="">
     </div>
 </div>
-<div class="regs">
-    <div class="vhod" style="cursor:pointer">
-        <a href="{{ path('app_courses') }}"><span>Список курсов</span></a>
-        <img src="{{ asset('assets/img/courseicon.svg') }}" alt="">
-    </div>
-</div>
+
+{#<div class="regs">#}
+{#    <div class="vhod" style="cursor:pointer">#}
+{#        <a href="{{ path('app_courses') }}"><span>Список курсов</span></a>#}
+{#        <img src="{{ asset('assets/img/courseicon.svg') }}" alt="">#}
+{#    </div>#}
+{#</div>#}
 
 {% if is_granted('ROLE_EMPLOYEE') %}
     <div class="btn_worker" style="cursor: pointer;">
