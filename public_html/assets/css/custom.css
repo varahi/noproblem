@@ -540,3 +540,19 @@ blockquote p::after {
 .btn_account a:hover {
     text-decoration: none;
 }
+.conf {
+    margin-top: 15px;
+}
+.button_footer {
+    margin-top: -65px;
+}
+.three {
+    width: 400px;
+}
+.three .comapny-info {
+    margin-top: 90px;
+}
+.three .comapny-info p {
+    padding-bottom: 5px;
+    font-size: 17px !important;
+}
