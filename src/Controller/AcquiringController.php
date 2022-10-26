@@ -80,7 +80,7 @@ class AcquiringController extends AbstractController
         // if ($cookies->has('PHPSESSID')) {
         //     $orderId = $cookies->get('PHPSESSID');
         // }
-        
+        $tariff = $request->get('tariff');
         $tariff = $tariffRepository->findOneBy(['id' => $tariff]);
         $orderAmount = $tariff->getAmount();
         $returnUrl   = 'https://'.$this->defailtDomain.'/pay/proceed/'.$orderId;
@@ -115,7 +115,7 @@ class AcquiringController extends AbstractController
             'orderNumber' => $id,
         ]);
 
-        if (OrderStatus::isApproved($result['orderStatus'])) {
+        if (OrderStatus::isDeposited($result['orderStatus'])) {
             $cookies = $request->cookies;
             if ($cookies->has('orderId')) {
                 $orderId = $cookies->get('orderId');
