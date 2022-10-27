@@ -159,6 +159,11 @@ class Worksheet
      */
     private $busynesses;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="featuredProfiles")
+     */
+    private $featuredUsers;
+
 
     public function __construct()
     {
@@ -166,6 +171,7 @@ class Worksheet
         $this->additional = new ArrayCollection();
         $this->tasks = new ArrayCollection();
         $this->busynesses = new ArrayCollection();
+        $this->featuredUsers = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -551,6 +557,33 @@ class Worksheet
             if ($busyness->getWorksheet() === $this) {
                 $busyness->setWorksheet(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getFeaturedUsers(): Collection
+    {
+        return $this->featuredUsers;
+    }
+
+    public function addFeaturedUser(User $featuredUser): self
+    {
+        if (!$this->featuredUsers->contains($featuredUser)) {
+            $this->featuredUsers[] = $featuredUser;
+            $featuredUser->addFeaturedProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFeaturedUser(User $featuredUser): self
+    {
+        if ($this->featuredUsers->removeElement($featuredUser)) {
+            $featuredUser->removeFeaturedProfile($this);
         }
 
         return $this;

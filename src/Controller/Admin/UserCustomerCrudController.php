@@ -95,7 +95,7 @@ class UserCustomerCrudController extends AbstractCrudController
         yield TelephoneField::new('phone')->hideOnIndex()->setColumns('col-md-10');
         yield TextField::new('age')->hideOnIndex()->setColumns('col-md-10');
 
-        yield FormField::addPanel('Change password')->setIcon('fa fa-key')->setCssClass('col-sm-12');
+        /*yield FormField::addPanel('Change password')->setIcon('fa fa-key')->setCssClass('col-sm-12');
         yield FormField::addRow();
         yield Field::new('password', 'New password')->onlyWhenCreating()->setRequired(true)
             ->setFormType(RepeatedType::class)
@@ -116,7 +116,7 @@ class UserCustomerCrudController extends AbstractCrudController
                 'second_options'  => [ 'label' => 'Repeat password' ],
                 'error_bubbling'  => true,
                 'invalid_message' => 'The password fields do not match.',
-            ]);
+            ]);*/
 
         yield FormField::addPanel('Relations')->setIcon('fa fa-chain')->setCssClass('col-sm-12');
         yield FormField::addRow();
@@ -166,5 +166,16 @@ class UserCustomerCrudController extends AbstractCrudController
 
         yield FormField::addRow();
         yield AssociationField::new('worksheets')->hideOnIndex()->setColumns('col-md-12');
+        yield AssociationField::new('featuredProfiles')
+            ->setFormTypeOptions([
+                'by_reference' => false,
+            ])->hideOnIndex()
+            ->setColumns('col-md-12');
+        yield AssociationField::new('featuredJobs')
+            ->setFormTypeOptions([
+                'by_reference' => false,
+            ])->hideOnIndex()
+            ->setColumns('col-md-12');
+
     }
 }

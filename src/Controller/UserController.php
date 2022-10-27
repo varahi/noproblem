@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Worksheet;
 use App\ImageOptimizer;
 use App\Repository\JobRepository;
 use App\Repository\WorksheetRepository;
@@ -258,6 +259,69 @@ class UserController extends AbstractController
                 'form' => $form->createView(),
                 'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             ]));
+        } else {
+            $message = $translator->trans('Please login', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_main");
+        }
+    }
+
+    /**
+     *
+     * @Route("/add-to-favorite/worksheet-{id}", name="app_add_worksheet_to_favorite")
+     */
+    public function addWorksheetToFavorite(
+        Request $request,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier,
+        Worksheet $worksheet
+    ): Response {
+        if ($this->isGranted(self::ROLE_EMPLOYEE) || $this->isGranted(self::ROLE_CUSTOMER)) {
+            $user = $this->security->getUser();
+            //if ($user->getId() == $userNotification->getUser()->getId()) {
+            //}
+            //dd($worksheet);
+
+            $worksheet->addFeaturedUser($user);
+            $entityManager = $this->doctrine->getManager();
+            $entityManager->persist($worksheet);
+            $entityManager->flush();
+
+            $message = $translator->trans('Worksheet added to favorites', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            $referer = $request->headers->get('referer');
+            return new RedirectResponse($referer);
+
+        } else {
+            $message = $translator->trans('Please login', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_main");
+        }
+    }
+
+    /**
+     *
+     * @Route("/remove-from--favorite/worksheet-{id}", name="app_remove_worksheet_from_favorite")
+     */
+    public function removeWorksheetFromFavorite(
+        Request $request,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier,
+        Worksheet $worksheet
+    ): Response {
+        if ($this->isGranted(self::ROLE_EMPLOYEE) || $this->isGranted(self::ROLE_CUSTOMER)) {
+            $user = $this->security->getUser();
+
+            $worksheet->removeFeaturedUser($user);
+            $entityManager = $this->doctrine->getManager();
+            $entityManager->persist($worksheet);
+            $entityManager->flush();
+
+            $message = $translator->trans('Worksheet removed from favorites', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            $referer = $request->headers->get('referer');
+            return new RedirectResponse($referer);
+
         } else {
             $message = $translator->trans('Please login', array(), 'flash');
             $notifier->send(new Notification($message, ['browser']));

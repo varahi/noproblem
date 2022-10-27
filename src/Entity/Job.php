@@ -150,11 +150,6 @@ class Job
     private $accommodations;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="featuredVacancies")
-     */
-    private $user;
-
-    /**
      * @ORM\Column(type="decimal", precision=9, scale=7, nullable=true)
      */
     private $latitude;
@@ -164,6 +159,11 @@ class Job
      */
     private $longitude;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="featuredJobs")
+     */
+    private $featuredUsers;
+
     public function __construct()
     {
         $this->created = new \DateTime();
@@ -171,6 +171,7 @@ class Job
         $this->additional = new ArrayCollection();
         $this->busynesses = new ArrayCollection();
         $this->accommodations = new ArrayCollection();
+        $this->featuredUsers = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -555,18 +556,6 @@ class Job
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
     public function getLatitude(): ?string
     {
         return $this->latitude;
@@ -587,6 +576,33 @@ class Job
     public function setLongitude(?string $longitude): self
     {
         $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getFeaturedUsers(): Collection
+    {
+        return $this->featuredUsers;
+    }
+
+    public function addFeaturedUser(User $featuredUser): self
+    {
+        if (!$this->featuredUsers->contains($featuredUser)) {
+            $this->featuredUsers[] = $featuredUser;
+            $featuredUser->addFeaturedJob($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFeaturedUser(User $featuredUser): self
+    {
+        if ($this->featuredUsers->removeElement($featuredUser)) {
+            $featuredUser->removeFeaturedJob($this);
+        }
 
         return $this;
     }

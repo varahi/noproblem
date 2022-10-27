@@ -171,11 +171,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $passportVerified;
 
     /**
-     * @ORM\OneToMany(targetEntity=Job::class, mappedBy="user")
-     */
-    private $featuredVacancies;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $preferredContactMethod;
@@ -190,6 +185,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $orders;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Worksheet::class, inversedBy="featuredUsers")
+     */
+    private $featuredProfiles;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Job::class, inversedBy="featuredUsers")
+     */
+    private $featuredJobs;
+
     public function __construct()
     {
         $this->tickets = new ArrayCollection();
@@ -198,9 +203,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->ownersJobs = new ArrayCollection();
         $this->created = new \DateTime();
         $this->worksheets = new ArrayCollection();
-        $this->featuredVacancies = new ArrayCollection();
         $this->notifications = new ArrayCollection();
         $this->orders = new ArrayCollection();
+        $this->featuredProfiles = new ArrayCollection();
+        $this->featuredJobs = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -674,36 +680,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Job>
-     */
-    public function getFeaturedVacancies(): Collection
-    {
-        return $this->featuredVacancies;
-    }
-
-    public function addFeaturedVacancy(Job $featuredVacancy): self
-    {
-        if (!$this->featuredVacancies->contains($featuredVacancy)) {
-            $this->featuredVacancies[] = $featuredVacancy;
-            $featuredVacancy->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFeaturedVacancy(Job $featuredVacancy): self
-    {
-        if ($this->featuredVacancies->removeElement($featuredVacancy)) {
-            // set the owning side to null (unless already changed)
-            if ($featuredVacancy->getUser() === $this) {
-                $featuredVacancy->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getPreferredContactMethod(): ?string
     {
         return $this->preferredContactMethod;
@@ -772,6 +748,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $order->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Worksheet>
+     */
+    public function getFeaturedProfiles(): Collection
+    {
+        return $this->featuredProfiles;
+    }
+
+    public function addFeaturedProfile(Worksheet $featuredProfile): self
+    {
+        if (!$this->featuredProfiles->contains($featuredProfile)) {
+            $this->featuredProfiles[] = $featuredProfile;
+        }
+
+        return $this;
+    }
+
+    public function removeFeaturedProfile(Worksheet $featuredProfile): self
+    {
+        $this->featuredProfiles->removeElement($featuredProfile);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Job>
+     */
+    public function getFeaturedJobs(): Collection
+    {
+        return $this->featuredJobs;
+    }
+
+    public function addFeaturedJob(Job $featuredJob): self
+    {
+        if (!$this->featuredJobs->contains($featuredJob)) {
+            $this->featuredJobs[] = $featuredJob;
+        }
+
+        return $this;
+    }
+
+    public function removeFeaturedJob(Job $featuredJob): self
+    {
+        $this->featuredJobs->removeElement($featuredJob);
 
         return $this;
     }

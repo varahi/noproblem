@@ -97,7 +97,7 @@ class UserEmployeeCrudController extends AbstractCrudController
             ->setFormType(FileUploadType::class)
             ->setRequired(false);
 
-        yield FormField::addPanel('General information')->setIcon('fa fa-info-circle')->setCssClass('col-sm-6');
+        /*yield FormField::addPanel('General information')->setIcon('fa fa-info-circle')->setCssClass('col-sm-6');
         yield TextareaField::new('about')->hideOnIndex()->setColumns('col-md-10');
         yield AssociationField::new('city')->hideOnIndex()->setColumns('col-md-10');
         yield TextareaField::new('address')->hideOnIndex()->setColumns('col-md-10');
@@ -125,7 +125,7 @@ class UserEmployeeCrudController extends AbstractCrudController
                 'second_options'  => [ 'label' => 'Repeat password' ],
                 'error_bubbling'  => true,
                 'invalid_message' => 'The password fields do not match.',
-            ]);
+            ]);*/
 
         yield FormField::addPanel('Relations')->setIcon('fa fa-chain')->setCssClass('col-sm-12');
         yield FormField::addRow();
@@ -177,5 +177,17 @@ class UserEmployeeCrudController extends AbstractCrudController
                 'by_reference' => false,
             ])->hideOnIndex()
             ->setColumns('col-md-12')->setLabel('Jobs');
+
+        yield AssociationField::new('featuredProfiles')
+            ->setFormTypeOptions([
+                'by_reference' => false,
+            ])->hideOnIndex()
+            ->setColumns('col-md-12');
+
+        yield AssociationField::new('featuredJobs')
+            ->setFormTypeOptions([
+                'by_reference' => false,
+            ])->hideOnIndex()
+            ->setColumns('col-md-12');
     }
 }

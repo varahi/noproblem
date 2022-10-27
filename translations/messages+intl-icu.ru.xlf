@@ -585,6 +585,14 @@
             <source>Order</source>
             <target>Заявка</target>
         </trans-unit>
+        <trans-unit id="Featured Profiles" resname="Featured Profiles">
+            <source>Featured Profiles</source>
+            <target>Избранные акнеты</target>
+        </trans-unit>
+        <trans-unit id="Featured Jobs" resname="Featured Jobs">
+            <source>Featured Jobs</source>
+            <target>Избранные вакансии</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>

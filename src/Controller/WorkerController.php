@@ -103,6 +103,15 @@ class WorkerController extends AbstractController
             self::LIMIT_PER_PAGE
         );
 
+        // Get liked ancets
+        if(count($user->getFeaturedProfiles()) > 0) {
+            foreach ($user->getFeaturedProfiles() as $featuredProfile) {
+                $featuredProfiles[] = $featuredProfile->getId();
+            }
+        } else {
+            $featuredProfiles = null;
+        }
+
         return new Response($this->twig->render('pages/worksheet/all_workers.html.twig', [
             'cities' => $cities,
             'city' => $city,
@@ -113,6 +122,7 @@ class WorkerController extends AbstractController
             'user' => $user,
             'cityId' => $cityId,
             'districtId' => $districtId,
+            'featuredProfiles' => $featuredProfiles,
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             //'myArr' => $myArr,
             //'districtList' => $dList

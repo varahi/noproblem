@@ -45,6 +45,10 @@
         <source>Access denied for this operation</source>
         <target>Доступ запрещен для этой операции</target>
       </trans-unit>
+      <trans-unit id="Order was approved" resname="Order was approved">
+        <source>Order was approved</source>
+        <target>Заказ был успешно оплачен</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
