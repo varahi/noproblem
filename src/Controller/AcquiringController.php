@@ -109,7 +109,7 @@ class AcquiringController extends AbstractController
         TariffRepository $tariffRepository,
         TranslatorInterface $translator,
         NotifierInterface $notifier
-    ){
+    ) {
         $client = new Client($this->acq_array);
         $entityManager = $this->doctrine->getManager();
 

@@ -114,6 +114,18 @@ class WorksheetRepository extends ServiceEntityRepository
         return $this->findBy([], $order);
     }
 
+    public function findSelectedProfiles($user)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('w')
+            ->from(self::TABLE, 'w')
+            ->join('w.featuredUsers', 'u')
+            ->where($qb->expr()->eq('u.id', $user->getId()))
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Worksheet[] Returns an array of Worksheet objects
 //     */

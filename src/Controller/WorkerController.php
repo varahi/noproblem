@@ -104,7 +104,7 @@ class WorkerController extends AbstractController
         );
 
         // Get liked ancets
-        if(count($user->getFeaturedProfiles()) > 0) {
+        if ($user != null && count($user->getFeaturedProfiles()) > 0) {
             foreach ($user->getFeaturedProfiles() as $featuredProfile) {
                 $featuredProfiles[] = $featuredProfile->getId();
             }
@@ -375,5 +375,82 @@ class WorkerController extends AbstractController
             'relatedJobs' => $relatedJobs,
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
+    }
+
+    /**
+     *
+     * @Route("/selected-profiles", name="app_selected_profiles")
+     */
+    public function selectedProfiles(
+        Request $request,
+        CityRepository $cityRepository,
+        DistrictRepository $districtRepository,
+        CategoryRepository $categoryRepository,
+        WorksheetRepository $worksheetRepository,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier,
+        PaginatorInterface $paginator
+    ): Response {
+        if ($this->isGranted(self::ROLE_EMPLOYEE) || $this->isGranted(self::ROLE_CUSTOMER)) {
+            $user = $this->security->getUser();
+            $slug = $request->query->get('category');
+            $cities = $cityRepository->findLimitOrder('999', '0');
+            $districts = $districtRepository->findAll();
+            $categories = $categoryRepository->findAll();
+
+            $cityId = trim($request->query->get('city'));
+            $districtId = trim($request->query->get('district'));
+            $city = $cityRepository->findOneBy(['id' => $cityId]);
+            $district = $districtRepository->findOneBy(['id' => $districtId]);
+
+            if ($slug == '') {
+                //$query = $worksheetRepository->findAll();
+                //$query = $worksheetRepository->findAllOrder(['created' => 'DESC']);
+                $query = $worksheetRepository->findSelectedProfiles($user);
+                $category = null;
+                if ($cityId !== '' && $districtId !== '' || $cityId !== '') {
+                    $query = $worksheetRepository->findByParams($city, $district);
+                }
+            } else {
+                $category = $categoryRepository->findOneBy(['slug' => $slug]);
+                $query = $worksheetRepository->findBy(['category' => $category]);
+            }
+
+            $worksheets = $paginator->paginate(
+                $query,
+                $request->query->getInt('page', 1),
+                self::LIMIT_PER_PAGE
+            );
+
+            $user = $this->security->getUser();
+
+            // Get liked ancets
+            if ($user != null && count($user->getFeaturedProfiles()) > 0) {
+                foreach ($user->getFeaturedProfiles() as $featuredProfile) {
+                    $featuredProfiles[] = $featuredProfile->getId();
+                }
+            } else {
+                $featuredProfiles = null;
+            }
+
+            return new Response($this->twig->render('user/selected_profiles.html.twig', [
+                'user' => $user,
+                'cities' => $cities,
+                'city' => $city,
+                'districts' => $districts,
+                'categories' => $categories,
+                'category' => $category,
+                'cityId' => $cityId,
+                'districtId' => $districtId,
+                'worksheets' => $worksheets,
+                'featuredProfiles' => $featuredProfiles,
+                //'form' => $form->createView(),
+                'ticketForm' => $this->modalForms->ticketForm($request)->createView()
+            ]));
+        } else {
+            $message = $translator->trans('Please login', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_main");
+        }
     }
 }

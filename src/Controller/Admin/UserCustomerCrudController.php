@@ -176,6 +176,5 @@ class UserCustomerCrudController extends AbstractCrudController
                 'by_reference' => false,
             ])->hideOnIndex()
             ->setColumns('col-md-12');
-
     }
 }

@@ -291,7 +291,6 @@ class UserController extends AbstractController
             $notifier->send(new Notification($message, ['browser']));
             $referer = $request->headers->get('referer');
             return new RedirectResponse($referer);
-
         } else {
             $message = $translator->trans('Please login', array(), 'flash');
             $notifier->send(new Notification($message, ['browser']));
@@ -321,7 +320,6 @@ class UserController extends AbstractController
             $notifier->send(new Notification($message, ['browser']));
             $referer = $request->headers->get('referer');
             return new RedirectResponse($referer);
-
         } else {
             $message = $translator->trans('Please login', array(), 'flash');
             $notifier->send(new Notification($message, ['browser']));

@@ -562,6 +562,37 @@ blockquote p::after {
     display: none;
 }
 
+span.like {
+    cursor: pointer;
+    margin-left: 10px;
+    display: block;
+    width: 22px;
+    height: 22px;
+    background-image: url('../img/like.svg');
+    background-size: 22px 22px;
+    background-repeat: no-repeat;
+}
+
+span.liked {
+    background-image: url('../img/like_favorite.png');
+    background-size: 22px 22px;
+    background-repeat: no-repeat;
+}
+.like-info {
+    font-size: 16px;
+    color: #118324;
+    margin-left: 10px;
+}
+
+.main-custom {
+    display: grid;
+    /* grid-template-columns: 299px 1fr; */
+    grid-gap: 27px;
+    align-items: self-start;
+    padding-bottom: 80px;
+}
+
+
 @media only screen and (max-width: 800px) {
     .fon {
 /*        width: 90%;*/
