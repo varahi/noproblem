@@ -266,7 +266,7 @@ class WorkerController extends AbstractController
         if ($this->isGranted(self::ROLE_CUSTOMER)) {
             $user = $this->security->getUser();
             $worksheets = $worksheetRepository->findByUser($user->getId());
-            return $this->render('worksheet/my_worksheets.html.twig', [
+            return $this->render('pages/worksheet/my_worksheets.html.twig', [
                 'user' => $user,
                 'worksheets' => $worksheets,
                 'ticketForm' => $this->modalForms->ticketForm($request)->createView()
