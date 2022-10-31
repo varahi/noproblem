@@ -1,0 +1,39 @@
+{% extends 'layouts/base.html.twig' %}
+{% block title %}Избранные анкеты - Онлайн-сервис по подбору домашнего персонала{% endblock %}
+{% block body %}
+    <script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script>
+    {% include 'partials/header.html.twig' %}
+    <div class="">
+        <div class="content">
+            <div class="bread">
+                <a href="/" class="nuxt-link-active">{{ 'Main page'|trans }}</a>
+                <a href="{{ path('app_lk') }}">/ {{ 'Personal area'|trans }}</a>
+                <a href="" class="nuxt-link-active" >/ Избранные анкеты</a>
+            </div>
+            <br />
+            <div class="main-custom">
+                <div class="fon"></div>
+                <div class="big" >
+                    <div class="title" >
+                        <h2>Избранные анкеты</h2>
+                    </div>
+
+                    <div class="large fon">
+                        <div class="in" >
+                            {% include 'partials/_message.html.twig' %}
+                            {% if jobs is not null %}
+                                {% for job in jobs %}
+                                    {% include 'partials/pages/job/_list_job_item.html.twig' %}
+                                {% endfor %}
+                            {% else %}
+                                <p>По данному запросу анкет не найдено</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}

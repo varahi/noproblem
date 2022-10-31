@@ -121,7 +121,14 @@ class JobController extends AbstractController
             }
         }
 
-        //dd($city);
+        // Get liked vacancies
+        if ($user != null && count($user->getFeaturedJobs()) > 0) {
+            foreach ($user->getFeaturedJobs() as $featuredJob) {
+                $featuredJobs[] = $featuredJob->getId();
+            }
+        } else {
+            $featuredJobs = null;
+        }
 
         return new Response($this->twig->render('pages/job/all_jobs.html.twig', [
             'cities' => $cities,
@@ -133,6 +140,7 @@ class JobController extends AbstractController
             'user' => $user,
             'cityId' => $cityId,
             'districtId' => $districtId,
+            'featuredJobs' => $featuredJobs,
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             //'myArr' => $myArr,
             //'districtList' => $dList
@@ -590,15 +598,53 @@ class JobController extends AbstractController
      *
      * @Route("/selected-jobs", name="app_selected_jobs")
      */
-    public function selectedProfiles(
+    public function selectedJobs(
         Request $request,
-        CityRepository $cityRepository,
-        DistrictRepository $districtRepository,
-        CategoryRepository $categoryRepository,
-        WorksheetRepository $worksheetRepository,
+        JobRepository $jobRepository,
         TranslatorInterface $translator,
         NotifierInterface $notifier,
         PaginatorInterface $paginator
     ): Response {
+        if ($this->isGranted(self::ROLE_EMPLOYEE) || $this->isGranted(self::ROLE_CUSTOMER)) {
+            $user = $this->security->getUser();
+            $query = $jobRepository->findSelectedProfiles($user);
+
+            $jobs = $paginator->paginate(
+                $query,
+                $request->query->getInt('page', 1),
+                self::LIMIT_PER_PAGE
+            );
+
+            $user = $this->security->getUser();
+
+            // Get liked vacancies
+            if ($user != null && count($user->getFeaturedJobs()) > 0) {
+                foreach ($user->getFeaturedJobs() as $featuredJob) {
+                    $featuredJobs[] = $featuredJob->getId();
+                }
+            } else {
+                $featuredJobs = null;
+            }
+
+            // Get liked ancets
+            if ($user != null && count($user->getFeaturedProfiles()) > 0) {
+                foreach ($user->getFeaturedProfiles() as $featuredProfile) {
+                    $featuredProfiles[] = $featuredProfile->getId();
+                }
+            } else {
+                $featuredProfiles = null;
+            }
+
+            return new Response($this->twig->render('user/selected_jobs.html.twig', [
+                'user' => $user,
+                'jobs' => $jobs,
+                'featuredJobs' => $featuredJobs,
+                'ticketForm' => $this->modalForms->ticketForm($request)->createView()
+            ]));
+        } else {
+            $message = $translator->trans('Please login', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_main");
+        }
     }
 }

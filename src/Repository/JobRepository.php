@@ -114,6 +114,18 @@ class JobRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findSelectedProfiles($user)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('j')
+            ->from(self::TABLE, 'j')
+            ->join('j.featuredUsers', 'u')
+            ->where($qb->expr()->eq('u.id', $user->getId()))
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Job[] Returns an array of Job objects
 //     */

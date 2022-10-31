@@ -315,21 +315,40 @@ class UserController extends AbstractController
      * @Route("/add-to-favorite/job-{id}", name="app_add_job_to_favorite")
      */
     public function addJobToFavorite(
-        TranslatorInterface $translator,
-        NotifierInterface $notifier,
+        Request $request,
         Job $job
     ) {
-        if ($this->isGranted(self::ROLE_EMPLOYEE)) {
+        if ($this->isGranted(self::ROLE_CUSTOMER)) {
             $user = $this->security->getUser();
 
             $job->addFeaturedUser($user);
             $entityManager = $this->doctrine->getManager();
             $entityManager->persist($job);
             $entityManager->flush();
-        } else {
-            $message = $translator->trans('Please login', array(), 'flash');
-            $notifier->send(new Notification($message, ['browser']));
-            return $this->redirectToRoute("app_main");
+
+            $referer = $request->headers->get('referer');
+            return new RedirectResponse($referer);
+        }
+    }
+
+    /**
+     *
+     * @Route("/remove-from-favorite/job-{id}", name="app_remove_job_from_favorite")
+     */
+    public function removeJobFromFavorite(
+        Request $request,
+        Job $job
+    ) {
+        if ($this->isGranted(self::ROLE_CUSTOMER)) {
+            $user = $this->security->getUser();
+
+            $job->removeFeaturedUser($user);
+            $entityManager = $this->doctrine->getManager();
+            $entityManager->persist($job);
+            $entityManager->flush();
+
+            $referer = $request->headers->get('referer');
+            return new RedirectResponse($referer);
         }
     }
 }

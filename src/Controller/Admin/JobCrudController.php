@@ -93,6 +93,11 @@ class JobCrudController extends AbstractCrudController
                 'by_reference' => false,
             ])->hideOnIndex()->setColumns('col-md-12')->setLabel('Busynnes')->hideOnIndex();
 
+        yield AssociationField::new('featuredUsers')
+            ->setFormTypeOptions([
+                'by_reference' => false,
+            ])->hideOnIndex()->setColumns('col-md-12')->setLabel('Featured Users')->hideOnIndex();
+
         yield FormField::addPanel('General requirements')->setIcon('fa fa-gear');
         yield FormField::addRow();
         yield TextField::new('age')->setColumns('col-md-4');

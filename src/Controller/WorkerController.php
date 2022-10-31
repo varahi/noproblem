@@ -393,7 +393,7 @@ class WorkerController extends AbstractController
     ): Response {
         if ($this->isGranted(self::ROLE_EMPLOYEE) || $this->isGranted(self::ROLE_CUSTOMER)) {
             $user = $this->security->getUser();
-            $slug = $request->query->get('category');
+            //$slug = $request->query->get('category');
             $cities = $cityRepository->findLimitOrder('999', '0');
             $districts = $districtRepository->findAll();
             $categories = $categoryRepository->findAll();
@@ -403,7 +403,7 @@ class WorkerController extends AbstractController
             $city = $cityRepository->findOneBy(['id' => $cityId]);
             $district = $districtRepository->findOneBy(['id' => $districtId]);
 
-            if ($slug == '') {
+            /*if ($slug == '') {
                 //$query = $worksheetRepository->findAll();
                 //$query = $worksheetRepository->findAllOrder(['created' => 'DESC']);
                 $query = $worksheetRepository->findSelectedProfiles($user);
@@ -414,7 +414,9 @@ class WorkerController extends AbstractController
             } else {
                 $category = $categoryRepository->findOneBy(['slug' => $slug]);
                 $query = $worksheetRepository->findBy(['category' => $category]);
-            }
+            }*/
+
+            $query = $worksheetRepository->findSelectedProfiles($user);
 
             $worksheets = $paginator->paginate(
                 $query,
@@ -439,7 +441,7 @@ class WorkerController extends AbstractController
                 'city' => $city,
                 'districts' => $districts,
                 'categories' => $categories,
-                'category' => $category,
+                //'category' => $category,
                 'cityId' => $cityId,
                 'districtId' => $districtId,
                 'worksheets' => $worksheets,
