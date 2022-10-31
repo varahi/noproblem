@@ -602,6 +602,11 @@ span.liked {
 .dom-4 {
     display: none;
 }
+.dom-3 img {
+    position: relative;
+    right: 40px;
+}
+
 .in_account a {
     text-decoration: underline;
 }
