@@ -592,6 +592,22 @@ span.liked {
     padding-bottom: 80px;
 }
 
+.dom {
+    text-align: center;
+}
+.dom .image {
+    margin: auto;
+}
+
+.dom-4 {
+    display: none;
+}
+.in_account a {
+    text-decoration: underline;
+}
+.in_account a:hover {
+    text-decoration: none;
+}
 
 @media only screen and (max-width: 800px) {
     .fon {

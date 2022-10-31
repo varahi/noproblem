@@ -585,4 +585,20 @@ class JobController extends AbstractController
             return $this->redirectToRoute("app_main");
         }
     }
+
+    /**
+     *
+     * @Route("/selected-jobs", name="app_selected_jobs")
+     */
+    public function selectedProfiles(
+        Request $request,
+        CityRepository $cityRepository,
+        DistrictRepository $districtRepository,
+        CategoryRepository $categoryRepository,
+        WorksheetRepository $worksheetRepository,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier,
+        PaginatorInterface $paginator
+    ): Response {
+    }
 }

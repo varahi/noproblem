@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Worksheet;
+use App\Entity\Job;
 use App\ImageOptimizer;
 use App\Repository\JobRepository;
 use App\Repository\WorksheetRepository;
@@ -272,43 +273,30 @@ class UserController extends AbstractController
      */
     public function addWorksheetToFavorite(
         Request $request,
-        TranslatorInterface $translator,
-        NotifierInterface $notifier,
         Worksheet $worksheet
-    ): Response {
-        if ($this->isGranted(self::ROLE_EMPLOYEE) || $this->isGranted(self::ROLE_CUSTOMER)) {
+    ) {
+        if ($this->isGranted(self::ROLE_EMPLOYEE)) {
             $user = $this->security->getUser();
-            //if ($user->getId() == $userNotification->getUser()->getId()) {
-            //}
-            //dd($worksheet);
 
             $worksheet->addFeaturedUser($user);
             $entityManager = $this->doctrine->getManager();
             $entityManager->persist($worksheet);
             $entityManager->flush();
 
-            $message = $translator->trans('Worksheet added to favorites', array(), 'flash');
-            $notifier->send(new Notification($message, ['browser']));
             $referer = $request->headers->get('referer');
             return new RedirectResponse($referer);
-        } else {
-            $message = $translator->trans('Please login', array(), 'flash');
-            $notifier->send(new Notification($message, ['browser']));
-            return $this->redirectToRoute("app_main");
         }
     }
 
     /**
      *
-     * @Route("/remove-from--favorite/worksheet-{id}", name="app_remove_worksheet_from_favorite")
+     * @Route("/remove-from-favorite/worksheet-{id}", name="app_remove_worksheet_from_favorite")
      */
     public function removeWorksheetFromFavorite(
         Request $request,
-        TranslatorInterface $translator,
-        NotifierInterface $notifier,
         Worksheet $worksheet
-    ): Response {
-        if ($this->isGranted(self::ROLE_EMPLOYEE) || $this->isGranted(self::ROLE_CUSTOMER)) {
+    ) {
+        if ($this->isGranted(self::ROLE_EMPLOYEE)) {
             $user = $this->security->getUser();
 
             $worksheet->removeFeaturedUser($user);
@@ -316,10 +304,28 @@ class UserController extends AbstractController
             $entityManager->persist($worksheet);
             $entityManager->flush();
 
-            $message = $translator->trans('Worksheet removed from favorites', array(), 'flash');
-            $notifier->send(new Notification($message, ['browser']));
             $referer = $request->headers->get('referer');
             return new RedirectResponse($referer);
+        }
+    }
+
+
+    /**
+     *
+     * @Route("/add-to-favorite/job-{id}", name="app_add_job_to_favorite")
+     */
+    public function addJobToFavorite(
+        TranslatorInterface $translator,
+        NotifierInterface $notifier,
+        Job $job
+    ) {
+        if ($this->isGranted(self::ROLE_EMPLOYEE)) {
+            $user = $this->security->getUser();
+
+            $job->addFeaturedUser($user);
+            $entityManager = $this->doctrine->getManager();
+            $entityManager->persist($job);
+            $entityManager->flush();
         } else {
             $message = $translator->trans('Please login', array(), 'flash');
             $notifier->send(new Notification($message, ['browser']));

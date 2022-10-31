@@ -141,7 +141,7 @@ class EditProfileFormType extends AbstractType
                 'phone',
                 TelType::class,
                 [
-                    'required' => false,
+                    'required' => true,
                     'attr' => [
                         'placeholder' => 'Your phone',
                         'class' => 'form-control',

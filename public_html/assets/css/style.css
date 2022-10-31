@@ -6272,14 +6272,21 @@ font-size: 12px;
   padding: 10px 18px;
 }
 
-.block2 {
-
+.block2,
+.block4,
+.block5,
+.buts4 {
   display: none;
 }
 
 .btn_try {
   display: none;
 }
+
+.modal-content .btn_try {
+    display: block;
+}
+
 .work {
   display: flex;
   align-items: center;
