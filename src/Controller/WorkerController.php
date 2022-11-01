@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Controller\Traits\JobTrait;
 use App\Entity\Worksheet;
 use App\Form\Worksheet\WorksheetFormType;
 use App\Repository\BusynessRepository;
@@ -29,6 +30,8 @@ use App\Service\FileUploader;
 
 class WorkerController extends AbstractController
 {
+    use JobTrait;
+
     public const ROLE_EMPLOYEE = 'ROLE_EMPLOYEE';
 
     public const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
@@ -104,13 +107,7 @@ class WorkerController extends AbstractController
         );
 
         // Get liked ancets
-        if ($user != null && count($user->getFeaturedProfiles()) > 0) {
-            foreach ($user->getFeaturedProfiles() as $featuredProfile) {
-                $featuredProfiles[] = $featuredProfile->getId();
-            }
-        } else {
-            $featuredProfiles = null;
-        }
+        $featuredProfiles = $this->getFeaturedProfiles($user);
 
         return new Response($this->twig->render('pages/worksheet/all_workers.html.twig', [
             'cities' => $cities,
@@ -124,8 +121,6 @@ class WorkerController extends AbstractController
             'districtId' => $districtId,
             'featuredProfiles' => $featuredProfiles,
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
-            //'myArr' => $myArr,
-            //'districtList' => $dList
         ]));
     }
 
@@ -358,7 +353,7 @@ class WorkerController extends AbstractController
     }
 
     /**
-     * @Route("/detail-questionare/questionare-{id}", name="app_detail_worksheet")
+     * @Route("/detail/worksheet-{id}", name="app_detail_worksheet")
      */
     public function worksheetDetailPage(
         Request $request,
@@ -367,12 +362,21 @@ class WorkerController extends AbstractController
     ): Response {
         $category = $worksheet->getCategory();
         $user = $this->security->getUser();
-        $relatedJobs = $worksheetRepository->findByCategory($category->getId(), $worksheet->getId(), '10');
+
+        if (isset($category) && $category !==null) {
+            $relatedJobs = $worksheetRepository->findByCategory($category->getId(), $worksheet->getId(), '10');
+        } else {
+            $relatedJobs = null;
+        }
+
+        // Get liked ancets
+        $featuredProfiles = $this->getFeaturedProfiles($user);
 
         return new Response($this->twig->render('pages/worksheet/detail.html.twig', [
             'user' => $user,
             'worksheet' => $worksheet,
             'relatedJobs' => $relatedJobs,
+            'featuredProfiles' => $featuredProfiles,
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
@@ -425,15 +429,7 @@ class WorkerController extends AbstractController
             );
 
             $user = $this->security->getUser();
-
-            // Get liked ancets
-            if ($user != null && count($user->getFeaturedProfiles()) > 0) {
-                foreach ($user->getFeaturedProfiles() as $featuredProfile) {
-                    $featuredProfiles[] = $featuredProfile->getId();
-                }
-            } else {
-                $featuredProfiles = null;
-            }
+            $featuredProfiles = $this->getFeaturedProfiles($user);
 
             return new Response($this->twig->render('user/selected_profiles.html.twig', [
                 'user' => $user,

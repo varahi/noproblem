@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Controller\Traits\JobTrait;
 use App\Entity\Job;
 use App\Entity\Worksheet;
 use App\Form\Job\JobFormType;
@@ -35,6 +36,8 @@ use App\ImageOptimizer;
 
 class JobController extends AbstractController
 {
+    use JobTrait;
+
     public const ROLE_EMPLOYEE = 'ROLE_EMPLOYEE';
 
     public const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
@@ -121,14 +124,7 @@ class JobController extends AbstractController
             }
         }
 
-        // Get liked vacancies
-        if ($user != null && count($user->getFeaturedJobs()) > 0) {
-            foreach ($user->getFeaturedJobs() as $featuredJob) {
-                $featuredJobs[] = $featuredJob->getId();
-            }
-        } else {
-            $featuredJobs = null;
-        }
+        $featuredJobs = $this->getFeaturedJobs($user);
 
         return new Response($this->twig->render('pages/job/all_jobs.html.twig', [
             'cities' => $cities,
@@ -142,8 +138,6 @@ class JobController extends AbstractController
             'districtId' => $districtId,
             'featuredJobs' => $featuredJobs,
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
-            //'myArr' => $myArr,
-            //'districtList' => $dList
         ]));
     }
 
@@ -552,6 +546,8 @@ class JobController extends AbstractController
             $scheduleKeys = null;
         }
 
+        $featuredJobs = $this->getFeaturedJobs($user);
+
         return new Response($this->twig->render('pages/job/detail.html.twig', [
             'user' => $user,
             'job' => $job,
@@ -561,6 +557,7 @@ class JobController extends AbstractController
             'schedules' => $schedules,
             'dataKeys' => $dataKeys,
             'scheduleKeys' => $scheduleKeys,
+            'featuredJobs' => $featuredJobs,
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
@@ -616,24 +613,7 @@ class JobController extends AbstractController
             );
 
             $user = $this->security->getUser();
-
-            // Get liked vacancies
-            if ($user != null && count($user->getFeaturedJobs()) > 0) {
-                foreach ($user->getFeaturedJobs() as $featuredJob) {
-                    $featuredJobs[] = $featuredJob->getId();
-                }
-            } else {
-                $featuredJobs = null;
-            }
-
-            // Get liked ancets
-            if ($user != null && count($user->getFeaturedProfiles()) > 0) {
-                foreach ($user->getFeaturedProfiles() as $featuredProfile) {
-                    $featuredProfiles[] = $featuredProfile->getId();
-                }
-            } else {
-                $featuredProfiles = null;
-            }
+            $featuredJobs = $this->getFeaturedJobs($user);
 
             return new Response($this->twig->render('user/selected_jobs.html.twig', [
                 'user' => $user,

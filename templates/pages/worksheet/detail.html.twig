@@ -64,15 +64,19 @@
                                 </div>
                             </div>
                             {% if app.user %}
-                                <div class="btn_one_vacan3">
-                                    <img src="{{ asset('assets/img/like.svg') }}" class="lazyLoad isLoaded" alt="">
-                                    <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Добавить в избранное</a>
-                                </div>
+                                {% if worksheet.id in featuredProfiles %}
+                                    <div class="btn_one_vacan3">
+                                        <span class="remove-job-{{ worksheet.id }} detail-liked ">Удалить из избранного</span>
+                                    </div>
+                                {% else %}
+                                    <div class="btn_one_vacan3">
+                                        <span class="add-job-{{ worksheet.id }} detail-like ">Добавить в избранное</span>
+                                    </div>
+                                {% endif %}
                             {% else %}
                                 <div class="btn_one_vacan3">
-                                    <!-- ToDo: enter to system -->
                                     <img src="{{ asset('assets/img/like.svg') }}" class="lazyLoad isLoaded" alt="">
-                                    <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Добавить в избранное</a>
+                                    <a href="{{ path('app_login') }}" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Добавить в избранное</a>
                                 </div>
                             {% endif %}
                         </div>
@@ -210,6 +214,34 @@
     <script type="text/javascript">
         $(document).ready(function(){
             jQuery("span.timeago").timeago();
+
+            $('span.add-job-{{ worksheet.id }}').click(function(){
+                var url = '{{ path('app_add_worksheet_to_favorite', { id: worksheet.id}) }}';
+                dataString = 'Добавлено в избранное';
+                jQuery.ajax({
+                    url: url,
+                    data: dataString,
+                    type: "POST",
+                    success:function(){
+                        $(".add-job-{{ worksheet.id }}").css('display', 'none').after(' <span class="add-job-3 detail-liked lazyLoad isLoaded">Добавлено в избранное</span>');
+                    },
+                    error:function (){}
+                });
+            });
+            $('span.remove-job-{{ worksheet.id }}').click(function(){
+                var url = '{{ path('app_remove_worksheet_from_favorite', { id: worksheet.id}) }}';
+                dataString = 'Удалено из избранного';
+                jQuery.ajax({
+                    url: url,
+                    data: dataString,
+                    type: "POST",
+                    success:function(){
+                        $(".remove-job-{{ worksheet.id }}").css('display', 'none').after(' <span class="add-job-3 detail-like lazyLoad isLoaded">Удалено из избранного</span>');
+                    },
+                    error:function (){}
+                });
+            });
+
         });
     </script>
     {% include 'partials/footer.html.twig' %}

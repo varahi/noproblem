@@ -584,6 +584,28 @@ span.liked {
     margin-left: 10px;
 }
 
+span.detail-like {
+    font-size: 18px;
+    cursor: pointer;
+    padding-left: 25px;
+    display: block;
+    background-image: url('../img/like.svg');
+    background-size: 20px 18px;
+    background-repeat: no-repeat;
+    background-position: 0 4px;
+}
+
+span.detail-liked {
+    font-size: 18px;
+    cursor: pointer;
+    padding-left: 25px;
+    display: block;
+    background-image: url('../img/like_favorite.png');
+    background-size: 20px 18px;
+    background-repeat: no-repeat;
+    background-position: 0 4px;
+}
+
 .main-custom {
     display: grid;
     /* grid-template-columns: 299px 1fr; */
