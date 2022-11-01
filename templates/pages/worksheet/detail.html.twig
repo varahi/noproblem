@@ -90,11 +90,13 @@
                             <img class="img_like_mob mobs lazyLoad" src="{{ asset('assets/img/like.svg') }}" alt="">
                         </div>
 
+                        {% if app.user %}
                         <div class="additional-info additional-info-{{ worksheet.id }} hidden">
                             <h3>Контакты работника</h3>
                             <p>ФИО контактного лица: {{ worksheet.contactFullName }}</p>
                             <p>Email: <a class="link" href="mailto:{{ worksheet.user.email }}?subject=Запрос на выполнение работы">{{ worksheet.user.email }}</a></p>
                         </div>
+                        {% endif %}
 
                         <div class="dates mobs">
                             <span>5 ноября</span>

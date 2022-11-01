@@ -42,14 +42,20 @@
             <p>{{ job.description|length > 150 ? job.description|slice(0, 150) ~ '...' : job.description }}</p>
         </div>
 
+        {% if app.user %}
         <div class="additional-info additional-info-{{ job.id }} hidden">
             <h3>Контакты работодателя</h3>
             <p>ФИО контактного лица: {{ job.contactFullName }}</p>
             <p>Email: <a class="link" href="mailto:{{ job.owner.email }}?subject=Запрос на выполнение работы">{{ job.owner.email }}</a></p>
         </div>
+        {% endif %}
 
         <div class="btn_box_account">
-            <button class="btn_box_account_one_vacan btn-show-info-{{ job.id }}">Показать контакты</button>
+            {% if app.user %}
+                <button class="btn_box_account_one_vacan btn-show-info-{{ job.id }}">Показать контакты</button>
+            {% else %}
+                <a href="{{ path('app_login') }}"><button class="btn_box_account_one_vacan">Показать контакты</button></a>
+            {% endif %}
             <button class="btn_box_account_two_vacan btn_box_account_two_vacan_{{ job.id }}"><a href="{{ path('app_detail_job', { id: job.id}) }}">Подробнее</a></button>
         </div>
     </div>

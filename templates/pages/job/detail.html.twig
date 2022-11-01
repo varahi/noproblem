@@ -49,7 +49,11 @@
                                 <p>Паспортные данные подтверждены</p>
                             </div>
                             <div class="btn_one_vacan2">
-                                <span aria-current="page" class="btn-show-info-{{ job.id }}">Показать контакты</span>
+                                {% if app.user %}
+                                    <span aria-current="page" class="btn-show-info-{{ job.id }}">Показать контакты</span>
+                                {% else %}
+                                    <a href="{{ path('app_login') }}" aria-current="page" class="">Показать контакты</a>
+                                {% endif %}
                             </div>
                         </div>
                         <div  class="owns nona">
@@ -96,11 +100,13 @@
                             <img class="img_like_mob mobs lazyLoad" src="{{ asset('assets/img/like.svg') }}" alt="">
                         </div>
 
+                        {% if app.user %}
                         <div class="additional-info additional-info-{{ job.id }} hidden">
                             <h3>Контакты работодателя</h3>
                             <p>ФИО контактного лица: {{ job.contactFullName }}</p>
                             <p>Email: <a class="link" href="mailto:{{ job.owner.email }}?subject=Запрос на выполнение работы">{{ job.owner.email }}</a></p>
                         </div>
+                        {% endif %}
 
                         <div class="dates mobs">
                             <span>5 ноября</span>
