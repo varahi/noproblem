@@ -26,7 +26,8 @@ npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
-.env.test
+
+.env
 .php-cs-fixer.cache
 bin/phpunit
 composer.phar

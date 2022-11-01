@@ -66,14 +66,14 @@ class EditProfileFormType extends AbstractType
                     'translation_domain' => 'forms',
                 ]
             )
-            ->add('city', EntityType::class, [
+            /*->add('city', EntityType::class, [
                 'class' => City::class,
                 'multiple'  => false,
                 'expanded'  => false,
                 'label' => 'Your city',
                 'translation_domain' => 'forms',
                 'required' => true,
-            ])
+            ])*/
             ->add(
                 'address',
                 TextType::class,
@@ -87,6 +87,33 @@ class EditProfileFormType extends AbstractType
                     'translation_domain' => 'forms',
                 ]
             )
+            ->add(
+                'age',
+                TextType::class,
+                [
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Your age',
+                        'class' => 'form-control',
+                    ],
+                    'label' => 'Your age',
+                    'translation_domain' => 'forms',
+                ]
+            )
+            ->add(
+                'citizen',
+                TextType::class,
+                [
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Your citizen',
+                        'class' => 'form-control',
+                    ],
+                    'label' => 'Your citizen',
+                    'translation_domain' => 'forms',
+                ]
+            )
+
             ->add(
                 'about',
                 TextareaType::class,

@@ -1,6 +1,10 @@
 {% extends 'layouts/lk.html.twig' %}
 {% block title %}Редактировать профиль - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block body %}
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
+
     {% include 'partials/header.html.twig' %}
     <div>
         <div class="main_account content">
@@ -33,19 +37,49 @@
                         {{ form_row(form.phone) }}
                         {{ form_row(form.firstName) }}
                         {{ form_row(form.lastName) }}
+                        {{ form_row(form.age) }}
+                        {{ form_row(form.citizen) }}
                     </div>
                     <div class="_form-group grig-group">
                         {{ form_row(form.plainPassword, { label: 'Пароль'}) }}
                     </div>
                     <div class="form-group grig-group">
-                        {{ form_row(form.city) }}
+                        <div>
+                            <label for="edit_profile_form_city" class="required">Ваш город</label>
+                            <input type="text" id="edit_profile_form_city" name="edit_profile_form[city]" required="required"
+                                   placeholder="Ваш город" class="form-control" value="{{ user.city }}">
+                        </div>
                         {{ form_row(form.address) }}
                     </div>
 
-                    <div class="form-group grig-group" style="margin-top: 20px">
-                        {{ form_widget(form.about) }}
+                    <script type="text/javascript">
+                        $( "#edit_profile_form_city" ).autocomplete({
+                            source: function( request, response ) {
+                                $.ajax({
+                                    url: "http://127.0.0.1/data/cities.php",
+                                    dataType: "json",
+                                    type: "POST",
+                                    data: {
+                                        maxRows: 15,
+                                        name: request.term
+                                    },
+                                    success: function( data ) {
+                                        response( $.map( data, function( item ) {
+                                            return {
+                                                label: item.name,
+                                                value: item.name
+                                            }
+                                        }));
+                                    }
+                                });
+                            },
+                            minlength: 2
+                        });
+                    </script>
 
-                        <div class="_round_account">
+                    <div class="form-group grig-group" style="margin-top: 20px">
+                        {{ form_row(form.about) }}
+                        <div class="round_account">
                             {% if user.avatar %}
                                 <img id="avatar" src="{{ asset('uploads/files/' ~ user.avatar) }}" class="lazyLoad isLoaded" width="200" height="200" />
                             {% else %}
