@@ -58,10 +58,12 @@
                                     <h4>Зарегистрирован</h4>
                                     <span class="timeago" title="{{ job.owner.created|date("Y-m-d H:i:s") }}"></span>
                                 </div>
-                                <div class="ones_vacan">
-                                    <h4>Был последний раз</h4>
-                                    <span >Сегодня</span>
-                                </div>
+                                {% if job.owner.lastlogin is not null %}
+                                    <div class="ones_vacan">
+                                        <h4>Был последний раз</h4>
+                                        <span class="timeago" title="{{ job.owner.lastlogin|date("Y-m-d H:i:s") }}"></span>
+                                    </div>
+                                {% endif %}
                             </div>
                             {% if app.user %}
                                 {% if job.id in featuredJobs %}

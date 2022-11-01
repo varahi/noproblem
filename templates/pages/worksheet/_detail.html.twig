@@ -54,11 +54,12 @@
                                     <h4>Зарегистрирован</h4>
                                     <span class="timeago" title="{{ worksheet.user.created|date("Y-m-d H:i:s") }}"></span>
                                 </div>
-                                <!-- ToDo: made last login function -->
-                                <div class="ones_vacan">
-                                    <h4>Был последний раз</h4>
-                                    <span >Сегодня</span>
-                                </div>
+                                {% if worksheet.user.lastlogin is not null %}
+                                    <div class="ones_vacan">
+                                        <h4>Был последний раз</h4>
+                                        <span class="timeago" title="{{ worksheet.user.lastlogin|date("Y-m-d H:i:s") }}"></span>
+                                    </div>
+                                {% endif %}
                             </div>
                             <div class="btn_one_vacan3">
                                 <img src="{{ asset('assets/img/like.svg') }}" class="lazyLoad isLoaded" alt="">

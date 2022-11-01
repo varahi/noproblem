@@ -57,10 +57,12 @@
                                     <h4>Зарегистрирован</h4>
                                     <span class="timeago" title="{{ worksheet.user.created|date("Y-m-d H:i:s") }}"></span>
                                 </div>
-                                <div class="ones_vacan">
-                                    <h4>Был последний раз</h4>
-                                    <span >Сегодня</span>
-                                </div>
+                                {% if worksheet.user.lastlogin is not null %}
+                                    <div class="ones_vacan">
+                                        <h4>Был последний раз</h4>
+                                        <span class="timeago" title="{{ worksheet.user.lastlogin|date("Y-m-d H:i:s") }}"></span>
+                                    </div>
+                                {% endif %}
                             </div>
                             {% if app.user %}
                                 {% if worksheet.id in featuredProfiles %}
