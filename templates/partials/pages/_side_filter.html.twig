@@ -1,6 +1,10 @@
 <script src="{{ asset('assets/js/dependableList.js') }}"></script>
 
-<form class="form-search" autocomplete="off" action="">
+<form class="form-search" autocomplete="off" action="" method="get">
+    {% if slug %}
+        <input type="hidden" name="category"  value="{{ slug }}">
+    {% endif %}
+
     <div class="inside_city">
         <div class="block_emp">
             <p>Город</p>

@@ -9,7 +9,10 @@
                 <a href="/" class="nuxt-link-active main_vavancies" >Главная</a>
                 <a href="" class="nuxt-link-active" >Анкеты</a>
             </div>
-            {% include 'partials/pages/worksheet/_top_menu.html.twig' %}
+            <div class="choose">
+                <p><a href="{{ path('app_all_jobs') }}" class="title-link">Все анкеты:</a></p>
+                {% include 'partials/pages/_categories.html.twig' with {'workers': 1} %}
+            </div>
             <div class="mains">
                 <div class="fon">
 

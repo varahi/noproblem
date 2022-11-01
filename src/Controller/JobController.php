@@ -81,6 +81,7 @@ class JobController extends AbstractController
         $districts = $districtRepository->findAll();
         $categories = $categoryRepository->findAll();
 
+        // Get different get params
         $cityId = trim($request->query->get('city'));
         $districtId = trim($request->query->get('district'));
         $city = $cityRepository->findOneBy(['id' => $cityId]);
@@ -92,23 +93,13 @@ class JobController extends AbstractController
             $user = null;
         }
 
-        if ($slug == '') {
-            $queryJobs = $jobRepository->findAllOrder(['created' => 'DESC']);
-            $category = null;
-            if ($cityId !== '' && $districtId !== '' || $cityId !== '') {
-                $queryJobs = $jobRepository->findByParams($city, $district);
-            }
-        } else {
+        if ($slug !== '') {
             $category = $categoryRepository->findOneBy(['slug' => $slug]);
-            $queryJobs = $jobRepository->findByCategory($category->getId(), '', '999');
-
-            /*if($cityId !== '' && $districtId !== '' || $cityId !== '' ) {
-                $jobs = $jobRepository->findByParams($city, $district, $slug);
-            } else {
-                $jobs = $jobRepository->findBy(['category' => $category]);
-            }*/
+        } else {
+            $category = null;
         }
 
+        $queryJobs = $jobRepository->findByParams($category, $city, $district);
         $jobs = $paginator->paginate(
             $queryJobs,
             $request->query->getInt('page', 1),
@@ -137,6 +128,7 @@ class JobController extends AbstractController
             'cityId' => $cityId,
             'districtId' => $districtId,
             'featuredJobs' => $featuredJobs,
+            'slug' => $slug,
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }

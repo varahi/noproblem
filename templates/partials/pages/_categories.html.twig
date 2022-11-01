@@ -1,0 +1,25 @@
+<div class="for mob_group_btn">
+    {% for category in categories %}
+        <div class="click_master">
+
+            {% if jobs is defined and jobs == 1 %}
+                {% if cityId and districtId %}
+                    <a href="{{ path('app_all_jobs', { category: category.slug, city: cityId, district: districtId}) }}" class="">{{ category.name }}</a>
+                {% elseif cityId %}
+                    <a href="{{ path('app_all_jobs', { category: category.slug, city: cityId}) }}" class="">{{ category.name }}</a>
+                {% else %}
+                    <a href="{{ path('app_all_jobs', { category: category.slug}) }}" class="">{{ category.name }}</a>
+                {% endif %}
+
+            {% elseif workers is defined and  workers == 1 %}
+                {% if cityId and districtId %}
+                    <a href="{{ path('app_all_workers', { category: category.slug, city: cityId, district: districtId}) }}" class="">{{ category.name }}</a>
+                {% elseif cityId %}
+                    <a href="{{ path('app_all_workers', { category: category.slug, city: cityId}) }}" class="">{{ category.name }}</a>
+                {% else %}
+                    <a href="{{ path('app_all_workers', { category: category.slug}) }}" class="">{{ category.name }}</a>
+                {% endif %}
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>

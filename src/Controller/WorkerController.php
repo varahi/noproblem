@@ -88,18 +88,13 @@ class WorkerController extends AbstractController
             $user = null;
         }
 
-        if ($slug == '') {
-            //$query = $worksheetRepository->findAll();
-            $query = $worksheetRepository->findAllOrder(['created' => 'DESC']);
-            $category = null;
-            if ($cityId !== '' && $districtId !== '' || $cityId !== '') {
-                $query = $worksheetRepository->findByParams($city, $district);
-            }
-        } else {
+        if ($slug !== '') {
             $category = $categoryRepository->findOneBy(['slug' => $slug]);
-            $query = $worksheetRepository->findBy(['category' => $category]);
+        } else {
+            $category = null;
         }
 
+        $query = $worksheetRepository->findByParams($category, $city, $district);
         $worksheets = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
@@ -120,6 +115,7 @@ class WorkerController extends AbstractController
             'cityId' => $cityId,
             'districtId' => $districtId,
             'featuredProfiles' => $featuredProfiles,
+            'slug' => $slug,
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }

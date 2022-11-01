@@ -95,14 +95,18 @@ class JobRepository extends ServiceEntityRepository
     /**
      * @param Job $job
      */
-    public function findByParams($city, $district)
+    public function findByParams($category, $city, $district)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $expr = $qb->expr();
         $qb->select('j')
             ->from(self::TABLE, 'j')
             ->orderBy('j.created', 'DESC')
             ;
+
+        if ($category) {
+            $qb->join('j.category', 'c')
+                ->where($qb->expr()->eq('c.id', $category->getId()));
+        }
 
         if ($city && $district) {
             $qb->andWhere($qb->expr()->eq('j.city', $city->getId()));
