@@ -31,8 +31,7 @@
                                             <img class="verif_green lazyLoad isLoaded" src="{{ asset('assets/img/verif.svg') }}" alt="">
                                         {% endif %}
                                     </div>
-                                    <div class="city_one_vacan"><span>Наниматель</span>
-                                    </div>
+                                    <div class="city_one_vacan"><span>Работник</span></div>
                                 </div>
                             </div>
                             <div class="btn_one_vacan nona">
@@ -49,7 +48,7 @@
                                 <p>Паспортные данные подтверждены</p>
                             </div>
                             <div class="btn_one_vacan2">
-                                <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Показать контакты</a>
+                                <span aria-current="page" class="nuxt-link-exact-active nuxt-link-active btn-show-info-{{ worksheet.id }}">Показать контакты</span>
                             </div>
                         </div>
                         <div  class="owns nona">
@@ -88,6 +87,13 @@
                             <h3>{{ worksheet.name }}</h3>
                             <img class="img_like_mob mobs lazyLoad" src="{{ asset('assets/img/like.svg') }}" alt="">
                         </div>
+
+                        <div class="additional-info additional-info-{{ worksheet.id }} hidden">
+                            <h3>Контакты работника</h3>
+                            <p>ФИО контактного лица: {{ worksheet.contactFullName }}</p>
+                            <p>Email: <a class="link" href="mailto:{{ worksheet.user.email }}?subject=Запрос на выполнение работы">{{ worksheet.user.email }}</a></p>
+                        </div>
+
                         <div class="dates mobs">
                             <span>5 ноября</span>
                         </div>
@@ -241,6 +247,23 @@
                     error:function (){}
                 });
             });
+
+            $(".btn-show-info-{{ worksheet.id }}").click(function(){
+                $(".additional-info-{{ worksheet.id }}").toggle();
+                //$(".btn-show-info-{{ worksheet.id }}").addClass('hidden').after(' <span class="btn-hidden-info-{{ worksheet.id }}">Скрыть контакты</span>');
+            });
+
+            {#$(document).on("click", ".btn-hidden-info-{{ worksheet.id }}" , function() {#}
+            {#    $(this).parent().remove();#}
+            {#    $(".additional-info-{{ worksheet.id }}").hide();#}
+            {#    $(".btn-show-info-{{ worksheet.id }}").removeClass('hidden').after(' <span aria-current="page" class="nuxt-link-exact-active nuxt-link-active btn-show-info-{{ worksheet.id }}">Показать контакты</span>');#}
+            {#});#}
+
+            {#$(".btn-hidden-info-{{ worksheet.id }}").click(function(){#}
+            {#    alert('sadasd');#}
+            {#    //$(".additional-info-{{ worksheet.id }}").hide();#}
+            {#    //$(".btn-show-info-{{ worksheet.id }}").removeClass('hidden').after(' <span aria-current="page" class="nuxt-link-exact-active nuxt-link-active btn-show-info-{{ worksheet.id }}">Показать контакты</span>');#}
+            {#});#}
 
         });
     </script>

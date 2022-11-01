@@ -49,7 +49,7 @@
                                 <p>Паспортные данные подтверждены</p>
                             </div>
                             <div class="btn_one_vacan2">
-                                <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Показать контакты</a>
+                                <span aria-current="page" class="btn-show-info-{{ job.id }}">Показать контакты</span>
                             </div>
                         </div>
                         <div  class="owns nona">
@@ -93,6 +93,13 @@
                             <h3>{{ job.name }}</h3>
                             <img class="img_like_mob mobs lazyLoad" src="{{ asset('assets/img/like.svg') }}" alt="">
                         </div>
+
+                        <div class="additional-info additional-info-{{ job.id }} hidden">
+                            <h3>Контакты работодателя</h3>
+                            <p>ФИО контактного лица: {{ job.contactFullName }}</p>
+                            <p>Email: <a class="link" href="mailto:{{ job.owner.email }}?subject=Запрос на выполнение работы">{{ job.owner.email }}</a></p>
+                        </div>
+
                         <div class="dates mobs">
                             <span>5 ноября</span>
                         </div>
@@ -242,6 +249,10 @@
                     },
                     error:function (){}
                 });
+            });
+
+            $(".btn-show-info-{{ job.id }}").click(function(){
+                $(".additional-info-{{ job.id }}").toggle();
             });
         });
     </script>

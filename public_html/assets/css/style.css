@@ -2398,14 +2398,16 @@ margin-left: 117px}
 
 .btn_one_vacan2 a{padding: 9px 42px}
 
-.btn_one_vacan2 a:hover {
+.btn_one_vacan2 a:hover,
+.btn_one_vacan2 span:hover {
   transition: .2s;
   background: #6d3d67;
   color: #ffffff;
 }
 
 
-.btn_one_vacan a {
+.btn_one_vacan a,
+.btn_one_vacan span {
     font-size: 18px;
     color: #fff;
     background: #6d3d67;
@@ -2414,7 +2416,8 @@ margin-left: 117px}
     padding: 11px 28px;
 }
 
-.btn_one_vacan2 a {
+.btn_one_vacan2 a,
+.btn_one_vacan2 span {
     font-size: 18px;
     border-radius: 40px;
     border: 1px solid #6d3d67;

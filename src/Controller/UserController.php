@@ -274,7 +274,7 @@ class UserController extends AbstractController
     public function addWorksheetToFavorite(
         Request $request,
         Worksheet $worksheet
-    ) {
+    ): Response {
         if ($this->isGranted(self::ROLE_EMPLOYEE)) {
             $user = $this->security->getUser();
 
@@ -295,7 +295,7 @@ class UserController extends AbstractController
     public function removeWorksheetFromFavorite(
         Request $request,
         Worksheet $worksheet
-    ) {
+    ): Response {
         if ($this->isGranted(self::ROLE_EMPLOYEE)) {
             $user = $this->security->getUser();
 
@@ -317,7 +317,7 @@ class UserController extends AbstractController
     public function addJobToFavorite(
         Request $request,
         Job $job
-    ) {
+    ): Response {
         if ($this->isGranted(self::ROLE_CUSTOMER)) {
             $user = $this->security->getUser();
 
@@ -338,7 +338,7 @@ class UserController extends AbstractController
     public function removeJobFromFavorite(
         Request $request,
         Job $job
-    ) {
+    ): Response {
         if ($this->isGranted(self::ROLE_CUSTOMER)) {
             $user = $this->security->getUser();
 
