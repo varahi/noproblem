@@ -33,38 +33,6 @@
                 {% else %}
                     <span class="add-job-{{ job.id }} like" title="Добавить в избранное"></span>
                 {% endif %}
-
-                <script>
-                    $(document).ready(function(){
-                        $('span.add-job-{{ job.id }}').click(function(){
-                            var url = '{{ path('app_add_job_to_favorite', { id: job.id}) }}';
-                            dataString = 'Добавлено в избранное';
-                            jQuery.ajax({
-                                url: url,
-                                data: dataString,
-                                type: "POST",
-                                success:function(){
-                                    $(".add-job-{{ job.id }}").addClass('liked').after(' <div class="like-info">Добавлено в избранное</div>');
-                                },
-                                error:function (){}
-                            });
-                        });
-                        $('span.remove-job-{{ job.id }}').click(function(){
-                            var url = '{{ path('app_remove_job_from_favorite', { id: job.id}) }}';
-                            dataString = 'Удалено из избранного';
-                            jQuery.ajax({
-                                url: url,
-                                data: dataString,
-                                type: "POST",
-                                success:function(){
-                                    $(".remove-job-{{ job.id }}").removeClass('liked').after(' <div class="like-info">Удалено из избранного</div>');
-                                },
-                                error:function (){}
-                            });
-                        });
-                    });
-                </script>
-
             </div>
             <div class="date_vacan">
                 <p>{{ job.created|format_datetime(locale='ru') }}</p>
@@ -74,9 +42,52 @@
             <p>{{ job.description|length > 150 ? job.description|slice(0, 150) ~ '...' : job.description }}</p>
         </div>
 
+        <div class="additional-info additional-info-{{ job.id }} hidden">
+            <h3>Контакты работодателя</h3>
+            <p>ФИО контактного лица: {{ job.contactFullName }}</p>
+            <p>Email: <a class="link" href="mailto:{{ job.owner.email }}?subject=Запрос на выполнение работы">{{ job.owner.email }}</a></p>
+        </div>
+
         <div class="btn_box_account">
-            <button class="btn_box_account_one_vacan">Получить контакты</button>
-            <button class="btn_box_account_two_vacan"><a href="{{ path('app_detail_job', { id: job.id}) }}">Подробнее</a></button>
+            <button class="btn_box_account_one_vacan btn-show-info-{{ job.id }}">Получить контакты</button>
+            <button class="btn_box_account_two_vacan btn_box_account_two_vacan_{{ job.id }}"><a href="{{ path('app_detail_job', { id: job.id}) }}">Подробнее</a></button>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        $('span.add-job-{{ job.id }}').click(function(){
+            var url = '{{ path('app_add_job_to_favorite', { id: job.id}) }}';
+            dataString = 'Добавлено в избранное';
+            jQuery.ajax({
+                url: url,
+                data: dataString,
+                type: "POST",
+                success:function(){
+                    $(".add-job-{{ job.id }}").addClass('liked').after(' <div class="like-info">Добавлено в избранное</div>');
+                },
+                error:function (){}
+            });
+        });
+        $('span.remove-job-{{ job.id }}').click(function(){
+            var url = '{{ path('app_remove_job_from_favorite', { id: job.id}) }}';
+            dataString = 'Удалено из избранного';
+            jQuery.ajax({
+                url: url,
+                data: dataString,
+                type: "POST",
+                success:function(){
+                    $(".remove-job-{{ job.id }}").removeClass('liked').after(' <div class="like-info">Удалено из избранного</div>');
+                },
+                error:function (){}
+            });
+        });
+
+        $(".btn-show-info-{{ job.id }}").click(function(){
+            $(".additional-info-{{ job.id }}").show();
+            $(".btn-show-info-{{ job.id }}").addClass('hidden');
+            $(".btn_box_account_two_vacan_{{ job.id }}").css('margin-left', '0');
+        });
+    });
+</script>

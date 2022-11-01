@@ -593,6 +593,14 @@
             <source>Featured Jobs</source>
             <target>Избранные вакансии</target>
         </trans-unit>
+        <trans-unit id="Contact Full Name" resname="Contact Full Name">
+            <source>Contact Full Name</source>
+            <target>ФИО контактного лица</target>
+        </trans-unit>
+        <trans-unit id="Featured Users" resname="Featured Users">
+            <source>Featured Users</source>
+            <target>В избранном у пользователей</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>

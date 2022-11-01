@@ -607,11 +607,21 @@ span.liked {
     right: 40px;
 }
 
-.in_account a {
+.in_account a,
+a.link {
     text-decoration: underline;
 }
-.in_account a:hover {
+.in_account a:hover,
+a.link:hover {
     text-decoration: none;
+}
+
+.additional-info {
+    margin-top: 10px;
+}
+
+.hidden {
+    display: none;
 }
 
 @media only screen and (max-width: 800px) {

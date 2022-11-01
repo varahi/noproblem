@@ -63,6 +63,7 @@ class JobCrudController extends AbstractCrudController
         yield DateTimeField::new('created')->setFormTypeOption('disabled', 'disabled');
         yield BooleanField::new('hidden');
         yield TextField::new('name')->setColumns('col-md-8');
+        yield TextField::new('contactFullName')->setColumns('col-md-8')->hideOnIndex();
         yield TextareaField::new('description')->setColumns('col-md-8')->hideOnIndex();
         yield TextField::new('payment')->setColumns('col-md-8');
         yield ImageField::new('image')

@@ -464,34 +464,34 @@ class JobController extends AbstractController
 
         $job->setOwner($user);
         $job->setSchedule($scheduleArrJson);
-        if ($post['city'] !=='') {
+        if (isset($post['city'])&& $post['city'] !=='') {
             $city = $cityRepository->findOneBy(['id' => $post['city']]);
             $job->setCity($city);
         }
-        if ($post['district'] !=='') {
+        if (isset($post['district']) && $post['district'] !=='') {
             $district = $districtRepository->findOneBy(['id' => $post['district']]);
             $job->setDistrict($district);
         }
-        if ($post['task'] !=='' && is_array($post['task'])) {
+        if (isset($post['task']) && $post['task'] !=='' && is_array($post['task'])) {
             foreach ($post['task'] as $taskId) {
                 $task = $taskRepository->findOneBy(['id' => $taskId]);
                 $job->addTask($task);
                 $entityManager->persist($task);
             }
         }
-        if ($post['citizenship'] !=='') {
+        if (isset($post['citizenship']) && $post['citizenship'] !=='') {
             $citizen = $citizenRepository->findOneBy(['id' => $post['citizenship']]);
             $job->setCitizen($citizen);
         }
-        if ($post['accommodation'] !=='') {
+        if (isset($post['accommodation']) && $post['accommodation'] !=='') {
             $accommodation = $accommodationRepository->findOneBy(['id' => $post['accommodation']]);
             $job->addAccommodation($accommodation);
         }
-        if ($post['busyness'] !=='') {
+        if (isset($post['busyness']) && $post['busyness'] !=='') {
             $busyness = $busynessRepository->findOneBy(['id' => $post['busyness']]);
             $job->addBusyness($busyness);
         }
-        if ($post['additionally'] && is_array($post['additionally'])) {
+        if (isset($post['additionally']) && $post['additionally'] && is_array($post['additionally'])) {
             foreach ($post['additionally'] as $additionalId) {
                 $additionally = $additionalInfoRepository->findOneBy(['id' => $additionalId]);
                 $job->addAdditional($additionally);
