@@ -43,6 +43,11 @@ class Order
         $this->created = new \DateTime();
     }
 
+    public function __toString(): string
+    {
+        return 'Order ID' . $this->id .' '. $this->name;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
