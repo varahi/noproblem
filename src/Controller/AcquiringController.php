@@ -155,11 +155,13 @@ class AcquiringController extends AbstractController
                     $order->setTariff($tariff);
 
                     // We need to save data here to get order created date
-                    $entityManager->persist($order);
-                    $entityManager->flush();
+                    //$entityManager->persist($order);
+                    //$entityManager->flush();
 
+                    $currentDateStr = date('Y-m-d H:i:s');
+                    $currentDate = new \DateTime($currentDateStr);
                     $interval = '+' .$tariff->getTermDays(). 'day';
-                    $endDate = $order->getCreated()->modify($interval);
+                    $endDate = $currentDate->modify($interval);
                     $order->setEndDate($endDate);
 
                     // Flush data again
