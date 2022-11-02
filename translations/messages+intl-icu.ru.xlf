@@ -601,6 +601,14 @@
             <source>Featured Users</source>
             <target>В избранном у пользователей</target>
         </trans-unit>
+        <trans-unit id="Old Price" resname="Old Price">
+            <source>Old Price</source>
+            <target>Старая цена</target>
+        </trans-unit>
+        <trans-unit id="Customer Description" resname="Customer Description">
+            <source>Customer Description</source>
+            <target>Описание для работников</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>

@@ -69,6 +69,11 @@ class Tariff
      */
     private $amount;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $customerDescription;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -237,6 +242,18 @@ class Tariff
     public function setAmount(int $amount): self
     {
         $this->amount = $amount;
+
+        return $this;
+    }
+
+    public function getCustomerDescription(): ?string
+    {
+        return $this->customerDescription;
+    }
+
+    public function setCustomerDescription(?string $customerDescription): self
+    {
+        $this->customerDescription = $customerDescription;
 
         return $this;
     }

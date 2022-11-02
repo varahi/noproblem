@@ -16,7 +16,6 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TariffRepository extends ServiceEntityRepository
 {
-
     public const TABLE = 'App\Entity\Tariff';
 
     public function __construct(ManagerRegistry $registry)
