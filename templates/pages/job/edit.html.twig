@@ -1,6 +1,10 @@
 {% extends 'layouts/base.html.twig' %}
 {% block title %}Редактировать вакансию - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block body %}
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
+
     {% include 'partials/header.html.twig' %}
     <div class=" content">
         <div  class="bread nona">
@@ -39,13 +43,9 @@
                     <div class="abouts_creating_form grid_creating_form">
                         <div class="dom_creating_form">
                             <p class="required">Город</p>
-                            <select id="job_form_city" name="job_form[city]" class="text_input" required="required">
-                                <option>Выберите город</option>
-                                {% for city in cities %}
-                                    <option value="{{ city.id }}" {% if city.id == job.city.id %} selected {% endif %}>{{ city.name }}</option>
-                                {% endfor %}
-                            </select>
+                            <input type="text" id="job_form" name="job_form[city]" required="required" placeholder="Ваш город" class="form-control" value="{{ job.city.name }}">
                         </div>
+
                         <div class="dom_creating_form">
                             <p>Район</p>
                             <select id="job_form_district" name="job_form[district]" class="text_input">
@@ -249,6 +249,32 @@
                 if (item !== checkbox) item.checked = false
             })
         }
+
+        $( "#job_form" ).autocomplete({
+            source: function( request, response ) {
+                $.ajax({
+                    url: "{{ path('api_cities') }}",
+                    dataType: "json",
+                    type: "POST",
+                    data: {
+                        maxRows: 15,
+                        name: request.term
+                    },
+                    success: function( data ) {
+                        response( $.map( data, function( item ) {
+                            return {
+                                label: item.name,
+                                lat: item.lat,
+                                lng: item.lng,
+                                district: item.district
+                            }
+                        }));
+                    }
+                });
+            },
+            minlength: 2
+        });
+
     </script>
 
     {% include 'partials/footer.html.twig' %}

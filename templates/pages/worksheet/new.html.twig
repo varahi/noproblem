@@ -1,6 +1,10 @@
 {% extends 'layouts/base.html.twig' %}
 {% block title %}Создать анкету - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block body %}
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
+
     {% include 'partials/header.html.twig' %}
 
     <div class=" content">
@@ -10,9 +14,10 @@
             <a>/ Создать анкету</a>
         </div>
 
-        {{ form_start(form, {'attr' : {'class': 'form-std form-std-custom', 'autocomplete': 'off'}} ) }}
             <div class="large_creating_form fon">
                 <div class="in_creating_form">
+                    {{ form_start(form, {'attr' : {'class': 'form-std form-std-custom', 'autocomplete': 'off'}} ) }}
+                    {% include 'partials/_message.html.twig' %}
                     <div class="hide" v-if="one">
                         <div class="abouts_creating_form grid_creating_form">
                             <div class="dom_creating_form">
@@ -24,12 +29,7 @@
                         <div class="abouts_creating_form grid_creating_form">
                             <div class="dom_creating_form">
                                 <p class="required">Город</p>
-                                <select id="worksheet_form_city" name="worksheet_form[city]" class="text_input" required="required">
-                                    <option>Выберите город</option>
-                                    {% for city in cities %}
-                                        <option value="{{ city.id }}">{{ city.name }}</option>
-                                    {% endfor %}
-                                </select>
+                                <input type="text" id="worksheet_form" name="worksheet_form[city]" required="required" placeholder="Ваш город" class="form-control">
                             </div>
                             <div class="dom_creating_form">
                                 <p>Район</p>
@@ -309,9 +309,11 @@
 {#                            <a href="">Опубликовать</a>#}
 {#                        </div>#}
 {#                    </div>#}
+
+                    {{ form_end(form) }}
                 </div>
             </div>
-        {{ form_end(form) }}
+
     </div>
 
     <script>
@@ -337,6 +339,32 @@
                 if (item !== checkbox) item.checked = false
             })
         }
+
+        $( "#worksheet_form" ).autocomplete({
+            source: function( request, response ) {
+                $.ajax({
+                    url: "{{ path('api_cities') }}",
+                    dataType: "json",
+                    type: "POST",
+                    data: {
+                        maxRows: 15,
+                        name: request.term
+                    },
+                    success: function( data ) {
+                        response( $.map( data, function( item ) {
+                            return {
+                                label: item.name,
+                                lat: item.lat,
+                                lng: item.lng,
+                                district: item.district
+                            }
+                        }));
+                    }
+                });
+            },
+            minlength: 2
+        });
+
     </script>
 
     {% include 'partials/footer.html.twig' %}

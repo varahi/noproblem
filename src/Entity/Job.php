@@ -140,12 +140,12 @@ class Job
     private $anotherCitizen;
 
     /**
-     * @ORM\OneToMany(targetEntity=Busyness::class, mappedBy="job")
+     * @ORM\OneToMany(targetEntity=Busyness::class, mappedBy="job") // ToDo: change relation to ManyToMany
      */
     private $busynesses;
 
     /**
-     * @ORM\OneToMany(targetEntity=Accommodation::class, mappedBy="job")
+     * @ORM\OneToMany(targetEntity=Accommodation::class, mappedBy="job", orphanRemoval=false) // ToDo: change relation to ManyToMany
      */
     private $accommodations;
 

@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Controller\Traits\AbstractTrait;
+use App\Controller\Traits\DataTrait;
 use App\Controller\Traits\JobTrait;
 use App\Entity\Job;
 use App\Entity\Worksheet;
@@ -37,6 +39,10 @@ use App\ImageOptimizer;
 class JobController extends AbstractController
 {
     use JobTrait;
+
+    use DataTrait;
+
+    use AbstractTrait;
 
     public const ROLE_EMPLOYEE = 'ROLE_EMPLOYEE';
 
@@ -163,7 +169,6 @@ class JobController extends AbstractController
             $accommodations = $accommodationRepository->findAll();
             $busynessess = $busynessRepository->findAll();
 
-            $entityManager = $doctrine->getManager();
             $job = new Job();
             $url = $this->generateUrl('app_new_job');
             $form = $this->createForm(JobFormType::class, $job, [
@@ -204,6 +209,13 @@ class JobController extends AbstractController
 
             $form->handleRequest($request);
             if ($form->isSubmitted()) {
+                $post = $request->request->get('job_form');
+                $city = $cityRepository->findOneBy(['name' => $post['city']]);
+
+                if ($city == null) {
+                    $city = $this->setNewCity($request, 'job_form');
+                }
+                $job->setCity($city);
                 $this->updateFields(
                     $request,
                     $form,
@@ -354,7 +366,6 @@ class JobController extends AbstractController
 
             $form->handleRequest($request);
             if ($form->isSubmitted()) {
-                //$post = $request->request->get('job_form');
                 $this->updateFields(
                     $request,
                     $form,
@@ -450,10 +461,18 @@ class JobController extends AbstractController
 
         $job->setOwner($user);
         $job->setSchedule($scheduleArrJson);
-        if (isset($post['city'])&& $post['city'] !=='') {
+
+        /*if (isset($post['city'])&& $post['city'] !=='') {
             $city = $cityRepository->findOneBy(['id' => $post['city']]);
             $job->setCity($city);
+        }*/
+
+        $city = $cityRepository->findOneBy(['name' => $post['city']]);
+        if ($city == null) {
+            $city = $this->setNewCity($request, 'job_form');
         }
+        $job->setCity($city);
+
         if (isset($post['district']) && $post['district'] !=='') {
             $district = $districtRepository->findOneBy(['id' => $post['district']]);
             $job->setDistrict($district);

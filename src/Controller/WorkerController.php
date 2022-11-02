@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Controller\Traits\AbstractTrait;
+use App\Controller\Traits\DataTrait;
 use App\Controller\Traits\JobTrait;
 use App\Entity\Worksheet;
 use App\Form\Worksheet\WorksheetFormType;
@@ -31,6 +33,10 @@ use App\Service\FileUploader;
 class WorkerController extends AbstractController
 {
     use JobTrait;
+
+    use DataTrait;
+
+    use AbstractTrait;
 
     public const ROLE_EMPLOYEE = 'ROLE_EMPLOYEE';
 
@@ -215,15 +221,23 @@ class WorkerController extends AbstractController
             $worksheet->setStartDate($startDate);
         }
 
-        if ($post['city'] !=='') {
+        /*if ($post['city'] !=='') {
             $city = $cityRepository->findOneBy(['id' => $post['city']]);
             $worksheet->setCity($city);
+        }*/
+
+        $city = $cityRepository->findOneBy(['name' => $post['city']]);
+        if ($city == null) {
+            $city = $this->setNewCity($request, 'worksheet_form');
         }
-        if ($post['district'] !=='') {
+
+        $worksheet->setCity($city);
+
+        if (isset($post['district']) && $post['district'] !=='') {
             $district = $districtRepository->findOneBy(['id' => $post['district']]);
             $worksheet->setDistrict($district);
         }
-        if ($post['task'] !=='' && is_array($post['task'])) {
+        if (isset($post['task']) && $post['task'] !=='' && is_array($post['task'])) {
             foreach ($post['task'] as $taskId) {
                 $task = $taskRepository->findOneBy(['id' => $taskId]);
                 $worksheet->addTask($task);
@@ -314,7 +328,17 @@ class WorkerController extends AbstractController
                     $busynessArr = null;
                 }
 
-                if ($form->isSubmitted() && $form->isValid()) {
+                if ($form->isSubmitted()) {
+                    $this->updateFields(
+                        $request,
+                        $form,
+                        $worksheet,
+                        $cityRepository,
+                        $districtRepository,
+                        $taskRepository,
+                        $fileUploader
+                    );
+
                     $entityManager = $doctrine->getManager();
                     $entityManager->persist($worksheet);
                     $entityManager->flush();
