@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Controller\Traits\AbstractTrait;
 use App\Entity\Order;
 use App\Entity\Tariff;
 use App\Repository\TariffRepository;
@@ -23,6 +24,11 @@ use Voronkovich\SberbankAcquiring\OrderStatus;
 
 class AcquiringController extends AbstractController
 {
+    use AbstractTrait;
+
+    /**
+     * @var array
+     */
     private $acq_array = [
         'userName' => 'T7736337091-api',
         'password' => 'T7736337091',
@@ -32,10 +38,21 @@ class AcquiringController extends AbstractController
         'httpMethod' => AcqHttpClientInterface::METHOD_GET,
     ];
 
+    /**
+     * @var Security
+     */
     private $security;
 
+    /**
+     * @var string
+     */
     private $defailtDomain;
 
+    /**
+     * @param Security $security
+     * @param string $defailtDomain
+     * @param ManagerRegistry $doctrine
+     */
     public function __construct(
         Security $security,
         string $defailtDomain,
@@ -84,6 +101,7 @@ class AcquiringController extends AbstractController
         $tariff = $tariffRepository->findOneBy(['id' => $tariff]);
         $orderAmount = $tariff->getAmount();
         $returnUrl   = 'https://'.$this->defailtDomain.'/pay/proceed/'.$orderId;
+        //$returnUrl   = $this->getDomain().'/pay/proceed/'.$orderId;
 
         // You can pass additional parameters like a currency code and etc.
         $params['currency'] = Currency::RUB;
@@ -139,13 +157,16 @@ class AcquiringController extends AbstractController
                     $message = $translator->trans('Order was approved', array(), 'flash');
                     $notifier->send(new Notification($message, ['browser']));
                     return $this->redirectToRoute("app_lk");
-
                     //return $this->json(['data' => "Order was approved! and it's working!"]);
                 }
             }
-            return $this->json(['data' => "Order was approved!"]);
+            //return $this->json(['data' => "Order was approved!"]);
+            $message = $translator->trans('Order was approved', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_lk");
         } else {
-            return $this->json(['data' => "Order wasn't approved!"]);
+            //return $this->json(['data' => "Order wasn't approved!"]);
+            return $this->redirectToRoute("app_payment_error");
         }
     }
 }

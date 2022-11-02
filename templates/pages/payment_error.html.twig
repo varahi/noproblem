@@ -1,0 +1,24 @@
+{# templates/pages/payment_error.html.twig #}
+{% extends 'layouts/base.html.twig' %}
+{% block title %}Ошибка оплаты - Онлайн-сервис по подбору домашнего персонала
+{% endblock %}
+{% block body %}
+    {% include 'partials/header.html.twig' %}
+
+    <div class="main_account content">
+        <div class="large_account fon">
+            <div class="in_account">
+                <div class="_reset-form-content">
+                    <h2 class="b_center">Ошибка оплаты</h2>
+                    <p style="text-align: center">
+                        Произошла ошибка оплаты. Попробуйте сделать это позже или обратитесь в службу поддержки
+                        <a id="openModal" onclick="openModal()">в службу поддержки сайта</a>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}

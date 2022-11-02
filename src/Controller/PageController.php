@@ -244,4 +244,19 @@ class PageController extends AbstractController
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }
+
+    /**
+     * @Route("/payment-error", name="app_payment_error")
+     */
+    public function paymentError(
+        Request $request,
+        ArticleRepository $articleRepository,
+        ArticleCategoryRepository $articleCategoryRepository
+    ) {
+        $user = $this->security->getUser();
+        return $this->render('pages/payment_error.html.twig', [
+            'ticketForm' => $this->modalForms->ticketForm($request)->createView(),
+            'user' => $user
+        ]);
+    }
 }
