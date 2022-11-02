@@ -141,7 +141,7 @@ class AcquiringController extends AbstractController
                 $orderId = $cookies->get('orderId');
                 if ($orderId == $id) {
 
-                    // logic of succeed
+                    // Logic of succeed
                     // Создаем новый заказ
                     $user = $this->security->getUser();
                     // Необходимо получить id тарифа и найти его в БД
@@ -150,9 +150,25 @@ class AcquiringController extends AbstractController
                     $order = new Order();
                     $order->setName('Order #' .'User ID - '. $user->getId() .' Tariff ID - '. $tariff->getId());
                     $order->setUser($user);
+                    $order->setActive(1);
+                    //$order->setEndDate()
                     $order->setTariff($tariff);
+
+                    // We need to save data here to get order created date
                     $entityManager->persist($order);
                     $entityManager->flush();
+
+                    $interval = '+' .$tariff->getTermDays(). 'day';
+                    $endDate = $order->getCreated()->modify($interval);
+                    $order->setEndDate($endDate);
+
+                    // Flush data again
+                    $entityManager->persist($order);
+                    $entityManager->flush();
+
+                    $order->setTariff($tariff);
+                    $entityManager->persist($order);
+
                     // Redirect to lk with message
                     $message = $translator->trans('Order was approved', array(), 'flash');
                     $notifier->send(new Notification($message, ['browser']));

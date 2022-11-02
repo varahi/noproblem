@@ -32,6 +32,7 @@ class TariffCrudController extends AbstractCrudController
         yield IntegerField::new('id')->setFormTypeOption('disabled', 'disabled');
         yield BooleanField::new('hidden');
         yield TextField::new('name')->setColumns('col-md-10');
+        yield TextField::new('termDays')->setColumns('col-md-10');
         yield TextareaField::new('description')->setColumns('col-md-10')->hideOnIndex();
         yield TextareaField::new('customerDescription')->setColumns('col-md-10')->hideOnIndex();
         yield TextareaField::new('price')->setColumns('col-md-10');
