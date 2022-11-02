@@ -107,7 +107,8 @@ class PageController extends AbstractController
         TariffRepository $tariffRepository
     ): Response {
         $user = $this->security->getUser();
-        $tariffs = $tariffRepository->findAll();
+        //$tariffs = $tariffRepository->findAll();
+        $tariffs = $tariffRepository->findLimitOrder('6', '0');
         return new Response($this->twig->render('pages/tarifs.html.twig', [
             'user' => $user,
             'tariffs' => $tariffs,
