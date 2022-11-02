@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Controller\Traits\AbstractTrait;
 use App\Controller\Traits\DataTrait;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
@@ -16,6 +17,8 @@ use Symfony\Component\Security\Core\Security;
 class ApiController extends AbstractController
 {
     use DataTrait;
+
+    use AbstractTrait;
 
     private $security;
 
@@ -144,6 +147,61 @@ class ApiController extends AbstractController
         $response->headers->set('Content-Type', 'application/json');
         $response->headers->set('Access-Control-Allow-Origin', '*');
         $response->setContent(json_encode($arrData));
+
+        return $response;
+    }
+
+
+    /**
+     * @Route("/api/cities", name="api_cities")
+     * @return Response
+     */
+    public function apiCities()
+    {
+        if (isset($_POST['name'])) {
+            $searchword = $_POST['name'];
+            $char = mb_strtoupper(substr($searchword, 0, 3), "utf-8"); // первый символ в верхний регистр
+            $searchword[0] = $char[0];
+            $searchword[1] = $char[1];
+        } else {
+            echo \json_encode('Город не найден');
+        }
+
+        $jsonFile = $this->getDomain() . '/data/russian-cities.json';
+        $content = file_get_contents($jsonFile);
+
+        if ($content == '') {
+            $cities = [];
+        } else {
+            $cities = \json_decode($content);
+        }
+
+        foreach ($cities as $item) {
+            if (stripos($item->name, $searchword) === 0) {
+                $city[] = [
+                    'name' => $item->name,
+                    'lat' => $item->coords->lat,
+                    'lng' => $item->coords->lon,
+                    'district' => $item->district
+                ];
+            }
+        }
+
+        $_POST['maxRows'] = '5';
+
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+
+        if (count($city) > 0) {
+            if (count($city) > $_POST['maxRows']) {
+                $city = array_slice($city, 0, $_POST['maxRows']);
+            }
+            $response->setContent(\json_encode($city));
+        } else {
+            $err[] = array('name'=>'Город не найден');
+            $response->setContent(\json_encode($err));
+        }
 
         return $response;
     }

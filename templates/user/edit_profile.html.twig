@@ -56,7 +56,7 @@
                         $( "#edit_profile_form_city" ).autocomplete({
                             source: function( request, response ) {
                                 $.ajax({
-                                    url: "http://127.0.0.1/data/cities.php",
+                                    url: "{{ path('api_cities') }}",
                                     dataType: "json",
                                     type: "POST",
                                     data: {
@@ -67,7 +67,9 @@
                                         response( $.map( data, function( item ) {
                                             return {
                                                 label: item.name,
-                                                value: item.name
+                                                lat: item.lat,
+                                                lng: item.lng,
+                                                district: item.district
                                             }
                                         }));
                                     }

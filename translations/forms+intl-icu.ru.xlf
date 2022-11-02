@@ -83,7 +83,15 @@
             </trans-unit>
             <trans-unit id="Ticket description" resname="Ticket description">
                 <source>Ticket description</source>
-                <target>Текс обращения</target>
+                <target>Текст обращения</target>
+            </trans-unit>
+            <trans-unit id="Your age" resname="Your age">
+                <source>Your age</source>
+                <target>Ваш возраст</target>
+            </trans-unit>
+            <trans-unit id="Your citizen" resname="Your citizen">
+                <source>Your citizen</source>
+                <target>Гражданство</target>
             </trans-unit>
         </body>
     </file>

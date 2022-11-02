@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Controller\Traits\AbstractTrait;
+use App\Controller\Traits\DataTrait;
 use App\Entity\Worksheet;
 use App\Entity\Job;
+use App\Entity\City;
 use App\ImageOptimizer;
+use App\Repository\CityRepository;
 use App\Repository\JobRepository;
 use App\Repository\WorksheetRepository;
 use App\Repository\NotificationRepository;
@@ -32,6 +36,10 @@ use App\Form\User\EditProfileFormType;
 
 class UserController extends AbstractController
 {
+    use AbstractTrait;
+
+    use DataTrait;
+
     /**
      * Time in seconds 3600 - one hour
      */
@@ -208,7 +216,8 @@ class UserController extends AbstractController
         TranslatorInterface $translator,
         NotifierInterface $notifier,
         UserPasswordHasherInterface $passwordHasher,
-        FileUploader $fileUploader
+        FileUploader $fileUploader,
+        CityRepository $cityRepository
     ): Response {
         if (
             $this->isGranted(self::ROLE_BUYER) ||
@@ -222,6 +231,15 @@ class UserController extends AbstractController
 
             if ($form->isSubmitted()) {
                 $post = $request->request->get('edit_profile_form');
+                $city = $cityRepository->findOneBy(['name' => $post['city']]);
+
+                if ($city == null) {
+                    // Create a new city if not exist in database
+                    $city = $this->setNewCity($request, 'edit_profile_form');
+                }
+
+                $user->setCity($city);
+
                 // Set new password if changed
                 if ($post['plainPassword']['first'] !=='' && $post['plainPassword']['second'] !=='') {
                     if (strcmp($post['plainPassword']['first'], $post['plainPassword']['second']) == 0) {
