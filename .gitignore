@@ -38,3 +38,4 @@ php-cs-fixer
 phpunit.xml.dist
 public_html/
 yarn.lock
+docker/store

@@ -1,0 +1,101 @@
+version: '3.3'
+
+services:
+  #######################################
+  # PHP application Docker container
+  #######################################
+  web_app:
+    build:
+      context: web/
+      dockerfile: Dockerfile
+    container_name: 'noproblem_web'
+    links:
+      - web_mysql:db
+#      - redis
+    ports:
+      - "80:80"
+      - "443:443"
+      - "20022:22"
+    extra_hosts:
+      - "noproblem.ru:185.154.53.166"
+      - "noproblem.localhost:127.0.0.1"
+    volumes:
+      - ../:/app/
+      - ./:/docker/
+    #  - ./../src/:/app/
+    # cap and privileged needed for slowlog
+    cap_add:
+      - SYS_PTRACE
+    privileged: true
+    env_file:
+      - etc/environment.yml
+      - etc/environment.development.yml
+
+  #######################################
+  # MariaDB server
+  #######################################
+  web_mysql:
+    image: mariadb:10.3
+    container_name: 'noproblem_mysql'
+    ports:
+      - 3306:3306
+    volumes:
+      - ./store/mysql:/var/lib/mysql
+      - ./store/my.cnf:/etc/mysql/conf.d/custom.cnf
+    environment:
+      MYSQL_ROOT_PASSWORD: db_pass
+      MYSQL_DATABASE: db_name
+      MYSQL_USER: db_user
+      MYSQL_PASSWORD: db_root_pass
+
+  #######################################
+  # Phpmyadmin
+  #######################################
+  phpmyadmin:
+    container_name: 'noproblem_phpmyadmin'
+    image: phpmyadmin/phpmyadmin
+    links:
+      - web_mysql:db
+    ports:
+      - 8765:80
+    environment:
+      MYSQL_ROOT_PASSWORD: dev
+    depends_on:
+      - web_mysql
+
+  #######################################
+  # Mailhoq
+  #######################################
+  mailhog:
+    image: mailhog/mailhog
+    container_name: 'noproblem_mailhog'
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+  #######################################
+  # Redis
+  #######################################
+  redis:
+    container_name: 'noproblem_redis'
+#    image: redis:alpine
+    image: redis:5-alpine
+    ports: [6379]
+#    ports:
+#      - "6379:6379"
+
+  #######################################
+  # Rabbit http://127.0.0.1:15672/ guest guest
+  #######################################
+  rabbit:
+    container_name: 'noproblem_rabbit'
+    hostname: rabbit
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    volumes:
+      - ./store/rabbitmq/:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
