@@ -1831,11 +1831,12 @@ opacity: 0.8;
   text-decoration: underline;
 }
 
-
-
 .window_account .green {
     color: #33BE41;
+}
 
+.window_account .red {
+    color: #ff0000;
 }
 
 .tit_account {

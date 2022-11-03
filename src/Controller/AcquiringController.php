@@ -153,6 +153,7 @@ class AcquiringController extends AbstractController
                     $order->setActive(1);
                     //$order->setEndDate()
                     $order->setTariff($tariff);
+                    $user->setActive(true);
 
                     // We need to save data here to get order created date
                     //$entityManager->persist($order);
@@ -166,6 +167,7 @@ class AcquiringController extends AbstractController
 
                     // Flush data again
                     $entityManager->persist($order);
+                    $entityManager->persist($user);
                     $entityManager->flush();
 
                     $order->setTariff($tariff);

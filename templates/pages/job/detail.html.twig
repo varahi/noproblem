@@ -97,12 +97,16 @@
                             <img class="img_like_mob mobs lazyLoad" src="{{ asset('assets/img/like.svg') }}" alt="">
                         </div>
 
-                        {% if app.user %}
+                        {% if app.user and user.active == 1 %}
                         <div class="additional-info additional-info-{{ job.id }} hidden">
                             <h3>Контакты работодателя</h3>
                             <p>ФИО контактного лица: {{ job.contactFullName }}</p>
                             <p>Email: <a class="link" href="mailto:{{ job.owner.email }}?subject=Запрос на выполнение работы">{{ job.owner.email }}</a></p>
                         </div>
+                        {% elseif user.active == 0 or user.inactive == 1 %}
+                            <div class="additional-info additional-info-{{ job.id }} hidden">
+                                <p>Доступ к системе ограничен. <a style="text-decoration: underline" href="{{ path('app_tarifs') }}">Пожалуйста пополните ваш баланс.</a></p>
+                            </div>
                         {% endif %}
 
                         <div class="dates mobs">

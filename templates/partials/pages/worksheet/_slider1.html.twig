@@ -45,7 +45,7 @@
                                 </div>
                             </div>
                             <div class="btn_box_account">
-                                <button class="btn_box_account_one">Подробнее</button>
+                                <a href="{{ path('app_detail_worksheet', { id: worksheet.id}) }}"><button class="btn_box_account_one">Подробнее</button></a>
                                 <a href="{{ path('app_edit_worksheet', { id: worksheet.id}) }}"><button class="btn_box_account_two">Редактировать</button></a>
                             </div>
                         </div>

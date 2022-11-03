@@ -609,6 +609,14 @@
             <source>Customer Description</source>
             <target>Описание для работников</target>
         </trans-unit>
+        <trans-unit id="Active user" resname="Active user">
+            <source>Active user</source>
+            <target>Пользователь активен</target>
+        </trans-unit>
+        <trans-unit id="Inactive user" resname="Inactive user">
+            <source>Inactive user</source>
+            <target>Пользователь неактивен</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>

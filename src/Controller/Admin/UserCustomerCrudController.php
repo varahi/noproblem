@@ -76,6 +76,8 @@ class UserCustomerCrudController extends AbstractCrudController
             ->setColumns('col-md-8');
         //yield ArrayField::new('roles')->hideOnIndex()->setFormTypeOption('disabled', 'disabled');
         yield BooleanField::new('hidden');
+        yield BooleanField::new('active')->setLabel('Active user');
+        yield BooleanField::new('inactive')->setLabel('Inactive user');
         yield TextField::new('firstName')->setColumns('col-md-10');
         yield TextField::new('lastName')->setColumns('col-md-10');
         yield TextField::new('email')->setColumns('col-md-10');

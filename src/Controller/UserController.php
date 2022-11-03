@@ -12,6 +12,7 @@ use App\Entity\City;
 use App\ImageOptimizer;
 use App\Repository\CityRepository;
 use App\Repository\JobRepository;
+use App\Repository\OrderRepository;
 use App\Repository\WorksheetRepository;
 use App\Repository\NotificationRepository;
 use App\Repository\UserRepository;
@@ -115,11 +116,29 @@ class UserController extends AbstractController
         Request $request,
         TranslatorInterface $translator,
         NotifierInterface $notifier,
-        WorksheetRepository $worksheetRepository
+        WorksheetRepository $worksheetRepository,
+        OrderRepository $orderRepository
     ): Response {
         if ($this->isGranted(self::ROLE_CUSTOMER)) {
             $user = $this->security->getUser();
             $worksheets = $worksheetRepository->findByUser($user->getId());
+            $order = $orderRepository->findByUserAndActive($user->getId());
+
+            $currentDateStr = date('Y-m-d H:i:s');
+            $currentDate = new \DateTime($currentDateStr);
+            $daysLeft = $order->getEndDate()->diff($currentDate)->format("%a");
+
+            if ($daysLeft <= 0) {
+                $user->setInactive(true);
+                $user->setActive(false);
+            } else {
+                $user->setInactive(false);
+                $user->setActive(true);
+            }
+
+            $entityManager = $this->doctrine->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
 
             // Resize avatar if exist
             if ($user->getAvatar()) {
@@ -129,6 +148,8 @@ class UserController extends AbstractController
             {
                 return $this->render('user/lk_customer.html.twig', [
                     'user' => $user,
+                    'order' => $order,
+                    'daysLeft' => $daysLeft,
                     'worksheets' => $worksheets,
                     'ticketForm' => $this->modalForms->ticketForm($request)->createView()
                 ]);
@@ -150,7 +171,8 @@ class UserController extends AbstractController
         Request $request,
         TranslatorInterface $translator,
         NotifierInterface $notifier,
-        JobRepository $jobRepository
+        JobRepository $jobRepository,
+        OrderRepository $orderRepository
     ): Response {
         if ($this->isGranted(self::ROLE_EMPLOYEE)) {
             $user = $this->security->getUser();
@@ -161,10 +183,23 @@ class UserController extends AbstractController
                 $this->imageOptimizer->resize($this->targetDirectory.'/'.$user->getAvatar());
             }
 
+            $order = $orderRepository->findByUserAndActive($user->getId());
+            $currentDateStr = date('Y-m-d H:i:s');
+            $currentDate = new \DateTime($currentDateStr);
+            $daysLeft = $order->getEndDate()->diff($currentDate)->format("%a");
+            if ($daysLeft <= 0) {
+                $user->setInactive(true);
+                $user->setActive(false);
+            } else {
+                $user->setInactive(false);
+                $user->setActive(true);
+            }
+
             {
                 return $this->render('user/lk_customer.html.twig', [
                     'user' => $user,
                     'jobs' => $jobs,
+                    'daysLeft' => $daysLeft,
                     'ticketForm' => $this->modalForms->ticketForm($request)->createView()
                 ]);
             }

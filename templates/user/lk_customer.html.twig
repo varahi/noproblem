@@ -62,15 +62,18 @@
                             <p>Паспорт - <span>не загружен</span></p>
                             <p> Телефон -  <span>не подтвержден</span></p>
                             <p> Почта - <span>не пожтверждена</span></p>
-
                         </div>
                         <div class="window_account ">
                             <div class="var_account">
                                 <h5>Доступ к платформе:</h5>
                             </div>
-
-
-                            <p class="green">Осталось: 14 дней</p>
+                            {% if daysLeft <= 0 %}
+                                <p class="red">Доступ к системе ограничен. Пожалуйста пополните ваш баланс.</p>
+                            {% elseif daysLeft < 3 %}
+                                <p class="red">Осталось: {{ daysLeft }} дней</p>
+                             {% else %}
+                                 <p class="green">Осталось: {{ daysLeft }} дней</p>
+                            {% endif %}
                             <button class="btn_tarrifs_account">
                                 <a href="{{ path('app_tarifs') }}" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Тарифы</a>
                             </button>

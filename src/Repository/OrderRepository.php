@@ -16,6 +16,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class OrderRepository extends ServiceEntityRepository
 {
+    public const TABLE = 'App\Entity\Order';
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Order::class);
@@ -37,6 +39,24 @@ class OrderRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * @param int $id
+     * @return int|mixed|string
+     */
+    public function findByUserAndActive(int $id)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('o')
+            ->from(self::TABLE, 'o')
+            ->join('o.user', 'u')
+            ->where($qb->expr()->eq('u.id', $id))
+            ->orWhere($qb->expr()->eq('o.active', true))
+            ->andWhere($qb->expr()->neq('o.disabled', true))
+        ;
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
 //    /**
