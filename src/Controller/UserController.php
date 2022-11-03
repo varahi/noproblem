@@ -288,7 +288,8 @@ class UserController extends AbstractController
                     } else {
                         $message = $translator->trans('Mismatch password', array(), 'flash');
                         $notifier->send(new Notification($message, ['browser']));
-                        return $this->redirectToRoute("app_edit_client_profile");
+                        $referer = $request->headers->get('referer');
+                        return new RedirectResponse($referer);
                     }
                 }
 

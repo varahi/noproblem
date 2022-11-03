@@ -49,6 +49,10 @@
         <source>Order was approved</source>
         <target>Заказ был успешно оплачен</target>
       </trans-unit>
+      <trans-unit id="Mismatch password" resname="Mismatch password">
+        <source>Mismatch password</source>
+        <target>Введенные пароли не совпадают</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
