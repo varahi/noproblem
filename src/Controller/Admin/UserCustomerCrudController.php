@@ -176,5 +176,7 @@ class UserCustomerCrudController extends AbstractCrudController
                 'by_reference' => false,
             ])->hideOnIndex()
             ->setColumns('col-md-12');
+
+        yield AssociationField::new('orders')->hideOnIndex()->setColumns('col-md-12');
     }
 }

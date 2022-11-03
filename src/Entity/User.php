@@ -73,7 +73,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\OneToMany(targetEntity=Ticket::class, mappedBy="user")
      */
-    private $tickets;
+    private $ticket;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Answer::class, mappedBy="user")
+     */
+    private $answers;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -197,7 +202,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
-        $this->tickets = new ArrayCollection();
+        $this->ticket = new ArrayCollection();
+        $this->answers = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->jobs = new ArrayCollection();
         $this->ownersJobs = new ArrayCollection();
@@ -348,15 +354,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Ticket>
      */
-    public function getTickets(): Collection
+    public function getTicket(): Collection
     {
-        return $this->tickets;
+        return $this->ticket;
     }
 
     public function addTicket(Ticket $ticket): self
     {
-        if (!$this->tickets->contains($ticket)) {
-            $this->tickets[] = $ticket;
+        if (!$this->ticket->contains($ticket)) {
+            $this->ticket[] = $ticket;
             $ticket->setUser($this);
         }
 
@@ -365,10 +371,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeTicket(Ticket $ticket): self
     {
-        if ($this->tickets->removeElement($ticket)) {
+        if ($this->ticket->removeElement($ticket)) {
             // set the owning side to null (unless already changed)
             if ($ticket->getUser() === $this) {
                 $ticket->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Answer>
+     */
+    public function getAnswers(): Collection
+    {
+        return $this->answers;
+    }
+
+    public function addAnswer(Answer $answer): self
+    {
+        if (!$this->answers->contains($answer)) {
+            $this->answers[] = $answer;
+            $answer->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnswer(Answer $answer): self
+    {
+        if ($this->answers->removeElement($answer)) {
+            // set the owning side to null (unless already changed)
+            if ($answer->getUser() === $this) {
+                $answer->setUser(null);
             }
         }
 
