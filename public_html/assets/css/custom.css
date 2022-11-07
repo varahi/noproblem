@@ -660,6 +660,27 @@ a.link:hover {
     .work {
         grid-gap: 15px;
     }
+    .btn_try_custom {
+        margin-top: 0;
+        text-align: center;
+        display: block;
+    }
+    .btn_try button {
+        padding: 10px 30px;
+    }
+    .modal-vue .modal {
+        width: 300px;
+        min-width: 300px;
+        margin-left: -180px;
+        top: 8%;
+    }
+    .modal-title h2 {
+        font-size: 30px !important;
+        font-weight: lighter;
+        line-height: 34px;
+        margin-top: 20px;
+        text-align: center;
+    }
 }
 
 /* 320px 480px: мобильные устройства; */

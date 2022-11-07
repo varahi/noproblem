@@ -374,4 +374,31 @@ input.form-control {
   font-size: 20px;
 }
 
+@media only screen and (max-width: 800px) {
+  .modal-vue .modal {
+    width: auto;
+    min-width: 300px;
+    max-width: 300px;
+    height: auto;
+    top: 40%;
+    left: 50%;
+    margin-top: -75px; /* Negative half of height. */
+    margin-left: -180px; /* Negative half of width. */
+  }
+  .buttons {
+    grid-template-columns: none;
+    width: max-content;
+    align-items: center;
+    display: grid;
+    grid-gap: 25px;
+  }
+  form.form-std {
+    width: 300px;
+  }
+  input.form-control {
+    width: 270px;
+    margin-bottom: 20px;
+  }
+}
+
 </style>

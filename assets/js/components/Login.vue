@@ -221,4 +221,15 @@ input.form-control {
 .form-group label {
   display: none;
 }
+
+@media only screen and (max-width: 800px) {
+  .modal-vue .modal {
+    min-width: 350px;
+  }
+  input.form-control {
+    width: auto;
+    margin-bottom: 20px;
+  }
+}
+
 </style>

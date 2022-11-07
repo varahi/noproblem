@@ -37,7 +37,7 @@
 
     <div class="modal-vue registration">
 
-      <!-- Registration emploayer modal box -->
+      <!-- Registration employer modal box -->
       <div class="modal" v-if="showModalEmployer">
         <div class="modal-title">
           <h2>Регистрация работадателя</h2>

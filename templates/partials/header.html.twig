@@ -3,10 +3,7 @@
         <a class="nav-link" href="{{ path('app_main') }}">
             <img class="logo" src="{{ asset('assets/img/logo.svg') }}" alt="">
         </a>
-        <!-- ToDo create Vue component -->
-        <div class="btn_try_mob" style="cursor:pointer">
-            <a>Попробовать</a>
-        </div>
+        <div id="try-and-register-modal"></div>
         <div class="menu">
             {% include 'partials/header/top_navigation.html.twig' %}
             {% if is_granted('ROLE_BUYER') %}

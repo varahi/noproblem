@@ -367,7 +367,7 @@
       </trans-unit>
       <trans-unit id="iqyLx.D" resname="mail_message_check_email">
         <source>mail_message_check_email</source>
-        <target>Если существует учетная запись, соответствующая введенному адресу электронной почты, то вы получит письмо со ссылкой, которую вы можете использовать для сброса пароля.</target>
+        <target>Если существует учетная запись, соответствующая введенному адресу электронной почты, то вы получите письмо со ссылкой, которую вы можете использовать для сброса пароля.</target>
       </trans-unit>
       <trans-unit id="fIVCInG" resname="mail_message_link_expire">
         <source>mail_message_link_expire</source>

@@ -2,6 +2,7 @@
 import Courses from './components/Pages/Courses/CourseList';
 import Announcements from './components/User/Announcements';
 import TryAndRegister from './components/TryAndRegister';
+import TryAndRegisterModal from './components/TryAndRegisterModal';
 import Register from './components/Register';
 import MenuAuth from './components/MenuAuth';
 import Login from './components/Login';
@@ -33,4 +34,9 @@ new Vue({
 new Vue({
     el: '#menu-registration',
     render: h => h(Register)
+});
+
+new Vue({
+    el: '#try-and-register-modal',
+    render: h => h(TryAndRegisterModal)
 });
