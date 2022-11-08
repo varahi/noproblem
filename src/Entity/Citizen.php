@@ -34,10 +34,16 @@ class Citizen
      */
     private $worksheets;
 
+    /**
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="citizen")
+     */
+    private $users;
+
     public function __construct()
     {
         $this->jobs = new ArrayCollection();
         $this->worksheets = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -116,6 +122,36 @@ class Citizen
             // set the owning side to null (unless already changed)
             if ($worksheet->getCitizen() === $this) {
                 $worksheet->setCitizen(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setCitizen($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getCitizen() === $this) {
+                $user->setCitizen(null);
             }
         }
 

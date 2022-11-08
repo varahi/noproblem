@@ -95,7 +95,7 @@ class UserCustomerCrudController extends AbstractCrudController
         yield AssociationField::new('city')->hideOnIndex()->setColumns('col-md-10');
         yield TextareaField::new('address')->hideOnIndex()->setColumns('col-md-10');
         yield TelephoneField::new('phone')->hideOnIndex()->setColumns('col-md-10');
-        yield TextField::new('age')->hideOnIndex()->setColumns('col-md-10');
+        yield IntegerField::new('age')->hideOnIndex()->setColumns('col-md-10');
 
         /*yield FormField::addPanel('Change password')->setIcon('fa fa-key')->setCssClass('col-sm-12');
         yield FormField::addRow();
@@ -143,7 +143,7 @@ class UserCustomerCrudController extends AbstractCrudController
             ]
         )->hideOnIndex()
             ->setColumns('col-md-4');
-        yield ChoiceField::new('citizen')->setChoices(
+        /*yield ChoiceField::new('citizen')->setChoices(
             [
                 'Нет' => null,
                 'РФ' => '1',
@@ -159,7 +159,9 @@ class UserCustomerCrudController extends AbstractCrudController
                 'Страны ЕС' => '11',
             ]
         )->hideOnIndex()
-            ->setColumns('col-md-4');
+            ->setColumns('col-md-4');*/
+
+        yield AssociationField::new('citizen')->hideOnIndex()->setColumns('col-md-4');
 
         yield FormField::addRow();
         yield AssociationField::new('category')->hideOnIndex()->setColumns('col-md-4');

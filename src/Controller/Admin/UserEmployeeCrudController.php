@@ -153,22 +153,8 @@ class UserEmployeeCrudController extends AbstractCrudController
                 'Высшее' => '5',
             ]
         )->hideOnIndex()->setColumns('col-md-4');
-        yield ChoiceField::new('citizen')->setChoices(
-            [
-                'Нет' => null,
-                'РФ' => '1',
-                'Белоруссия' => '2',
-                'Армения' => '3',
-                'Азербайджан' => '4',
-                'Грузия' => '5',
-                'Казахстан' => '6',
-                'Киргизия' => '7',
-                'Молодова' => '8',
-                'Таджикистан' => '9',
-                'Узбекистан' => '10',
-                'Страны ЕС' => '11',
-            ]
-        )->hideOnIndex()->setColumns('col-md-4');
+        yield AssociationField::new('citizen')->hideOnIndex()->setColumns('col-md-4');
+
         yield FormField::addRow();
         yield AssociationField::new('category')->hideOnIndex()->setColumns('col-md-6');
         yield AssociationField::new('tariff')->hideOnIndex()->setColumns('col-md-6');

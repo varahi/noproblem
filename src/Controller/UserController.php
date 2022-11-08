@@ -46,14 +46,29 @@ class UserController extends AbstractController
      */
     public const CACHE_MAX_AGE = '3600';
 
+    /**
+     *
+     */
     public const ROLE_EMPLOYEE = 'ROLE_EMPLOYEE';
 
+    /**
+     *
+     */
     public const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
 
+    /**
+     *
+     */
     public const ROLE_BUYER = 'ROLE_BUYER';
 
+    /**
+     *
+     */
     public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 
+    /**
+     * @var Security
+     */
     private $security;
 
     /**
@@ -80,6 +95,10 @@ class UserController extends AbstractController
         $this->targetDirectory = $targetDirectory;
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function signUp(Request $request): Response
     {
         return $this->render('profile/sign-up.html.twig');
@@ -111,6 +130,7 @@ class UserController extends AbstractController
      *
      * @IsGranted("ROLE_CUSTOMER")
      * @Route("/lk/customer", name="app_lk_customer")
+     * @throws \Exception
      */
     public function customerProfile(
         Request $request,
@@ -122,23 +142,18 @@ class UserController extends AbstractController
         if ($this->isGranted(self::ROLE_CUSTOMER)) {
             $user = $this->security->getUser();
             $worksheets = $worksheetRepository->findByUser($user->getId());
+
+            // Check days left and set user status
             $order = $orderRepository->findByUserAndActive($user->getId());
+            $daysLeft = $this->getDaysLeft($order, $user);
 
-            $currentDateStr = date('Y-m-d H:i:s');
-            $currentDate = new \DateTime($currentDateStr);
-            $daysLeft = $order->getEndDate()->diff($currentDate)->format("%a");
-
-            if ($daysLeft <= 0) {
-                $user->setInactive(true);
-                $user->setActive(false);
+            // Get percents how profile filled to show modal warning window
+            $persentFilled = $this->getPersentFilled($user);
+            if ($persentFilled <= 0.6) {
+                $profleFilled = 0;
             } else {
-                $user->setInactive(false);
-                $user->setActive(true);
+                $profleFilled = 1;
             }
-
-            $entityManager = $this->doctrine->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
 
             // Resize avatar if exist
             if ($user->getAvatar()) {
@@ -151,6 +166,8 @@ class UserController extends AbstractController
                     'order' => $order,
                     'daysLeft' => $daysLeft,
                     'worksheets' => $worksheets,
+                    'profleFilled' => $profleFilled,
+                    'persentFilled' => $persentFilled,
                     'ticketForm' => $this->modalForms->ticketForm($request)->createView()
                 ]);
             }
@@ -166,6 +183,7 @@ class UserController extends AbstractController
      *
      * @IsGranted("ROLE_EMPLOYEE")
      * @Route("/lk/employer", name="app_lk_employee")
+     * @throws \Exception
      */
     public function employeeProfile(
         Request $request,
@@ -183,16 +201,16 @@ class UserController extends AbstractController
                 $this->imageOptimizer->resize($this->targetDirectory.'/'.$user->getAvatar());
             }
 
+            // Check days left and set user status
             $order = $orderRepository->findByUserAndActive($user->getId());
-            $currentDateStr = date('Y-m-d H:i:s');
-            $currentDate = new \DateTime($currentDateStr);
-            $daysLeft = $order->getEndDate()->diff($currentDate)->format("%a");
-            if ($daysLeft <= 0) {
-                $user->setInactive(true);
-                $user->setActive(false);
+            $daysLeft = $this->getDaysLeft($order, $user);
+
+            // Get percents how profile filled to show modal warning window
+            $persentFilled = $this->getPersentFilled($user);
+            if ($persentFilled <= 0.6) {
+                $profleFilled = 0;
             } else {
-                $user->setInactive(false);
-                $user->setActive(true);
+                $profleFilled = 1;
             }
 
             {
@@ -200,6 +218,8 @@ class UserController extends AbstractController
                     'user' => $user,
                     'jobs' => $jobs,
                     'daysLeft' => $daysLeft,
+                    'profleFilled' => $profleFilled,
+                    'persentFilled' => $persentFilled,
                     'ticketForm' => $this->modalForms->ticketForm($request)->createView()
                 ]);
             }
@@ -404,5 +424,56 @@ class UserController extends AbstractController
             $referer = $request->headers->get('referer');
             return new RedirectResponse($referer);
         }
+    }
+
+    /**
+     * @param $order
+     * @param $user
+     * @return null
+     * @throws \Exception
+     */
+    private function getDaysLeft($order, $user)
+    {
+        if ($order !==null) {
+            $currentDateStr = date('Y-m-d H:i:s');
+            $currentDate = new \DateTime($currentDateStr);
+            if ($order->getEndDate() !==null) {
+                $daysLeft = $order->getEndDate()->diff($currentDate)->format("%a");
+            }
+            if (isset($daysLeft) && $daysLeft <= 0) {
+                $user->setInactive(true);
+                $user->setActive(false);
+            } else {
+                $user->setInactive(false);
+                $user->setActive(true);
+            }
+        } else {
+            $daysLeft = null;
+        }
+
+        $entityManager = $this->doctrine->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return $daysLeft;
+    }
+
+    /**
+     * @param $user
+     * @return float|int
+     */
+    private function getPersentFilled($user)
+    {
+        $fieldsArr = [
+            'age' => $user->getAge(),
+            'citizen' => $user->getCitizen(),
+            'about' => $user->getAbout(),
+            'avatar' => $user->getAvatar()
+        ];
+
+        $filledFieldsArr = array_filter($fieldsArr);
+        $persentFilled = count($filledFieldsArr) / count($fieldsArr);
+
+        return $persentFilled;
     }
 }

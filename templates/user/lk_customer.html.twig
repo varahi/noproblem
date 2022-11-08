@@ -14,6 +14,10 @@
             <p>{{ 'Profile'|trans }}</p>
         </div>
         <div class="large_account fon">
+            {% if profleFilled == 0 %}
+                {% include 'partials/_warning_modal.html.twig' %}
+            {% endif %}
+
             <div class="in_account">
                 {% include 'partials/_message.html.twig' %}
                 <div class="starts_account">
@@ -21,16 +25,16 @@
                         <div class="name_account">
                             <div class="round_account">
                                 {% if user.avatar %}
-                                    <img id="avatar" src="{{ asset('uploads/files/' ~ user.avatar) }}" class="lazyLoad isLoaded" width="200" height="200" />
+                                    <img id="avatar" src="{{ asset('uploads/files/' ~ user.avatar) }}" class="lazyLoad isLoaded" width="200" height="200"  alt=""/>
                                 {% else %}
-                                    <img src="{{ asset('assets/img/photo_acount.jpg') }}" class="lazyLoad isLoaded">
+                                    <img src="{{ asset('assets/img/photo_acount.jpg') }}" class="lazyLoad isLoaded" alt="">
                                 {% endif %}
                             </div>
                             <div class="about_account">
                                 <p class="point_account">{{user.firstName}} {{user.lastName}}</p>
                                 <span class="nan hidden_content">Наниматель</span>
                                 <div class="city_account">
-                                    <img src="{{ asset('assets/img/city_map.svg') }}" class="lazyLoad isLoaded">
+                                    <img src="{{ asset('assets/img/city_map.svg') }}" class="lazyLoad isLoaded" alt="">
                                     {% if user.city %}
                                         <span class="town_account">{{ user.city.name }}</span>
                                     {% else %}

@@ -1,0 +1,22 @@
+<div id="warningModal" class="login modal-vue ticket-form">
+    <div class="overlay"></div>
+    <!-- Modal content -->
+    <div class="modal">
+        <div class="modal-title">
+            <h2>Заполните свой профиль</h2>
+            <button class="close" onclick="closeWarningModal()"><img src="{{ asset('assets/img/krest.svg') }}" alt=""></button>
+        </div>
+        <div class="modal-content">
+            <p>Полный функционал доступен после полного заполнения профиля</p>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(window).on('load', function() {
+        $('#warningModal').modal('show');
+    });
+    function closeWarningModal() {
+        $("#warningModal").css("display", "none");
+    }
+</script>

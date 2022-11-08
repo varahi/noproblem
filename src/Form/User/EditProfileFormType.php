@@ -4,6 +4,7 @@ namespace App\Form\User;
 
 use App\Entity\User;
 use App\Entity\City;
+use App\Entity\Citizen;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TelephoneField;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -12,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -89,7 +91,7 @@ class EditProfileFormType extends AbstractType
             )
             ->add(
                 'age',
-                TextType::class,
+                IntegerType::class,
                 [
                     'required' => false,
                     'attr' => [
@@ -100,20 +102,14 @@ class EditProfileFormType extends AbstractType
                     'translation_domain' => 'forms',
                 ]
             )
-            ->add(
-                'citizen',
-                TextType::class,
-                [
-                    'required' => false,
-                    'attr' => [
-                        'placeholder' => 'Your citizen',
-                        'class' => 'form-control',
-                    ],
-                    'label' => 'Your citizen',
-                    'translation_domain' => 'forms',
-                ]
-            )
-
+            ->add('citizen', EntityType::class, [
+                'class' => Citizen::class,
+                'multiple'  => false,
+                'expanded'  => false,
+                'label' => 'Your citizen',
+                'translation_domain' => 'forms',
+                'required' => false,
+            ])
             ->add(
                 'about',
                 TextareaType::class,

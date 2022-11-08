@@ -101,11 +101,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $education;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $citizen;
-
-    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $address;
@@ -209,6 +204,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $inactive;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Citizen::class, inversedBy="users")
+     */
+    private $citizen;
 
     public function __construct()
     {
@@ -465,18 +465,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEducation(?string $education): self
     {
         $this->education = $education;
-
-        return $this;
-    }
-
-    public function getCitizen(): ?string
-    {
-        return $this->citizen;
-    }
-
-    public function setCitizen(?string $citizen): self
-    {
-        $this->citizen = $citizen;
 
         return $this;
     }
@@ -866,6 +854,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setInactive(?bool $inactive): self
     {
         $this->inactive = $inactive;
+
+        return $this;
+    }
+
+    public function getCitizen(): ?Citizen
+    {
+        return $this->citizen;
+    }
+
+    public function setCitizen(?Citizen $citizen): self
+    {
+        $this->citizen = $citizen;
 
         return $this;
     }
