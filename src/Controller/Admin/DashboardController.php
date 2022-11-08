@@ -36,7 +36,7 @@ use App\Entity\Notification;
 class DashboardController extends AbstractDashboardController
 {
     /**
-     * @Route("/admin", name="admin")
+     * @Route("/noproblem_backend_b43f", name="admin")
      */
     public function index(): Response
     {
