@@ -41,30 +41,18 @@ class UserController extends AbstractController
 
     use DataTrait;
 
+    public const ROLE_EMPLOYEE = 'ROLE_EMPLOYEE';
+
+    public const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
+
+    public const ROLE_BUYER = 'ROLE_BUYER';
+
+    public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+
     /**
      * Time in seconds 3600 - one hour
      */
     public const CACHE_MAX_AGE = '3600';
-
-    /**
-     *
-     */
-    public const ROLE_EMPLOYEE = 'ROLE_EMPLOYEE';
-
-    /**
-     *
-     */
-    public const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
-
-    /**
-     *
-     */
-    public const ROLE_BUYER = 'ROLE_BUYER';
-
-    /**
-     *
-     */
-    public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 
     /**
      * @var Security
@@ -228,6 +216,15 @@ class UserController extends AbstractController
             $notifier->send(new Notification($message, ['browser']));
             return $this->redirectToRoute("app_main");
         }
+    }
+
+    /**
+     * @Route("/resize-image", name="app_resize_image")
+     * @throws \Exception
+     */
+    public function resizeImage()
+    {
+        dd($_REQUEST);
     }
 
     /**

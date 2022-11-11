@@ -101,7 +101,23 @@
     cursor: pointer;
     border: none;
 }
-.btn_try button:hover {
+
+.btn_resize button {
+    font-size: 18px;
+    padding: 18px 50px;
+    color: #fff;
+    background: #6d3d67;
+    background: var(--violet);
+    border-radius: 40px;
+    cursor: pointer;
+    border: none;
+}
+.btn_resize {
+    margin-top: 20px;
+}
+
+.btn_try button:hover,
+.btn_resize button:hover {
     opacity: .8;
     transition: .2s;
 }
@@ -645,9 +661,15 @@ a.link:hover {
     padding-bottom: 5px;
 }
 
+
 .hidden {
     display: none;
 }
+
+.resize {
+    margin-top: 20px;
+}
+
 
 @media only screen and (max-width: 800px) {
     .fon {

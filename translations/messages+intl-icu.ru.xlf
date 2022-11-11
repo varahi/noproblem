@@ -577,46 +577,54 @@
         <source>Support</source>
         <target>Тех. поддержка</target>
       </trans-unit>
-        <trans-unit id="Orders" resname="Orders">
-            <source>Orders</source>
-            <target>Заявки</target>
-        </trans-unit>
-        <trans-unit id="Order" resname="Order">
-            <source>Order</source>
-            <target>Заявка</target>
-        </trans-unit>
-        <trans-unit id="Featured Profiles" resname="Featured Profiles">
-            <source>Featured Profiles</source>
-            <target>Избранные акнеты</target>
-        </trans-unit>
-        <trans-unit id="Featured Jobs" resname="Featured Jobs">
-            <source>Featured Jobs</source>
-            <target>Избранные вакансии</target>
-        </trans-unit>
-        <trans-unit id="Contact Full Name" resname="Contact Full Name">
-            <source>Contact Full Name</source>
-            <target>ФИО контактного лица</target>
-        </trans-unit>
-        <trans-unit id="Featured Users" resname="Featured Users">
-            <source>Featured Users</source>
-            <target>В избранном у пользователей</target>
-        </trans-unit>
-        <trans-unit id="Old Price" resname="Old Price">
-            <source>Old Price</source>
-            <target>Старая цена</target>
-        </trans-unit>
-        <trans-unit id="Customer Description" resname="Customer Description">
-            <source>Customer Description</source>
-            <target>Описание для работников</target>
-        </trans-unit>
-        <trans-unit id="Active user" resname="Active user">
-            <source>Active user</source>
-            <target>Пользователь активен</target>
-        </trans-unit>
-        <trans-unit id="Inactive user" resname="Inactive user">
-            <source>Inactive user</source>
-            <target>Пользователь неактивен</target>
-        </trans-unit>
+      <trans-unit id="t_is3VI" resname="Orders">
+        <source>Orders</source>
+        <target>Заявки</target>
+      </trans-unit>
+      <trans-unit id="a_CQgly" resname="Order">
+        <source>Order</source>
+        <target>Заявка</target>
+      </trans-unit>
+      <trans-unit id="jH.2gy1" resname="Featured Profiles">
+        <source>Featured Profiles</source>
+        <target>Избранные акнеты</target>
+      </trans-unit>
+      <trans-unit id="c5UA45F" resname="Featured Jobs">
+        <source>Featured Jobs</source>
+        <target>Избранные вакансии</target>
+      </trans-unit>
+      <trans-unit id="oS3JSqH" resname="Contact Full Name">
+        <source>Contact Full Name</source>
+        <target>ФИО контактного лица</target>
+      </trans-unit>
+      <trans-unit id="FZHygKS" resname="Featured Users">
+        <source>Featured Users</source>
+        <target>В избранном у пользователей</target>
+      </trans-unit>
+      <trans-unit id="Dtli2Nc" resname="Old Price">
+        <source>Old Price</source>
+        <target>Старая цена</target>
+      </trans-unit>
+      <trans-unit id="QGb4w7." resname="Customer Description">
+        <source>Customer Description</source>
+        <target>Описание для работников</target>
+      </trans-unit>
+      <trans-unit id="PHg0Es3" resname="Active user">
+        <source>Active user</source>
+        <target>Пользователь активен</target>
+      </trans-unit>
+      <trans-unit id="ifFxAcl" resname="Inactive user">
+        <source>Inactive user</source>
+        <target>Пользователь неактивен</target>
+      </trans-unit>
+      <trans-unit id="qyi_FOT" resname="Resize image">
+        <source>Resize image</source>
+        <target>Изменить изображение</target>
+      </trans-unit>
+      <trans-unit id="KCICho4" resname="Crop &amp; Upload Image">
+        <source>Crop &amp; Upload Image</source>
+        <target><![CDATA[Обрезать и сохранить]]></target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

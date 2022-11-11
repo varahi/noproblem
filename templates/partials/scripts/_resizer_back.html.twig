@@ -1,0 +1,71 @@
+<script>
+    var Resize = (function() {
+        function resizeBasic() {
+            var $w = $('.basic-width'),
+                $h = $('.basic-height'),
+                basic = $('#crop-avatar').croppie({
+                    viewport: {
+                        width: 200,
+                        height: 200,
+                        type: 'circle'
+                    },
+                    boundary: {
+                        width: 300,
+                        height: 300
+                    }
+                });
+            basic.croppie('bind', {
+                url: '{{ asset('uploads/files/' ~ user.avatar) }}',
+            });
+
+            $('.basic-result').on('click', function() {
+                var w = parseInt($w.val(), 10),
+                    h = parseInt($h.val(), 10),s
+                size = 'viewport';
+                if (w || h) {
+                    size = { width: w, height: h };
+                }
+                basic.croppie('result', {
+                    type: 'canvas',
+                    size: size,
+                    resultSize: {
+                        width: 50,
+                        height: 50
+                    }
+                }).then(function (resp) {
+                    $('#avatar').attr('src', resp);
+                });
+            });
+
+            // $('.save-result').on('click', function() {
+            //     croppie.result({
+            //         type: 'base64',
+            //         circle: false,
+            //         format: 'png',
+            //         size: 'viewport'
+            //     }).then((imageResult) => {
+            //         // Initialises a FormData object and appends the base64 image data to it
+            //         let formData = new FormData();
+            //         formData.append('base64_img', imageResult);
+            //
+            //         // Sends a POST request to upload_cropped.php
+            //         fetch('upload_cropped.php', {
+            //             method: 'POST',
+            //             body: formData
+            //         }).then(response => response.json()).then((data) => {
+            //             console.log(data);
+            //         });
+            //     });
+            // });
+
+        }
+
+        function init() {
+            resizeBasic();
+        }
+
+        return {
+            init: init
+        };
+    })();
+</script>

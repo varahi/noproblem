@@ -3,98 +3,128 @@
 {% block body %}
     {% include 'partials/header.html.twig' %}
 
-<div>
-    <div class="main_account content">
-        <div  class="bread">
-            <a  href="/" class="nuxt-link-active">{{ 'Main page'|trans }}</a>
-            <a>/</a>
-            <a>{{ 'Personal area'|trans }}</a>
-        </div>
-        <div class="mobfile mobs">
-            <p>{{ 'Profile'|trans }}</p>
-        </div>
-        <div class="large_account fon">
-            {% if profleFilled == 0 %}
-                {% include 'partials/_warning_modal.html.twig' %}
-            {% endif %}
+    <div>
+        <div class="main_account content">
+            <div  class="bread">
+                <a  href="/" class="nuxt-link-active">{{ 'Main page'|trans }}</a>
+                <a>/</a>
+                <a>{{ 'Personal area'|trans }}</a>
+            </div>
+            <div class="mobfile mobs">
+                <p>{{ 'Profile'|trans }}</p>
+            </div>
+            <div class="large_account fon">
+                {% if profleFilled == 0 %}
+                    {% include 'partials/_warning_modal.html.twig' %}
+                {% endif %}
 
-            <div class="in_account">
-                {% include 'partials/_message.html.twig' %}
-                <div class="starts_account">
-                    <div class="left">
-                        <div class="name_account">
-                            <div class="round_account">
-                                {% if user.avatar %}
-                                    <img id="avatar" src="{{ asset('uploads/files/' ~ user.avatar) }}" class="lazyLoad isLoaded" width="200" height="200"  alt=""/>
-                                {% else %}
-                                    <img src="{{ asset('assets/img/photo_acount.jpg') }}" class="lazyLoad isLoaded" alt="">
-                                {% endif %}
-                            </div>
-                            <div class="about_account">
-                                <p class="point_account">{{user.firstName}} {{user.lastName}}</p>
-                                <span class="nan hidden_content">Наниматель</span>
-                                <div class="city_account">
-                                    <img src="{{ asset('assets/img/city_map.svg') }}" class="lazyLoad isLoaded" alt="">
-                                    {% if user.city %}
-                                        <span class="town_account">{{ user.city.name }}</span>
+                <div class="in_account">
+                    {% include 'partials/_message.html.twig' %}
+                    <div class="starts_account">
+                        <div class="left">
+
+                            {{ form_start(form, {'action': path('app_resize_image'), 'method': 'POST'}) }}  {{ form_end(form) }}
+                            <div class="name_account">
+                                <div class="round_account">
+                                    {% if user.avatar %}
+                                        <img id="avatar" src="{{ asset('uploads/files/' ~ user.avatar) }}" name="resized_image"
+                                             class="lazyLoad isLoaded" width="200" height="200"  alt=""/>
                                     {% else %}
-                                        <span class="town_account">Город не указан</span>
+                                        <img src="{{ asset('assets/img/photo_acount.jpg') }}" class="lazyLoad isLoaded" alt="">
                                     {% endif %}
                                 </div>
-                                <div class="contact_account_container">
-                                    <p class="contact_account">{{ user.email }}</p>
-                                    <p class="contact_account">{{ user.phone }}</p>
+                                <div class="about_account">
+                                    <p class="point_account">{{user.firstName}} {{user.lastName}}</p>
+                                    <span class="nan hidden_content">Наниматель</span>
+                                    <div class="city_account">
+                                        <img src="{{ asset('assets/img/city_map.svg') }}" class="lazyLoad isLoaded" alt="">
+                                        {% if user.city %}
+                                            <span class="town_account">{{ user.city.name }}</span>
+                                        {% else %}
+                                            <span class="town_account">Город не указан</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="contact_account_container">
+                                        <p class="contact_account">{{ user.email }}</p>
+                                        <p class="contact_account">{{ user.phone }}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="double_account _hidden_content">
-                            <div class="btn_account ">
-                                <a href="{{ path('app_edit_profile') }}">Редактировать профиль</a>
+                            <div id="imageModal" class="login modal-vue hidden">
+                                <div class="overlay"></div>
+                                <!-- Modal content -->
+                                <div class="modal">
+                                    <div class="modal-title">
+                                        <h2>{{ 'Resize image'|trans }}</h2>
+                                        <button class="close"><img src="{{ asset('assets/img/krest.svg') }}" alt=""></button>
+                                    </div>
+                                    <div class="modal-content">
+                                        <div id="image_avatar"></div>
+
+                                        <div class="btn_try" style="text-align: center">
+                                            <button class="btn btn-success crop_image">{{ 'Crop & Upload Image'|trans }}</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="btn_account_mob mobs">
-                            <a href="{{ path('app_edit_profile') }}">Редактировать</a>
-                        </div>
-                    </div>
-                    <div class="right_account">
-                        <div class="window_account">
-                            <div class="var_account">
-                                <h5>Верификация</h5>
-                                <img src="{{ asset('assets/img/verif.svg') }}" class="lazyLoad isLoaded" alt="">
-                            </div>
-                            <p>Паспорт - <span>не загружен</span></p>
-                            <p> Телефон -  <span>не подтвержден</span></p>
-                            <p> Почта - <span>не пожтверждена</span></p>
-                        </div>
-                        <div class="window_account ">
-                            <div class="var_account">
-                                <h5>Доступ к платформе:</h5>
-                            </div>
-                            {% if daysLeft <= 0 %}
-                                <p class="red">Доступ к системе ограничен. Пожалуйста пополните ваш баланс.</p>
-                            {% elseif daysLeft < 3 %}
-                                <p class="red">Осталось: {{ daysLeft }} дней</p>
-                             {% else %}
-                                 <p class="green">Осталось: {{ daysLeft }} дней</p>
+
+                            {% if user.avatar %}
+                                <div class="btn_resize">
+                                    <button type="submit" class="btn resize_image open-modal">{{ 'Resize image'|trans }}</button>
+                                </div>
+                                {% include 'partials/scripts/_image_crop.html.twig' %}
                             {% endif %}
-                            <button class="btn_tarrifs_account">
-                                <a href="{{ path('app_tarifs') }}" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Тарифы</a>
-                            </button>
+
+
+                            <div class="double_account _hidden_content">
+                                <div class="btn_account ">
+                                    <a href="{{ path('app_edit_profile') }}">Редактировать профиль</a>
+                                </div>
+                            </div>
+                            <div class="btn_account_mob mobs">
+                                <a href="{{ path('app_edit_profile') }}">Редактировать</a>
+                            </div>
+                        </div>
+                        <div class="right_account">
+                            <div class="window_account">
+                                <div class="var_account">
+                                    <h5>Верификация</h5>
+                                    <img src="{{ asset('assets/img/verif.svg') }}" class="lazyLoad isLoaded" alt="">
+                                </div>
+                                <p>Паспорт - <span>не загружен</span></p>
+                                <p> Телефон -  <span>не подтвержден</span></p>
+                                <p> Почта - <span>не пожтверждена</span></p>
+                            </div>
+                            <div class="window_account ">
+                                <div class="var_account">
+                                    <h5>Доступ к платформе:</h5>
+                                </div>
+                                {% if daysLeft <= 0 %}
+                                    <p class="red">Доступ к системе ограничен. Пожалуйста пополните ваш баланс.</p>
+                                {% elseif daysLeft < 3 %}
+                                    <p class="red">Осталось: {{ daysLeft }} дней</p>
+                                {% else %}
+                                    <p class="green">Осталось: {{ daysLeft }} дней</p>
+                                {% endif %}
+                                <button class="btn_tarrifs_account">
+                                    <a href="{{ path('app_tarifs') }}" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Тарифы</a>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            {% if is_granted('ROLE_EMPLOYEE') %}
+                {% include 'partials/user/_slider1.html.twig' %}
+            {% endif %}
+            {% if is_granted('ROLE_CUSTOMER') %}
+                {% include 'partials/pages/worksheet/_slider1.html.twig' %}
+                {#{% include 'partials/user/_slider2.html.twig' %}#}
+            {% endif %}
         </div>
-        {% if is_granted('ROLE_EMPLOYEE') %}
-            {% include 'partials/user/_slider1.html.twig' %}
-        {% endif %}
-        {% if is_granted('ROLE_CUSTOMER') %}
-            {% include 'partials/pages/worksheet/_slider1.html.twig' %}
-            {#{% include 'partials/user/_slider2.html.twig' %}#}
-        {% endif %}
     </div>
-</div>
 
     {% include 'partials/footer.html.twig' %}
+
 {% endblock %}
