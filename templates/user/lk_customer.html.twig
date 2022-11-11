@@ -26,8 +26,7 @@
                             <div class="name_account">
                                 <div class="round_account">
                                     {% if user.avatar %}
-                                        <img id="avatar" src="{{ asset('uploads/files/' ~ user.avatar) }}" name="resized_image"
-                                             class="lazyLoad isLoaded" width="200" height="200"  alt=""/>
+                                        <img id="avatar" src="{{ asset('uploads/files/' ~ user.avatar) }}" class="lazyLoad isLoaded" alt=""/>
                                     {% else %}
                                         <img src="{{ asset('assets/img/photo_acount.jpg') }}" class="lazyLoad isLoaded" alt="">
                                     {% endif %}
@@ -76,14 +75,14 @@
                                 {% include 'partials/scripts/_image_crop.html.twig' %}
                             {% endif %}
 
-                            <div class="double_account _hidden_content">
+                            <div class="double_account _hidden_content" style="margin-top: 30px;">
                                 <div class="btn_account ">
                                     <a href="{{ path('app_edit_profile') }}">Редактировать профиль</a>
                                 </div>
                             </div>
-                            <div class="btn_account_mob mobs">
-                                <a href="{{ path('app_edit_profile') }}">Редактировать</a>
-                            </div>
+{#                            <div class="btn_account_mob mobs">#}
+{#                                <a href="{{ path('app_edit_profile') }}">Редактировать</a>#}
+{#                            </div>#}
                         </div>
                         <div class="right_account">
                             <div class="window_account">
