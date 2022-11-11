@@ -84,7 +84,7 @@
                         {{ form_row(form.about) }}
                         <div class="round_account">
                             {% if user.avatar %}
-                                <img id="avatar" src="{{ asset('uploads/files/' ~ user.avatar) }}" class="lazyLoad isLoaded" width="200" height="200"  alt=""/>
+                                <img id="avatar" src="{{ asset('uploads/files/' ~ user.avatar) }}" class="lazyLoad isLoaded" alt=""/>
                             {% else %}
                                 <img id="avatar" src="{{ asset('assets/img/photo_acount.jpg') }}" width="200" alt="">
                             {% endif %}

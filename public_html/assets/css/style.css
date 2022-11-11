@@ -1711,19 +1711,20 @@ margin-bottom: 20px;
 .round_account {
   display: grid;
   align-items: center;
-  width: 200px;
-  height: 200px;
-  border-radius: 100%;
-  border: 1px solid var(--violet);
-  justify-content: center;
 }
 
 .round_account img {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-  object-fit: cover;
-  border-radius: 100%;
+    width: 100%;
+    height: 100%;
+    max-width: 200px;
+    max-height: 200px;
+    min-width: 200px;
+    min-height: 200px;
+    -o-object-fit: cover;
+    object-fit: cover;
+    border-radius: 100%;
+    border: 1px solid var(--violet);
+    justify-content: center;
 }
 
 .point_account {
