@@ -79,15 +79,17 @@
                         });
                     </script>
 
+
                     <div class="form-group grig-group" style="margin-top: 20px">
                         {{ form_row(form.about) }}
                         <div class="round_account">
                             {% if user.avatar %}
-                                <img id="avatar" src="{{ asset('uploads/files/' ~ user.avatar) }}" class="lazyLoad isLoaded" width="200" height="200" />
+                                <img id="avatar" src="{{ asset('uploads/files/' ~ user.avatar) }}" class="lazyLoad isLoaded" width="200" height="200"  alt=""/>
                             {% else %}
-                                <img id="avatar" src="{{ asset('assets/img/photo_acount.jpg') }}" width="200">
+                                <img id="avatar" src="{{ asset('assets/img/photo_acount.jpg') }}" width="200" alt="">
                             {% endif %}
                             <div class="">
+                                <div class="upload-image-message"></div>
                                 <p>Аватар пользователя</p>
                                 <div class="upload_file">
                                     {{ form_widget(form.avatar) }}
@@ -100,6 +102,27 @@
                         <button type="submit" class="btn btn-success">Обновить профиль</button>
                     </div>
                 {{ form_end(form) }}
+
+                    <div id="imageModal" class="login modal-vue _hidden" style="visibility: hidden">
+                        <div class="overlay"></div>
+                        <!-- Modal content -->
+                        <div class="modal">
+                            <div class="modal-title">
+                                <h2>{{ 'Upload image'|trans }}</h2>
+                                <button class="close"><img src="{{ asset('assets/img/krest.svg') }}" alt=""></button>
+                            </div>
+                            <div class="modal-content">
+                                <div id="image_avatar"></div>
+
+                                <div class="btn_try" style="text-align: center">
+                                    <button class="btn btn-success crop_image">{{ 'Crop & Upload Image'|trans }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% include 'partials/scripts/_image_crop.html.twig' %}
+
                 </div>
             </div>
         </div>

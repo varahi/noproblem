@@ -623,7 +623,11 @@
       </trans-unit>
       <trans-unit id="KCICho4" resname="Crop &amp; Upload Image">
         <source>Crop &amp; Upload Image</source>
-        <target><![CDATA[Обрезать и сохранить]]></target>
+        <target>Обрезать и сохранить</target>
+      </trans-unit>
+      <trans-unit id="._TfbHy" resname="Upload image">
+        <source>Upload image</source>
+        <target>Загрузить изображение</target>
       </trans-unit>
     </body>
   </file>

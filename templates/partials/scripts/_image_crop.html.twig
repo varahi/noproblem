@@ -14,6 +14,20 @@
             },
         });
 
+        $('#edit_profile_form_avatar').on('change', function(){
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                $image_crop.croppie('bind', {
+                    url: event.target.result
+                }).then(function(){
+                    console.log('jQuery bind complete');
+                });
+            }
+            reader.readAsDataURL(this.files[0]);
+            //$('#uploadimageModal').modal('show');
+            $("#imageModal").css("visibility", "visible")
+        });
+
         $('.crop_image').click(function(event){
             $image_crop.croppie('result', {
                 type: 'canvas',
@@ -26,6 +40,9 @@
                     success:function(data)
                     {
                         $("#imageModal").css("visibility", "hidden")
+                        $(".upload-image-message").append('<span class="success">Изображение загружено</span>');
+                        //window.location='{{ path('app_lk') }}';
+                        //window.location=document.referrer;
                     }
                 });
             })

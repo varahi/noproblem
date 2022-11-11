@@ -224,8 +224,11 @@ class UserController extends AbstractController
      *
      * @return Response
      */
-    public function uploadCroppedImage()
-    {
+    public function uploadCroppedImage(
+        Request $request,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier
+    ): Response {
         if ($this->isGranted(self::ROLE_CUSTOMER) || $this->isGranted(self::ROLE_EMPLOYEE)) {
             $user = $this->security->getUser();
 
@@ -235,10 +238,7 @@ class UserController extends AbstractController
                     $image_array_1 = explode(";", $data);
                     $image_array_2 = explode(",", $image_array_1[1]);
                     $data = base64_decode($image_array_2[1]);
-
-                    //$imageName = $user->getAvatar();
-
-                    $newImageName = time() . '.png';
+                    $newImageName = $user->getUsername() .'-'. time() . '.png';
                     $user->setAvatar($newImageName);
                     $entityManager = $this->doctrine->getManager();
                     $entityManager->persist($user);
@@ -253,6 +253,11 @@ class UserController extends AbstractController
                 'There is ok',
                 Response::HTTP_OK
             );
+
+            /*$message = $translator->trans('Image updated', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            $referer = $request->headers->get('referer');
+            return new RedirectResponse($referer);*/
         }
     }
 

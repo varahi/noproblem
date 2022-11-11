@@ -670,6 +670,14 @@ a.link:hover {
     margin-top: 20px;
 }
 
+.upload-image-message {
+    margin-top: 10px;
+}
+
+.upload-image-message span {
+    color: #73bb26;
+}
+
 
 @media only screen and (max-width: 800px) {
     .fon {
