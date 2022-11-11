@@ -1,5 +1,4 @@
 <script>
-
     $(document).ready(function(){
         $image_crop = $('#image_avatar').croppie({
             url: '{{ asset('uploads/files/' ~ user.avatar) }}',
@@ -21,12 +20,12 @@
                 size: 'viewport'
             }).then(function(response){
                 $.ajax({
-                    url:"http://127.0.0.1/crop/upload.php",
+                    url:"{{ path('app_upload_cropped_image') }}",
                     type: "POST",
                     data:{"image": response},
                     success:function(data)
                     {
-                        $("#uploadimageModal").css("display", "none");
+                        $("#imageModal").css("visibility", "hidden")
                     }
                 });
             })
@@ -34,10 +33,12 @@
 
 
         $(".open-modal").click(function(){
-            $("#imageModal").show();
+            //$("#imageModal").show();
+            $("#imageModal").css("visibility", "visible")
         });
         $(".close").click(function(){
-            $("#imageModal").hide();
+            //$("#imageModal").hide();
+            $("#imageModal").css("visibility", "hidden")
         });
     });
 </script>

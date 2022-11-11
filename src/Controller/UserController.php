@@ -218,13 +218,42 @@ class UserController extends AbstractController
         }
     }
 
+
     /**
-     * @Route("/resize-image", name="app_resize_image")
-     * @throws \Exception
+     * @Route("/upload-cropped-image", name="app_upload_cropped_image")
+     *
+     * @return Response
      */
-    public function resizeImage()
+    public function uploadCroppedImage()
     {
-        dd($_REQUEST);
+        if ($this->isGranted(self::ROLE_CUSTOMER) || $this->isGranted(self::ROLE_EMPLOYEE)) {
+            $user = $this->security->getUser();
+
+            if ($user->getAvatar()) {
+                if (isset($_POST["image"])) {
+                    $data = $_POST["image"];
+                    $image_array_1 = explode(";", $data);
+                    $image_array_2 = explode(",", $image_array_1[1]);
+                    $data = base64_decode($image_array_2[1]);
+
+                    //$imageName = $user->getAvatar();
+
+                    $newImageName = time() . '.png';
+                    $user->setAvatar($newImageName);
+                    $entityManager = $this->doctrine->getManager();
+                    $entityManager->persist($user);
+                    $entityManager->flush();
+
+                    $targetImageName = $this->targetDirectory .'/'. $newImageName;
+                    file_put_contents($targetImageName, $data);
+                }
+            }
+
+            return new Response(
+                'There is ok',
+                Response::HTTP_OK
+            );
+        }
     }
 
     /**

@@ -23,7 +23,6 @@
                     <div class="starts_account">
                         <div class="left">
 
-                            {{ form_start(form, {'action': path('app_resize_image'), 'method': 'POST'}) }}  {{ form_end(form) }}
                             <div class="name_account">
                                 <div class="round_account">
                                     {% if user.avatar %}
@@ -51,7 +50,7 @@
                                 </div>
                             </div>
 
-                            <div id="imageModal" class="login modal-vue hidden">
+                            <div id="imageModal" class="login modal-vue _hidden" style="visibility: hidden">
                                 <div class="overlay"></div>
                                 <!-- Modal content -->
                                 <div class="modal">
@@ -75,7 +74,6 @@
                                 </div>
                                 {% include 'partials/scripts/_image_crop.html.twig' %}
                             {% endif %}
-
 
                             <div class="double_account _hidden_content">
                                 <div class="btn_account ">
