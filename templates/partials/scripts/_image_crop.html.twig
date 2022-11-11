@@ -33,6 +33,7 @@
                 type: 'canvas',
                 size: 'viewport'
             }).then(function(response){
+                $('#avatar').attr('src', response);
                 $.ajax({
                     url:"{{ path('app_upload_cropped_image') }}",
                     type: "POST",
@@ -40,7 +41,7 @@
                     success:function(data)
                     {
                         $("#imageModal").css("visibility", "hidden")
-                        $(".upload-image-message").append('<span class="success">Изображение загружено</span>');
+                        $(".upload-image-message").append('<span class="success">Изображение сохранено</span>');
                         //window.location='{{ path('app_lk') }}';
                         //window.location=document.referrer;
                     }
