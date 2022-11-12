@@ -9,7 +9,6 @@ parameters:
     default_subject: Subject from noproblem
     default_domain: 'noproblem.ru'
     default_scheme: 'https'
-    app.chat.manager.class: ISMS\ChatBundle\Manager\ChatManager
 
 services:
     # default configuration for services in *this* file
@@ -36,7 +35,3 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-
-    App\Manager\Chat:
-#        class: %app.chat.manager.class%
-        arguments: ['@doctrine.orm.entity_manager']
