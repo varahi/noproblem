@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Controller\ChatController;
+use App\Service\ChatMessenger;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -50,7 +50,7 @@ class ChatStartCommand extends Command
             'Starting chat, open your browser.',
         ]);
 
-        $server = IoServer::factory(new HttpServer(new WsServer(new ChatController())), 8080);
+        $server = IoServer::factory(new HttpServer(new WsServer(new ChatMessenger())), 8080);
 
         $server->run();
     }

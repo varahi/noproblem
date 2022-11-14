@@ -1,6 +1,8 @@
 <script>
     var userInfo = {
-        username: new Date().getTime().toString()
+        //username: new Date().getTime().toString()
+        sessionUserId: {{ user.id }},
+        secondUserId: 6 // info@t3dev.ru
     };
     /* var form = document.getElementById('submit-form');
     var messageArea = document.getElementById("form-message");
@@ -12,7 +14,8 @@
      * @type WebSocket
      */
 
-    var socket = new WebSocket("ws://127.0.0.1:8080");
+    //var socket = new WebSocket("ws://127.0.0.1:8080");
+    var socket = new WebSocket('ws://localhost:8080?token={{ user.id }}');
 
     socket.onopen = function(event) {
         console.info("Connection status OK!");
@@ -20,7 +23,7 @@
 
     socket.onmessage = function(event) {
         var data = JSON.parse(event.data);
-        ChatController.addMessage(data.username, data.message);
+        ChatController.addMessage(data.sessionUserId, data.message);
 
         console.log(data);
     };
@@ -48,15 +51,21 @@
 
     // Send the message and add it to a list.
     var ChatController = {
-        addMessage: function(username,message){
+        addMessage: function(sessionUserId,secondUserId, message){
             var from;
 
-            if(username == userInfo.username){
+            if(sessionUserId == userInfo.sessionUserId){
                 from = "Me";
-            }else{
-                from = userInfo.username;
+            }
+            //else{
+            //    from = userInfo.sessionUserId;
+            //}
+
+            if(secondUserId == userInfo.secondUserId) {
+                from = userInfo.secondUserId;
             }
 
+            //from = userInfo.username;
             var ul = document.getElementById("messages-list");
             var li = document.createElement("li");
             li.appendChild(document.createTextNode(from + " : "+ message));
@@ -65,7 +74,7 @@
         sendMessage: function(text){
             userInfo.message = text;
             socket.send(JSON.stringify(userInfo));
-            this.addMessage(userInfo.username, userInfo.message);
+            this.addMessage(userInfo.sessionUserId, userInfo.secondUserId, userInfo.message);
         }
     };
 </script>

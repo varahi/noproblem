@@ -2,6 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Chat;
+use App\ImageOptimizer;
+use App\Service\ModalForms;
+use Doctrine\Persistence\ManagerRegistry;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,90 +14,33 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
+use Twig\Environment;
 
-class ChatController extends AbstractController implements MessageComponentInterface
+class ChatController extends AbstractController
 {
-    protected $clients;
-
-    private $entityManager;
-
-    private $chatRepository;
-
-    private $paths;
-
-    public function __construct()
-    {
-        //$this->clients = new \SplObjectStorage();
-        $this->clients = [];
-        $this->paths = [];
-    }
-
-    public function onOpen(ConnectionInterface $conn)
-    {
-        //$this->clients->attach($conn);
-        //echo "New connection! ({$conn->resourceId})\n";
-
-        $this->clients[$conn->resourceId] = $conn;
-        echo "New connection! ({$conn->resourceId})\n";
-    }
-
-    public function onMessage(ConnectionInterface $from, $msg)
-    {
-        $numRecv = count($this->clients) - 1;
-        echo sprintf('Connection %d sending message "%s" to %d other connection%s' . "\n", $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
-
-        foreach ($this->clients as $client) {
-            if ($from !== $client) {
-                // The sender is not the receiver, send to each client connected
-                $client->send($msg);
-            }
-        }
-        //push data in array
-        $tempArr=$this->paths;
-        $reqArr=json_decode($msg, true);
-        $tempArr[$from->resourceId]=$reqArr['sessionUser'];
-        $this->paths=$tempArr;
-
-        // search in array
-        $tempSearch= array_search($reqArr['secondUser'], $this->paths);
-        if ($tempSearch) {
-            $val=$tempSearch;
-        } else {
-            $val=$from->resourceId;
-        }
-
-        // curl code
-        $request = "http://localhost/user";
-        $header_array = array(
-            'Content-Type:application/json',
-            'Accept:application/json');
-
-        // initiate curl
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $request);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $header_array);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $msg);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $response = curl_exec($ch);
-        curl_close($ch);
-        $retData=json_decode($response);
-
-        $client = $this->clients[$val];
-        $from->send($msg);
-    }
-
-    public function onClose(ConnectionInterface $conn)
-    {
-        // The connection is closed, remove it, as we can no longer send it messages
-        $this->clients->detach($conn);
-        echo "Connection {$conn->resourceId} has disconnected\n";
-    }
-
-    public function onError(ConnectionInterface $conn, \Exception $e)
-    {
-        echo "An error has occurred: {$e->getMessage()}\n";
-        $conn->close();
+    /**
+     * @param Security $security
+     * @param Environment $twig
+     * @param ManagerRegistry $doctrine
+     * @param ModalForms $modalForms
+     * @param ImageOptimizer $imageOptimizer
+     * @param string $targetDirectory
+     */
+    public function __construct(
+        Security $security,
+        Environment $twig,
+        ManagerRegistry $doctrine,
+        ModalForms $modalForms,
+        ImageOptimizer $imageOptimizer,
+        string $targetDirectory
+    ) {
+        $this->security = $security;
+        $this->twig = $twig;
+        $this->doctrine = $doctrine;
+        $this->modalForms = $modalForms;
+        $this->imageOptimizer = $imageOptimizer;
+        $this->targetDirectory = $targetDirectory;
     }
 
     /**
@@ -108,30 +55,31 @@ class ChatController extends AbstractController implements MessageComponentInter
     }
 
     /**
-     * @Route("/user", name="userTab")
+     * @Route("/user", name="check_user")
      *
      * @param Request $request
      */
     public function checkUser(Request $request)
     {
+        $user = $this->security->getUser();
         $data = \json_decode($request->getContent(), true);
 
         file_put_contents('data.json', json_encode($data));
+        file_put_contents('user.json', json_encode($data['userId']));
+        file_put_contents('msg.json', json_encode($data['message']));
 
-        //dd($data);
+        $chat = new Chat();
+        //$chat->setMessage(($data['message']));
+        //$chat->setUserId($user->getId());
+        $chat->setMessage('Some message');
+        $chat->setUserId('Some user id');
 
-        /*if($data['msg']!="check"){
-            $chatUser= new  ChatEntity();
-            $chatUser->setMessage($data['msg']);
-            $chatUser->setUserId($data['sessionUser']);
-            $chatUser->setReciever($data['secondUser']);
-            $chatUser->setStatus("new");
-            $this->entityManager->persist($chatUser);
-            $this->entityManager->flush();
-        }*/
-        //$arrData=$this->chatEntity->findOneBy(['userId'=>$data['secondUser'],'reciever'=>$data['sessionUser'],'status'=>"new"]);
+        $entityManager = $this->doctrine->getManager();
+        $entityManager->persist($chat);
+        $entityManager->flush();
 
-        //file_put_contents('arrdata.json', json_encode($arrData));
+        //if (isset($data) && !empty($data) && !empty($data['msg'])) {
+        //}
 
         return new JsonResponse("null", 200);
     }
