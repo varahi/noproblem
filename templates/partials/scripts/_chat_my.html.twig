@@ -1,8 +1,10 @@
 <script>
     var userInfo = {
         //username: new Date().getTime().toString()
-        sessionUserId: {{ user.id }},
-        secondUserId: 6 // info@t3dev.ru
+        fromUserId: 'Test ' + {{ fromUser.id }},
+        {% if toUser is not null %}
+            toUserId: 'Test ' + {{ toUser.id }}
+        {% endif %}
     };
     /* var form = document.getElementById('submit-form');
     var messageArea = document.getElementById("form-message");
@@ -13,9 +15,7 @@
     /**
      * @type WebSocket
      */
-
-    //var socket = new WebSocket("ws://127.0.0.1:8080");
-    var socket = new WebSocket('ws://localhost:8080?token={{ user.id }}');
+    var socket = new WebSocket("ws://127.0.0.1:8080");
 
     socket.onopen = function(event) {
         console.info("Connection status OK!");
@@ -23,7 +23,7 @@
 
     socket.onmessage = function(event) {
         var data = JSON.parse(event.data);
-        ChatController.addMessage(data.sessionUserId, data.message);
+        ChatController.addMessage(data.fromUserId, data.toUserId, data.message);
 
         console.log(data);
     };
@@ -51,18 +51,15 @@
 
     // Send the message and add it to a list.
     var ChatController = {
-        addMessage: function(sessionUserId,secondUserId, message){
+        addMessage: function(fromUserId,toUserId, message){
             var from;
+            //from = "From user id " + userInfo.fromUserId;
 
-            if(sessionUserId == userInfo.sessionUserId){
-                from = "Me";
-            }
-            //else{
-            //    from = userInfo.sessionUserId;
-            //}
-
-            if(secondUserId == userInfo.secondUserId) {
-                from = userInfo.secondUserId;
+            if(fromUserId === userInfo.fromUserId){
+                 //from = "From me";
+                from = "From user id " + userInfo.fromUserId;
+            } else {
+                from = "From user id " + userInfo.toUserId;
             }
 
             //from = userInfo.username;
@@ -74,7 +71,7 @@
         sendMessage: function(text){
             userInfo.message = text;
             socket.send(JSON.stringify(userInfo));
-            this.addMessage(userInfo.sessionUserId, userInfo.secondUserId, userInfo.message);
+            this.addMessage(userInfo.fromUserId, userInfo.toUserId, userInfo.message);
         }
     };
 </script>

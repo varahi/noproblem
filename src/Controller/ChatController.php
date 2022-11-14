@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Chat;
+use App\Entity\User;
 use App\ImageOptimizer;
+use App\Repository\UserRepository;
 use App\Service\ModalForms;
 use Doctrine\Persistence\ManagerRegistry;
 use Ratchet\MessageComponentInterface;
@@ -46,11 +48,33 @@ class ChatController extends AbstractController
     /**
      * @Route("/chat", name="chat")
      */
-    public function index()
-    {
+    public function chat(
+        UserRepository $userRepository
+    ) {
+        $toUser = null;
         $user = $this->getUser();
+        $allUsers = $userRepository->findAll();
         return $this->render('chat/index.html.twig', [
-            'user' => $user
+            'user' => $user,
+            'toUser' => $toUser,
+            'allUsers' => $allUsers
+        ]);
+    }
+
+    /**
+     * @Route("/select-chat/user-{id}", name="app_select_chat")
+     */
+    public function selectChat(
+        Request $request,
+        User $toUser,
+        UserRepository $userRepository
+    ) {
+        $fromUser = $this->getUser();
+        $allUsers = $userRepository->findAll();
+        return $this->render('chat/index.html.twig', [
+            'fromUser' => $fromUser,
+            'toUser' => $toUser,
+            'allUsers' => $allUsers
         ]);
     }
 

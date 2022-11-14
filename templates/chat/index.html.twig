@@ -1,9 +1,9 @@
-{% block title %}Symfony Chat{% endblock %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/chat.css') }}">
-{% endblock %}
 {% block body %}
+
+    {% for siteUser in allUsers %}
+        <a href="{{ path('app_select_chat', { id:  siteUser.id}) }}" class="">{{ siteUser }}</a> <br />
+    {% endfor %}
 
     <div class="row">
         <div id="sidebar" class="col-sm-3">
