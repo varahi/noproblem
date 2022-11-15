@@ -16,6 +16,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class UserRepository extends ServiceEntityRepository
 {
+    public const TABLE = 'App\Entity\User';
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
@@ -37,6 +39,27 @@ class UserRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * @param $user
+     * @param $role
+     * @return float|int|mixed|string
+     */
+    public function findAllExcluded($user, $role)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $expr = $qb->expr();
+        $qb->select('u')
+            ->from(self::TABLE, 'u')
+            ->where('u.roles NOT LIKE :roles')
+            ->andWhere($qb->expr()->neq('u.id', $user->getId()))
+            ->setParameter('roles', '%"'.$role.'"%')
+            ->andWhere($expr->neq('u.hidden', 1))
+            //->orWhere('u.hidden is NULL')
+            ->orderBy('u.created', 'DESC');
+
+        return $qb->getQuery()->getResult();
     }
 
 //    /**

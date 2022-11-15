@@ -210,6 +210,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $citizen;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=ChatRoom::class, mappedBy="users")
+     */
+    private $chatRooms;
+
     public function __construct()
     {
         $this->ticket = new ArrayCollection();
@@ -223,6 +228,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->orders = new ArrayCollection();
         $this->featuredProfiles = new ArrayCollection();
         $this->featuredJobs = new ArrayCollection();
+        $this->chatRooms = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -866,6 +872,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCitizen(?Citizen $citizen): self
     {
         $this->citizen = $citizen;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ChatRoom>
+     */
+    public function getChatRooms(): Collection
+    {
+        return $this->chatRooms;
+    }
+
+    public function addChatRoom(ChatRoom $chatRoom): self
+    {
+        if (!$this->chatRooms->contains($chatRoom)) {
+            $this->chatRooms[] = $chatRoom;
+            $chatRoom->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChatRoom(ChatRoom $chatRoom): self
+    {
+        if ($this->chatRooms->removeElement($chatRoom)) {
+            $chatRoom->removeUser($this);
+        }
 
         return $this;
     }

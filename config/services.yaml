@@ -33,5 +33,10 @@ services:
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }
 
+#        app.chat_messenger:
+#            class: App\Service\ChatMessenger
+#            calls:
+#                - withMailer: !returns_clone ['@mailer']
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

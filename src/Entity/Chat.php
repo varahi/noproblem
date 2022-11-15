@@ -6,7 +6,7 @@ use App\Repository\ChatRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ChatEntityRepository::class)
+ * @ORM\Entity(repositoryClass=ChatRepository::class)
  */
 class Chat
 {
@@ -18,38 +18,48 @@ class Chat
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="datetime")
      */
-    private $userId;
+    private $created;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text")
      */
     private $message;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $status;
+    private $sender;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $reciever;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=ChatRoom::class, inversedBy="chat")
+     */
+    private $chatRoom;
+
+    public function __construct()
+    {
+        $this->created = new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUserId(): ?string
+    public function getCreated(): ?\DateTimeInterface
     {
-        return $this->userId;
+        return $this->created;
     }
 
-    public function setUserId(?string $userId): self
+    public function setCreated(\DateTimeInterface $created): self
     {
-        $this->userId = $userId;
+        $this->created = $created;
 
         return $this;
     }
@@ -59,21 +69,21 @@ class Chat
         return $this->message;
     }
 
-    public function setMessage(?string $message): self
+    public function setMessage(string $message): self
     {
         $this->message = $message;
 
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getSender(): ?string
     {
-        return $this->status;
+        return $this->sender;
     }
 
-    public function setStatus(?string $status): self
+    public function setSender(?string $sender): self
     {
-        $this->status = $status;
+        $this->sender = $sender;
 
         return $this;
     }
@@ -86,6 +96,18 @@ class Chat
     public function setReciever(?string $reciever): self
     {
         $this->reciever = $reciever;
+
+        return $this;
+    }
+
+    public function getChatRoom(): ?ChatRoom
+    {
+        return $this->chatRoom;
+    }
+
+    public function setChatRoom(?ChatRoom $chatRoom): self
+    {
+        $this->chatRoom = $chatRoom;
 
         return $this;
     }

@@ -629,6 +629,14 @@
         <source>Upload image</source>
         <target>Загрузить изображение</target>
       </trans-unit>
+        <trans-unit id="Buyers" resname="Buyers">
+            <source>Buyers</source>
+            <target>Покупатели</target>
+        </trans-unit>
+        <trans-unit id="Buyer" resname="Buyer">
+            <source>Buyer</source>
+            <target>Покупатель</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>

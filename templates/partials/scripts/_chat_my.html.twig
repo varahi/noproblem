@@ -1,15 +1,8 @@
 <script>
     var userInfo = {
-        //username: new Date().getTime().toString()
-        fromUserId: 'Test ' + {{ fromUser.id }},
-        {% if toUser is not null %}
-            toUserId: 'Test ' + {{ toUser.id }}
-        {% endif %}
+        fromId: {{ fromUser.id }},
+        toId: {{ toUser.id }}
     };
-    /* var form = document.getElementById('submit-form');
-    var messageArea = document.getElementById("form-message");
-    var messagesList = document.getElementById('messages-list');
-     */
 
     // Socket chat configuration
     /**
@@ -23,17 +16,16 @@
 
     socket.onmessage = function(event) {
         var data = JSON.parse(event.data);
-        ChatController.addMessage(data.fromUserId, data.toUserId, data.message);
+        ChatController.addMessage(data.fromId, data.toId, data.message);
 
         console.log(data);
     };
 
     socket.onerror = function(error){
-        alert("Something is wrong with your connection.");
+        alert("Соединение с чат сервером не может быть установлено.");
         console.error(error);
     };
     // Socket chat config end
-
 
     /// Adding messages to the list element
     document.getElementById("form-submit").addEventListener("click",function(){
@@ -51,15 +43,15 @@
 
     // Send the message and add it to a list.
     var ChatController = {
-        addMessage: function(fromUserId,toUserId, message){
+        addMessage: function(fromId,toId, message){
             var from;
-            //from = "From user id " + userInfo.fromUserId;
+            //from = "From user id " + userInfo.fromId;
 
-            if(fromUserId === userInfo.fromUserId){
+            if(fromId === userInfo.fromId){
                  //from = "From me";
-                from = "From user id " + userInfo.fromUserId;
+                from = "From user id " + userInfo.fromId;
             } else {
-                from = "From user id " + userInfo.toUserId;
+                from = "From user id " + userInfo.toId;
             }
 
             //from = userInfo.username;
@@ -71,7 +63,7 @@
         sendMessage: function(text){
             userInfo.message = text;
             socket.send(JSON.stringify(userInfo));
-            this.addMessage(userInfo.fromUserId, userInfo.toUserId, userInfo.message);
+            this.addMessage(userInfo.fromId, userInfo.toId, userInfo.message);
         }
     };
 </script>

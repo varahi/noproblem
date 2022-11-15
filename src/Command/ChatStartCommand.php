@@ -2,7 +2,10 @@
 
 namespace App\Command;
 
+use App\Repository\ChatRoomRepository;
+use App\Repository\UserRepository;
 use App\Service\ChatMessenger;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,6 +22,18 @@ class ChatStartCommand extends Command
 {
     // php bin/console chat:start
     protected static $defaultName = 'chat:start';
+
+    private $doctrine;
+
+    /**
+     * @param ManagerRegistry $doctrine
+     */
+    public function __construct(
+        ManagerRegistry $doctrine
+    ) {
+        $this->doctrine = $doctrine;
+        parent::__construct();
+    }
 
     protected function configure()
     {
@@ -50,7 +65,7 @@ class ChatStartCommand extends Command
             'Starting chat, open your browser.',
         ]);
 
-        $server = IoServer::factory(new HttpServer(new WsServer(new ChatMessenger())), 8080);
+        $server = IoServer::factory(new HttpServer(new WsServer(new ChatMessenger($this->doctrine))), 8080);
 
         $server->run();
     }

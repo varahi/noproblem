@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Chat;
+use App\Entity\ChatRoom;
 use App\Entity\User;
 use App\ImageOptimizer;
 use App\Repository\UserRepository;
@@ -52,26 +53,69 @@ class ChatController extends AbstractController
         UserRepository $userRepository
     ) {
         $toUser = null;
-        $user = $this->getUser();
-        $allUsers = $userRepository->findAll();
+        $fromUser = $this->getUser();
+        $allUsers = $userRepository->findAllExcluded($fromUser, 'ROLE_SUPER_ADMIN');
         return $this->render('chat/index.html.twig', [
-            'user' => $user,
+            'fromUser' => $fromUser,
             'toUser' => $toUser,
             'allUsers' => $allUsers
         ]);
     }
 
     /**
-     * @Route("/select-chat/user-{id}", name="app_select_chat")
+     * @Route("/selected-chat/user-{id}", name="app_selected_chat")
      */
-    public function selectChat(
+    public function selectedChat(
         Request $request,
         User $toUser,
         UserRepository $userRepository
     ) {
+
+        /*$res1 = '3574';
+        $res2 = '970';
+
+        $entityManager = $this->doctrine->getManager();
+
+        $user1 = $entityManager->getRepository(User::class)->findOneBy(['id' => 9]);
+        $user2 = $entityManager->getRepository(User::class)->findOneBy(['id' => 8]);
+        $chatRoom = $entityManager->getRepository(ChatRoom::class)->findOneByUsers($user1, $user2);
+
+        if(!empty($chatRoom)) {
+            $chatRoom = $chatRoom[0];
+        } else {
+            $chatRoom = null;
+        }
+
+        dd($chatRoom->getSocketId2());
+
+        if (empty($chatRoom) || $chatRoom !==null)  {
+            // New chat room
+            echo sprintf('New chat created');
+            $chatRoom = new ChatRoom();
+            $chatRoom->setSocketId(3574);
+            $chatRoom->addUser($user1);
+            $chatRoom->addUser($user2);
+            $entityManager->persist($chatRoom);
+            $entityManager->flush();
+        } else {
+            // Update existing chat room
+            if($chatRoom->getSocketId() === '3574') {
+                echo sprintf('New socket 2 id ' . 970);
+                $chatRoom->setSocketId((int)970);
+                $entityManager->persist($chatRoom);
+                $entityManager->flush();
+            } else {
+                echo sprintf('New socket id ' . 970);
+                $chatRoom->setSocketId2((int)970);
+                $entityManager->persist($chatRoom);
+                $entityManager->flush();
+            }
+        }*/
+
+
         $fromUser = $this->getUser();
-        $allUsers = $userRepository->findAll();
-        return $this->render('chat/index.html.twig', [
+        $allUsers = $userRepository->findAllExcluded($fromUser, 'ROLE_SUPER_ADMIN');
+        return $this->render('chat/selected_chat.html.twig', [
             'fromUser' => $fromUser,
             'toUser' => $toUser,
             'allUsers' => $allUsers
