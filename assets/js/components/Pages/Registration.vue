@@ -1,7 +1,7 @@
 <template>
   <section class="banner modal-vue">
     <div class="inner">
-      <h1 class="banner_header">Найдите надежного работника или работу самостоятельно</h1>
+      <h1 class="banner_header">Найдите надёжного работника или работу самостоятельно</h1>
       <h3 class="banner_header-2">без посредников</h3>
       <div class="banner_btn-box">
         <button class="banner_btn" type="button" @click="showModal = true">Попробовать</button>

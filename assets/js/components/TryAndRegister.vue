@@ -1,7 +1,7 @@
 <template>
   <div class="indexa modal-vue">
     <div class="main content">
-      <h2>Найдите надежного работника<br> или работу самостоятельно<br> <b>без посредников</b></h2>
+      <h2>Найдите надёжного работника<br> или работу самостоятельно<br> <b>без посредников</b></h2>
       <div class="btn_try" style="cursor:pointer">
         <a @click="showModal = true">Попробовать</a>
       </div>

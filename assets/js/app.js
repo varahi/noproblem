@@ -6,6 +6,7 @@ import TryAndRegisterModal from './components/TryAndRegisterModal';
 import Register from './components/Register';
 import MenuAuth from './components/MenuAuth';
 import Login from './components/Login';
+import SearchWork from './components/SearchWork';
 import Vue from 'vue';
 
 // any CSS you import will output into a single css file (app.css in this case)
@@ -39,4 +40,9 @@ new Vue({
 new Vue({
     el: '#try-and-register-modal',
     render: h => h(TryAndRegisterModal)
+});
+
+new Vue({
+    el: '#search-work',
+    render: h => h(SearchWork)
 });

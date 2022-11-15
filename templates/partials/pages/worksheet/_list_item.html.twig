@@ -45,16 +45,18 @@
             <p>{{ job.description|length > 150 ? job.description|slice(0, 150) ~ '...' : job.description }}</p>
         </div>
 
-        {% if app.user and user.active == 1 %}
-        <div class="additional-info additional-info-{{ job.id }} hidden">
-            <h3>Контакты работодателя</h3>
-            <p>ФИО контактного лица: {{ job.contactFullName }}</p>
-            <p>Email: <a class="link" href="mailto:{{ job.user.email }}?subject=Запрос на выполнение работы">{{ job.user.email }}</a></p>
-        </div>
-        {% elseif user.active == 0 or user.inactive == 1 %}
-            <div class="additional-info additional-info-{{ job.id }} hidden">
-                <p>Доступ к системе ограничен. <a style="text-decoration: underline" href="{{ path('app_tarifs') }}">Пожалуйста пополните ваш баланс.</a></p>
-            </div>
+        {% if app.user %}
+            {% if user.active == 1 %}
+                <div class="additional-info additional-info-{{ job.id }} hidden">
+                    <h3>Контакты работодателя</h3>
+                    <p>ФИО контактного лица: {{ job.contactFullName }}</p>
+                    <p>Email: <a class="link" href="mailto:{{ job.user.email }}?subject=Запрос на выполнение работы">{{ job.user.email }}</a></p>
+                </div>
+            {% elseif user.active == 0 or user.inactive == 1 %}
+                <div class="additional-info additional-info-{{ job.id }} hidden">
+                    <p>Доступ к системе ограничен. <a style="text-decoration: underline" href="{{ path('app_tarifs') }}">Пожалуйста пополните ваш баланс.</a></p>
+                </div>
+            {% endif %}
         {% endif %}
 
         <div class="btn_box_account">
