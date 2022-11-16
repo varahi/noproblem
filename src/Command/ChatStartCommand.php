@@ -20,7 +20,8 @@ use Ratchet\WebSocket\WsServer;
 
 class ChatStartCommand extends Command
 {
-    // php bin/console chat:start
+    // php bin/console chat:start > /dev/null 2>&1 &
+    // Check running command ps -ax | grep pts
     protected static $defaultName = 'chat:start';
 
     private $doctrine;

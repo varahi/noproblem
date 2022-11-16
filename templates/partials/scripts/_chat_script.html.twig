@@ -8,7 +8,7 @@
     /**
      * @type WebSocket
      */
-    var socket = new WebSocket("ws://127.0.0.1:8080");
+    var socket = new WebSocket("ws://{{ defailtDomain }}:8080");
 
     socket.onopen = function(event) {
         console.info("Connection status OK!");
@@ -23,7 +23,7 @@
 
     socket.onerror = function(error){
         alert("Соединение с чат сервером не может быть установлено.");
-        //console.error(error);
+        console.error(error);
     };
     // Socket chat config end
 
@@ -32,7 +32,7 @@
         var msg = document.getElementById("form-message").value;
 
         if(!msg){
-            alert("You haven't written anything yet!");
+            alert("Вы еще ничего не написали!");
         }
 
         ChatController.sendMessage(msg);
@@ -46,7 +46,6 @@
         addMessage: function(fromId,toId, message){
             var from;
             //from = "From user id " + userInfo.fromId;
-
             if(fromId === userInfo.fromId){
                  from = "{{ fromUser }}";
                 //from = "From user id " + userInfo.fromId;

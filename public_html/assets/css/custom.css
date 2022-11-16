@@ -736,7 +736,7 @@ Chat
 /* Chat thread */
 .chat-thread {
     width: 100%;
-    margin: 0 auto 0 auto;
+    margin: 10px auto 0 auto;
     list-style: none;
     overflow-y: scroll;
     overflow-x: hidden;

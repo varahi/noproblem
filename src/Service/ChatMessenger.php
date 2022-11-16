@@ -55,15 +55,14 @@ class ChatMessenger extends AbstractController implements MessageComponentInterf
         $user2 = $entityManager->getRepository(User::class)->findOneBy(['id' => $jsonMsg->toId]);
 
         $chatRoom = $this->getChatRoom($msg);
-
-        echo sprintf(' User1 ' . $jsonMsg->fromId .' User2 '. $jsonMsg->toId . "\n");
+        //echo sprintf(' User1 ' . $jsonMsg->fromId .' User2 '. $jsonMsg->toId . "\n");
 
         if ($chatRoom == null) {
             // New chat room
             // echo sprintf('New chat created');
             $chatRoom = new ChatRoom();
             $chatRoom->setSocketId($conn->resourceId);
-            //$chatRoom->setSocketId2($conn->resourceId);
+            $chatRoom->setSocketId2($conn->resourceId);
             $chatRoom->addUser($user1);
             $chatRoom->addUser($user2);
             $entityManager->persist($chatRoom);
@@ -91,6 +90,7 @@ class ChatMessenger extends AbstractController implements MessageComponentInterf
         //echo sprintf(' From id - ' . $jsonMsg->fromId .' Res id - '. $conn->resourceId . "\n");
         //echo sprintf(' To id - ' . $jsonMsg->toId .' Res id - '. $conn->resourceId . "\n");
 
+
         $jsonMsg = json_decode($msg);
         if ($jsonMsg->toId || $jsonMsg->fromId) {
             $this->updateChatRoom($conn, $msg);
@@ -111,10 +111,25 @@ class ChatMessenger extends AbstractController implements MessageComponentInterf
             $entityManager->persist($chat);
             $entityManager->flush();
 
+            $sender->setCurrentChatRoom($chatRoom->getId());
+            $reciever->setCurrentChatRoom($chatRoom->getId());
+            $entityManager->persist($sender);
+            $entityManager->persist($reciever);
+            $entityManager->flush();
+
+            // ToDo: Set current chat room on open room chat
             foreach ($this->users as $user) {
+
+                //echo sprintf(' Send message from conn - ' . $conn->resourceId . "\n");
+                //echo sprintf(' Send message from user - ' . $user->resourceId . "\n");
+
                 if ($conn !== $user) {
-                    //echo sprintf(' Send message from user - ' . $conn->resourceId . "\n");
-                    if ($conn->resourceId === $chatRoom->getSocketId() || $conn->resourceId === $chatRoom->getSocketId2()) {
+                    if (
+                        $chatRoom->getId() == $sender->getCurrentChatRoom() && $chatRoom->getId() == $reciever->getCurrentChatRoom()
+                        //$conn->resourceId === $chatRoom->getSocketId() && $conn->resourceId === $chatRoom->getSocketId2() ||
+                        //$user->resourceId === $chatRoom->getSocketId() && $user->resourceId === $chatRoom->getSocketId2()
+                        /*$sender->getSenderChats()->getChatRoom()->getId() == $chatRoom->getId() && $reciever->getRecieverChats()->getChatRoom()->getId() == $chatRoom->getId()*/
+                    ) {
                         $user->send($msg);
                     }
                 }

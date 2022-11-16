@@ -225,6 +225,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $recieverChats;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $currentChatRoom;
+
     public function __construct()
     {
         $this->ticket = new ArrayCollection();
@@ -971,6 +976,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $recieverChat->setReciever(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCurrentChatRoom(): ?int
+    {
+        return $this->currentChatRoom;
+    }
+
+    public function setCurrentChatRoom(?int $currentChatRoom): self
+    {
+        $this->currentChatRoom = $currentChatRoom;
 
         return $this;
     }

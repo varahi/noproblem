@@ -32,8 +32,8 @@
                             <div class="container chat-items">
                                 {% include 'partials/chat/_user_item.html.twig' with {'user': toUser} %}
 
-                                {% if chatRoom %}
                                 <ul class="chat-thread" id="messages-list">
+                                {% if chatRoom %}
                                     {% for chat in chatRoom.chat %}
                                         {% if fromUser.id == chat.sender.id %}
                                             <li class="chat-item sender">
@@ -56,21 +56,9 @@
                                                  {{ chat.message }}
                                              </li>
                                         {% endif %}
-
-{#                                        {% if toUser.id == chat.reciever.id %}#}
-{#                                            <li class="chat-item reciever">#}
-{#                                                {{ chat.reciever }} :#}
-{#                                                {% if chat.reciever.avatar %}#}
-{#                                                    <img id="avatar" src="{{ asset('uploads/files/' ~ chat.reciever.avatar) }}" class="rounded" width="50" height="50"  alt=""/>#}
-{#                                                {% else %}#}
-{#                                                    <img src="{{ asset('assets/img/ava_person_account.png') }}" alt="">#}
-{#                                                {% endif %}#}
-{#                                                {{ chat.message }}#}
-{#                                            </li>#}
-{#                                        {% endif %}#}
                                     {% endfor %}
-                                </ul>
                                 {% endif %}
+                                </ul>
 
                                 <div class="row" id="data-pre">
                                     <textarea id="form-message" class="form-control" rows="3" placeholder="Введите ваше сообщение"></textarea>
