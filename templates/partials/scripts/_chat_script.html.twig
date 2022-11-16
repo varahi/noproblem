@@ -23,7 +23,7 @@
 
     socket.onerror = function(error){
         alert("Соединение с чат сервером не может быть установлено.");
-        console.error(error);
+        //console.error(error);
     };
     // Socket chat config end
 
@@ -48,15 +48,28 @@
             //from = "From user id " + userInfo.fromId;
 
             if(fromId === userInfo.fromId){
-                 //from = "From me";
-                from = "From user id " + userInfo.fromId;
+                 from = "{{ fromUser }}";
+                //from = "From user id " + userInfo.fromId;
+                var li = document.createElement("li");
+                li.classList.add('chat-item', 'sender');
+                var img=document.createElement('img');
+                img.src="{{ fromImgSrc }}";
+                img.width = 50;
+                img.height = 50;
+                li.appendChild(img);
             } else {
-                from = "From user id " + userInfo.toId;
+                //from = "From user id " + userInfo.toId;
+                from = "{{ toUser }}";
+                var li = document.createElement("li");
+                li.classList.add('chat-item', 'reciever');
+                var img=document.createElement('img');
+                img.src="{{ toImgSrc }}";
+                img.width = 50;
+                img.height = 50;
+                li.appendChild(img);
             }
 
-            //from = userInfo.username;
             var ul = document.getElementById("messages-list");
-            var li = document.createElement("li");
             li.appendChild(document.createTextNode(from + " : "+ message));
             ul.appendChild(li);
         },

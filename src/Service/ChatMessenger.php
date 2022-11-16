@@ -100,18 +100,22 @@ class ChatMessenger extends AbstractController implements MessageComponentInterf
         $chatRoom = $this->getChatRoom($msg);
 
         if ($chatRoom !==null) {
+            $sender = $entityManager->getRepository(User::class)->findOneBy(['id' => $jsonMsg->fromId]);
+            $reciever = $entityManager->getRepository(User::class)->findOneBy(['id' => $jsonMsg->toId]);
+
+            $chat = new Chat();
+            $chat->setMessage($jsonMsg->message);
+            $chat->setChatRoom($chatRoom);
+            $chat->setSender($sender);
+            $chat->setReciever($reciever);
+            $entityManager->persist($chat);
+            $entityManager->flush();
+
             foreach ($this->users as $user) {
                 if ($conn !== $user) {
                     //echo sprintf(' Send message from user - ' . $conn->resourceId . "\n");
                     if ($conn->resourceId === $chatRoom->getSocketId() || $conn->resourceId === $chatRoom->getSocketId2()) {
                         $user->send($msg);
-                        $chat = new Chat();
-                        $chat->setMessage($jsonMsg->message);
-                        $chat->setChatRoom($chatRoom);
-                        $chat->setSender($jsonMsg->fromId);
-                        $chat->setReciever($jsonMsg->toId);
-                        $entityManager->persist($chat);
-                        $entityManager->flush();
                     }
                 }
             }

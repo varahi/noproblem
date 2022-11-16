@@ -28,19 +28,19 @@ class Chat
     private $message;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity=ChatRoom::class, inversedBy="chat")
+     */
+    private $chatRoom;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="senderChats")
      */
     private $sender;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="recieverChats")
      */
     private $reciever;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=ChatRoom::class, inversedBy="chat")
-     */
-    private $chatRoom;
 
     public function __construct()
     {
@@ -76,30 +76,6 @@ class Chat
         return $this;
     }
 
-    public function getSender(): ?string
-    {
-        return $this->sender;
-    }
-
-    public function setSender(?string $sender): self
-    {
-        $this->sender = $sender;
-
-        return $this;
-    }
-
-    public function getReciever(): ?string
-    {
-        return $this->reciever;
-    }
-
-    public function setReciever(?string $reciever): self
-    {
-        $this->reciever = $reciever;
-
-        return $this;
-    }
-
     public function getChatRoom(): ?ChatRoom
     {
         return $this->chatRoom;
@@ -108,6 +84,30 @@ class Chat
     public function setChatRoom(?ChatRoom $chatRoom): self
     {
         $this->chatRoom = $chatRoom;
+
+        return $this;
+    }
+
+    public function getSender(): ?User
+    {
+        return $this->sender;
+    }
+
+    public function setSender(?User $sender): self
+    {
+        $this->sender = $sender;
+
+        return $this;
+    }
+
+    public function getReciever(): ?User
+    {
+        return $this->reciever;
+    }
+
+    public function setReciever(?User $reciever): self
+    {
+        $this->reciever = $reciever;
 
         return $this;
     }

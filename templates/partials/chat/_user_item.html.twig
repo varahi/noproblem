@@ -1,0 +1,13 @@
+<div class="user-item">
+    <div class="box_logo">
+        {% if user.avatar %}
+            <img id="avatar" src="{{ asset('uploads/files/' ~ user.avatar) }}" class="rounded" width="50" height="50"  alt=""/>
+        {% else %}
+            <img src="{{ asset('assets/img/ava_person_account.png') }}" alt="">
+        {% endif %}
+    </div>
+    <div class="clear"></div>
+    <div class="user-info">
+        {{ user.firstName }} {{ user.lastName }}
+    </div>
+</div>

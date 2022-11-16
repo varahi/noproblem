@@ -23,6 +23,11 @@ use Twig\Environment;
 class ChatController extends AbstractController
 {
     /**
+     * @var string
+     */
+    private $defailtDomain;
+
+    /**
      * @param Security $security
      * @param Environment $twig
      * @param ManagerRegistry $doctrine
@@ -36,7 +41,8 @@ class ChatController extends AbstractController
         ManagerRegistry $doctrine,
         ModalForms $modalForms,
         ImageOptimizer $imageOptimizer,
-        string $targetDirectory
+        string $targetDirectory,
+        string $defailtDomain
     ) {
         $this->security = $security;
         $this->twig = $twig;
@@ -44,10 +50,11 @@ class ChatController extends AbstractController
         $this->modalForms = $modalForms;
         $this->imageOptimizer = $imageOptimizer;
         $this->targetDirectory = $targetDirectory;
+        $this->defailtDomain = $defailtDomain;
     }
 
     /**
-     * @Route("/chat", name="chat")
+     * @Route("/chat", name="app_chat")
      */
     public function chat(
         UserRepository $userRepository
@@ -70,55 +77,38 @@ class ChatController extends AbstractController
         User $toUser,
         UserRepository $userRepository
     ) {
-
-        /*$res1 = '3574';
-        $res2 = '970';
-
+        $fromUser = $this->getUser();
         $entityManager = $this->doctrine->getManager();
-
-        $user1 = $entityManager->getRepository(User::class)->findOneBy(['id' => 9]);
-        $user2 = $entityManager->getRepository(User::class)->findOneBy(['id' => 8]);
+        $user1 = $entityManager->getRepository(User::class)->findOneBy(['id' => $fromUser->getId()]);
+        $user2 = $entityManager->getRepository(User::class)->findOneBy(['id' => $toUser->getId()]);
         $chatRoom = $entityManager->getRepository(ChatRoom::class)->findOneByUsers($user1, $user2);
 
-        if(!empty($chatRoom)) {
+        if ($fromUser->getAvatar()) {
+            $fromImgSrc = 'https://'.$this->defailtDomain. '/uploads/files/' . $fromUser->getAvatar();
+        } else {
+            $fromImgSrc = 'https://'.$this->defailtDomain. '/assets/img/ava_person_account.png';
+        }
+
+        if ($toUser->getAvatar()) {
+            $toImgSrc = 'https://'.$this->defailtDomain. '/uploads/files/' . $toUser->getAvatar();
+        } else {
+            $toImgSrc = 'https://'.$this->defailtDomain. '/assets/img/ava_person_account.png';
+        }
+
+        if (!empty($chatRoom)) {
             $chatRoom = $chatRoom[0];
         } else {
             $chatRoom = null;
         }
 
-        dd($chatRoom->getSocketId2());
-
-        if (empty($chatRoom) || $chatRoom !==null)  {
-            // New chat room
-            echo sprintf('New chat created');
-            $chatRoom = new ChatRoom();
-            $chatRoom->setSocketId(3574);
-            $chatRoom->addUser($user1);
-            $chatRoom->addUser($user2);
-            $entityManager->persist($chatRoom);
-            $entityManager->flush();
-        } else {
-            // Update existing chat room
-            if($chatRoom->getSocketId() === '3574') {
-                echo sprintf('New socket 2 id ' . 970);
-                $chatRoom->setSocketId((int)970);
-                $entityManager->persist($chatRoom);
-                $entityManager->flush();
-            } else {
-                echo sprintf('New socket id ' . 970);
-                $chatRoom->setSocketId2((int)970);
-                $entityManager->persist($chatRoom);
-                $entityManager->flush();
-            }
-        }*/
-
-
-        $fromUser = $this->getUser();
         $allUsers = $userRepository->findAllExcluded($fromUser, 'ROLE_SUPER_ADMIN');
         return $this->render('chat/selected_chat.html.twig', [
             'fromUser' => $fromUser,
             'toUser' => $toUser,
-            'allUsers' => $allUsers
+            'allUsers' => $allUsers,
+            'chatRoom' => $chatRoom,
+            'fromImgSrc' => $fromImgSrc,
+            'toImgSrc' => $toImgSrc
         ]);
     }
 

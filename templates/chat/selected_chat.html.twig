@@ -1,40 +1,93 @@
-
+{% extends 'layouts/lk.html.twig' %}
+{% block title %}Чат с пользователем {{ toUser }} - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block body %}
+    {% include 'partials/header.html.twig' %}
 
-    {% for siteUser in allUsers %}
-        <a href="{{ path('app_selected_chat', { id:  siteUser.id}) }}" class="">{{ siteUser }}</a> <br />
-    {% endfor %}
+    <div>
+        <div class="main_account content">
+            <div  class="bread">
+                <a  href="{{ path('app_main') }}" class="nuxt-link-active">Главная</a> /
+                <a  href="{{ path('app_chat') }}" class="nuxt-link-active">Выберите пользователя</a>
+                <a>/ Сообщения</a>
+            </div>
 
-    <div class="row">
-        <div id="sidebar" class="col-sm-3">
-            <ul id="users-list" class="col-lg-12 col-md-12 col-sm-12 rounded message-list">
+            <div class="mobfile mobs">
+                <p>{{ 'Notifications'|trans }}</p>
+            </div>
+            <div class="large_account fon">
+                <div class="in_account chat">
 
-                {# Fetching users' list from the UserRepo to show here #}
-
-            </ul>
-        </div>
-        <div id="main" class="col-sm-9">
-            <section class="jumbotron">
-                <div class="container">
                     <div class="row">
-                        <ul id="messages-list" class="col-lg-12 col-md-12 col-sm-12 rounded messages-list"></ul>
-                    </div>
-                    <div class="row" id="data-pre">
-                        <div class="col-lg-9 col-md-9 col-sm-9">
-                            <textarea id="form-message" class="form-control" rows="3" placeholder="Type your message"></textarea>
+                        <div class="col-md-4">
+                            <div class="users-block">
+                                {% for siteUser in allUsers %}
+                                    <a href="{{ path('app_selected_chat', { id:  siteUser.id}) }}" class="" style="text-decoration: none">
+                                        {% include 'partials/chat/_user_item.html.twig' with {'user': siteUser} %}
+                                    </a>
+                                {% endfor %}
+                            </div>
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3">
-                            <input type="button" id="form-submit" value="Send" class="btn btn-lg btn-block btn-outline-primary"/>
+                        <div class="col-md-8">
+
+                            <div class="container chat-items">
+                                {% include 'partials/chat/_user_item.html.twig' with {'user': toUser} %}
+
+                                {% if chatRoom %}
+                                <ul class="chat-thread" id="messages-list">
+                                    {% for chat in chatRoom.chat %}
+                                        {% if fromUser.id == chat.sender.id %}
+                                            <li class="chat-item sender">
+                                                {{ chat.sender }} :
+                                                {% if chat.sender.avatar %}
+                                                    <img id="avatar" src="{{ asset('uploads/files/' ~ chat.sender.avatar) }}" class="rounded" width="50" height="50"  alt=""/>
+                                                {% else %}
+                                                    <img src="{{ asset('assets/img/ava_person_account.png') }}" alt="">
+                                                {% endif %}
+                                                {{ chat.message }}
+                                            </li>
+                                         {% else %}
+                                             <li class="chat-item reciever">
+                                                 {{ chat.sender }} :
+                                                 {% if chat.sender.avatar %}
+                                                     <img id="avatar" src="{{ asset('uploads/files/' ~ chat.sender.avatar) }}" class="rounded" width="50" height="50"  alt=""/>
+                                                 {% else %}
+                                                     <img src="{{ asset('assets/img/ava_person_account.png') }}" alt="">
+                                                 {% endif %}
+                                                 {{ chat.message }}
+                                             </li>
+                                        {% endif %}
+
+{#                                        {% if toUser.id == chat.reciever.id %}#}
+{#                                            <li class="chat-item reciever">#}
+{#                                                {{ chat.reciever }} :#}
+{#                                                {% if chat.reciever.avatar %}#}
+{#                                                    <img id="avatar" src="{{ asset('uploads/files/' ~ chat.reciever.avatar) }}" class="rounded" width="50" height="50"  alt=""/>#}
+{#                                                {% else %}#}
+{#                                                    <img src="{{ asset('assets/img/ava_person_account.png') }}" alt="">#}
+{#                                                {% endif %}#}
+{#                                                {{ chat.message }}#}
+{#                                            </li>#}
+{#                                        {% endif %}#}
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+
+                                <div class="row" id="data-pre">
+                                    <textarea id="form-message" class="form-control" rows="3" placeholder="Введите ваше сообщение"></textarea>
+                                    <div class="but_creating_form send_message">
+                                        <button type="submit" id="form-submit">Отправить</button>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
+
                 </div>
-            </section>
+            </div>
         </div>
     </div>
 
+    {% include 'partials/footer.html.twig' %}
+    {% include 'partials/scripts/_chat_script.html.twig' %}
 {% endblock %}
-
-{% block javascripts %}
-    {% include 'partials/scripts/_chat_my.html.twig' %}
-{% endblock %}
-

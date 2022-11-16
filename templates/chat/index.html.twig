@@ -1,10 +1,54 @@
-
+{% extends 'layouts/lk.html.twig' %}
+{% block title %}Чат пользователя - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block body %}
+    {% include 'partials/header.html.twig' %}
 
-    {% for siteUser in allUsers %}
-        <a href="{{ path('app_selected_chat', { id:  siteUser.id}) }}" class="">{{ siteUser }}</a> <br />
-    {% endfor %}
+    <div>
+        <div class="main_account content">
+            <div  class="bread">
+                <a  href="{{ path('app_main') }}" class="nuxt-link-active">Главная</a>
+                <a>/ Сообщения</a>
+            </div>
 
+            <div class="mobfile mobs">
+                <p>{{ 'Notifications'|trans }}</p>
+            </div>
+            <div class="large_account fon">
+                <div class="in_account chat">
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="users-block">
+                                {% for siteUser in allUsers %}
+                                    <a href="{{ path('app_selected_chat', { id:  siteUser.id}) }}" class="" style="text-decoration: none">
+                                        <div class="user-item">
+                                            <div class="box_logo">
+                                                <img src="{{ asset('assets/img/ava_person_account.png') }}" alt="">
+                                            </div>
+                                            <div class="clear"></div>
+                                            <div class="user-info">
+                                                {{ siteUser }}
+                                            </div>
+                                        </div>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="content">
+                                <p>Выберите пользователя для общения</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    {% include 'partials/footer.html.twig' %}
 {% endblock %}
+
 
 

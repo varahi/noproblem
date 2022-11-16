@@ -215,6 +215,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $chatRooms;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Chat::class, mappedBy="sender")
+     */
+    private $senderChats;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Chat::class, mappedBy="reciever")
+     */
+    private $recieverChats;
+
     public function __construct()
     {
         $this->ticket = new ArrayCollection();
@@ -229,6 +239,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->featuredProfiles = new ArrayCollection();
         $this->featuredJobs = new ArrayCollection();
         $this->chatRooms = new ArrayCollection();
+        $this->senderChats = new ArrayCollection();
+        $this->recieverChats = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -898,6 +910,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->chatRooms->removeElement($chatRoom)) {
             $chatRoom->removeUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Chat>
+     */
+    public function getSenderChats(): Collection
+    {
+        return $this->senderChats;
+    }
+
+    public function addSenderChat(Chat $senderChat): self
+    {
+        if (!$this->senderChats->contains($senderChat)) {
+            $this->senderChats[] = $senderChat;
+            $senderChat->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSenderChat(Chat $senderChat): self
+    {
+        if ($this->senderChats->removeElement($senderChat)) {
+            // set the owning side to null (unless already changed)
+            if ($senderChat->getSender() === $this) {
+                $senderChat->setSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Chat>
+     */
+    public function getRecieverChats(): Collection
+    {
+        return $this->recieverChats;
+    }
+
+    public function addRecieverChat(Chat $recieverChat): self
+    {
+        if (!$this->recieverChats->contains($recieverChat)) {
+            $this->recieverChats[] = $recieverChat;
+            $recieverChat->setReciever($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecieverChat(Chat $recieverChat): self
+    {
+        if ($this->recieverChats->removeElement($recieverChat)) {
+            // set the owning side to null (unless already changed)
+            if ($recieverChat->getReciever() === $this) {
+                $recieverChat->setReciever(null);
+            }
         }
 
         return $this;

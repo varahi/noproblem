@@ -34,7 +34,7 @@ trait ChatTrait
      * @param $jsonMsg
      * @return void
      */
-    private function updateChatRoom(
+    /*private function updateChatRoom(
         $jsonMsg
     ) {
         $entityManager = $this->doctrine->getManager();
@@ -48,5 +48,21 @@ trait ChatTrait
 
         $entityManager->persist($chatRoom);
         $entityManager->flush();
+    }*/
+
+    public function getChatRoom($msg)
+    {
+        $jsonMsg = json_decode($msg);
+        $entityManager = $this->doctrine->getManager();
+        $user1 = $entityManager->getRepository(User::class)->findOneBy(['id' => $jsonMsg->fromId]);
+        $user2 = $entityManager->getRepository(User::class)->findOneBy(['id' => $jsonMsg->toId]);
+        $chatRoom = $entityManager->getRepository(ChatRoom::class)->findOneByUsers($user1, $user2);
+        if (!empty($chatRoom)) {
+            $chatRoom = $chatRoom[0];
+        } else {
+            $chatRoom = null;
+        }
+
+        return $chatRoom;
     }
 }
