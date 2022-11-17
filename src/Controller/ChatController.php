@@ -65,6 +65,15 @@ class ChatController extends AbstractController
         $user2 = $entityManager->getRepository(User::class)->findOneBy(['id' => $toUser->getId()]);
         $chatRoom = $entityManager->getRepository(ChatRoom::class)->findOneByUsers($user1, $user2);
 
+        if (!empty($chatRoom)) {
+            $chatRoom = $chatRoom[0];
+            $fromUser->setCurrentChatRoom($chatRoom->getId());
+            $entityManager->persist($fromUser);
+            $entityManager->flush();
+        } else {
+            $chatRoom = null;
+        }
+
         if ($fromUser->getAvatar()) {
             $fromImgSrc = 'https://'.$this->defailtDomain. '/uploads/files/' . $fromUser->getAvatar();
         } else {
@@ -75,12 +84,6 @@ class ChatController extends AbstractController
             $toImgSrc = 'https://'.$this->defailtDomain. '/uploads/files/' . $toUser->getAvatar();
         } else {
             $toImgSrc = 'https://'.$this->defailtDomain. '/assets/img/ava_person_account.png';
-        }
-
-        if (!empty($chatRoom)) {
-            $chatRoom = $chatRoom[0];
-        } else {
-            $chatRoom = null;
         }
 
         $allUsers = $userRepository->findAllExcluded($fromUser, 'ROLE_SUPER_ADMIN');

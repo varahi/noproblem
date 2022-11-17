@@ -38,6 +38,7 @@
                                         {% if fromUser.id == chat.sender.id %}
                                             <li class="chat-item sender">
                                                 {{ chat.sender }} :
+                                                <span>{{ chat.created|date("d.m.Y H:i") }}</span>
                                                 {% if chat.sender.avatar %}
                                                     <img id="avatar" src="{{ asset('uploads/files/' ~ chat.sender.avatar) }}" class="rounded" width="50" height="50"  alt=""/>
                                                 {% else %}
@@ -48,6 +49,7 @@
                                          {% else %}
                                              <li class="chat-item reciever">
                                                  {{ chat.sender }} :
+                                                 <span>{{ chat.created|date("d.m.Y H:i") }}</span>
                                                  {% if chat.sender.avatar %}
                                                      <img id="avatar" src="{{ asset('uploads/files/' ~ chat.sender.avatar) }}" class="rounded" width="50" height="50"  alt=""/>
                                                  {% else %}

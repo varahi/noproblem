@@ -6,9 +6,6 @@ use App\Controller\Traits\ChatTrait;
 use App\Entity\Chat;
 use App\Entity\ChatRoom;
 use App\Entity\User;
-use App\Repository\ChatRepository;
-use App\Repository\ChatRoomRepository;
-use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
@@ -111,24 +108,19 @@ class ChatMessenger extends AbstractController implements MessageComponentInterf
             $entityManager->persist($chat);
             $entityManager->flush();
 
-            $sender->setCurrentChatRoom($chatRoom->getId());
-            $reciever->setCurrentChatRoom($chatRoom->getId());
-            $entityManager->persist($sender);
-            $entityManager->persist($reciever);
-            $entityManager->flush();
-
             // ToDo: Set current chat room on open room chat
             foreach ($this->users as $user) {
 
                 //echo sprintf(' Send message from conn - ' . $conn->resourceId . "\n");
                 //echo sprintf(' Send message from user - ' . $user->resourceId . "\n");
+                //echo sprintf(' Sender id ' . $sender->getId() . ' Current chat room ' .$sender->getCurrentChatRoom() . ' Chat room '.$chatRoom->getId() . "\n");
+                //echo sprintf(' Reciever id ' . $reciever->getId() . ' Current chat room ' .$reciever->getCurrentChatRoom() . ' Chat room '.$chatRoom->getId() . "\n");
 
                 if ($conn !== $user) {
                     if (
-                        $chatRoom->getId() == $sender->getCurrentChatRoom() && $chatRoom->getId() == $reciever->getCurrentChatRoom()
-                        //$conn->resourceId === $chatRoom->getSocketId() && $conn->resourceId === $chatRoom->getSocketId2() ||
+                        //$chatRoom->getId() == $sender->getCurrentChatRoom() && $chatRoom->getId() == $reciever->getCurrentChatRoom()
+                        $conn->resourceId === $chatRoom->getSocketId() && $conn->resourceId === $chatRoom->getSocketId2()
                         //$user->resourceId === $chatRoom->getSocketId() && $user->resourceId === $chatRoom->getSocketId2()
-                        /*$sender->getSenderChats()->getChatRoom()->getId() == $chatRoom->getId() && $reciever->getRecieverChats()->getChatRoom()->getId() == $chatRoom->getId()*/
                     ) {
                         $user->send($msg);
                     }
