@@ -34,9 +34,16 @@
                                     <div class="city_one_vacan"><span>Работник</span></div>
                                 </div>
                             </div>
-                            <div class="btn_one_vacan nona">
-                                <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Написать сообщение</a>
-                            </div>
+                            {% if user.id == worksheet.user.id %}
+                                <div class="btn_one_vacan nona">
+                                    <a class="isDisabled">Написать сообщение</a>
+                                </div>
+                                {% else %}
+                                    <div class="btn_one_vacan nona">
+                                        <a href="{{ path('app_selected_chat', { id: worksheet.user.id}) }}" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Написать сообщение</a>
+                                    </div>
+                            {% endif %}
+
                             {#                            <div class="btn_one_vacan mobs">#}
                             {#                                <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Добавить в чат</a>#}
                             {#                            </div>#}

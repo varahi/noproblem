@@ -35,9 +35,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="btn_one_vacan nona">
-                                <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Написать сообщение</a>
-                            </div>
+
+                            {% if user.id == job.owner.id %}
+                                <div class="btn_one_vacan nona">
+                                    <a>Написать сообщение</a>
+                                </div>
+                            {% else %}
+                                <div class="btn_one_vacan nona">
+                                    <a href="{{ path('app_selected_chat', { id: job.owner.id}) }}" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Написать сообщение</a>
+                                </div>
+                            {% endif %}
+
 {#                            <div class="btn_one_vacan mobs">#}
 {#                                <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Добавить в чат</a>#}
 {#                            </div>#}

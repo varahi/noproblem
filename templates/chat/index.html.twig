@@ -21,15 +21,7 @@
                             <div class="users-block">
                                 {% for siteUser in allUsers %}
                                     <a href="{{ path('app_selected_chat', { id:  siteUser.id}) }}" class="" style="text-decoration: none">
-                                        <div class="user-item">
-                                            <div class="box_logo">
-                                                <img src="{{ asset('assets/img/ava_person_account.png') }}" alt="">
-                                            </div>
-                                            <div class="clear"></div>
-                                            <div class="user-info">
-                                                {{ siteUser }}
-                                            </div>
-                                        </div>
+                                        {% include 'partials/chat/_user_item.html.twig' with {'user': siteUser} %}
                                     </a>
                                 {% endfor %}
                             </div>

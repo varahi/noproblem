@@ -873,6 +873,13 @@ Chat
     margin-bottom: 20px;
 }
 
+.isDisabled {
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: none;
+}
+
 @keyframes show-chat-even {
     0% {
         margin-left: -480px;

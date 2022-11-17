@@ -118,9 +118,12 @@ class ChatMessenger extends AbstractController implements MessageComponentInterf
 
                 if ($conn !== $user) {
                     if (
+                        // ToDo: set correct conditions
                         //$chatRoom->getId() == $sender->getCurrentChatRoom() && $chatRoom->getId() == $reciever->getCurrentChatRoom()
-                        $conn->resourceId === $chatRoom->getSocketId() && $conn->resourceId === $chatRoom->getSocketId2()
-                        //$user->resourceId === $chatRoom->getSocketId() && $user->resourceId === $chatRoom->getSocketId2()
+                        $user->resourceId == $chatRoom->getSocketId() || $conn->resourceId == $chatRoom->getSocketId2() &&
+                        $user->resourceId == $chatRoom->getSocketId2() || $conn->resourceId == $chatRoom->getSocketId() &&
+                        $conn->resourceId == $chatRoom->getSocketId() || $user->resourceId == $chatRoom->getSocketId2() &&
+                        $conn->resourceId == $chatRoom->getSocketId2() || $user->resourceId == $chatRoom->getSocketId()
                     ) {
                         $user->send($msg);
                     }
