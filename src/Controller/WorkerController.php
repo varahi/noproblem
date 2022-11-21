@@ -383,6 +383,8 @@ class WorkerController extends AbstractController
         $category = $worksheet->getCategory();
         $user = $this->security->getUser();
 
+        //dd($user);
+
         if (isset($category) && $category !==null) {
             $relatedJobs = $worksheetRepository->findByCategory($category->getId(), $worksheet->getId(), '10');
         } else {

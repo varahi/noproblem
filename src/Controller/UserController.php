@@ -169,7 +169,6 @@ class UserController extends AbstractController
     /**
      * Require ROLE_EMPLOYEE for *every* controller method in this class.
      *
-     * @IsGranted("ROLE_EMPLOYEE")
      * @Route("/lk/employer", name="app_lk_employee")
      * @throws \Exception
      */

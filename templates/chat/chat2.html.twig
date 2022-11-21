@@ -1,0 +1,111 @@
+{% extends 'layouts/lk.html.twig' %}
+{% block title %}Чат с пользователем {{ toUser }} - Онлайн-сервис по подбору домашнего персонала{% endblock %}
+{% block body %}
+    {% include 'partials/header.html.twig' %}
+
+    <div class="main_account content">
+        <div  class="bread">
+            <a  href="{{ path('app_main') }}" class="nuxt-link-active">Главная</a> /
+            <a  href="{{ path('app_chat') }}" class="nuxt-link-active">Выберите пользователя</a>
+            <a>/ Сообщения</a>
+        </div>
+
+        <div class="mobfile mobs">
+            <p>{{ 'Notifications'|trans }}</p>
+        </div>
+
+        <div class="large_account fon">
+            <div class="in_account chat">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="users-block">
+                            {% for siteUser in allUsers %}
+                                <a href="{{ path('app_selected_chat', { id:  siteUser.id}) }}" class="" style="text-decoration: none">
+                                    {% include 'partials/chat/_user_item.html.twig' with {'user': siteUser} %}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+
+                        <div class="col border">
+
+                            <div class="messages">
+
+                            </div>
+                            <input class="form-control" type="text" name="message">
+                            <button type="button" class="btn-send-message btn btn-primary">Send</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}
+{% block javascripts %}
+    <script>
+        /*
+        * connect to socket
+        * */
+        myUserId = '{{ fromUser.id }}';
+        messageToUserId = '{{ toUser.id }}';
+        ws = new WebSocket('ws://localhost:8080');
+        ws.onopen = function () {
+            /*if(myUserId==''){
+                myUserId = prompt('Enter User Id:');
+            }
+            if(messageToUserId==''){
+                messageToUserId = prompt('Enter Other Person\'s User Id:');
+            }*/
+            ws.send(JSON.stringify({'action': 'register', 'value': myUserId}));
+            $('.messages').append(`<div class="alert alert-info">Connected With Socket, Registering User!</div>`);
+        }
+        ws.onclose = function () {
+            $('.messages').append(`<div class="alert alert-danger">Connection Closed! Bye!</div>`);
+        }
+        ws.onerror = function () {
+            $('.messages').append(`<div class="alert alert-danger">Opps! Error in Connection!</div>`);
+        }
+        ws.onmessage = function (message) {
+            data = JSON.parse(message.data);
+            switch (data.action) {
+                case 'error':
+                    $('.messages').append(`<div id="${data.value}" class="alert alert-danger">${data.value}</div>`);
+                    break;
+                case 'message':
+                    let msgTmpl  = `<div class="row">
+                                    <div class="col-2">
+                                        ${messageToUserId}
+                                    </div>
+                                    <div class="col-10">
+                                        <div class="alert alert-primary">${data.value}</div>
+                                    </div>
+                                </div>`;
+
+                    $('.messages').append(msgTmpl);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        $('.btn-send-message').bind('click', function () {
+            let message = $('input[name=message]');
+            ws.send(JSON.stringify({'action': 'message','to':messageToUserId,'value':message.val()}));
+            let msgTmpl  = `<div class="row">
+                                    <div class="col-2">
+                                        ${myUserId}
+                                    </div>
+                                    <div class="col-10">
+                                        <div class="alert alert-dark">${message.val()}</div>
+                                    </div>
+                                </div>`;
+            $('.messages').append(msgTmpl);
+            message.val('');
+        });
+    </script>
+{% endblock %}

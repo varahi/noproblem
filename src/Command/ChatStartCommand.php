@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Repository\ChatRoomRepository;
 use App\Repository\UserRepository;
 use App\Service\ChatMessenger;
+use App\Service\DataHandler;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -66,7 +67,8 @@ class ChatStartCommand extends Command
             'Starting chat, open your browser.',
         ]);
 
-        $server = IoServer::factory(new HttpServer(new WsServer(new ChatMessenger($this->doctrine))), 9000);
+        //$server = IoServer::factory(new HttpServer(new WsServer(new ChatMessenger($this->doctrine))), 9000);
+        $server = IoServer::factory(new HttpServer(new WsServer(new DataHandler())), 8080);
 
         $server->run();
     }

@@ -15,27 +15,120 @@ class ChatMessenger extends AbstractController implements MessageComponentInterf
 {
     //use ChatTrait;
 
-    private $paths;
+    private $connections =  [];
 
-    private $activeUsers;
-
-    private $activeConnections;
-
+    /**
+     * @param ManagerRegistry $doctrine
+     */
     public function __construct(
         ManagerRegistry $doctrine
     ) {
         $this->users = new \SplObjectStorage();
-        $this->paths = [];
-        $this->activeUsers = [];
-        $this->activeConnections = [];
+        $this->connections = [];
         $this->doctrine = $doctrine;
     }
 
-    public function onOpen(ConnectionInterface $socket)
+    /**
+     * @param ConnectionInterface $conn
+     * @return void
+     */
+    public function onOpen(ConnectionInterface $conn)
     {
         // Attach new connection
-        $this->users->attach($socket);
-        echo "New user! ({$socket->resourceId})\n";
+        $this->users->attach($conn);
+        $this->connections[] = $conn;
+
+        echo "Connected new client with Id:".$conn->resourceId."\n";
+        echo count($this->connections)." active connections\n";
+
+        echo "New user! ({$conn->resourceId})\n";
+
+        /* if (isset($this->users)) {
+             foreach ($this->users as $user) {
+                 if ($conn !== $user) {
+                     echo sprintf(' On open - User id ' . $user->resourceId . ' Conn id ' . $conn->resourceId . "\n");
+                 }
+             }
+         }*/
+
+        // ToDo: Find chat room and set only one socket of new user
+        //$entityManager = $this->doctrine->getManager();
+        //$chatRoom = $entityManager->getRepository(ChatRoom::class)->findOneBy(['id' => $socket->resourceId]);
+        //$chatRoom = $this->getChatRoom($msg);
+    }
+
+    /**
+     * @param ConnectionInterface $conn
+     * @param $msg
+     * @return void
+     */
+    public function onMessage(ConnectionInterface $conn, $msg)
+    {
+        // $jsonMsg = json_decode($msg);
+        //if ($jsonMsg->toId || $jsonMsg->fromId) {
+        //$this->updateChatRoom($conn, $msg);
+        //}
+        $this->updateChatRoom($conn, $msg);
+        $chatRoom = $this->getChatRoom($msg);
+        $entityManager = $this->doctrine->getManager();
+
+        if ($chatRoom !==null) {
+            $this->saveChatMessage($chatRoom, $msg);
+            foreach ($this->users as $user) {
+
+                //$chatRoom->setSocketId((int)$user->resourceId);
+                //$entityManager->persist($chatRoom);
+                //$entityManager->flush();
+
+                echo sprintf(' User id ' . $user->resourceId . ' Conn id ' . $conn->resourceId . ' Chat room '. $chatRoom->getId() . "\n");
+                if ($conn !== $user) {
+                    if ($user->resourceId == $chatRoom->getSocketId()) {
+                        $user->send($msg);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * @param ConnectionInterface $socket
+     * @return void
+     */
+    public function onClose(ConnectionInterface $socket)
+    {
+        $this->users->detach($socket);
+        echo "Connection {$socket->resourceId} was terminated\n";
+    }
+
+    /**
+     * @param ConnectionInterface $socket
+     * @param \Exception $e
+     * @return void
+     */
+    public function onError(ConnectionInterface $socket, \Exception $e)
+    {
+        echo "You got an error: {$e->getMessage()}\n";
+        $socket->close();
+    }
+
+    /**
+     * @param $msg
+     * @return null
+     */
+    private function getChatRoom($msg)
+    {
+        $jsonMsg = json_decode($msg);
+        $entityManager = $this->doctrine->getManager();
+        $user1 = $entityManager->getRepository(User::class)->findOneBy(['id' => $jsonMsg->fromId]);
+        $user2 = $entityManager->getRepository(User::class)->findOneBy(['id' => $jsonMsg->toId]);
+        $chatRoom = $entityManager->getRepository(ChatRoom::class)->findOneByUsers($user1, $user2);
+        if (!empty($chatRoom)) {
+            $chatRoom = $chatRoom[0];
+        } else {
+            $chatRoom = null;
+        }
+
+        return $chatRoom;
     }
 
     /**
@@ -59,42 +152,28 @@ class ChatMessenger extends AbstractController implements MessageComponentInterf
             // echo sprintf('New chat created');
             $chatRoom = new ChatRoom();
             $chatRoom->setSocketId($conn->resourceId);
-            $chatRoom->setSocketId2($conn->resourceId);
+            //$chatRoom->setSocketId2($conn->resourceId);
             $chatRoom->addUser($user1);
             $chatRoom->addUser($user2);
             $entityManager->persist($chatRoom);
             $entityManager->flush();
         } else {
             // Update existing chat room
-            if ($chatRoom->getSocketId() === $conn->resourceId) {
-                // echo sprintf('New socket id ' . $conn->resourceId);
-                $chatRoom->setSocketId2((int)$conn->resourceId);
-                $entityManager->persist($chatRoom);
-                $entityManager->flush();
-            } else {
-                // echo sprintf('New socket id ' . $conn->resourceId);
-                $chatRoom->setSocketId((int)$conn->resourceId);
-                $entityManager->persist($chatRoom);
-                $entityManager->flush();
-            }
+            $chatRoom->setSocketId((int)$conn->resourceId);
+            $entityManager->persist($chatRoom);
+            $entityManager->flush();
         }
     }
 
-    public function onMessage(ConnectionInterface $conn, $msg)
+    /**
+     * @param $chatRoom
+     * @param $msg
+     * @return void
+     */
+    private function saveChatMessage($chatRoom, $msg)
     {
-        //$numRecv = count($this->users) - 1;
-        //echo sprintf('Connection %d sending message "%s" to %d other socketection%s' . "\n", $conn->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
-        //echo sprintf(' From id - ' . $jsonMsg->fromId .' Res id - '. $conn->resourceId . "\n");
-        //echo sprintf(' To id - ' . $jsonMsg->toId .' Res id - '. $conn->resourceId . "\n");
-
-
         $jsonMsg = json_decode($msg);
-        if ($jsonMsg->toId || $jsonMsg->fromId) {
-            $this->updateChatRoom($conn, $msg);
-        }
-
         $entityManager = $this->doctrine->getManager();
-        $chatRoom = $this->getChatRoom($msg);
 
         if ($chatRoom !==null) {
             $sender = $entityManager->getRepository(User::class)->findOneBy(['id' => $jsonMsg->fromId]);
@@ -107,56 +186,6 @@ class ChatMessenger extends AbstractController implements MessageComponentInterf
             $chat->setReciever($reciever);
             $entityManager->persist($chat);
             $entityManager->flush();
-
-            // ToDo: Set current chat room on open room chat
-            foreach ($this->users as $user) {
-
-                //echo sprintf(' Send message from conn - ' . $conn->resourceId . "\n");
-                //echo sprintf(' Send message from user - ' . $user->resourceId . "\n");
-                //echo sprintf(' Sender id ' . $sender->getId() . ' Current chat room ' .$sender->getCurrentChatRoom() . ' Chat room '.$chatRoom->getId() . "\n");
-                //echo sprintf(' Reciever id ' . $reciever->getId() . ' Current chat room ' .$reciever->getCurrentChatRoom() . ' Chat room '.$chatRoom->getId() . "\n");
-
-                if ($conn !== $user) {
-                    if (
-                        // ToDo: set correct conditions
-                        //$chatRoom->getId() == $sender->getCurrentChatRoom() && $chatRoom->getId() == $reciever->getCurrentChatRoom()
-                        $user->resourceId == $chatRoom->getSocketId() || $conn->resourceId == $chatRoom->getSocketId2() &&
-                        $user->resourceId == $chatRoom->getSocketId2() || $conn->resourceId == $chatRoom->getSocketId() &&
-                        $conn->resourceId == $chatRoom->getSocketId() || $user->resourceId == $chatRoom->getSocketId2() &&
-                        $conn->resourceId == $chatRoom->getSocketId2() || $user->resourceId == $chatRoom->getSocketId()
-                    ) {
-                        $user->send($msg);
-                    }
-                }
-            }
         }
-    }
-
-    private function getChatRoom($msg)
-    {
-        $jsonMsg = json_decode($msg);
-        $entityManager = $this->doctrine->getManager();
-        $user1 = $entityManager->getRepository(User::class)->findOneBy(['id' => $jsonMsg->fromId]);
-        $user2 = $entityManager->getRepository(User::class)->findOneBy(['id' => $jsonMsg->toId]);
-        $chatRoom = $entityManager->getRepository(ChatRoom::class)->findOneByUsers($user1, $user2);
-        if (!empty($chatRoom)) {
-            $chatRoom = $chatRoom[0];
-        } else {
-            $chatRoom = null;
-        }
-
-        return $chatRoom;
-    }
-
-    public function onClose(ConnectionInterface $socket)
-    {
-        $this->users->detach($socket);
-        echo "Connection {$socket->resourceId} was terminated\n";
-    }
-
-    public function onError(ConnectionInterface $socket, \Exception $e)
-    {
-        echo "You got an error: {$e->getMessage()}\n";
-        $socket->close();
     }
 }

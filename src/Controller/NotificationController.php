@@ -74,7 +74,7 @@ class NotificationController extends AbstractController
                     'ticketForm' => $this->modalForms->ticketForm($request)->createView()
                 ]));
 
-                $response->setSharedMaxAge((int)self::CACHE_MAX_AGE);
+                //$response->setSharedMaxAge((int)self::CACHE_MAX_AGE);
                 return $response;
             }
         } else {

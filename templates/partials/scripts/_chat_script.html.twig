@@ -8,7 +8,8 @@
     /**
      * @type WebSocket
      */
-    var socket = new WebSocket("ws://{{ defailtDomain }}:9000");
+    //var socket = new WebSocket("ws://{{ defailtDomain }}:9000");
+    var socket = new WebSocket("ws://127.0.0.1:9000");
 
     socket.onopen = function(event) {
         console.info("Connection status OK!");

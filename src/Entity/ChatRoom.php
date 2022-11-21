@@ -39,11 +39,6 @@ class ChatRoom
      */
     private $chat;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $socketId2;
-
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -130,18 +125,6 @@ class ChatRoom
                 $chat->setChatRoom(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getSocketId2(): ?int
-    {
-        return $this->socketId2;
-    }
-
-    public function setSocketId2(int $socketId2): self
-    {
-        $this->socketId2 = $socketId2;
 
         return $this;
     }
