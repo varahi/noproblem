@@ -90,20 +90,7 @@ class ChatController extends AbstractController
         }
 
         $allUsers = $userRepository->findAllExcluded($fromUser, 'ROLE_SUPER_ADMIN');
-
-        /*return $this->render('chat/selected_chat.html.twig', [
-            'fromUser' => $fromUser,
-            'toUser' => $toUser,
-            'allUsers' => $allUsers,
-            'chatRoom' => $chatRoom,
-            'fromImgSrc' => $fromImgSrc,
-            'toImgSrc' => $toImgSrc,
-            'defailtDomain' => $this->defailtDomain,
-            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
-        ]);*/
-
-
-        return $this->render('chat/chat2.html.twig', [
+        return $this->render('chat/selected_chat.html.twig', [
             'fromUser' => $fromUser,
             'toUser' => $toUser,
             'allUsers' => $allUsers,
@@ -113,51 +100,5 @@ class ChatController extends AbstractController
             'defailtDomain' => $this->defailtDomain,
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
-    }
-
-
-    /**
-     * @Route("/chat2",name="app_chat2")
-     * */
-    public function index()
-    {
-        //$this->phpClientDemo();
-        return $this->render('chat/chat2.html.twig');
-    }
-
-
-
-    /**
-     * @Route("/php-client-demo",name="php_client_demo")
-     * */
-    public function phpClientDemo()
-    {
-        $loop = Factory::create();
-        $reactConnector = new \React\Socket\Connector(
-            $loop,
-            [
-                'tls' => [
-                    'allow_self_signed' => true,
-                    'verify_peer' => false,
-                    'verify_peer_name' => false
-                ]
-            ]
-        );
-        $connector = new Connector($loop, $reactConnector);
-
-        $connector(
-            'ws://localhost:8080',
-            [],
-            ['Origin' => 'http://localhost']
-        )->then(function (WebSocket $conn) {
-            $conn->send(json_encode(['action'=>'register','value'=>'tiwari']));
-            $conn->send(json_encode(['action'=>'message','to'=>'mayank','value'=>'Message from PHP Client']));
-            $conn->close();
-        }, function (Exception $e) use ($loop) {
-            echo "Could not connect: {$e->getMessage()}\n";
-            $loop->stop();
-        });
-        $loop->run();
-        return new Response('OK - Check the Server');
     }
 }

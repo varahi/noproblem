@@ -2,11 +2,11 @@
 
 namespace App\Command;
 
-use App\Repository\ChatRoomRepository;
-use App\Repository\UserRepository;
 use App\Service\ChatMessenger;
-use App\Service\DataHandler;
 use Doctrine\Persistence\ManagerRegistry;
+use Ratchet\Http\HttpServer;
+use Ratchet\Server\IoServer;
+use Ratchet\WebSocket\WsServer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,9 +15,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 //Ratchet libraries
-use Ratchet\Server\IoServer;
-use Ratchet\Http\HttpServer;
-use Ratchet\WebSocket\WsServer;
 
 class ChatStartCommand extends Command
 {
@@ -66,9 +63,7 @@ class ChatStartCommand extends Command
             '============',
             'Starting chat, open your browser.',
         ]);
-
-        //$server = IoServer::factory(new HttpServer(new WsServer(new ChatMessenger($this->doctrine))), 9000);
-        $server = IoServer::factory(new HttpServer(new WsServer(new DataHandler($this->doctrine))), 8080);
+        $server = IoServer::factory(new HttpServer(new WsServer(new ChatMessenger($this->doctrine))), 9000);
 
         $server->run();
     }

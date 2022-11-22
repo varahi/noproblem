@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\back;
 
-use App\Controller\Traits\ChatTrait;
 use App\Entity\Chat;
 use App\Entity\ChatRoom;
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
-use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
+use Ratchet\MessageComponentInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ChatMessenger_back extends AbstractController implements MessageComponentInterface
