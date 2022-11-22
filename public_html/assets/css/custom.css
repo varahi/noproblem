@@ -836,6 +836,15 @@ Chat
     outline: none;
 }
 
+.alert-danger-offline {
+    position: absolute;
+    margin-top: -70px;
+    margin-left: -70px;
+}
+#data-pre {
+    padding-top: 40px;
+}
+
 /* Small screens */
 @media all and (max-width: 767px) {
     .chat-thread {

@@ -29,14 +29,48 @@
 
                     <div class="col-md-8">
 
-                        <div class="col border">
-
+                        <ul class="chat-thread" id="messages-list">
+                            {% if chatRoom %}
+                                {% for chat in chatRoom.chat %}
+                                    {% if fromUser.id == chat.sender.id %}
+                                        <li class="chat-item sender">
+                                            {{ chat.sender }} :
+                                            <span>{{ chat.created|date("d.m.Y H:i:s") }}</span>
+                                            {% if chat.sender.avatar %}
+                                                <img id="avatar" src="{{ asset('uploads/files/' ~ chat.sender.avatar) }}" class="rounded" width="50" height="50"  alt=""/>
+                                            {% else %}
+                                                <img src="{{ asset('assets/img/ava_person_account.png') }}" alt="">
+                                            {% endif %}
+                                            {{ chat.message }}
+                                        </li>
+                                    {% else %}
+                                        <li class="chat-item reciever">
+                                            {{ chat.sender }} :
+                                            <span>{{ chat.created|date("d.m.Y H:i:s") }}</span>
+                                            {% if chat.sender.avatar %}
+                                                <img id="avatar" src="{{ asset('uploads/files/' ~ chat.sender.avatar) }}" class="rounded" width="50" height="50"  alt=""/>
+                                            {% else %}
+                                                <img src="{{ asset('assets/img/ava_person_account.png') }}" alt="">
+                                            {% endif %}
+                                            {{ chat.message }}
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
                             <div class="messages">
 
                             </div>
-                            <input class="form-control" type="text" name="message">
-                            <button type="button" class="btn-send-message btn btn-primary">Send</button>
+                        </ul>
+
+                        <div class="row" id="data-pre">
+                            <textarea id="form-message" class="form-control" rows="3" placeholder="Введите ваше сообщение"></textarea>
+                            <div class="but_creating_form send_message">
+                                <button type="submit" class="btn-send-message">Отправить</button>
+                            </div>
                         </div>
+
+{#                        <input class="form-control" type="text" name="message">#}
+{#                        <button type="button" class="btn-send-message btn btn-primary">Send</button>#}
 
                     </div>
                 </div>
@@ -51,8 +85,17 @@
         /*
         * connect to socket
         * */
+        myUserName = '{{ fromUser }}';
         myUserId = '{{ fromUser.id }}';
         messageToUserId = '{{ toUser.id }}';
+        messageToUserName = '{{ toUser }}';
+        fromImgSrc = '{{ fromImgSrc }}';
+        toImgSrc = '{{ toImgSrc }}';
+
+        var dt = new Date();
+        var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+        var strDate = dt.getFullYear() + "." + (dt.getMonth()+1) + "." + dt.getDate();
+
         ws = new WebSocket('ws://localhost:8080');
         ws.onopen = function () {
             /*if(myUserId==''){
@@ -61,31 +104,30 @@
             if(messageToUserId==''){
                 messageToUserId = prompt('Enter Other Person\'s User Id:');
             }*/
-            ws.send(JSON.stringify({'action': 'register', 'value': myUserId}));
-            $('.messages').append(`<div class="alert alert-info">Connected With Socket, Registering User!</div>`);
+            //ws.send(JSON.stringify({'action': 'register', 'value': myUserId, 'to': messageToUserId}));
+            //$('.messages').append(`<div class="alert alert-info">Connected With Socket, Registering User!</div>`);
         }
         ws.onclose = function () {
-            $('.messages').append(`<div class="alert alert-danger">Connection Closed! Bye!</div>`);
+            $('.messages').append(`<div class="alert alert-danger">Соединение закрыто! Пока!</div>`);
         }
         ws.onerror = function () {
-            $('.messages').append(`<div class="alert alert-danger">Opps! Error in Connection!</div>`);
+            $('.messages').append(`<div class="alert alert-danger">Упс! Ошибка соединения с сервером!</div>`);
         }
         ws.onmessage = function (message) {
             data = JSON.parse(message.data);
             switch (data.action) {
                 case 'error':
-                    $('.messages').append(`<div id="${data.value}" class="alert alert-danger">${data.value}</div>`);
+                    $('.messages').append(`<div id="alert-danger" class="alert alert-danger alert-danger-offline">${data.value}</div>`);
                     break;
                 case 'message':
-                    let msgTmpl  = `<div class="row">
-                                    <div class="col-2">
-                                        ${messageToUserId}
-                                    </div>
-                                    <div class="col-10">
-                                        <div class="alert alert-primary">${data.value}</div>
-                                    </div>
-                                </div>`;
-
+                    let msgTmpl  = `
+                                    <li class="chat-item sender">
+                                        ${messageToUserName}
+                                        <span>${strDate} ${time}</span>
+                                        <img id="avatar" src="${toImgSrc}" class="rounded" width="50" height="50" alt="">
+                                        ${data.value}
+                                    </li>
+                                `;
                     $('.messages').append(msgTmpl);
                     break;
                 default:
@@ -94,16 +136,16 @@
         }
 
         $('.btn-send-message').bind('click', function () {
-            let message = $('input[name=message]');
-            ws.send(JSON.stringify({'action': 'message','to':messageToUserId,'value':message.val()}));
-            let msgTmpl  = `<div class="row">
-                                    <div class="col-2">
-                                        ${myUserId}
-                                    </div>
-                                    <div class="col-10">
-                                        <div class="alert alert-dark">${message.val()}</div>
-                                    </div>
-                                </div>`;
+            let message = $('textarea#form-message');
+            ws.send(JSON.stringify({'action': 'message','to':messageToUserId,'from':myUserId, 'value':message.val()}));
+            let msgTmpl  = `
+                                    <li class="chat-item sender">
+                                        ${myUserName}
+                                         <span>${strDate} ${time}</span>
+                                        <img id="avatar" src="${fromImgSrc}" class="rounded" width="50" height="50" alt="">
+                                        ${message.val()}
+                                    </li>
+                                `;
             $('.messages').append(msgTmpl);
             message.val('');
         });

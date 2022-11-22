@@ -68,7 +68,7 @@ class ChatStartCommand extends Command
         ]);
 
         //$server = IoServer::factory(new HttpServer(new WsServer(new ChatMessenger($this->doctrine))), 9000);
-        $server = IoServer::factory(new HttpServer(new WsServer(new DataHandler())), 8080);
+        $server = IoServer::factory(new HttpServer(new WsServer(new DataHandler($this->doctrine))), 8080);
 
         $server->run();
     }
