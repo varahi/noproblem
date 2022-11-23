@@ -222,6 +222,9 @@ input[required] + label:after {
     background-color: #f2dede;
     border-color: #ebccd1;
     color: #a94442;
+
+    border-radius: 8px;
+    padding: 5px 10px;
 }
 
 .alert-danger hr {

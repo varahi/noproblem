@@ -19,7 +19,7 @@
       <div class="modal" v-if="showModal">
         <div class="modal-title">
           <h2>Найти работника</h2>
-          <button class="close" @click="showModal = false"><img src="/assets/img/krest.svg"></button>
+          <button class="close" @click="showModal = false"><img src="/assets/img/krest.svg" alt=""></button>
         </div>
         <div class="modal-content">
           <div class="buttons">

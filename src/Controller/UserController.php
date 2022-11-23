@@ -34,6 +34,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Notifier\Notification\Notification;
 use Symfony\Component\Notifier\NotifierInterface;
 use App\Form\User\EditProfileFormType;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class UserController extends AbstractController
 {
@@ -142,6 +143,12 @@ class UserController extends AbstractController
             } else {
                 $profleFilled = 1;
             }
+
+            /*$session = new Session();
+            $session->set('city', 'SPb');
+            $citySession = $session->get('city');
+
+            dd($citySession);*/
 
             // Resize avatar if exist
             if ($user->getAvatar()) {

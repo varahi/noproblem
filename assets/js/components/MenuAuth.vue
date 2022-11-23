@@ -6,7 +6,8 @@
     <div class="modal" v-if="showModal">
       <div class="modal-title">
         <h2>Вход</h2>
-        <button class="close" @click="showModal = false"><img src="/assets/img/krest.svg"></button>
+        <p v-if="alert" class="alert-danger">{{ alertMessage }}</p>
+        <button class="close" @click="showModal = false"><img src="/assets/img/krest.svg" alt=""></button>
       </div>
 
       <div class="modal-content">
@@ -48,12 +49,12 @@
       return {
         showModal: false,
         msg: 'LoginForm',
-
         email: '',
         password: '',
-
         validationErrors: {},
-        formSubmittedSuccess: false
+        formSubmittedSuccess: false,
+        alert: false,
+        alertMessage: ''
       }
     },
 
@@ -75,12 +76,18 @@
             //component.formSubmittedSuccess = true;
             //component.validationErrors = {};
           }
-        }).catch(function (error) {
+        })
+            .catch(error => {
+              this.alert = true;
+              this.alertMessage = 'Неверная пара логин/пароль';
+            });
+
+            /*.catch(function (error) {
           let message = 'Неверная пара логин/пароль';
           alert(message);
           console.log(message);
           console.log(error.response);
-        });
+        });*/
       }
     }
   }
