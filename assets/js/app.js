@@ -5,6 +5,7 @@ import TryAndRegister from './components/TryAndRegister';
 //import TryAndRegisterModal from './components/TryAndRegisterModal';
 import Register from './components/Register';
 import MenuAuth from './components/MenuAuth';
+import SetCity from './components/SetCity';
 import Login from './components/Login';
 import SearchWork from './components/SearchWork';
 import Vue from 'vue';
@@ -30,6 +31,11 @@ new Vue({
 new Vue({
     el: '#menu-auth',
     render: h => h(MenuAuth)
+});
+
+new Vue({
+    el: '#menu-set-city',
+    render: h => h(SetCity)
 });
 
 new Vue({
