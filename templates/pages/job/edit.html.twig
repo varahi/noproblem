@@ -17,7 +17,7 @@
         <div class="large_creating_form fon">
             <div class="in_creating_form">
                 {% include 'partials/_message.html.twig' %}
-                {{ form_start(form, {'attr' : {'class': 'form', 'autocomplete': 'on'}} ) }}
+                {{ form_start(form, {'attr' : {'class': 'form job_form', 'autocomplete': 'on'}} ) }}
                 <div class="hide">
                     <div class="abouts_creating_form grid_creating_form">
                         <div class="dom_creating_form">
@@ -47,22 +47,28 @@
                         </div>
 
                         <div class="dom_creating_form">
-                            <p>Район</p>
-                            <select id="job_form_district" name="job_form[district]" class="text_input">
-                                {% for district in districts %}
-                                    <option>Выберите район</option>
-                                    {% if job.district.id is defined %}
-                                        <option data-list-id="{{ district.city.id }}" value="{{ district.id }}" {% if district.id == job.district.id %} selected {% endif %}>
-                                            {{ district.name }}
-                                        </option>
-                                    {% else %}
-                                        <option data-list-id="{{ district.city.id }}" value="{{ district.id }}">
-                                            {{ district.name }}
-                                        </option>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
+                            <p class="required">Адрес</p>
+                            {{ form_row(form.address) }}
                         </div>
+
+{#                        <div class="dom_creating_form">#}
+{#                            <p>Район</p>#}
+{#                            <select id="job_form_district" name="job_form[district]" class="text_input">#}
+{#                                {% for district in districts %}#}
+{#                                    <option>Выберите район</option>#}
+{#                                    {% if job.district.id is defined %}#}
+{#                                        <option data-list-id="{{ district.city.id }}" value="{{ district.id }}" {% if district.id == job.district.id %} selected {% endif %}>#}
+{#                                            {{ district.name }}#}
+{#                                        </option>#}
+{#                                    {% else %}#}
+{#                                        <option data-list-id="{{ district.city.id }}" value="{{ district.id }}">#}
+{#                                            {{ district.name }}#}
+{#                                        </option>#}
+{#                                    {% endif %}#}
+{#                                {% endfor %}#}
+{#                            </select>#}
+{#                        </div>#}
+
                     </div>
 
                     <div class="abouts_creating_form grid_creating_form ">
@@ -72,10 +78,6 @@
                                 <img src="{{ asset('assets/img/locats.svg') }}" alt="">
                                 <span class="">Поиск по геолокации</span>
                             </div>
-                        </div>
-                        <div class="dom_creating_form">
-                            <p class="required">Адрес</p>
-                            {{ form_row(form.address) }}
                         </div>
                     </div>
 

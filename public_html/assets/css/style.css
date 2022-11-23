@@ -2694,11 +2694,16 @@ display: none;
 
 .in_creating_form{padding: 42px 43px 56px;}
 /*заменить*/
-.grid_creating_form{display: grid;
-grid-template-columns: 1fr 1fr 1fr;
-align-items: center;
-grid-gap: 39px;
+.grid_creating_form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    grid-gap: 39px;
 }
+.job_form .grid_creating_form {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
 /*конец заменить*/
 .abouts_creating_form {margin-bottom: 30px;}
 

@@ -27,7 +27,7 @@ class WorksheetFormType extends AbstractType
         $builder
             ->add(
                 'name',
-                TextType::class,
+                TextareaType::class,
                 [
                     'required' => true,
                     'attr' => [

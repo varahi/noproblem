@@ -37,19 +37,21 @@
                                         <p class="required">Город</p>
                                         <input type="text" id="worksheet_form" name="worksheet_form[city]" required="required" placeholder="Ваш город" class="form-control" value="{{ worksheet.city.name }}">
                                     </div>
-                                    <div class="dom_creating_form">
-                                        <p>Район</p>
-                                        <select id="worksheet_form_district" name="worksheet_form[district]" class="text_input" disabled>
-                                            {% for district in districts %}
-                                                {% if job.district.id is defined %}
-                                                    <option>Выберите район</option>
-                                                    <option data-list-id="{{ district.city.id }}" value="{{ district.id }}" {% if district.id == worksheet.district.id %} selected {% endif %}>
-                                                        {{ district.name }}
-                                                    </option>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </select>
-                                    </div>
+
+{#                                    <div class="dom_creating_form">#}
+{#                                        <p>Район</p>#}
+{#                                        <select id="worksheet_form_district" name="worksheet_form[district]" class="text_input" disabled>#}
+{#                                            {% for district in districts %}#}
+{#                                                {% if job.district.id is defined %}#}
+{#                                                    <option>Выберите район</option>#}
+{#                                                    <option data-list-id="{{ district.city.id }}" value="{{ district.id }}" {% if district.id == worksheet.district.id %} selected {% endif %}>#}
+{#                                                        {{ district.name }}#}
+{#                                                    </option>#}
+{#                                                {% endif %}#}
+{#                                            {% endfor %}#}
+{#                                        </select>#}
+{#                                    </div>#}
+
                                     <div class="dom_creating_form">
                                         <p class="required">Адрес</p>
                                         {{ form_row(form.address) }}
