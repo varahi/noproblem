@@ -2,7 +2,7 @@
 import Courses from './components/Pages/Courses/CourseList';
 import Announcements from './components/User/Announcements';
 import TryAndRegister from './components/TryAndRegister';
-import TryAndRegisterModal from './components/TryAndRegisterModal';
+//import TryAndRegisterModal from './components/TryAndRegisterModal';
 import Register from './components/Register';
 import MenuAuth from './components/MenuAuth';
 import Login from './components/Login';
@@ -13,14 +13,14 @@ import Vue from 'vue';
 //import '../css/style.css';
 //import '../css/custom.css';
 
-new Vue({
+/*new Vue({
     el: '#app',
     components: {
         Courses,
         TryAndRegister,
         Announcements
     }
-});
+});*/
 
 new Vue({
     el: '#login',
@@ -37,10 +37,11 @@ new Vue({
     render: h => h(Register)
 });
 
-new Vue({
-    el: '#try-and-register-modal',
-    render: h => h(TryAndRegisterModal)
-});
+// Turned off
+//new Vue({
+//    el: '#try-and-register-modal',
+//    render: h => h(TryAndRegisterModal)
+//});
 
 new Vue({
     el: '#search-work',

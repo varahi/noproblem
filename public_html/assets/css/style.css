@@ -2203,9 +2203,13 @@ left: 80px}
 }
 
 .menu {
-  grid-template-columns: repeat(6,auto);
+/*  grid-template-columns: repeat(6,auto);*/
+    grid-template-columns: 450px 450px 50px;
   align-items: center;
   grid-gap: 20px;
+}
+.menu-logged {
+    grid-template-columns: repeat(4,auto);
 }
 
 city, .menu {

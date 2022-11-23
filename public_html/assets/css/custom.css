@@ -103,8 +103,9 @@
 }
 
 .btn_resize button {
-    font-size: 18px;
-    padding: 18px 52px;
+    font-size: inherit;
+/*    padding: 18px 60px;*/
+    padding: 10px 20px;
     color: #fff;
     background: #6d3d67;
     background: var(--violet);
@@ -383,6 +384,11 @@ img.rounded {
 .map-img {
     float: right;
 
+}
+
+h2.main-page {
+    font-size: 62px;
+    line-height: 74px;
 }
 
 .pagination {
@@ -836,11 +842,11 @@ Chat
     outline: none;
 }
 
-.alert-danger-offline {
+/*.alert-danger-offline {
     position: absolute;
     margin-top: -70px;
     margin-left: -70px;
-}
+}*/
 #data-pre {
     padding-top: 40px;
 }

@@ -4,7 +4,7 @@
             <img class="logo" src="{{ asset('assets/img/logo.svg') }}" alt="">
         </a>
         <div id="try-and-register-modal"></div>
-        <div class="menu">
+        <div class="menu {% if app.user %}menu-logged {% endif %}">
             {% include 'partials/header/top_navigation.html.twig' %}
             {% if is_granted('ROLE_BUYER') %}
                 <div id="login"></div>

@@ -49,7 +49,10 @@
                 <div class="additional-info additional-info-{{ job.id }} hidden">
                     <h3>Контакты работодателя</h3>
                     <p>ФИО контактного лица: {{ job.contactFullName }}</p>
-                    <p>Email: <a class="link" href="mailto:{{ job.owner.email }}?subject=Запрос на выполнение работы">{{ job.owner.email }}</a></p>
+{#                    <p>Email: <a class="link" href="mailto:{{ job.owner.email }}?subject=Запрос на выполнение работы">{{ job.owner.email }}</a></p>#}
+                    {% if job.owner.phone %}
+                        <p>{{ 'Phone'|trans }}: <a class="link" href="tel:{{ job.owner.phone|trim|replace({'(': '', ')': '', ' ': '-', '.': '-', '+': ''}) }}">{{ job.owner.phone }}</a></p>
+                    {% endif %}
                 </div>
             {% elseif user.active == 0 or user.inactive == 1 %}
                 <div class="additional-info additional-info-{{ job.id }} hidden">

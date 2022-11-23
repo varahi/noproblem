@@ -11,7 +11,8 @@
     <!-- first modal -->
     <div class="modal" v-if="showModal">
       <div class="modal-title">
-        <h2>Выберите свою роль</h2>
+<!--        <h2>Выберите свою роль</h2>-->
+        <h2>Регистрация</h2>
         <button class="close" @click="showModal = false"><img src="/assets/img/krest.svg"></button>
       </div>
       <div class="modal-content">
@@ -22,9 +23,9 @@
           <div class="button" @click="showModalCustomer = true, showModal = false, showModalEmployer = false, showModalBuyer = false">
             <a>Работник</a>
           </div>
-          <div class="button" @click="showModalBuyer = true, showModal = false, showModalEmployer = false, showModalCustomer = false">
+<!--          <div class="button" @click="showModalBuyer = true, showModal = false, showModalEmployer = false, showModalCustomer = false">
             <a>Покупатель</a>
-          </div>
+          </div>-->
         </div>
       </div>
     </div>
@@ -310,6 +311,9 @@ export default {
 }
 .button a {
   font-size: 20px;
+  color: #fff;
+}
+.button a:hover {
   color: #fff;
 }
 .buttons {
