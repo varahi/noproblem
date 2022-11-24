@@ -169,7 +169,7 @@ class UserController extends AbstractController
                     'profleFilled' => $profleFilled,
                     'persentFilled' => $persentFilled,
                     // Get City from session
-                    //'cityName' => $this->sessionService->getCity(),
+                    'cityName' => $this->sessionService->getCity(),
                     //'cityName'   => $serializer->normalize($cityName, 'json'),
                     // Modal form for all pages
                     'ticketForm' => $this->modalForms->ticketForm($request)->createView()

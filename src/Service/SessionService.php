@@ -25,10 +25,9 @@ class SessionService extends AbstractController
     public function getCity()
     {
         $session = new Session();
-        $cityId = $session->get('city');
+        $cityName = $session->get('city');
         $entityManager = $this->doctrine->getManager();
-        //$city = $cityRepository->findOneBy(['id' => $cityId]);
-        $city = $entityManager->getRepository(City::class)->findOneBy(['id' => $cityId]);
+        $city = $entityManager->getRepository(City::class)->findOneBy(['name' => $cityName]);
         return $city->getName();
     }
 }

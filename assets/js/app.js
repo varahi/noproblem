@@ -35,6 +35,12 @@ new Vue({
 
 new Vue({
     el: '#menu-set-city',
+    data: {
+        trans: null
+    },
+    mounted: function() {
+        this.trans = this.$el.getAttribute('data-trans');
+    },
     render: h => h(SetCity)
 });
 

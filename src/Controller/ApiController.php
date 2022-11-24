@@ -252,7 +252,7 @@ class ApiController extends AbstractController
     {
         if ($request) {
             $data = json_decode($request->getContent(), true);
-            $cityId = $data['id'];
+            $cityId = $data['cname'];
             //file_put_contents('data.txt', $cityId);
 
             $session = new Session();

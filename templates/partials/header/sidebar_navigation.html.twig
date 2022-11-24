@@ -2,11 +2,20 @@
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <img class="logo logo_menu" src="{{ asset('assets/img/logo.svg') }}" alt="">
 
+        {% if cityName is defined %}
+            {% if cityName is not null %}
+                <script>
+                    const cityName = JSON.parse('{{ cityName|json_encode()|raw }}')
+                </script>
+            {% endif %}
+        {% else %}
+            {% set cityName = 'Город не выбран' %}
+        {% endif %}
+
     <div class="sidenav_container">
         {% if is_granted('ROLE_EMPLOYEE') %}
             <a href="{{ path('app_lk_employee') }}">Профиль</a>
-            <div id="menu-set-city"></div>
-{#            <a href="#">Ваш город / <span>Город не выбран</span></a>#}
+            <div id="menu-set-city" data-trans="{{ cityName | json_encode() }}"></div>
             <a href="{{ path('app_my_jobs') }}">Мои вакансии</a>
             <a href="{{ path('app_selected_profiles') }}">Избранные анкеты</a>
             <a href="{{ path('app_all_workers') }}">Все анкеты</a>
@@ -16,8 +25,7 @@
             <a href="{{ path('app_logout') }}">Выход</a>
         {% elseif is_granted('ROLE_CUSTOMER') %}
             <a href="{{ path('app_lk_customer') }}">Профиль</a>
-            <div id="menu-set-city"></div>
-{#            <a href="#">Ваш город / <span>Город не выбран</span></a>#}
+            <div id="menu-set-city" data-trans="{{ cityName | json_encode() }}"></div>
             <a href="{{ path('app_my_worksheets') }}">Мои анкеты</a>
             <a href="{{ path('app_selected_jobs') }}">Избранные вакансии</a>
             <a href="{{ path('app_all_jobs') }}">Все вакансии</a>
@@ -27,8 +35,7 @@
             <a href="{{ path('app_logout') }}">Выход</a>
         {% elseif is_granted('ROLE_BUYER') %}
             <a href="{{ path('app_lk_buyer') }}">Профиль</a>
-            <div id="menu-set-city"></div>
-{#            <a href="#">Ваш город / <span>Город не выбран</span></a>#}
+            <div id="menu-set-city" data-trans="{{ cityName | json_encode() }}"></div>
             {# <a href="#">Мои вакансии</a>
             <a href="#">Избранные анкеты</a>#}
 {#            <a href="#">Мои курсы</a>#}
@@ -38,8 +45,7 @@
         {% else %}
             <div id="menu-auth"></div>
             <div id="menu-registration"></div>
-{#            <a href="#">Ваш город / <span>Город не выбран</span></a>#}
-            <div id="menu-set-city"></div>
+            <div id="menu-set-city" data-trans="{{ cityName | json_encode() }}"></div>
             <a href="{{ path('app_all_jobs') }}">Все вакансии</a>
             <a href="{{ path('app_all_workers') }}">Все анкеты</a>
             <a href="{{ path('app_company') }}">О компании</a>

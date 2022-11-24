@@ -8,21 +8,18 @@
         <p v-if="alert" class="alert-danger">{{ alertMessage }}</p>
         <button class="close" @click="showModal = false"><img src="/assets/img/krest.svg" alt=""></button>
       </div>
-
       <div class="modal-content">
-
         <ul v-if="errors && errors.length">
           <li v-for="error of errors">
             {{error.message}}
           </li>
         </ul>
-
-        <div class="alert alert-success" role="alert" v-if="formSubmittedSuccess">
+        <!-- <div class="alert alert-success" role="alert" v-if="formSubmittedSuccess">
           <p class="alert-success">Город выбран</p>
-        </div>
-        <form class="form-std select-form" autocomplete="off" method="post" v-on:submit.prevent="setCity" v-else>
+        </div> -->
+        <form class="form-std select-form" autocomplete="off" method="post" v-on:submit.prevent="setCity">
           <select v-model="selectedCity">
-            <option v-for="model in items" :key="model.id" :value="model.id">
+            <option v-for="model in items" :key="model.id" :value="model.title" :selected="selectedCity === model.title">
               {{ model.title }}
             </option>
           </select>
@@ -32,11 +29,10 @@
         </form>
       </div>
     </div>
-
-    <a href="#" @click="showModal = true">Ваш город / <span>Город не выбран</span></a>
+    <a href="#" @click="showModal = true" v-if="selectedCity && selectedCity.length">Ваш город / <span>{{ selectedCity }}</span></a>
+    <a href="#" @click="showModal = true" v-else>Ваш город / <span>{{ cityName }}</span></a>
   </div>
 </template>
-
 
 <script>
 import axios from 'axios';
@@ -47,15 +43,15 @@ export default {
       items: [],
       errors: [],
       showModal: false,
-      msg: '',
-      id: '',
+      cname: '',
       validationErrors: {},
       formSubmittedSuccess: false,
       alert: false,
-      alertMessage: ''
+      alertMessage: '',
+      selectedCity: '',
+      cityName,
     }
   },
-
   created() {
     axios.get(`api/get-cities`)
         .then(response => {
@@ -65,13 +61,12 @@ export default {
           this.errors.push(e)
         })
   },
-
   methods: {
     setCity: function (event) {
       event.preventDefault();
       let component = this;
       let body = {
-        id: this.selectedCity,
+        cname: this.selectedCity,
       };
 
       axios.create().post('/api/set-city', body).then(response => {
@@ -79,9 +74,8 @@ export default {
           component.validationErrors = response.data.errors;
         }
         else{
-          console.log(response.data);
-          //this.items = response.data;
           component.formSubmittedSuccess = true;
+          component.showModal = false;
           component.validationErrors = {};
         }
       })

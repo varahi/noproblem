@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Http\Request\LoginRequest;
 use App\Service\LoginValidator;
+use App\Service\SessionService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -36,10 +37,12 @@ class SecurityController extends AbstractController
 
     public function __construct(
         LoginValidator $loginValidator,
-        SerializerInterface $serializer
+        SerializerInterface $serializer,
+        SessionService $sessionService
     ) {
         $this->loginValidator = $loginValidator;
         $this->serializer = $serializer;
+        $this->sessionService = $sessionService;
     }
 
     /**
@@ -82,6 +85,7 @@ class SecurityController extends AbstractController
             return $this->render(
                 'security/login.html.twig',
                 [
+                    'cityName' => $this->sessionService->getCity(),
                     'last_username' => $lastUsername,
                     'error' => $error
                 ]
