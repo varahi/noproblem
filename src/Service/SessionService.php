@@ -8,6 +8,7 @@ use App\Entity\City;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class SessionService extends AbstractController
 {
@@ -15,17 +16,25 @@ class SessionService extends AbstractController
      * @param ManagerRegistry $doctrine
      */
     public function __construct(
-        ManagerRegistry $doctrine
+        ManagerRegistry $doctrine,
+        RequestStack $requestStack
     ) {
         $this->doctrine = $doctrine;
+        $this->requestStack = $requestStack;
     }
 
     public function getCity()
     {
-        $session = new Session();
+        if($this->requestStack->getSession()) {
+            $session = $this->requestStack->getSession();
+        } else {
+            $session = new Session();
+        }
+
         $cityName = $session->get('city');
         $entityManager = $this->doctrine->getManager();
         $city = $entityManager->getRepository(City::class)->findOneBy(['name' => $cityName]);
+
         if ($city !==null) {
             return $city->getName();
         } else {

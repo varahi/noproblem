@@ -2,15 +2,20 @@
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <img class="logo logo_menu" src="{{ asset('assets/img/logo.svg') }}" alt="">
 
-        {% if cityName is defined %}
-            {% if cityName is not null %}
-                <script>
-                    const cityName = JSON.parse('{{ cityName|json_encode()|raw }}')
-                </script>
-            {% endif %}
-        {% else %}
-            {% set cityName = 'Город не выбран' %}
-        {% endif %}
+    {% if cityName is not defined  %}
+        {% set cityName = 'Город не выбран' %}
+    {% endif %}
+
+    {% if cityName is defined and cityName is null  %}
+        {% set cityName = 'Город не выбран' %}
+        <script>
+            const cityName = JSON.parse('{{ cityName|json_encode()|raw }}')
+        </script>
+    {% else %}
+        <script>
+            const cityName = JSON.parse('{{ cityName|json_encode()|raw }}')
+        </script>
+    {% endif %}
 
     <div class="sidenav_container">
         {% if is_granted('ROLE_EMPLOYEE') %}

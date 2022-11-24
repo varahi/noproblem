@@ -19,12 +19,11 @@
         </div> -->
         <form class="form-std select-form" autocomplete="off" method="post" v-on:submit.prevent="setCity">
           <select v-model="selectedCity" class="city">
-            <option disabled value="">{{ cityName }}</option>
+            <option disabled v-if="cityName && cityName" value="">{{ cityName }}</option>
             <option v-for="model in items"
                     :key="model.id"
                     :value="model.title">{{ model.title }}
             </option>
-
 <!--            <option v-for="model in items"
                     :key="model.id"
                     :value="model.title"
@@ -37,6 +36,7 @@
         </form>
       </div>
     </div>
+
     <a href="#" @click="showModal = true" v-if="selectedCity && selectedCity.length">Ваш город / <span>{{ selectedCity }}</span></a>
     <a href="#" @click="showModal = true" v-else>Ваш город / <span>{{ cityName }}</span></a>
   </div>
@@ -57,7 +57,7 @@ export default {
       alert: false,
       alertMessage: '',
       selectedCity: '',
-      cityName: '',
+      cityName,
     }
   },
   created() {
