@@ -96,7 +96,7 @@
         var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
         var strDate = dt.getFullYear() + "." + (dt.getMonth()+1) + "." + dt.getDate();
 
-        ws = new WebSocket('ws://localhost:9000');
+        ws = new WebSocket('wss://noproblem.ru/wss/');
         ws.onopen = function () {
             /*if(myUserId==''){
                 myUserId = prompt('Enter User Id:');
