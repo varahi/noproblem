@@ -7,12 +7,16 @@ use App\Controller\Traits\DataTrait;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\ArticleCategoryRepository;
+use App\Repository\CityRepository;
 use App\Repository\CourseRepository;
 use App\Repository\JobRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class ApiController extends AbstractController
 {
@@ -204,5 +208,64 @@ class ApiController extends AbstractController
         }
 
         return $response;
+    }
+
+    /**
+     * @Route("/api/get-cities", name="api_get_cities")
+     * @return Response
+     */
+    public function apiGetCities(
+        CityRepository $cityRepository
+    ) {
+        $items = $cityRepository->findAllOrder(['name' => 'ASC']);
+
+        if ($items) {
+            foreach ($items as $item) {
+                if ($item->getId()) {
+                    $itemId = $item->getId();
+                }
+                if ($item->getName()) {
+                    $itemTitle = $item->getName();
+                } else {
+                    $itemTitle = null;
+                }
+
+                $arrData[] = [
+                    'id' => $itemId,
+                    'title' => $itemTitle,
+                ];
+            }
+        }
+
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $response->setContent(json_encode($arrData));
+
+        return $response;
+    }
+
+    /**
+     * @Route("/api/set-city", name="app_set_city")
+     */
+    public function setCity(Request $request): JsonResponse
+    {
+        if ($request) {
+            $data = json_decode($request->getContent(), true);
+            $cityId = $data['id'];
+            //file_put_contents('data.txt', $cityId);
+
+            $session = new Session();
+            $session->set('city', $cityId);
+            //$citySession = $session->get('city');
+
+            return new JsonResponse([
+                'status' => Response::HTTP_OK,
+            ]);
+        } else {
+            return new JsonResponse([
+                'status' => Response::HTTP_BAD_REQUEST,
+            ]);
+        }
     }
 }

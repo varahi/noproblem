@@ -18,6 +18,7 @@ use App\Repository\NotificationRepository;
 use App\Repository\UserRepository;
 use App\Service\FileUploader;
 use App\Service\ModalForms;
+use App\Service\SessionService;
 use App\Service\SignUpValidator;
 use App\Service\UserCreator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,7 +35,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Notifier\Notification\Notification;
 use Symfony\Component\Notifier\NotifierInterface;
 use App\Form\User\EditProfileFormType;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class UserController extends AbstractController
 {
@@ -67,6 +67,7 @@ class UserController extends AbstractController
      * @param ModalForms $modalForms
      * @param ImageOptimizer $imageOptimizer
      * @param string $targetDirectory
+     * @param SessionService $sessionService
      */
     public function __construct(
         Security $security,
@@ -74,7 +75,8 @@ class UserController extends AbstractController
         ManagerRegistry $doctrine,
         ModalForms $modalForms,
         ImageOptimizer $imageOptimizer,
-        string $targetDirectory
+        string $targetDirectory,
+        SessionService $sessionService
     ) {
         $this->security = $security;
         $this->twig = $twig;
@@ -82,6 +84,7 @@ class UserController extends AbstractController
         $this->modalForms = $modalForms;
         $this->imageOptimizer = $imageOptimizer;
         $this->targetDirectory = $targetDirectory;
+        $this->sessionService = $sessionService;
     }
 
     /**
@@ -144,16 +147,18 @@ class UserController extends AbstractController
                 $profleFilled = 1;
             }
 
-            /*$session = new Session();
-            $session->set('city', 'SPb');
-            $citySession = $session->get('city');
-
-            dd($citySession);*/
-
             // Resize avatar if exist
             if ($user->getAvatar()) {
                 $this->imageOptimizer->resize($this->targetDirectory.'/'.$user->getAvatar());
             }
+
+            /*$cityName = $this->sessionService->getCity();
+            $encoders = [new XmlEncoder(), new JsonEncoder()];
+            $normalizers = [new ObjectNormalizer()];
+            $serializer = new Serializer($normalizers, $encoders);*/
+
+            //$cityName = $this->sessionService->getCity();
+            //dd($cityName);
 
             {
                 return $this->render('user/lk_customer.html.twig', [
@@ -163,6 +168,10 @@ class UserController extends AbstractController
                     'worksheets' => $worksheets,
                     'profleFilled' => $profleFilled,
                     'persentFilled' => $persentFilled,
+                    // Get City from session
+                    //'cityName' => $this->sessionService->getCity(),
+                    //'cityName'   => $serializer->normalize($cityName, 'json'),
+                    // Modal form for all pages
                     'ticketForm' => $this->modalForms->ticketForm($request)->createView()
                 ]);
             }
