@@ -22,9 +22,14 @@
             <option disabled value="">{{ cityName }}</option>
             <option v-for="model in items"
                     :key="model.id"
+                    :value="model.title">{{ model.title }}
+            </option>
+
+<!--            <option v-for="model in items"
+                    :key="model.id"
                     :value="model.title"
                     :selected="cityName === model.title">{{ model.title }}
-            </option>
+            </option>-->
           </select>
           <div class="btn_try btn_try_custom">
             <button type="submit" class="btn btn-success">Выбрать город</button>
@@ -52,7 +57,7 @@ export default {
       alert: false,
       alertMessage: '',
       selectedCity: '',
-      cityName,
+      cityName: '',
     }
   },
   created() {
@@ -94,6 +99,34 @@ export default {
 
 
 <style scoped>
+
+.modal-vue .overlay {
+  backdrop-filter: blur(4px);
+  background: rgba(110, 99, 99, 0.34);
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.modal-vue .modal {
+  z-index: 9999;
+  margin: 0 auto;
+  padding: 30px 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  position: fixed;
+  width: auto;
+  min-width: 400px;
+  height: auto;
+  top: 40%;
+  left: 50%;
+  margin-top: -75px; /* Negative half of height. */
+  margin-left: -200px; /* Negative half of width. */
+}
+
 .select-form select {
   width: 100%;
 }
@@ -106,9 +139,6 @@ export default {
   padding: 12px 5px 12px 22px;
   width: 95%;
   margin-bottom: 30px;
-}
-.modal-vue .modal {
-  min-width: 400px;
 }
 select.city {
   width: 100%;

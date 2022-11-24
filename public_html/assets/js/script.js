@@ -71,7 +71,7 @@ for (i = 0; i < acc1.length; i++) {
 // personal_account
 
  $(document).ready(function(){
-    const slider = $("#slider_one").owlCarousel({
+    const slider = jQuery("#slider_one").owlCarousel({
         loop:true,
         margin:10,
         nav:true,
@@ -92,7 +92,7 @@ for (i = 0; i < acc1.length; i++) {
 });
 
  $(document).ready(function(){
-    const slider = $("#slider_two").owlCarousel({
+    const slider = jQuery("#slider_two").owlCarousel({
         loop:true,
         margin:10,
         nav:true,
@@ -112,9 +112,8 @@ for (i = 0; i < acc1.length; i++) {
     });
 });
 
-
  $(document).ready(function(){
-    const slider = $("#slider_one_vacan").owlCarousel({
+    const slider = jQuery("#slider_one_vacan").owlCarousel({
         loop:true,
         margin:10,
         nav:true,

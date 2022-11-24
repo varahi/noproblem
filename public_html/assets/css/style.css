@@ -658,7 +658,7 @@ article h4{
 }
 
 .block1_company {padding: 130px 0 90px;
-background-image: url(assets/img/jhow.png);
+background-image: url(../img/jhow.png);
 background-repeat: no-repeat;
 background-position-y: 566px;
 background-position-x: center;}
@@ -720,7 +720,7 @@ display: grid;
 grid-template-columns: 1fr 1fr;
 grid-gap: 56px;
 border-radius: 10px;
-background-image: url(~assets/img/handsa.png);
+background-image: url(../img/handsa.png);
 background-repeat: no-repeat;
 background-position-y: bottom;
 background-position-x: 730px;
@@ -830,16 +830,16 @@ justify-content: center;
 background-position: center;
 height: 116px;}
 
-.ones{background-image: url(assets/img/one.png);
+.ones{background-image: url(../img/one.png);
 width: 133px}
 
-.two{background-image: url(assets/img/two.png);
+.two{background-image: url(../img/two.png);
 width: 130px}
 
-.three{background-image: url(assets/img/three.png);
+.three{background-image: url(../img/three.png);
 width: 220px;}
 
-.four{background-image: url(assets/img/four.png);
+.four{background-image: url(../img/four.png);
 width: 116px}
 
 .dom p{font-size: 18px;}
