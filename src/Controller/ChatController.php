@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\ImageOptimizer;
 use App\Repository\UserRepository;
 use App\Service\ModalForms;
+use App\Service\SessionService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -29,11 +30,13 @@ class ChatController extends AbstractController
     public function __construct(
         ManagerRegistry $doctrine,
         ModalForms $modalForms,
-        string $defailtDomain
+        string $defailtDomain,
+        SessionService $sessionService
     ) {
         $this->doctrine = $doctrine;
         $this->modalForms = $modalForms;
         $this->defailtDomain = $defailtDomain;
+        $this->sessionService = $sessionService;
     }
 
     /**
@@ -50,6 +53,7 @@ class ChatController extends AbstractController
             'fromUser' => $fromUser,
             'toUser' => $toUser,
             'allUsers' => $allUsers,
+            'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }
@@ -98,6 +102,7 @@ class ChatController extends AbstractController
             'fromImgSrc' => $fromImgSrc,
             'toImgSrc' => $toImgSrc,
             'defailtDomain' => $this->defailtDomain,
+            'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }

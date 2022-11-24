@@ -18,6 +18,7 @@ use App\Repository\PageRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\TariffRepository;
 use App\Repository\WorksheetRepository;
+use App\Service\SessionService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -45,17 +46,20 @@ class PageController extends AbstractController
      * @param ManagerRegistry $doctrine
      * @param Security $security
      * @param ModalForms $modalForms
+     * @param SessionService $sessionService
      */
     public function __construct(
         Environment $twig,
         ManagerRegistry $doctrine,
         Security $security,
-        ModalForms $modalForms
+        ModalForms $modalForms,
+        SessionService $sessionService
     ) {
         $this->twig = $twig;
         $this->doctrine = $doctrine;
         $this->security = $security;
         $this->modalForms = $modalForms;
+        $this->sessionService = $sessionService;
     }
 
     /**
@@ -78,6 +82,7 @@ class PageController extends AbstractController
             'categories' => $categories,
             'user' => $user,
             'form' => $form->createView(),
+            'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }
@@ -93,6 +98,7 @@ class PageController extends AbstractController
         $user = $this->security->getUser();
         return new Response($this->twig->render('pages/company.html.twig', [
             'user' => $user,
+            'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
@@ -112,6 +118,7 @@ class PageController extends AbstractController
         return new Response($this->twig->render('pages/tarifs.html.twig', [
             'user' => $user,
             'tariffs' => $tariffs,
+            'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
@@ -131,6 +138,7 @@ class PageController extends AbstractController
             'articles' => $articles,
             'categories' => $categories,
             'user' => $user,
+            'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }
@@ -152,6 +160,7 @@ class PageController extends AbstractController
             'articles' => $articles,
             'categories' => $categories,
             'user' => $user,
+            'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }
@@ -172,6 +181,7 @@ class PageController extends AbstractController
             'article' => $article,
             'categories' => $categories,
             'user' => $user,
+            'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
@@ -188,6 +198,7 @@ class PageController extends AbstractController
         //$categories = $articleCategoryRepository->findAll();
         $user = $this->security->getUser();
         return $this->render('pages/courses/list.html.twig', [
+            'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView(),
             'user' => $user
             //'articles' => $articles,
@@ -208,6 +219,7 @@ class PageController extends AbstractController
         return new Response($this->twig->render('pages/courses/detail.html.twig', [
             'course' => $course,
             'user' => $user,
+            'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
@@ -225,6 +237,7 @@ class PageController extends AbstractController
         return $this->render('pages/privacy.html.twig', [
             'content' => $content,
             'user' => $user,
+            'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }
@@ -241,6 +254,7 @@ class PageController extends AbstractController
         return $this->render('pages/personal.html.twig', [
             'content' => $content,
             'user' => $user,
+            'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }
@@ -255,6 +269,7 @@ class PageController extends AbstractController
     ) {
         $user = $this->security->getUser();
         return $this->render('pages/payment_error.html.twig', [
+            'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView(),
             'user' => $user
         ]);

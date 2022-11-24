@@ -21,6 +21,7 @@ use App\Repository\TaskRepository;
 use App\Repository\WorksheetRepository;
 use App\Service\FileUploader;
 use App\Service\ModalForms;
+use App\Service\SessionService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -60,7 +61,8 @@ class JobController extends AbstractController
         ManagerRegistry $doctrine,
         ModalForms $modalForms,
         ImageOptimizer $imageOptimizer,
-        string $targetDirectory
+        string $targetDirectory,
+        SessionService $sessionService
     ) {
         $this->security = $security;
         $this->twig = $twig;
@@ -68,6 +70,7 @@ class JobController extends AbstractController
         $this->modalForms = $modalForms;
         $this->imageOptimizer = $imageOptimizer;
         $this->targetDirectory = $targetDirectory;
+        $this->sessionService = $sessionService;
     }
 
     /**
@@ -135,6 +138,7 @@ class JobController extends AbstractController
             'districtId' => $districtId,
             'featuredJobs' => $featuredJobs,
             'slug' => $slug,
+            'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
@@ -248,6 +252,7 @@ class JobController extends AbstractController
                 'days1' => $days1,
                 'days2' => $days2,
                 'form' => $form->createView(),
+                'cityName' => $this->sessionService->getCity(),
                 'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             ]);
         } else {
@@ -403,6 +408,7 @@ class JobController extends AbstractController
                 'busynessArr' => $busynessArr,
                 'additionalArr' => $additionalArr,
                 'form' => $form->createView(),
+                'cityName' => $this->sessionService->getCity(),
                 'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             ]);
         } else {
@@ -569,6 +575,7 @@ class JobController extends AbstractController
             'dataKeys' => $dataKeys,
             'scheduleKeys' => $scheduleKeys,
             'featuredJobs' => $featuredJobs,
+            'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
@@ -592,6 +599,7 @@ class JobController extends AbstractController
                 return $this->render('pages/job/my_jobs.html.twig', [
                     'user' => $user,
                     'jobs' => $jobs,
+                    'cityName' => $this->sessionService->getCity(),
                     'ticketForm' => $this->modalForms->ticketForm($request)->createView()
                 ]);
             }
@@ -630,6 +638,7 @@ class JobController extends AbstractController
                 'user' => $user,
                 'jobs' => $jobs,
                 'featuredJobs' => $featuredJobs,
+                'cityName' => $this->sessionService->getCity(),
                 'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             ]));
         } else {

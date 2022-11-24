@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
 use App\Service\ModalForms;
+use App\Service\SessionService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,11 +35,13 @@ class ResetPasswordController extends AbstractController
     public function __construct(
         ResetPasswordHelperInterface $resetPasswordHelper,
         EntityManagerInterface $entityManager,
-        ModalForms $modalForms
+        ModalForms $modalForms,
+        SessionService $sessionService
     ) {
         $this->resetPasswordHelper = $resetPasswordHelper;
         $this->entityManager = $entityManager;
         $this->modalForms = $modalForms;
+        $this->sessionService = $sessionService;
     }
 
     /**
@@ -61,6 +64,7 @@ class ResetPasswordController extends AbstractController
 
         return $this->render('reset_password/request.html.twig', [
             'requestForm' => $form->createView(),
+            'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }
@@ -80,6 +84,7 @@ class ResetPasswordController extends AbstractController
 
         return $this->render('reset_password/check_email.html.twig', [
             'resetToken' => $resetToken,
+            'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }
@@ -141,6 +146,7 @@ class ResetPasswordController extends AbstractController
 
         return $this->render('reset_password/reset.html.twig', [
             'resetForm' => $form->createView(),
+            'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }

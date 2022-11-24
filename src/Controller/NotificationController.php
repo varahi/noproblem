@@ -6,6 +6,7 @@ use App\ImageOptimizer;
 use App\Repository\NotificationRepository;
 use App\Repository\UserRepository;
 use App\Service\ModalForms;
+use App\Service\SessionService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,17 +38,20 @@ class NotificationController extends AbstractController
      * @param Environment $twig
      * @param ManagerRegistry $doctrine
      * @param ModalForms $modalForms
+     * @param SessionService $sessionService
      */
     public function __construct(
         Security $security,
         Environment $twig,
         ManagerRegistry $doctrine,
-        ModalForms $modalForms
+        ModalForms $modalForms,
+        SessionService $sessionService
     ) {
         $this->security = $security;
         $this->twig = $twig;
         $this->doctrine = $doctrine;
         $this->modalForms = $modalForms;
+        $this->sessionService = $sessionService;
     }
 
     /**
@@ -71,6 +75,7 @@ class NotificationController extends AbstractController
                     'user' => $user,
                     'newNotifications' => $newNotifications,
                     'viewedNotifications' => $viewedNotifications,
+                    'cityName' => $this->sessionService->getCity(),
                     'ticketForm' => $this->modalForms->ticketForm($request)->createView()
                 ]));
 

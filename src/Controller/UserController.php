@@ -168,10 +168,7 @@ class UserController extends AbstractController
                     'worksheets' => $worksheets,
                     'profleFilled' => $profleFilled,
                     'persentFilled' => $persentFilled,
-                    // Get City from session
                     'cityName' => $this->sessionService->getCity(),
-                    //'cityName'   => $serializer->normalize($cityName, 'json'),
-                    // Modal form for all pages
                     'ticketForm' => $this->modalForms->ticketForm($request)->createView()
                 ]);
             }
@@ -223,6 +220,7 @@ class UserController extends AbstractController
                     'daysLeft' => $daysLeft,
                     'profleFilled' => $profleFilled,
                     'persentFilled' => $persentFilled,
+                    'cityName' => $this->sessionService->getCity(),
                     'ticketForm' => $this->modalForms->ticketForm($request)->createView()
                 ]);
             }
@@ -298,6 +296,7 @@ class UserController extends AbstractController
             {
                 return $this->render('user/lk_customer.html.twig', [
                     'user' => $user,
+                    'cityName' => $this->sessionService->getCity(),
                     'ticketForm' => $this->modalForms->ticketForm($request)->createView()
                 ]);
             }
@@ -378,6 +377,7 @@ class UserController extends AbstractController
             return new Response($this->twig->render('user/edit_profile.html.twig', [
                 'user' => $user,
                 'form' => $form->createView(),
+                'cityName' => $this->sessionService->getCity(),
                 'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             ]));
         } else {

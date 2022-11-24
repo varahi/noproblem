@@ -15,6 +15,7 @@ use App\Repository\ReviewRepository;
 use App\Repository\TaskRepository;
 use App\Repository\WorksheetRepository;
 use App\Service\ModalForms;
+use App\Service\SessionService;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -53,17 +54,20 @@ class WorkerController extends AbstractController
      * @param Environment $twig
      * @param ManagerRegistry $doctrine
      * @param ModalForms $modalForms
+     * @param SessionService $sessionService
      */
     public function __construct(
         Security $security,
         Environment $twig,
         ManagerRegistry $doctrine,
-        ModalForms $modalForms
+        ModalForms $modalForms,
+        SessionService $sessionService
     ) {
         $this->security = $security;
         $this->twig = $twig;
         $this->doctrine = $doctrine;
         $this->modalForms = $modalForms;
+        $this->sessionService = $sessionService;
     }
 
     /**
@@ -122,6 +126,7 @@ class WorkerController extends AbstractController
             'districtId' => $districtId,
             'featuredProfiles' => $featuredProfiles,
             'slug' => $slug,
+            'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
@@ -184,6 +189,7 @@ class WorkerController extends AbstractController
                 'districts' => $districts,
                 'tasks' => $tasks,
                 'busynessess' => $busynessess,
+                'cityName' => $this->sessionService->getCity(),
                 'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             ]);
         } else {
@@ -274,6 +280,7 @@ class WorkerController extends AbstractController
             return $this->render('pages/worksheet/my_worksheets.html.twig', [
                 'user' => $user,
                 'worksheets' => $worksheets,
+                'cityName' => $this->sessionService->getCity(),
                 'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             ]);
         } else {
@@ -358,6 +365,7 @@ class WorkerController extends AbstractController
                     'busynessArr' => $busynessArr,
                     'form' => $form->createView(),
                     'worksheet' => $worksheet,
+                    'cityName' => $this->sessionService->getCity(),
                     'ticketForm' => $this->modalForms->ticketForm($request)->createView()
                 ]));
             } else {
@@ -399,6 +407,7 @@ class WorkerController extends AbstractController
             'worksheet' => $worksheet,
             'relatedJobs' => $relatedJobs,
             'featuredProfiles' => $featuredProfiles,
+            'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
@@ -465,6 +474,7 @@ class WorkerController extends AbstractController
                 'worksheets' => $worksheets,
                 'featuredProfiles' => $featuredProfiles,
                 //'form' => $form->createView(),
+                'cityName' => $this->sessionService->getCity(),
                 'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             ]));
         } else {
