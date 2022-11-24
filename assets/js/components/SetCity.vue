@@ -18,9 +18,12 @@
           <p class="alert-success">Город выбран</p>
         </div> -->
         <form class="form-std select-form" autocomplete="off" method="post" v-on:submit.prevent="setCity">
-          <select v-model="selectedCity">
-            <option v-for="model in items" :key="model.id" :value="model.title" :selected="selectedCity === model.title">
-              {{ model.title }}
+          <select v-model="selectedCity" class="city">
+            <option disabled value="">{{ cityName }}</option>
+            <option v-for="model in items"
+                    :key="model.id"
+                    :value="model.title"
+                    :selected="cityName === model.title">{{ model.title }}
             </option>
           </select>
           <div class="btn_try btn_try_custom">
@@ -103,5 +106,11 @@ export default {
   padding: 12px 5px 12px 22px;
   width: 95%;
   margin-bottom: 30px;
+}
+.modal-vue .modal {
+  min-width: 400px;
+}
+select.city {
+  width: 100%;
 }
 </style>

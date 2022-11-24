@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Entity\User;
 use App\Entity\City;
-use App\Repository\CityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -28,6 +26,10 @@ class SessionService extends AbstractController
         $cityName = $session->get('city');
         $entityManager = $this->doctrine->getManager();
         $city = $entityManager->getRepository(City::class)->findOneBy(['name' => $cityName]);
-        return $city->getName();
+        if ($city !==null) {
+            return $city->getName();
+        } else {
+            return null;
+        }
     }
 }

@@ -11,7 +11,7 @@
             <select name="city" id="city">
                 <option>Выберите город</option>
                 {% for city in cities %}
-                    <option value="{{ city.id }}" {% if city.id == cityId %} selected {% endif %}>{{ city.name }}</option>
+                    <option value="{{ city.id }}" {% if city.name == cityName %} selected {% endif %}>{{ city.name }}</option>
                 {% endfor %}
             </select>
         </div>
