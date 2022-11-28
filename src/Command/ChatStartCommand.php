@@ -63,7 +63,7 @@ class ChatStartCommand extends Command
             '============',
             'Starting chat, open your browser.',
         ]);
-        $server = IoServer::factory(new HttpServer(new WsServer(new ChatMessenger($this->doctrine))), 9000);
+        $server = IoServer::factory(new HttpServer(new WsServer(new ChatMessenger($this->doctrine))), 8888);
 
         $server->run();
     }
