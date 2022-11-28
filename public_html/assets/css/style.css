@@ -2212,6 +2212,7 @@ left: 80px}
 
   align-items: center;
   grid-gap: 20px;
+    width: 100%;
 }
 .menu-logged {
     grid-template-columns: repeat(4,auto);
@@ -2228,7 +2229,7 @@ city, .menu {
 }
 
 .nav {
-  display: grid;
+  display: flex;
   grid-template-columns: 1fr auto;
   align-content: center;
   padding: 17px 0;
