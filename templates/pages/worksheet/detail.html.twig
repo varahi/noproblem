@@ -34,15 +34,20 @@
                                     <div class="city_one_vacan"><span>Работник</span></div>
                                 </div>
                             </div>
-                            {% if user.id == worksheet.user.id %}
-                                <div class="btn_one_vacan nona">
-                                    <a class="isDisabled">Написать сообщение</a>
-                                </div>
+
+                            {% if app.user %}
+                                {% if user.id == worksheet.user.id %}
+                                    <div class="btn_one_vacan nona">
+                                        <a class="isDisabled">Написать сообщение</a>
+                                    </div>
                                 {% else %}
                                     <div class="btn_one_vacan nona">
                                         <a href="{{ path('app_selected_chat', { id: worksheet.user.id}) }}" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Написать сообщение</a>
                                     </div>
+                                {% endif %}
                             {% endif %}
+
+
 
                             {#                            <div class="btn_one_vacan mobs">#}
                             {#                                <a href="" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Добавить в чат</a>#}
@@ -54,9 +59,11 @@
                                 <p>Почта подтверждена</p>
                                 <p>Паспортные данные подтверждены</p>
                             </div>
+                            {% if app.user %}
                             <div class="btn_one_vacan2">
                                 <span aria-current="page" class="nuxt-link-exact-active nuxt-link-active btn-show-info-{{ worksheet.id }}">Показать контакты</span>
                             </div>
+                            {% endif %}
                         </div>
                         <div  class="owns nona">
                             <div class="last">

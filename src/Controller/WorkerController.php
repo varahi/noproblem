@@ -89,8 +89,18 @@ class WorkerController extends AbstractController
 
         $cityId = trim($request->query->get('city'));
         $districtId = trim($request->query->get('district'));
-        $city = $cityRepository->findOneBy(['id' => $cityId]);
         $district = $districtRepository->findOneBy(['id' => $districtId]);
+
+        // If city in session not null // else get city from POST
+        $cityRequest = $request->query->get('city');
+        if (isset($cityRequest) && !empty($cityRequest)) {
+            $city = $cityRepository->findOneBy(['id' => $cityId]);
+            $cityName = $city->getName();
+        } else {
+            $cityName = $this->sessionService->getCity();
+            $city = $cityRepository->findOneBy(['name' => $cityName]);
+        }
+
 
         if ($this->security->getUser()) {
             $user = $this->security->getUser();
@@ -126,7 +136,7 @@ class WorkerController extends AbstractController
             'districtId' => $districtId,
             'featuredProfiles' => $featuredProfiles,
             'slug' => $slug,
-            'cityName' => $this->sessionService->getCity(),
+            'cityName' => $cityName,
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }

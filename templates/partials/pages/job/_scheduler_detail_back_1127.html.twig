@@ -33,20 +33,28 @@
                 <div class="strokavremya">
                     <div  class="onestokavremya">{{ day }}</div>
 
-                    {% for schedule in schedules %}
-                        {#    Time {{ time }} - Start time {{ schedule.startTime }} - End time {{ schedule.endTime }}#}
-                        <div class="onestokavremya">
-                            {{ schedule.startTime  }} {{ schedule.endTime  }}
-                        </div>
-                    {% endfor %}
-
-                    {#{% for timeKey, time in timesArray %}
+                    {% for timeKey, time in timesArray %}
                         {% if dayKey in dataKeys and timeKey in scheduleKeys %}
                             <div class="onestokavremya activechas">{{ time }}</div>
                         {% else %}
                             <div class="onestokavremya"></div>
                         {% endif %}
-                    {% endfor %}#}
+
+                    {% endfor %}
+
+
+{#                    <div class="onestokavremya activechas">12:00</div>#}
+{#                    <div class="onestokavremya activechas"></div>#}
+{#                    <div class="onestokavremya activechas"></div>#}
+{#                    <div class="onestokavremya activechas"></div>#}
+{#                    <div class="onestokavremya activechas">16:00</div>#}
+{#                    <div class="onestokavremya"></div>#}
+{#                    <div class="onestokavremya"></div>#}
+{#                    <div class="onestokavremya"></div>#}
+{#                    <div class="onestokavremya"></div>#}
+{#                    <div class="onestokavremya"></div>#}
+{#                    <div class="onestokavremya"></div>#}
+{#                    <div class="onestokavremya"></div>#}
                 </div>
             </div>
         {% endfor %}

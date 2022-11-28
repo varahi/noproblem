@@ -25,7 +25,7 @@ class SessionService extends AbstractController
 
     public function getCity()
     {
-        if($this->requestStack->getSession()) {
+        if ($this->requestStack->getSession()) {
             $session = $this->requestStack->getSession();
         } else {
             $session = new Session();

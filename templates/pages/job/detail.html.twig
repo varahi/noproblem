@@ -36,6 +36,7 @@
                                 </div>
                             </div>
 
+                            {% if app.user %}
                             {% if user.id == job.owner.id %}
                                 <div class="btn_one_vacan nona">
                                     <a>Написать сообщение</a>
@@ -44,6 +45,7 @@
                                 <div class="btn_one_vacan nona">
                                     <a href="{{ path('app_selected_chat', { id: job.owner.id}) }}" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Написать сообщение</a>
                                 </div>
+                            {% endif %}
                             {% endif %}
 
 {#                            <div class="btn_one_vacan mobs">#}
@@ -56,13 +58,12 @@
                                 <p>Почта подтверждена</p>
                                 <p>Паспортные данные подтверждены</p>
                             </div>
+
+                            {% if app.user %}
                             <div class="btn_one_vacan2">
-                                {% if app.user %}
-                                    <span aria-current="page" class="btn-show-info-{{ job.id }}">Показать контакты</span>
-                                {% else %}
-                                    <a href="{{ path('app_login') }}" aria-current="page" class="">Показать контакты</a>
-                                {% endif %}
+                                <span aria-current="page" class="btn-show-info-{{ job.id }}">Показать контакты</span>
                             </div>
+                            {% endif %}
                         </div>
                         <div  class="owns nona">
                             <div class="last">
@@ -105,7 +106,8 @@
                             <img class="img_like_mob mobs lazyLoad" src="{{ asset('assets/img/like.svg') }}" alt="">
                         </div>
 
-                        {% if app.user and user.active == 1 %}
+                        {% if app.user %}
+                        {% if user.active == 1 %}
                         <div class="additional-info additional-info-{{ job.id }} hidden">
                             <h3>Контакты работодателя</h3>
                             <p>ФИО контактного лица: {{ job.contactFullName }}</p>
@@ -115,6 +117,7 @@
                             <div class="additional-info additional-info-{{ job.id }} hidden">
                                 <p>Доступ к системе ограничен. <a style="text-decoration: underline" href="{{ path('app_tarifs') }}">Пожалуйста пополните ваш баланс.</a></p>
                             </div>
+                        {% endif %}
                         {% endif %}
 
                         <div class="dates mobs">
@@ -199,7 +202,7 @@
                         {% endif %}
                     </div>
 
-                    {% include 'partials/pages/job/_scheduler_detail.html.twig' %}
+{#                    {% include 'partials/pages/job/_scheduler_detail.html.twig' %}#}
                     
                     <div class="tit_one_vacan img communication_method nona">
                         <img src="{{ asset('assets/img/phone.svg') }}" class="lazyLoad isLoaded" alt="">
@@ -210,9 +213,9 @@
                         <p>Звонок по телефону</p>
                     </div>
                     <div class="double_one_vacan nona">
-                        <div  class="btn_one_vacan">
-                            <a  href="{{ path('app_my_jobs') }}" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Венуться к вакансиям</a>
-                        </div>
+{#                        <div  class="btn_one_vacan">#}
+{#                            <a  href="{{ path('app_my_jobs') }}" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Венуться к вакансиям</a>#}
+{#                        </div>#}
                         <div class="btn_one_vacan2">
                             <a href="{{ path('app_all_jobs') }}" aria-current="page" class="nuxt-link-exact-active nuxt-link-active">Другие вакансии</a>
                         </div>

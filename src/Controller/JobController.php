@@ -93,7 +93,17 @@ class JobController extends AbstractController
         // Get different get params
         $cityId = trim($request->query->get('city'));
         $districtId = trim($request->query->get('district'));
-        $city = $cityRepository->findOneBy(['id' => $cityId]);
+
+        // If city in session not null // else get city from POST
+        $cityRequest = $request->query->get('city');
+        if (isset($cityRequest) && !empty($cityRequest)) {
+            $city = $cityRepository->findOneBy(['id' => $cityId]);
+            $cityName = $city->getName();
+        } else {
+            $cityName = $this->sessionService->getCity();
+            $city = $cityRepository->findOneBy(['name' => $cityName]);
+        }
+
         $district = $districtRepository->findOneBy(['id' => $districtId]);
 
         if ($this->security->getUser()) {
@@ -138,7 +148,7 @@ class JobController extends AbstractController
             'districtId' => $districtId,
             'featuredJobs' => $featuredJobs,
             'slug' => $slug,
-            'cityName' => $this->sessionService->getCity(),
+            'cityName' => $cityName,
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
@@ -450,10 +460,9 @@ class JobController extends AbstractController
         $post = $request->request->get('job_form');
 
         // Week days start time and end time
-        if (!empty($post['week']) && is_array($post['week']) ||
-            !empty($post['weekCheck']) && is_array($post['weekCheck'])) {
+        if (!empty($post['week']) && is_array($post['week'])) {
             foreach ($post['week'] as $key => $week) {
-                if ($week['startTime'] !=='' && $week['endTime'] !=='') {
+                if ($week['startTime'] !=='' && $week['endTime'] !=='' && isset($week['weekDay'])) {
                     $weekArr[] = $week;
                 }
             }
@@ -550,18 +559,23 @@ class JobController extends AbstractController
         ];
 
         $schedules = json_decode($job->getSchedule(), true);
-
         if (is_array($schedules) && !empty($schedules)) {
             foreach ($schedules as $key => $schedule) {
                 $scheduleKeys[] = $key;
-                if (array_key_exists('cheked', $schedule)) {
-                    $dataKeys[] = $schedule['cheked'];
+                if (array_key_exists('weekDay', $schedule)) {
+                    $dataKeys[] = $schedule['weekDay'];
                 }
             }
         } else {
             $dataKeys = null;
             $scheduleKeys = null;
         }
+
+        for ($i = 0; $i < 4; ++$i) {
+            $testArray[] = $i + 11;
+        }
+
+        //dd($schedules);
 
         $featuredJobs = $this->getFeaturedJobs($user);
 
@@ -575,6 +589,7 @@ class JobController extends AbstractController
             'dataKeys' => $dataKeys,
             'scheduleKeys' => $scheduleKeys,
             'featuredJobs' => $featuredJobs,
+            'testArray' => $testArray,
             'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));

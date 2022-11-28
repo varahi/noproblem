@@ -1059,3 +1059,17 @@ Chat
 }*/
 
 
+
+@media only screen and (max-width: 800px) {
+
+}
+@media (min-width: 320px) and (max-width: 584px) {
+    .main {
+        height: auto;
+        min-height: 400px;
+    }
+    h2.main-page {
+        font-size: 38px;
+        line-height: 42px;
+    }
+}

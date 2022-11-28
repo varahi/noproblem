@@ -15,7 +15,7 @@
                     </div>
                     <div class="weekday_box">
                         <label for="week-{{ week.key }}" class="weekday">
-                            <input type="checkbox" name="job_form[week][{{ week.key }}][cheked]" id="week-{{ week.key }}"  class="check-box" value="{{ week.key }}">
+                            <input type="checkbox" name="job_form[week][{{ week.key }}][weekDay]" id="week-{{ week.key }}"  class="check-box" value="{{ week.key }}">
                             <span class="checkmark_day"></span>
                         </label>
                     </div>
@@ -38,7 +38,7 @@
                     </div>
                     <div class="weekday_box">
                         <label for="week-{{ week.key }}" class="weekday">
-                            <input type="checkbox" name="job_form[week][{{ week.key }}][cheked]" id="week-{{ week.key }}"  class="check-box" value="{{ week.key }}">
+                            <input type="checkbox" name="job_form[week][{{ week.key }}][weekDay]" id="week-{{ week.key }}"  class="check-box" value="{{ week.key }}">
                             <span class="checkmark_day"></span>
                         </label>
                     </div>
@@ -51,7 +51,7 @@
         <p>Дополнительная информация:</p>
         <button class="choose_creating_form mobs accordion_filter_one_vacan">
             <span>Выберите из списка</span>
-            <img src="{{ asset('assets/img/str.svg" src="/preload.gif') }}" class="lazyLoad">
+            <img src="{{ asset('assets/img/str.svg" src="/preload.gif') }}" class="lazyLoad" alt="">
         </button>
         <div class="panel_filter">
             <div class="need_creating_form">
@@ -66,7 +66,7 @@
             </div>
         </div>
         <div class="did mobs">
-            <img src="assets/img/gala.svg">
+            <img src=" {{ asset('assets/img/gala.svg') }}" alt="">
             <a href="">Выполнено</a>
         </div>
     </div>

@@ -268,14 +268,18 @@ justify-content: center;
 background-position: center;
 height: 116px;}
 
-.ones{background-image: url(../img/one.png);
-width: 133px}
+.ones{
+    background-image: url(../img/one.png);
+    width: 133px
+}
 
-.two{background-image: url(../img/two.png);
-width: 130px}
+/*.two{
+    background-image: url(../img/two.png);
+    width: 130px
+}*/
 
-.three{background-image: url(../img/three.png);
-width: 117px}
+/*.three{background-image: url(../img/three.png);
+width: 117px}*/
 
 .four{background-image: url(../img/four.png);
 width: 116px}
@@ -833,11 +837,11 @@ height: 116px;}
 .ones{background-image: url(../img/one.png);
 width: 133px}
 
-.two{background-image: url(../img/two.png);
-width: 130px}
+/*.two{background-image: url(../img/two.png);
+width: 130px}*/
 
-.three{background-image: url(../img/three.png);
-width: 220px;}
+/*.three{background-image: url(../img/three.png);
+width: 220px;}*/
 
 .four{background-image: url(../img/four.png);
 width: 116px}
@@ -2204,7 +2208,8 @@ left: 80px}
 
 .menu {
 /*  grid-template-columns: repeat(6,auto);*/
-    grid-template-columns: 450px 450px 50px;
+/*    grid-template-columns: 450px 450px 50px;*/
+
   align-items: center;
   grid-gap: 20px;
 }
@@ -2213,7 +2218,9 @@ left: 80px}
 }
 
 city, .menu {
-  display: grid;
+  display: flex;
+    align-items: center;
+    justify-content: end;
 }
 
 .menus:hover{
