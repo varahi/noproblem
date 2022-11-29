@@ -462,11 +462,13 @@ class JobController extends AbstractController
         // Week days start time and end time
         if (!empty($post['week']) && is_array($post['week'])) {
             foreach ($post['week'] as $key => $week) {
-                if ($week['startTime'] !=='' && $week['endTime'] !=='' && isset($week['weekDay'])) {
+                /*if ($week['startTime'] !=='' && $week['endTime'] !=='' && isset($week['weekDay'])) {
                     $weekArr[] = $week;
-                }
+                }*/
+                $weekArr[] = $week;
             }
         }
+
         // Generate json to put in database
         if (isset($weekArr) && is_array($weekArr)) {
             $scheduleArrJson = json_encode($weekArr);
@@ -563,11 +565,14 @@ class JobController extends AbstractController
             foreach ($schedules as $key => $schedule) {
                 $scheduleKeys[] = $key;
                 if (array_key_exists('weekDay', $schedule)) {
-                    $dataKeys[] = $schedule['weekDay'];
+                    $dayKeys[$key]['day'] = $schedule['weekDay'];
+                    $dayKeys[$key]['startTime'] = $schedule['startTime'];
+                    $dayKeys[$key]['endTime'] = $schedule['endTime'];
+                    //$dayKeys[] = $schedule['weekDay'];
                 }
             }
         } else {
-            $dataKeys = null;
+            $dayKeys = null;
             $scheduleKeys = null;
         }
 
@@ -575,7 +580,7 @@ class JobController extends AbstractController
             $testArray[] = $i + 11;
         }
 
-        //dd($schedules);
+        //dd($dayKeys);
 
         $featuredJobs = $this->getFeaturedJobs($user);
 
@@ -586,7 +591,7 @@ class JobController extends AbstractController
             'daysArray' => $daysArray,
             'relatedJobs' => $relatedJobs,
             'schedules' => $schedules,
-            'dataKeys' => $dataKeys,
+            'dayKeys' => $dayKeys,
             'scheduleKeys' => $scheduleKeys,
             'featuredJobs' => $featuredJobs,
             'testArray' => $testArray,

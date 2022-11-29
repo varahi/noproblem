@@ -1,0 +1,36 @@
+{% block head %}
+	<title>Выберите способ оплаты</title>
+	<link rel="stylesheet" href={{asset('assets/css/style.css')}}/>
+
+	<style>
+		@font-face {
+			font-family: futura; /* Имя шрифта */
+			src: url({{asset('assets/fonts/FuturaPT.woff')}}); /* Путь к файлу со шрифтом */
+		}
+		body {
+			align-items: center;
+			font-family: 'futura';
+			text-align: center;
+		}
+		img {
+			width: calc(500px + 5%);
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		h1 {
+			font-size: 50pt;
+		}
+	</style>
+{% endblock %}
+{% block body %}
+
+	<h1>Выберите способ оплаты:</h1>
+	<a href="{{ app.request.getRequestUri() }}&bank=sber">
+		<img src={{ asset('assets/img/sber.png') }} alt="Sber">
+	</a>
+	<br/>
+	<a href="{{ app.request.getRequestUri() }}&bank=yookassa">
+		<img src="https://belimgroup.ru/wp-content/uploads/2021/06/logo-Ju.png" alt="YooKassa">
+	</a>
+{% endblock %}

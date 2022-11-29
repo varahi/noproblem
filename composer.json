@@ -58,6 +58,7 @@
         "twig/intl-extra": "^3.4",
         "twig/twig": "^2.12|^3.0",
         "voronkovich/sberbank-acquiring-client": "^2.8",
+        "yoomoney/yookassa-sdk-php": "^2.7",
         "wrep/daemonizable-command": "^3.1"
     },
     "require-dev": {

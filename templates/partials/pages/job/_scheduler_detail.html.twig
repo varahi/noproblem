@@ -9,47 +9,95 @@
             </div>
             {% for time in timesArray %}
                 <div class="onestokavremya">
-                    {{ time }}
+                    {{ time }}:00
                 </div>
             {% endfor %}
         </div>
 
 
+{#        {% set weekDay = '' %}#}
+{#        {% set key = '' %}#}
 {#        {% for key, schedule in schedules %}#}
-{#            {% if schedule.cheked is defined and schedule.cheked %}#}
+{#            {% if schedule.weekDay is defined %}#}
+{#                {% set weekDay = schedule.weekDay %}#}
 {#                Day Key {{ key }} {{ schedule.startTime }} - {{ schedule.endTime }}<br />#}
 {#            {% endif %}#}
 {#        {% endfor %}#}
 
-{#        {{ dump(dataKeys) }}#}
+{#        {{ dump({% endfor %}) }}#}
 
+{#        {% for dayKey, day in daysArray %}#}
+{#            <div class="nedeles">#}
+{#                <div class="strokavremya">#}
+{#                    <div  class="onestokavremya">{{ day }}</div>#}
 
-{#        {% for schedule in schedules %}#}
-{#            {{ schedule.startTime }}  {{ schedule.endTime }}#}
+{#                    {% for timeKey, time in timesArray %}#}
+{#                        {% if dayKey in dayKeys|keys %}#}
+{#                            <div class="onestokavremya activechas"></div>#}
+{#                        {% else %}#}
+{#                            <div class="onestokavremya"></div>#}
+{#                        {% endif %}#}
+{#                    {% endfor %}#}
+
+{#                    #}{#{% for timeKey, time in timesArray %}#}
+{#                        {% if dayKey in dataKeys and timeKey in scheduleKeys %}#}
+{#                            <div class="onestokavremya activechas">{{ time }} {{ dayKey }} {{ timeKey }}#}
+
+{#                                {% for key, schedule in schedules %}#}
+{#                                    {% if schedule.weekDay is defined and key == dayKey %}#}
+{#                                        Day Key {{ key }} {{ schedule.startTime }} - {{ schedule.endTime }}<br />#}
+{#                                    {% endif %}#}
+{#                                {% endfor %}#}
+{#                            </div>#}
+{#                        {% else %}#}
+{#                            <div class="onestokavremya"></div>#}
+{#                        {% endif %}#}
+{#                    {% endfor %}#}
+{#                </div>#}
+{#            </div>#}
 {#        {% endfor %}#}
 
-        {% for dayKey, day in daysArray %}
-            <div class="nedeles">
-                <div class="strokavremya">
-                    <div  class="onestokavremya">{{ day }}</div>
 
-                    {% for schedule in schedules %}
-                        {#    Time {{ time }} - Start time {{ schedule.startTime }} - End time {{ schedule.endTime }}#}
-                        <div class="onestokavremya">
-                            {{ schedule.startTime  }} {{ schedule.endTime  }}
-                        </div>
-                    {% endfor %}
+        {% for day in dayKeys %}
 
-                    {#{% for timeKey, time in timesArray %}
-                        {% if dayKey in dataKeys and timeKey in scheduleKeys %}
-                            <div class="onestokavremya activechas">{{ time }}</div>
-                        {% else %}
-                            <div class="onestokavremya"></div>
-                        {% endif %}
-                    {% endfor %}#}
-                </div>
-            </div>
         {% endfor %}
+
+
+        <div class="nedeles">
+            <div class="strokavremya">
+                <div  class="onestokavremya">Пн</div>
+                <div class="onestokavremya"></div>
+                <div class="onestokavremya activechas">{{ dayKeys.0.startTime }}:00</div>
+                <div class="onestokavremya activechas"></div>
+                <div class="onestokavremya activechas"></div>
+                <div class="onestokavremya activechas">{{ dayKeys.0.endTime }}:00</div>
+                <div class="onestokavremya"></div>
+                <div class="onestokavremya"></div>
+                <div class="onestokavremya"></div>
+                <div class="onestokavremya"></div>
+                <div class="onestokavremya"></div>
+                <div class="onestokavremya"></div>
+                <div class="onestokavremya"></div>
+            </div>
+        </div>
+
+        <div class="nedeles">
+            <div class="strokavremya">
+                <div class="onestokavremya">Вт</div>
+                <div  class="onestokavremya"></div>
+                <div class="onestokavremya"></div>
+                <div class="onestokavremya activechas">14:00</div>
+                <div class="onestokavremya activechas"></div>
+                <div class="onestokavremya activechas"></div>
+                <div  class="onestokavremya activechas"></div>
+                <div class="onestokavremya activechas">18:00</div>
+                <div  class="onestokavremya"></div>
+                <div class="onestokavremya"></div>
+                <div class="onestokavremya"></div>
+                <div  class="onestokavremya"></div>
+                <div class="onestokavremya"></div>
+            </div>
+        </div>
 
     </div>
 </div>
