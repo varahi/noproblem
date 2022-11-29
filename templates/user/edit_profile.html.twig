@@ -34,15 +34,13 @@
                 {{ form_start(form, {'attr' : {'class': 'form-std form-std-custom', 'autocomplete': 'off'}} ) }}
                     <div class="_form-group grig-group">
                         {{ form_row(form.email) }}
+                        {{ form_row(form.plainPassword, { label: 'Пароль'}) }}
                         {{ form_row(form.phone) }}
                         {{ form_row(form.firstName) }}
                         {{ form_row(form.lastName) }}
                         {{ form_row(form.age) }}
-                        {{ form_row(form.citizen) }}
                     </div>
-                    <div class="_form-group grig-group">
-                        {{ form_row(form.plainPassword, { label: 'Пароль'}) }}
-                    </div>
+
                     <div class="form-group grig-group">
                         <div>
                             <label for="edit_profile_form_city" class="required">Ваш город</label>
@@ -50,6 +48,7 @@
                                    placeholder="Ваш город" class="form-control" value="{{ user.city }}">
                         </div>
                         {{ form_row(form.address) }}
+                        {{ form_row(form.citizen) }}
                     </div>
 
                     <script type="text/javascript">

@@ -340,8 +340,17 @@ class UserController extends AbstractController
 
                 $user->setCity($city);
 
+                if ($post['plainPassword'] !=='') {
+                    $user->setPassword(
+                        $passwordHasher->hashPassword(
+                            $user,
+                            $post['plainPassword']
+                        )
+                    );
+                }
+
                 // Set new password if changed
-                if ($post['plainPassword']['first'] !=='' && $post['plainPassword']['second'] !=='') {
+                /*if ($post['plainPassword']['first'] !=='' && $post['plainPassword']['second'] !=='') {
                     if (strcmp($post['plainPassword']['first'], $post['plainPassword']['second']) == 0) {
                         // encode the plain password
                         $user->setPassword(
@@ -356,7 +365,7 @@ class UserController extends AbstractController
                         $referer = $request->headers->get('referer');
                         return new RedirectResponse($referer);
                     }
-                }
+                }*/
 
                 // File upload
                 $avatarFile = $form->get('avatar')->getData();

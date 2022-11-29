@@ -124,7 +124,17 @@ class EditProfileFormType extends AbstractType
                 ]
             )
 
-            ->add('plainPassword', RepeatedType::class, [
+            ->add(
+                'plainPassword',
+                PasswordType::class,
+                [
+                    'required' => false,
+                    'mapped' => false,
+                    'label' => 'Password'
+                ]
+            )
+
+            /*->add('plainPassword', RepeatedType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'required' => false,
@@ -158,7 +168,7 @@ class EditProfileFormType extends AbstractType
                 ],
                 'invalid_message' => 'Your password does not match the confirmation',
                 'translation_domain' => 'forms',
-            ])
+            ])*/
 
             ->add(
                 'phone',
