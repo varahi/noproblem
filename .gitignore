@@ -26,7 +26,6 @@ npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
-
 .env
 .php-cs-fixer.cache
 bin/phpunit
@@ -39,3 +38,9 @@ phpunit.xml.dist
 public_html/
 yarn.lock
 docker/store
+
+document_errors/
+logs/
+private/
+public_shtml/
+composer.lock

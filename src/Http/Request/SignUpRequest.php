@@ -11,6 +11,7 @@ class SignUpRequest
 {
     // ToDo: set password validator
     //@PasswordStrength(minLength=8, minStrength=3, message='Ваш пароль очень слабый')
+    //vendor/rollerworks/password-strength-validator/src/Validator/Constraints/PasswordStrength.php
 
     /**
      * @var string
