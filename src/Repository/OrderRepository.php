@@ -52,7 +52,7 @@ class OrderRepository extends ServiceEntityRepository
             ->from(self::TABLE, 'o')
             ->join('o.user', 'u')
             ->where($qb->expr()->eq('u.id', $id))
-            ->orWhere($qb->expr()->eq('o.active', true))
+            ->andWhere($qb->expr()->eq('o.active', true))
             ->andWhere($qb->expr()->neq('o.disabled', true))
         ;
 

@@ -9,21 +9,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class SignUpRequest
 {
-    /**
-     * @var string
-     * @Serializer\Type("string")
-     * @Assert\Type("string")
-     * @Assert\NotBlank()
-     */
-    //private $fullname;
-
-    /**
-     * @var string
-     * @Serializer\Type("string")
-     * @Assert\Type("string")
-     * @Assert\NotBlank()
-     */
-    //private $username;
+    // ToDo: set password validator
+    //@PasswordStrength(minLength=8, minStrength=3, message='Ваш пароль очень слабый')
 
     /**
      * @var string
@@ -39,19 +26,8 @@ class SignUpRequest
      * @Serializer\Type("string")
      * @Assert\Type("string")
      * @Assert\NotBlank()
-     * @PasswordStrength(minLength=8, minStrength=3)
      */
     private $password;
-
-    /*public function getFullname(): string
-    {
-        return $this->fullname;
-    }*/
-
-    /*public function getUsername(): string
-    {
-        return $this->username;
-    }*/
 
     public function getEmail(): string
     {

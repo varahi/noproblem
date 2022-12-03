@@ -1073,3 +1073,8 @@ Chat
         line-height: 42px;
     }
 }
+
+
+textarea {
+    resize: none;
+}

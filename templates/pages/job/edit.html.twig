@@ -197,29 +197,30 @@
                         <span>Добавьте вручную</span>
                         <img src="{{ asset('assets/img/str.svg" src="/preload.gif') }}" class="lazyLoad" alt="">
                     </button>
-                    {% include 'partials/pages/job/_scheduler.html.twig' %}
+{#                    {% include 'partials/pages/job/_scheduler.html.twig' %}#}
                 </div>
 
-                <div class="hide">
-                    <div class="foto_creatig_form">
-                        <div class="add_creating_form">
-                            <img src="{{ asset('assets/img/plus.svg') }}" alt="">
-                            <span>Загрузить фотографию</span>
-                        </div>
-                        <div class="add_photo">
-                            <div class="field__wrapper">
-                                {{ form_widget(form.image) }}
-                                <label class="field__file-wrapper" for="job_form_image">
-                                    <div class="field__file-fake">Файл не вбран</div>
-                                    <div class="field__file-button">Выбрать</div>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="face">
-                            <span>Добавьте фото и получите бесплатный доступ<br> к платформе на 3 дня</span>
-                        </div>
-                    </div>
-                </div>
+{#                <div class="hide">#}
+{#                    <div class="foto_creatig_form">#}
+{#                        <div class="add_creating_form">#}
+{#                            <img src="{{ asset('assets/img/plus.svg') }}" alt="">#}
+{#                            <span>Загрузить фотографию</span>#}
+{#                        </div>#}
+{#                        <div class="add_photo">#}
+{#                            <div class="field__wrapper">#}
+{#                                {{ form_widget(form.image) }}#}
+{#                                <label class="field__file-wrapper" for="job_form_image">#}
+{#                                    <div class="field__file-fake">Файл не вбран</div>#}
+{#                                    <div class="field__file-button">Выбрать</div>#}
+{#                                </label>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="face">#}
+{#                            <span>Добавьте фото и получите бесплатный доступ<br> к платформе на 3 дня</span>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+
                 <div class="but_creating_form send_message">
                     <button type="submit">Отправить объявление</button>
                 </div>
