@@ -158,7 +158,7 @@ export default {
 
 .button {
   background: #5B5367;
-  border-radius: 40px;
+  border-radius: 10px;
   width: 250px;
   display: grid;
   align-items: center;
