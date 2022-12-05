@@ -279,15 +279,15 @@ trait DataTrait
                         'name' => $item->name,
                         'lat' => $item->coords->lat,
                         'lng' => $item->coords->lon,
-                        'district' => $item->district
+                        //'district' => $item->district
                     ];
                 }
             }
         }
         $city->setIsHidden((bool)0);
         $city->setName($cityData['name']);
-        $city->setLatitude((float)$cityData['lat']);
-        $city->setLongitude((float)$cityData['lng']);
+        $city->setLatitude((string)$cityData['lat']);
+        $city->setLongitude((string)$cityData['lng']);
 
         $entityManager = $this->doctrine->getManager();
         $entityManager->persist($city);

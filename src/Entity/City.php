@@ -54,13 +54,15 @@ class City
      */
     private $worksheets;
 
+    //@ORM\Column(type="decimal", precision=9, scale=7, nullable=true)
+
     /**
-     * @ORM\Column(type="decimal", precision=9, scale=7, nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $latitude;
 
     /**
-     * @ORM\Column(type="decimal", precision=9, scale=7, nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $longitude;
 
@@ -238,24 +240,24 @@ class City
         return $this;
     }
 
-    public function getLatitude(): ?float
+    public function getLatitude(): ?string
     {
         return $this->latitude;
     }
 
-    public function setLatitude(float $latitude): self
+    public function setLatitude(string $latitude): self
     {
         $this->latitude = $latitude;
 
         return $this;
     }
 
-    public function getLongitude(): ?float
+    public function getLongitude(): ?string
     {
         return $this->longitude;
     }
 
-    public function setLongitude(float $longitude): self
+    public function setLongitude(string $longitude): self
     {
         $this->longitude = $longitude;
 
