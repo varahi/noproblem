@@ -9,103 +9,100 @@
 			<div class="benefit_box">
 				<h2 class="benefit_box-header">Почему выгоднее работать с нами?</h2>
 				<ul class="benefit_list">
-
 					<li class="benefit_item">
 						<span class="benefit_item-number">01</span>
 						<p class="benefit_item-text">Нам важно, чтобы ваш помощник выполнял свою работу хорошо,и вы были довольны, поэтому предоставляем возможность каждому помощнику пройти обучение на нашей платформе и повысить свою квалификацию</p>
 					</li>
-
 					<li class="benefit_item">
 						<span class="benefit_item-number">02</span>
 						<p class="benefit_item-text">Мы проверяем паспортные данные сотрудников, при необходимости делаем дополнительные проверки по различным базам</p>
 					</li>
-
 					<li class="benefit_item">
 						<span class="benefit_item-number">03</span>
 						<p class="benefit_item-text">Стоимость доступа к платформе ниже, чем у конкурентов</p>
 					</li>
-
 					<li class="benefit_item">
 						<span class="benefit_item-number">04</span>
 						<p class="benefit_item-text">У нас есть реальные отзывы</p>
 					</li>
-
 				</ul>
 			</div>
 		</section>
+		{% if is_granted('ROLE_EMPLOYEE') %}
+			<section class="employer container">
+				<div class="employer_select-box">
+					<span class="employer_select-text">Для работодателя</span>
+					<button class="worker_select-btn accordion1" type="button">
+						<img class="worker_select-icon" src="{{ asset('assets/img/downs.svg') }}" width="40" height="40" alt="arrow">
+					</button>
+				</div>
+				<ul class="employer_card-list panel1" style="display:flex;">
+					{% for tariff in tariffs %}
+						<li class="employer_card-item">
+							{% if tariff.name %}
+								<p class="employer_card-header">{{ tariff.name }}</p>
+							{% endif %}
+							{% if tariff.description %}
+								<p class="employer_card-text">{{ tariff.description }}</p>
+							{% endif %}
+							{% if tariff.price %}
+								<div class="employer_card-box-price">
+									<span class="employer_card-price">{{ tariff.price }}</span>
+								</div>
+							{% endif %}
+							{% if tariff.priceComment %}
+								<p class="employer_card-price-comment">{{ tariff.priceComment }}</p>
+							{% endif %}
 
-		<section class="employer container">
-			<div class="employer_select-box">
-				<span class="employer_select-text">Для работодателя</span>
-				<button class="worker_select-btn accordion1" type="button">
-					<img class="worker_select-icon" src="{{ asset('assets/img/downs.svg') }}" width="40" height="40" alt="arrow">
-				</button>
-			</div>
-			<ul class="employer_card-list panel1" style="display:flex;">
-				{% for tariff in tariffs %}
-					<li class="employer_card-item">
-						{% if tariff.name %}
-							<p class="employer_card-header">{{ tariff.name }}</p>
-						{% endif %}
-						{% if tariff.description %}
-							<p class="employer_card-text">{{ tariff.description }}</p>
-						{% endif %}
-						{% if tariff.price %}
-							<div class="employer_card-box-price">
-								<span class="employer_card-price">{{ tariff.price }}</span>
-							</div>
-						{% endif %}
-						{% if tariff.priceComment %}
-							<p class="employer_card-price-comment">{{ tariff.priceComment }}</p>
-						{% endif %}
+							{% if is_granted('ROLE_EMPLOYEE') %}
+								{#							<a class="employer_card-btn" href="pay/new?amount={{ tariff.amount }}&tariff={{ tariff.id }}&user={{ user.id }}" type="button">Приобрести</a>#}
+								<a class="employer_card-btn" href="{{ path('payment_new', { tariff: tariff.id, user: user.id}) }}" type="button">Приобрести</a>
+							{% else %}
+								<a class="employer_card-btn" href="{{ path('app_login') }}" type="button">Приобрести</a>
+							{% endif %}
+						</li>
+					{% endfor %}
+				</ul>
+			</section>
+		{% endif %}
+		{% if is_granted('ROLE_CUSTOMER') %}
+			<section class="worker container">
+				<div class="worker_select-box">
+					<span class="worker_select-text">Для работника</span>
+					<button class="worker_select-btn accordion" type="button">
+						<img class="worker_select-icon" src="{{ asset('assets/img/downs.svg') }}" width="40" height="40" alt="arrow">
+					</button>
+				</div>
 
-						{% if is_granted('ROLE_EMPLOYEE') %}
-							{#							<a class="employer_card-btn" href="pay/new?amount={{ tariff.amount }}&tariff={{ tariff.id }}&user={{ user.id }}" type="button">Приобрести</a>#}
-							<a class="employer_card-btn" href="{{ path('payment_new', { tariff: tariff.id, user: user.id}) }}" type="button">Приобрести</a>
-						{% else %}
-							<a class="employer_card-btn" href="{{ path('app_login') }}" type="button">Приобрести</a>
-						{% endif %}
-					</li>
-				{% endfor %}
-			</ul>
-		</section>
+				<ul class="worker_card-list panel">
+					{% for tariff in tariffs %}
+						<li class="employer_card-item">
+							{% if tariff.name %}
+								<p class="employer_card-header">{{ tariff.name }}</p>
+							{% endif %}
+							{% if tariff.description %}
+								<p class="employer_card-text">{{ tariff.customerDescription }}</p>
+							{% endif %}
+							{% if tariff.price %}
+								<div class="employer_card-box-price">
+									<span class="employer_card-price">{{ tariff.price }}</span>
+								</div>
+							{% endif %}
+							{% if tariff.priceComment %}
+								<p class="employer_card-price-comment">{{ tariff.priceComment }}</p>
+							{% endif %}
 
-		<section class="worker container">
-			<div class="worker_select-box">
-				<span class="worker_select-text">Для работника</span>
-				<button class="worker_select-btn accordion" type="button">
-					<img class="worker_select-icon" src="{{ asset('assets/img/downs.svg') }}" width="40" height="40" alt="arrow">
-				</button>
-			</div>
-
-			<ul class="worker_card-list panel">
-				{% for tariff in tariffs %}
-					<li class="employer_card-item">
-						{% if tariff.name %}
-							<p class="employer_card-header">{{ tariff.name }}</p>
-						{% endif %}
-						{% if tariff.description %}
-							<p class="employer_card-text">{{ tariff.customerDescription }}</p>
-						{% endif %}
-						{% if tariff.price %}
-							<div class="employer_card-box-price">
-								<span class="employer_card-price">{{ tariff.price }}</span>
-							</div>
-						{% endif %}
-						{% if tariff.priceComment %}
-							<p class="employer_card-price-comment">{{ tariff.priceComment }}</p>
-						{% endif %}
-
-						{% if is_granted('ROLE_CUSTOMER') %}
-							{#							<a class="employer_card-btn" href="pay/new?amount={{ tariff.amount }}&tariff={{ tariff.id }}&user={{ user.id }}" type="button">Приобрести</a>#}
-							<a class="employer_card-btn" href="{{ path('payment_new', { amount: tariff.amount, tariff: tariff.id, user: user.id}) }}" type="button">Приобрести</a>
-						{% else %}
-							<a class="employer_card-btn" href="{{ path('app_login') }}" type="button">Приобрести</a>
-						{% endif %}
-					</li>
-				{% endfor %}
-			</ul>
-		</section>
+							{% if is_granted('ROLE_CUSTOMER') %}
+								{#							<a class="employer_card-btn" href="pay/new?amount={{ tariff.amount }}&tariff={{ tariff.id }}&user={{ user.id }}" type="button">Приобрести</a>#}
+								<a class="employer_card-btn" href="{{ path('payment_new', { amount: tariff.amount, tariff: tariff.id, user: user.id}) }}" type="button">Приобрести</a>
+							{% else %}
+								<a class="employer_card-btn" href="{{ path('app_login') }}" type="button">Приобрести</a>
+							{% endif %}
+						</li>
+					{% endfor %}
+				</ul>
+			</section>
+		{% endif %}
 	</main>
 	{% include 'partials/footer.html.twig' %}
 {% endblock %}
