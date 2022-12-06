@@ -30,13 +30,14 @@
       </div>
     </div>
 
+    <!-- Second modlas -->
     <div class="modal-vue">
-      <!-- Registration emploayer modal box -->
+      <!-- Registration employer modal box -->
       <div class="modal" v-if="showModalEmployer">
         <div class="modal-title">
           <h2>Регистрация работадателя</h2>
           <button class="close" @click="showModalEmployer = false">
-            <img src="/assets/img/krest.svg">
+            <img src="/assets/img/krest.svg" alt="">
           </button>
         </div>
 
@@ -66,12 +67,13 @@
           </form>
         </div>
       </div>
+
       <!-- Registration customer modal box -->
       <div class="modal" v-if="showModalCustomer">
         <div class="modal-title">
           <h2>Регистрация работника</h2>
           <button class="close" @click="showModalCustomer = false">
-            <img src="/assets/img/krest.svg">
+            <img src="/assets/img/krest.svg" alt="">
           </button>
         </div>
 
@@ -95,12 +97,22 @@
                 {{ validationErrors.password }}
               </small>
             </div>
+            <div class="captcha-block">
+              <vue-recaptcha
+                  ref="recaptcha"
+                  sitekey="6LdoPl4jAAAAAN5n82bRAsWsVuRBaxamPw_wovqZ"
+                  @expired="onCaptchaExpired"
+                  @verify="submitFormCustomer"
+              >
+              </vue-recaptcha>
+            </div>
             <div class="btn_try btn_try_custom">
               <button type="submit" class="btn btn-success">Регистрация</button>
             </div>
           </form>
         </div>
       </div>
+
       <!-- Registration buyer modal box -->
       <div class="modal" v-if="showModalBuyer">
         <div class="modal-title">
@@ -143,9 +155,13 @@
 
 <script>
 import axios from 'axios';
+import { VueRecaptcha } from 'vue-recaptcha';
 
 export default {
   name: 'SignUpForm',
+  components: {
+    VueRecaptcha
+  },
   data() {
     return {
       showModal: false,
@@ -157,11 +173,13 @@ export default {
 
       email: '',
       password: '',
+      //recaptchaToken: '',
 
       validationErrors: {},
       formSubmittedEmployerSuccess: false,
       formSubmittedCustomerSuccess: false,
-      formSubmittedBuyerSuccess: false
+      formSubmittedBuyerSuccess: false,
+      sitekey: '6LdoPl4jAAAAAN5n82bRAsWsVuRBaxamPw_wovqZ'
     }
   },
   methods: {
@@ -174,10 +192,10 @@ export default {
       let body = {
         email: this.email,
         password: this.password,
+        recaptchaToken: recaptchaToken
       };
 
       //console.log(email);
-
       axios.create().post('/sign-up-handler-employer', body).then(function (response) {
         if(response.data.status === 400){
           component.validationErrors = response.data.errors;
@@ -195,16 +213,31 @@ export default {
     },
 
     // Register Customer
-    submitFormCustomer: function (event) {
-      event.preventDefault();
+    submitFormCustomer: function (recaptchaToken) {
 
-      let component = this;
+      //event.preventDefault();
+
+      /*let component = this;
       let body = {
         email: this.email,
         password: this.password,
-      };
+        recaptchaToken: this.recaptcha
+      };*/
 
-      axios.create().post('/sign-up-handler-customer', body).then(function (response) {
+      //const token = document.querySelector('#recaptcha-token')
+      //const token = document.querySelector('#recaptcha-token').value
+      //this.$refs.recaptcha.execute();
+
+      console.log(this.email);
+      console.log(this.password);
+      console.log(recaptchaToken);
+
+      axios.create().post('/sign-up-handler-customer', {
+        email: this.email,
+        password: this.password,
+        recaptchaToken: recaptchaToken
+
+      }).then(function (response) {
         if(response.data.status === 400){
           component.validationErrors = response.data.errors;
         }
@@ -244,6 +277,17 @@ export default {
         console.log(message);
         console.log(error.response);
       });
+    },
+
+    validate () {
+      // тут можно добавить проверку на валидацию
+      // например, с помощью vee validate
+      // если с валидацией наших полей все хорошо, запускаем каптчу
+      this.$refs.recaptcha.execute()
+    },
+
+    onCaptchaExpired () {
+      this.$refs.recaptcha.reset()
     }
 
   }
@@ -251,6 +295,10 @@ export default {
 </script>
 
 <style scoped>
+.captcha-block {
+  margin: 0 auto;
+}
+
 /* Modal */
 .modal-vue .overlay {
   backdrop-filter: blur(4px);

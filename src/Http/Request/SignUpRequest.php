@@ -30,6 +30,9 @@ class SignUpRequest
      */
     private $password;
 
+
+    //private $recaptchaToken;
+
     public function getEmail(): string
     {
         return $this->email;
@@ -39,4 +42,9 @@ class SignUpRequest
     {
         return $this->password;
     }
+
+    /*  public function getRecaptchaToken()
+      {
+          return $this->recaptchaToken;
+      }*/
 }

@@ -73,6 +73,16 @@ class RegistrationController extends AbstractController
         ]);
     }
 
+    public function signUpHandlerCustomer(Request $request): JsonResponse
+    {
+        //$data = json_encode($request->getContent(), true);
+        file_put_contents('/app/public_html/test.txt', $request->getContent());
+
+        return new JsonResponse([
+            'status' => Response::HTTP_OK
+        ]);
+    }
+
     /**
      * @ParamConverter(
      *      "signUpRequest",
@@ -85,8 +95,11 @@ class RegistrationController extends AbstractController
      * @return JsonResponse
      * @throws \Exception
      */
-    public function signUpHandlerCustomer(SignUpRequest $signUpRequest): JsonResponse
+    public function _signUpHandlerCustomer(SignUpRequest $signUpRequest): JsonResponse
     {
+        file_put_contents('/app/public_html/test.txt', json_encode($signUpRequest->getRecaptchaToken()));
+        exit;
+
         if (!$this->signUpValidator->validate($signUpRequest)) {
             return new JsonResponse([
                 'status' => Response::HTTP_BAD_REQUEST,

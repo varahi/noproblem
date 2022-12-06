@@ -5,10 +5,11 @@
         {% include 'partials/misc/_meta.html.twig' %}
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
-        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/custom.css') }}">
     {% endblock %}
     {% block javascripts_header %}
+        <script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer></script>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="{{ asset('assets/js/dependableList.js') }}"></script>
         <script src="{{ asset('assets/js/jquery.maskedinput.min.js') }}"></script>

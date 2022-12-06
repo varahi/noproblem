@@ -21,6 +21,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "vue-recaptcha": "^2.0.3",
         "vue-search-select": "^2.9.5"
     }
 }
