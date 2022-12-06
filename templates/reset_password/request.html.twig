@@ -1,9 +1,7 @@
 {% extends 'layouts/base.html.twig' %}
 {% block title %}Восстановить пароль - Онлайн-сервис по подбору домашнего персонала{% endblock %}
-
 {% block body %}
     {% include 'partials/header.html.twig' %}
-
     <div class="main_account content">
         <div class="large_account fon">
             <div class="in_account">
@@ -18,8 +16,8 @@
                     <div class="btn_try btn_try_custom">
                         <button type="submit" class="btn btn-success">{{ 'Reset'|trans }}</button>
                     </div>
-                    <!--                <p class="m_t_15"><a href="{{ path('app_login') }}">{{ 'Login'|trans }}</a></p>-->
                     {{ form_end(requestForm) }}
+                    <div style="text-align: center; margin-top: 20px;"><a href="{{ path('app_login') }}">{{ 'Login'|trans }}</a></div>
                 </div>
             </div>
         </div>

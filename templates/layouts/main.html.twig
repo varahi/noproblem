@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    {% include 'partials/misc/_meta.html.twig' %}
+        <title>{% block title %}No problem{% endblock %}</title>
+        {% include 'partials/misc/_meta.html.twig' %}
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
