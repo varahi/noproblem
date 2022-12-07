@@ -9,13 +9,16 @@ use App\Security\AppAuthenticator;
 use App\Security\EmailVerifier;
 use App\Service\SignUpValidator;
 use App\Service\UserCreator;
+use App\Service\Recaptcha;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
+use Symfony\Component\Notifier\Notification\Notification;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
@@ -23,6 +26,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Notifier\NotifierInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -33,14 +38,33 @@ class RegistrationController extends AbstractController
      */
     private $signUpValidator;
 
+    /**
+     * @var RequestStack
+     */
+    private $requestStack;
+
+    private $recaptcha;
+
+    private $translator;
+
+    private $notifier;
+
     public function __construct(
         EmailVerifier $emailVerifier,
         SignUpValidator $signUpValidator,
-        UserCreator $userCreator
+        UserCreator $userCreator,
+        RequestStack $requestStack,
+        Recaptcha $recaptcha,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier
     ) {
         $this->emailVerifier = $emailVerifier;
         $this->signUpValidator = $signUpValidator;
         $this->userCreator = $userCreator;
+        $this->requestStack = $requestStack;
+        $this->recaptcha = $recaptcha;
+        $this->translator = $translator;
+        $this->notifier = $notifier;
     }
 
     /**
@@ -73,15 +97,6 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    public function signUpHandlerCustomer(Request $request): JsonResponse
-    {
-        //$data = json_encode($request->getContent(), true);
-        file_put_contents('/app/public_html/test.txt', $request->getContent());
-
-        return new JsonResponse([
-            'status' => Response::HTTP_OK
-        ]);
-    }
 
     /**
      * @ParamConverter(
@@ -95,10 +110,25 @@ class RegistrationController extends AbstractController
      * @return JsonResponse
      * @throws \Exception
      */
-    public function _signUpHandlerCustomer(SignUpRequest $signUpRequest): JsonResponse
+    public function signUpHandlerCustomer(SignUpRequest $signUpRequest): JsonResponse
     {
-        file_put_contents('/app/public_html/test.txt', json_encode($signUpRequest->getRecaptchaToken()));
-        exit;
+        // Re-captcha validation
+        if ($this->requestStack->getCurrentRequest()->getContent()) {
+            $request = $this->requestStack->getCurrentRequest()->getContent();
+            $data = json_decode($request, true);
+
+            //$token = $data['recaptchaToken'];
+            //file_put_contents('/app/public_html/test.txt', $data['recaptchaToken']);
+            //exit();
+
+            $response = $this->recaptcha->verifyResponse($data['recaptchaToken']);
+            if (isset($response['success']) && $response['success'] != true) {
+                return new JsonResponse([
+                    'status' => Response::HTTP_BAD_REQUEST,
+                    'errors' => $this->signUpValidator->getErrors()
+                ]);
+            }
+        }
 
         if (!$this->signUpValidator->validate($signUpRequest)) {
             return new JsonResponse([

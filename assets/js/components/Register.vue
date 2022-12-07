@@ -45,7 +45,6 @@
           <div class="alert alert-success" role="alert" v-if="formSubmittedEmployerSuccess">
             Поздравляем вас! Вы успешно зарегистрировались. Проверьте вашу почту и активируйте аккаунт.
           </div>
-
           <form method="post" class="form-std" v-on:submit.prevent="submitFormEmployer" v-else>
             <div class="form-group">
               <label for="email">Ваш E-mail</label>
@@ -60,6 +59,15 @@
               <small class="form-text text-danger" v-if="validationErrors.password">
                 {{ validationErrors.password }}
               </small>
+            </div>
+            <div class="captcha-block">
+              <vue-recaptcha
+                  v-model="recaptcha"
+                  ref="recaptcha"
+                  sitekey="6LdoPl4jAAAAAN5n82bRAsWsVuRBaxamPw_wovqZ"
+                  @expired="onCaptchaExpired"
+                  @verify="submitFormEmployer"
+              ></vue-recaptcha>
             </div>
             <div class="btn_try btn_try_custom">
               <button type="submit" class="btn btn-success">Регистрация</button>
@@ -99,6 +107,7 @@
             </div>
             <div class="captcha-block">
               <vue-recaptcha
+                  v-model="recaptcha"
                   ref="recaptcha"
                   sitekey="6LdoPl4jAAAAAN5n82bRAsWsVuRBaxamPw_wovqZ"
                   @expired="onCaptchaExpired"
@@ -142,6 +151,15 @@
                 {{ validationErrors.password }}
               </small>
             </div>
+            <div class="captcha-block">
+              <vue-recaptcha
+                  v-model="recaptcha"
+                  ref="recaptcha"
+                  sitekey="6LdoPl4jAAAAAN5n82bRAsWsVuRBaxamPw_wovqZ"
+                  @expired="onCaptchaExpired"
+                  @verify="submitFormBuyer">
+              </vue-recaptcha>
+            </div>
             <div class="btn_try btn_try_custom">
               <button type="submit" class="btn btn-success">Регистрация</button>
             </div>
@@ -173,19 +191,19 @@ export default {
 
       email: '',
       password: '',
-      //recaptchaToken: '',
 
       validationErrors: {},
       formSubmittedEmployerSuccess: false,
       formSubmittedCustomerSuccess: false,
       formSubmittedBuyerSuccess: false,
       sitekey: '6LdoPl4jAAAAAN5n82bRAsWsVuRBaxamPw_wovqZ'
+      //sitekey: process.env.RECAPTCHA_SITE_KEY
     }
   },
   methods: {
-
+    // Decomposition component
     // Register Employer
-    submitFormEmployer: function (event) {
+    submitFormEmployer: function (recaptchaToken, event) {
       event.preventDefault();
 
       let component = this;
@@ -213,31 +231,23 @@ export default {
     },
 
     // Register Customer
-    submitFormCustomer: function (recaptchaToken) {
+    submitFormCustomer: function (recaptchaToken, event) {
+      if (event) {
+        event.preventDefault()
+      }
 
-      //event.preventDefault();
-
-      /*let component = this;
+      let component = this;
       let body = {
         email: this.email,
         password: this.password,
-        recaptchaToken: this.recaptcha
-      };*/
-
-      //const token = document.querySelector('#recaptcha-token')
-      //const token = document.querySelector('#recaptcha-token').value
-      //this.$refs.recaptcha.execute();
-
-      console.log(this.email);
-      console.log(this.password);
-      console.log(recaptchaToken);
-
-      axios.create().post('/sign-up-handler-customer', {
-        email: this.email,
-        password: this.password,
         recaptchaToken: recaptchaToken
+      };
 
-      }).then(function (response) {
+      //console.log(this.email);
+      //console.log(this.password);
+      //console.log(recaptchaToken);
+
+      axios.create().post('/sign-up-handler-customer', body).then(function (response) {
         if(response.data.status === 400){
           component.validationErrors = response.data.errors;
         }
@@ -254,13 +264,14 @@ export default {
     },
 
     // Register Buyer
-    submitFormBuyer: function (event) {
+    submitFormBuyer: function (recaptchaToken, event) {
       event.preventDefault();
 
       let component = this;
       let body = {
         email: this.email,
         password: this.password,
+        recaptchaToken: recaptchaToken
       };
 
       axios.create().post('/sign-up-handler-buyer', body).then(function (response) {

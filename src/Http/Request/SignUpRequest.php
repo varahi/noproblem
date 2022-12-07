@@ -43,8 +43,8 @@ class SignUpRequest
         return $this->password;
     }
 
-    /*  public function getRecaptchaToken()
-      {
-          return $this->recaptchaToken;
-      }*/
+    /*    public function getRecaptchaToken()
+          {
+              return $this->recaptchaToken;
+          }*/
 }

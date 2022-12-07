@@ -9,6 +9,8 @@ parameters:
     default_subject: Subject from noproblem
     default_domain: 'noproblem.ru'
     default_scheme: 'https'
+    recaptcha_site_key: ''
+    recaptcha_secret_key: ''
 
 services:
     # default configuration for services in *this* file
@@ -20,6 +22,8 @@ services:
             $adminEmail: "%env(string:default:default_admin_email:ADMIN_EMAIL)%"
             $defailtDomain: "%env(string:default:default_domain:DEFAULT_DOMAIN)%"
             $defailtScheme: "%env(string:default:default_scheme:DEFAULT_SCHEME)%"
+            $recaptchaSiteKey: "%env(string:default:recaptcha_site_key:RECAPTCHA_SITE_KEY)%"
+            $recaptchaSecretKey: "%env(string:default:recaptcha_secret_key:RECAPTCHA_SECRET_KEY)%"
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
