@@ -41,7 +41,6 @@ class TariffCrudController extends AbstractCrudController
         yield TextareaField::new('description')->setColumns('col-md-10')->hideOnIndex();
         //yield TextareaField::new('customerDescription')->setColumns('col-md-10')->hideOnIndex();
         //yield AssociationField::new('orders')->setColumns('col-md-10');
-
         yield FormField::addPanel('Price and type')->setIcon('fa fa-money')->setCssClass('col-sm-6');
         yield FormField::addRow();
         yield TextField::new('type')->hideOnDetail();

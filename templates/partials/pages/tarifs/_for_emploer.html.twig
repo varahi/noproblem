@@ -16,7 +16,7 @@
                 {% endif %}
                 {% if tariff.price %}
                     <div class="employer_card-box-price">
-                        <span class="employer_card-price">{{ tariff.price }}</span>
+                        <span class="employer_card-price">{{ tariff.price|raw }}</span>
                     </div>
                 {% endif %}
                 {% if tariff.priceComment %}
