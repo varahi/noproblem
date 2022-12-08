@@ -51,13 +51,39 @@ class TariffRepository extends ServiceEntityRepository
         $qb = $this->getEntityManager()->createQueryBuilder();
         $expr = $qb->expr();
 
-        $qb->select('c')
-            ->from(self::TABLE, 'c')
+        $qb->select('t')
+            ->from(self::TABLE, 't')
             //->where('r.hidden is not NULL')
-            ->where($expr->neq('c.hidden', 1))
+            ->where($expr->neq('t.hidden', 1))
             ->setMaxResults($limit)
             ->setFirstResult($offset)
-            ->orderBy('c.id', 'ASC');
+            ->orderBy('t.id', 'ASC');
+
+        $reviews = $qb->getQuery()->getResult();
+        return $reviews;
+
+        //return $this->findBy([], $order);
+    }
+
+    /**
+     * @param $limit
+     * @param $offset
+     * @param $type
+     * @return float|int|mixed|string
+     */
+    public function findLimitOrderAndType($limit, $offset, $type)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $expr = $qb->expr();
+
+        $qb->select('t')
+            ->from(self::TABLE, 't')
+            //->where('r.hidden is not NULL')
+            ->where($expr->neq('t.hidden', 1))
+            ->andWhere($qb->expr()->eq('t.type', $type))
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->orderBy('t.id', 'ASC');
 
         $reviews = $qb->getQuery()->getResult();
         return $reviews;

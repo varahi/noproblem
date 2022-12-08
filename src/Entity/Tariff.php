@@ -74,6 +74,11 @@ class Tariff
      */
     private $customerDescription;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $type;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -254,6 +259,18 @@ class Tariff
     public function setCustomerDescription(?string $customerDescription): self
     {
         $this->customerDescription = $customerDescription;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

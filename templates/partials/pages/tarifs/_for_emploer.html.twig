@@ -1,0 +1,35 @@
+<section class="employer container">
+    <div class="employer_select-box">
+        <span class="employer_select-text">Для работодателя</span>
+        <button class="worker_select-btn accordion1" type="button">
+            <img class="worker_select-icon" src="{{ asset('assets/img/downs.svg') }}" width="40" height="40" alt="arrow">
+        </button>
+    </div>
+    <ul class="employer_card-list panel1" style="display:flex;">
+        {% for tariff in employerTariffs %}
+            <li class="employer_card-item">
+                {% if tariff.name %}
+                    <p class="employer_card-header">{{ tariff.name }}</p>
+                {% endif %}
+                {% if tariff.description %}
+                    <p class="employer_card-text">{{ tariff.description }}</p>
+                {% endif %}
+                {% if tariff.price %}
+                    <div class="employer_card-box-price">
+                        <span class="employer_card-price">{{ tariff.price }}</span>
+                    </div>
+                {% endif %}
+                {% if tariff.priceComment %}
+                    <p class="employer_card-price-comment">{{ tariff.priceComment }}</p>
+                {% endif %}
+
+                {% if is_granted('ROLE_EMPLOYEE') %}
+                    {#							<a class="employer_card-btn" href="pay/new?amount={{ tariff.amount }}&tariff={{ tariff.id }}&user={{ user.id }}" type="button">Приобрести</a>#}
+                    <a class="employer_card-btn" href="{{ path('payment_new', { tariff: tariff.id, user: user.id}) }}" type="button">Приобрести</a>
+                {% else %}
+                    <a class="employer_card-btn" href="{{ path('app_login') }}" type="button">Приобрести</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</section>

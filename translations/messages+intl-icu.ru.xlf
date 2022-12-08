@@ -637,6 +637,22 @@
             <source>Buyer</source>
             <target>Покупатель</target>
         </trans-unit>
+        <trans-unit id="Price Comment" resname="Price Comment">
+            <source>Price Comment</source>
+            <target>Комментарий к стоимости</target>
+        </trans-unit>
+        <trans-unit id="Price and type" resname="Price and type">
+            <source>Price and type</source>
+            <target>Цена и тип</target>
+        </trans-unit>
+        <trans-unit id="Calc price" resname="Calc price">
+            <source>Calc price</source>
+            <target>Цена для расчета</target>
+        </trans-unit>
+        <trans-unit id="Type" resname="Type">
+            <source>Type</source>
+            <target>Тип</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>

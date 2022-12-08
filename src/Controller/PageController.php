@@ -114,10 +114,14 @@ class PageController extends AbstractController
     ): Response {
         $user = $this->security->getUser();
         //$tariffs = $tariffRepository->findAll();
-        $tariffs = $tariffRepository->findLimitOrder('6', '0');
+        //$tariffs = $tariffRepository->findLimitOrder('6', '0');
+        $employerTariffs = $tariffRepository->findLimitOrderAndType('6', '0', '1');
+        $customerTariffs = $tariffRepository->findLimitOrderAndType('6', '0', '2');
         return new Response($this->twig->render('pages/tarifs.html.twig', [
             'user' => $user,
-            'tariffs' => $tariffs,
+            //'tariffs' => $tariffs,
+            'employerTariffs' => $employerTariffs,
+            'customerTariffs' => $customerTariffs,
             'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
