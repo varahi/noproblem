@@ -44,6 +44,7 @@ class TariffCrudController extends AbstractCrudController
 
         yield FormField::addPanel('Price and type')->setIcon('fa fa-money')->setCssClass('col-sm-6');
         yield FormField::addRow();
+        yield TextField::new('type')->hideOnDetail();
         yield ChoiceField::new('type')->setChoices(
             [
                 'Тип *' => null,
@@ -51,7 +52,7 @@ class TariffCrudController extends AbstractCrudController
                 'Для работника' => '2',
             ]
         )->hideOnIndex();
-        yield TextField::new('type')->hideOnDetail();
+
         yield IntegerField::new('amount')->setColumns('col-md-10')->hideOnIndex()->setLabel('Calc price');
         yield TextareaField::new('price')->setColumns('col-md-10');
         yield TextareaField::new('priceComment')->setColumns('col-md-10')->hideOnIndex();
