@@ -6,7 +6,7 @@
     <div class="modal" v-if="showModal">
       <div class="modal-title">
         <h2>Вход</h2>
-        <p v-if="alert" class="alert-danger">{{ alertMessage }}</p>
+        <p v-if="alert" class="alert-danger"><span v-html="alertMessage">{{ alertMessage }}</span></p>
         <button class="close" @click="showModal = false"><img src="/assets/img/krest.svg" alt=""></button>
       </div>
 
@@ -78,16 +78,10 @@
           }
         })
             .catch(error => {
+              //console.log(error.response);
               this.alert = true;
-              this.alertMessage = 'Неверная пара логин/пароль';
+              this.alertMessage = error.response.data.error;
             });
-
-            /*.catch(function (error) {
-          let message = 'Неверная пара логин/пароль';
-          alert(message);
-          console.log(message);
-          console.log(error.response);
-        });*/
       }
     }
   }

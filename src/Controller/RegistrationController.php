@@ -28,6 +28,8 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Notifier\NotifierInterface;
+use App\Repository\UserRepository;
+use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -49,6 +51,7 @@ class RegistrationController extends AbstractController
 
     private $notifier;
 
+
     public function __construct(
         EmailVerifier $emailVerifier,
         SignUpValidator $signUpValidator,
@@ -56,15 +59,17 @@ class RegistrationController extends AbstractController
         RequestStack $requestStack,
         Recaptcha $recaptcha,
         TranslatorInterface $translator,
-        NotifierInterface $notifier
+        NotifierInterface $notifier,
+        VerifyEmailHelperInterface $helper
     ) {
-        $this->emailVerifier = $emailVerifier;
         $this->signUpValidator = $signUpValidator;
         $this->userCreator = $userCreator;
         $this->requestStack = $requestStack;
         $this->recaptcha = $recaptcha;
         $this->translator = $translator;
         $this->notifier = $notifier;
+        $this->emailVerifier = $emailVerifier;
+        $this->verifyEmailHelper = $helper;
     }
 
     /**
@@ -179,8 +184,13 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
-    {
+    public function register(
+        Request $request,
+        UserPasswordHasherInterface $userPasswordHasher,
+        UserAuthenticatorInterface $userAuthenticator,
+        AppAuthenticator $authenticator,
+        EntityManagerInterface $entityManager
+    ): Response {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -200,6 +210,14 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+            // Verify email
+            $signatureComponents = $this->verifyEmailHelper->generateSignature(
+                'app_verify_email',
+                $user->getId(),
+                $user->getEmail(),
+                ['id' => $user->getId()] // add the user's id as an extra query param
+            );
+
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation(
                 'app_verify_email',
@@ -209,6 +227,9 @@ class RegistrationController extends AbstractController
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
+                    ->context([
+                        'verifyUrl' => $signatureComponents->getSignedUrl()
+                    ])
             );
             // do anything else you need here, like send an email
 
@@ -227,7 +248,53 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/verify/email", name="app_verify_email")
      */
-    public function verifyUserEmail(Request $request, TranslatorInterface $translator): Response
+    public function verifyUserEmail(
+        Request $request,
+        UserRepository $userRepository,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier
+    ): Response {
+        //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //$user = $this->getUser();
+        $id = $request->get('id'); // retrieve the user id from the url
+
+        // Verify the user id exists and is not null
+        if (null === $id) {
+            $message = $translator->trans('Something wrong', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute('app_login');
+        }
+
+        $user = $userRepository->find($id);
+
+        if (null === $user) {
+            $message = $translator->trans('Something wrong', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute('app_login');
+        }
+
+        // Do not get the User's Id or Email Address from the Request object
+        try {
+            //$this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), $user->getId(), $user->getEmail());
+            $this->emailVerifier->handleEmailConfirmation($request, $user);
+        } catch (VerifyEmailExceptionInterface $e) {
+
+            //$this->addFlash('verify_email_error', $e->getReason());
+
+            $message = $translator->trans('Something wrong', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute('app_login');
+        }
+
+        $message = $translator->trans('Email verifyed', array(), 'flash');
+        $notifier->send(new Notification($message, ['browser']));
+        return $this->redirectToRoute("app_login");
+    }
+
+    /**
+     * @Route("/verify/email-back", name="app_verify_email_back")
+     */
+    public function _verifyUserEmail(Request $request, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 

@@ -653,6 +653,10 @@
             <source>Type</source>
             <target>Тип</target>
         </trans-unit>
+        <trans-unit id="Please Confirm your Email" resname="Please Confirm your Email">
+            <source>Please Confirm your Email</source>
+            <target>Подтвердите свой Email</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>

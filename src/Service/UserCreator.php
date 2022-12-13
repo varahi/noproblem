@@ -67,21 +67,9 @@ class UserCreator extends AbstractController
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        // generate a signed url and email it to the user
-        $this->emailVerifier->sendEmailConfirmation(
+        $signatureComponents = $this->verifyEmailHelper->generateSignature(
             'app_verify_email',
-            $user,
-            (new TemplatedEmail())
-                ->from(new Address('webmaster@noproblem.ru', 'Admin'))
-                ->to($user->getEmail())
-                ->subject('Please Confirm your Email')
-                ->htmlTemplate('registration/confirmation_email.html.twig')
-        );
-
-        // Verify email
-        /*$signatureComponents = $this->verifyEmailHelper->generateSignature(
-            'app_verify_email',
-            $user->getId(),
+            (string)$user->getId(),
             $user->getEmail(),
             ['id' => $user->getId()] // add the user's id as an extra query param
         );
@@ -91,14 +79,14 @@ class UserCreator extends AbstractController
             'app_verify_email',
             $user,
             (new TemplatedEmail())
-                ->from(new Address('noreply@smcentr.su', 'Admin'))
+                ->from(new Address('webmaster@noproblem.ru', 'Admin'))
                 ->to($user->getEmail())
-                ->subject('Пожалуйста подтвердите ваш аккаунт')
+                ->subject('Please Confirm your Email')
                 ->htmlTemplate('registration/confirmation_email.html.twig')
                 ->context([
                     'verifyUrl' => $signatureComponents->getSignedUrl()
                 ])
-        );*/
+        );
 
         return $user;
     }

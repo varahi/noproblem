@@ -57,6 +57,18 @@
         <source>Image updated</source>
         <target>Изображение обновлено</target>
       </trans-unit>
+      <trans-unit id="Your account has not been activated yet" resname="Your account has not been activated yet">
+        <source>Your account has not been activated yet</source>
+        <target><![CDATA[Ваш аккунт еще не активирован. <br />Пожалуйста перейдите по ссылке в отправленном вам письме!]]></target>
+      </trans-unit>
+      <trans-unit id="Something wrong" resname="Something wrong">
+        <source>Something wrong</source>
+        <target>Что-то пошло не так, попробуйте зарегистрироваться еще раз.</target>
+      </trans-unit>
+      <trans-unit id="Email verifyed" resname="Email verifyed">
+        <source>Email verifyed</source>
+        <target>Ваш аккаунт подтвержден, вы можете войти в систему.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
