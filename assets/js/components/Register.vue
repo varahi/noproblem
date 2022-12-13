@@ -62,11 +62,11 @@
             </div>
             <div class="captcha-block">
               <vue-recaptcha
-                  v-model="recaptcha"
                   ref="recaptcha"
-                  sitekey="6LdoPl4jAAAAAN5n82bRAsWsVuRBaxamPw_wovqZ"
+                  :sitekey="sitekey"
                   @expired="onCaptchaExpired"
                   @verify="submitFormEmployer"
+                  size="invisible"
               ></vue-recaptcha>
             </div>
             <div class="btn_try btn_try_custom">
@@ -75,6 +75,7 @@
           </form>
         </div>
       </div>
+
 
       <!-- Registration customer modal box -->
       <div class="modal" v-if="showModalCustomer">
@@ -90,7 +91,7 @@
             Поздравляем вас! Вы успешно зарегистрировались. Проверьте вашу почту и активируйте аккаунт.
           </div>
 
-          <form method="post" class="form-std" v-on:submit.prevent="submitFormCustomer" v-else>
+          <form method="post" class="form-std" @submit.prevent="validate" v-else>
             <div class="form-group">
               <label for="email">Ваш E-mail</label>
               <input type="email" class="form-control" id="email" v-model="email" aria-describedby="emailHelp" placeholder="Ваш E-mail">
@@ -107,11 +108,11 @@
             </div>
             <div class="captcha-block">
               <vue-recaptcha
-                  v-model="recaptcha"
                   ref="recaptcha"
-                  sitekey="6LdoPl4jAAAAAN5n82bRAsWsVuRBaxamPw_wovqZ"
+                  :sitekey="sitekey"
                   @expired="onCaptchaExpired"
                   @verify="submitFormCustomer"
+                  size="invisible"
               >
               </vue-recaptcha>
             </div>
@@ -153,11 +154,12 @@
             </div>
             <div class="captcha-block">
               <vue-recaptcha
-                  v-model="recaptcha"
                   ref="recaptcha"
-                  sitekey="6LdoPl4jAAAAAN5n82bRAsWsVuRBaxamPw_wovqZ"
+                  :sitekey="sitekey"
                   @expired="onCaptchaExpired"
-                  @verify="submitFormBuyer">
+                  @verify="submitFormBuyer"
+                  size="invisible"
+              >
               </vue-recaptcha>
             </div>
             <div class="btn_try btn_try_custom">
@@ -187,8 +189,6 @@ export default {
       showModalCustomer: false,
       showModalBuyer: false,
 
-      msg: 'SignUpForm',
-
       email: '',
       password: '',
 
@@ -196,7 +196,8 @@ export default {
       formSubmittedEmployerSuccess: false,
       formSubmittedCustomerSuccess: false,
       formSubmittedBuyerSuccess: false,
-      sitekey: '6LdoPl4jAAAAAN5n82bRAsWsVuRBaxamPw_wovqZ'
+      sitekey: '6LdaLF4jAAAAAKa_B_4FTMXZZXjv3Y67oklGW5X2'
+      //sitekey: '6LdoPl4jAAAAAN5n82bRAsWsVuRBaxamPw_wovqZ'
       //sitekey: process.env.RECAPTCHA_SITE_KEY
     }
   },
@@ -231,10 +232,10 @@ export default {
     },
 
     // Register Customer
-    submitFormCustomer: function (recaptchaToken, event) {
-      if (event) {
-        event.preventDefault()
-      }
+    submitFormCustomer: function (recaptchaToken) {
+      //if (event) {
+      //  event.preventDefault()
+      //}
 
       let component = this;
       let body = {
@@ -243,9 +244,9 @@ export default {
         recaptchaToken: recaptchaToken
       };
 
-      //console.log(this.email);
-      //console.log(this.password);
-      //console.log(recaptchaToken);
+      console.log(this.email);
+      console.log(this.password);
+      console.log(recaptchaToken);
 
       axios.create().post('/sign-up-handler-customer', body).then(function (response) {
         if(response.data.status === 400){
@@ -291,9 +292,13 @@ export default {
     },
 
     validate () {
-      // тут можно добавить проверку на валидацию
-      // например, с помощью vee validate
-      // если с валидацией наших полей все хорошо, запускаем каптчу
+      // const self = this
+      // self.$validator.validateAll().then((result) => {
+      //   if (result) {
+      //     self.$refs.recaptcha.execute()
+      //   }
+      // })
+
       this.$refs.recaptcha.execute()
     },
 

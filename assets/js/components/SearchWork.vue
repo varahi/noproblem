@@ -45,7 +45,7 @@ export default {
     return {
       showModal: false,
       items: [],
-      errors: []
+      //errors: []
     }
   },
 

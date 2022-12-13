@@ -1,7 +1,9 @@
+
 // Import Vue components
 import Courses from './components/Pages/Courses/CourseList';
 import Announcements from './components/User/Announcements';
 import TryAndRegister from './components/TryAndRegister';
+
 //import TryAndRegisterModal from './components/TryAndRegisterModal';
 import Register from './components/Register';
 import MenuAuth from './components/MenuAuth';
@@ -9,6 +11,14 @@ import SetCity from './components/SetCity';
 import Login from './components/Login';
 import SearchWork from './components/SearchWork';
 import Vue from 'vue';
+
+import VeeValidate, { Validator } from 'vee-validate';
+import ru from 'vee-validate/dist/locale/ru';
+
+Validator.localize('ru', ru);
+Vue.use(VeeValidate, {
+    locale: 'ru',
+});
 
 // any CSS you import will output into a single css file (app.css in this case)
 //import '../css/style.css';

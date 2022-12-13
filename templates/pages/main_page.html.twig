@@ -3,7 +3,6 @@
 {% block content %}
     {% include 'partials/header.html.twig' %}
     {% include 'partials/_message.html.twig' %}
-
     {% for message in app.flashes('notification') %}
         <div class="alert-success alert alert-dismissible" role="alert">
             <p>{{ message }}</p>

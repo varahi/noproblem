@@ -9,11 +9,13 @@
         <button class="close" @click="showModal = false"><img src="/assets/img/krest.svg" alt=""></button>
       </div>
       <div class="modal-content">
-        <ul v-if="errors && errors.length">
+
+<!--        <ul v-if="errors && errors.length">
           <li v-for="error of errors">
             {{error.message}}
           </li>
-        </ul>
+        </ul>-->
+
         <!-- <div class="alert alert-success" role="alert" v-if="formSubmittedSuccess">
           <p class="alert-success">Город выбран</p>
         </div> -->
@@ -49,7 +51,7 @@ export default {
   data() {
     return {
       items: [],
-      errors: [],
+      //errors: [],
       showModal: false,
       cname: '',
       validationErrors: {},

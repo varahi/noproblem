@@ -21,7 +21,9 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "@vue/server-renderer": "^3.2.45",
         "dotenv": "^16.0.3",
+        "vee-validate": "^2.2.15",
         "vue-recaptcha": "^2.0.3",
         "vue-search-select": "^2.9.5"
     }
