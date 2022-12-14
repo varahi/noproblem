@@ -4,7 +4,17 @@
 {% block body %}
 	{% include 'partials/header.html.twig' %}
 	<main>
-		{% include 'partials/pages/tarifs/_description.html.twig' %}
+		{% if app.user %}
+			{% if is_granted('ROLE_EMPLOYEE') %}
+				{% include 'partials/pages/tarifs/_employer_description.html.twig' %}
+			{% endif %}
+			{% if is_granted('ROLE_CUSTOMER') %}
+				{% include 'partials/pages/tarifs/_customer_description.html.twig' %}
+			{% endif %}
+		{% else %}
+			{% include 'partials/pages/tarifs/_description.html.twig' %}
+		{% endif %}
+
 		{% if app.user %}
 			{% if is_granted('ROLE_EMPLOYEE') %}
 				{% include 'partials/pages/tarifs/_for_emploer.html.twig' %}

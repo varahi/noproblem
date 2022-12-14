@@ -27,6 +27,7 @@
 {#            <a href="#">Мои курсы</a>#}
             <a href="#">История платежей</a>
             <a href="#">Служба поддержки</a>
+            <a href="{{ path('app_tarifs') }}">Тарифы</a>
             <a href="{{ path('app_logout') }}">Выход</a>
         {% elseif is_granted('ROLE_CUSTOMER') %}
             <a href="{{ path('app_lk_customer') }}">Профиль</a>
@@ -37,6 +38,7 @@
 {#            <a href="#">Мои курсы</a>#}
             <a href="#">История платежей</a>
             <a href="#">Служба поддержки</a>
+            <a href="{{ path('app_tarifs') }}">Тарифы</a>
             <a href="{{ path('app_logout') }}">Выход</a>
         {% elseif is_granted('ROLE_BUYER') %}
             <a href="{{ path('app_lk_buyer') }}">Профиль</a>
@@ -46,6 +48,10 @@
 {#            <a href="#">Мои курсы</a>#}
             <a href="#">История платежей</a>
             <a href="#">Служба поддержки</a>
+            <a href="{{ path('app_tarifs') }}">Тарифы</a>
+            <a href="{{ path('app_logout') }}">Выход</a>
+        {% elseif is_granted('ROLE_SUPER_ADMIN') %}
+            <a href="{{ path('admin') }}">Панель управления</a>
             <a href="{{ path('app_logout') }}">Выход</a>
         {% else %}
             <div id="menu-auth"></div>
