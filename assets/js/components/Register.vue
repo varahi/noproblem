@@ -196,7 +196,8 @@ export default {
       formSubmittedEmployerSuccess: false,
       formSubmittedCustomerSuccess: false,
       formSubmittedBuyerSuccess: false,
-      sitekey: '6LdaLF4jAAAAAKa_B_4FTMXZZXjv3Y67oklGW5X2'
+      sitekey: '6LeK-XcjAAAAACtV8r7cQMCc2lFskfpLAr04HyMu'
+      //sitekey: '6LcrWmMjAAAAALyFoHY5UOaehNmbQcBpWT31NOlN'
       //sitekey: '6LdoPl4jAAAAAN5n82bRAsWsVuRBaxamPw_wovqZ'
       //sitekey: process.env.RECAPTCHA_SITE_KEY
     }
