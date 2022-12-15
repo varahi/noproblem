@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Controller\Traits\AbstractTrait;
 use App\Controller\Traits\DataTrait;
 use App\Controller\Traits\JobTrait;
+use App\Controller\Traits\MapTrait;
 use App\Entity\Job;
 use App\Entity\Worksheet;
 use App\Form\Job\JobFormType;
@@ -44,6 +45,8 @@ class JobController extends AbstractController
     use DataTrait;
 
     use AbstractTrait;
+
+    use MapTrait;
 
     public const ROLE_EMPLOYEE = 'ROLE_EMPLOYEE';
 
@@ -135,7 +138,6 @@ class JobController extends AbstractController
         }
 
         $featuredJobs = $this->getFeaturedJobs($user);
-
         return new Response($this->twig->render('pages/job/all_jobs.html.twig', [
             'cities' => $cities,
             'city' => $city,
@@ -149,6 +151,8 @@ class JobController extends AbstractController
             'featuredJobs' => $featuredJobs,
             'slug' => $slug,
             'cityName' => $cityName,
+            'lat' => $this->getLatArr($jobs),
+            'lng' => $this->getLngArr($jobs),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }

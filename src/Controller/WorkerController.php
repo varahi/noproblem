@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Controller\Traits\AbstractTrait;
 use App\Controller\Traits\DataTrait;
 use App\Controller\Traits\JobTrait;
+use App\Controller\Traits\MapTrait;
 use App\Entity\Worksheet;
 use App\Form\Worksheet\WorksheetFormType;
 use App\Repository\BusynessRepository;
@@ -38,6 +39,8 @@ class WorkerController extends AbstractController
     use DataTrait;
 
     use AbstractTrait;
+
+    use MapTrait;
 
     public const ROLE_EMPLOYEE = 'ROLE_EMPLOYEE';
 
@@ -137,6 +140,8 @@ class WorkerController extends AbstractController
             'featuredProfiles' => $featuredProfiles,
             'slug' => $slug,
             'cityName' => $cityName,
+            'lat' => $this->getLatArr($worksheets),
+            'lng' => $this->getLngArr($worksheets),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }

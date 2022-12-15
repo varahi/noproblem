@@ -1,7 +1,7 @@
-{% extends 'layouts/base.html.twig' %}
+{% extends 'layouts/map.html.twig' %}
 {% block title %}Все вакансии - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block body %}
-    <script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script>
+{#    <script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script>#}
     {% include 'partials/header.html.twig' %}
     <div class="">
         <div class="content">
@@ -27,8 +27,11 @@
                     <div class="title" >
                         <h2>Все вакансии {% if category is not null %}- {{ category }} {% endif %}</h2>
                     </div>
-                    <div id="map" style="width: 100%; height: 300px;"></div>
+                    <div id="map" style="height: 300px;"></div>
+                    {% include 'partials/pages/script/_map_script.html.twig' %}
                     <div class="open_map" id="changeSize">Раскрыть карту</div>
+{#                    <div id="map" style="width: 100%; height: 300px;"></div>#}
+{#                    <div class="open_map" id="changeSize">Раскрыть карту</div>#}
                     <div class="large fon">
                         <div class="in" >
                             {% if jobs is not null %}
@@ -48,5 +51,5 @@
         </div>
     </div>
     {% include 'partials/footer.html.twig' %}
-    {% include 'partials/pages/script/_map_script.html.twig' %}
+
 {% endblock %}

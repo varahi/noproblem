@@ -51,6 +51,12 @@
             <a href="{{ path('app_tarifs') }}">Тарифы</a>
             <a href="{{ path('app_logout') }}">Выход</a>
         {% elseif is_granted('ROLE_SUPER_ADMIN') %}
+            <div id="menu-registration"></div>
+            <div id="menu-set-city" data-trans="{{ cityName | json_encode() }}"></div>
+            <a href="{{ path('app_all_jobs') }}">Все вакансии</a>
+            <a href="{{ path('app_all_workers') }}">Все анкеты</a>
+            <a href="{{ path('app_company') }}">О компании</a>
+            <a href="{{ path('app_tarifs') }}">Тарифы</a>
             <a href="{{ path('admin') }}">Панель управления</a>
             <a href="{{ path('app_logout') }}">Выход</a>
         {% else %}

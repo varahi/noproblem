@@ -1,37 +1,34 @@
-<script>
-    var changeSizeButton = document.getElementById('changeSize');
+<script type="text/javascript">
+    var map = L.map( 'map', {
+        center: [{{ lat }}, {{ lng }}],
+        zoom: 11,
+    });
 
-    DG.then(function() {
-        var map, enabled = false;
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        subdomains: ['a','b','c']
+    }).addTo(map);
 
-        {% if city is not null %}
-        map = DG.map('map', {
-            center: [{{ city.latitude }}, {{ city.longitude }}],
-            zoom: 10,
-            animate: true
-        });
-
-        {% else %}
-        map = DG.map('map', {
-            center: [55.751244, 37.618423],
-            zoom: 6,
-            animate: true
-        });
-        {% endif %}
-
-        {% for job in jobs %}
+    var marks = [
+        {% for job in worksheets %}
         {% if job.city is not null %}
-        DG.marker([{{ job.latitude }},
-            {{ job.longitude }}]).addTo(map).bindPopup( '<div class="map-popup"><h4>{{ job.name }}</h4>ID Вакансии: {{ job.id }}<br /><br />Разместил(а): <br />{{ job.user }}  <img class="rounded map-img" src="{{ asset('uploads/files/' ~ job.user.avatar) }}" width="50" height="50"/> <br /><br />Стоимость:{{ job.payment }} <br /><br /><a href="{{ path('app_detail_worksheet', { id: job.id}) }}">Подробнее ...</a></div>' );
+        {% set description = '' %}
+        {% if job.description %}
+        {% set description = job.description|striptags|u.truncate(50,  '...')  %}
+        {% endif %}
+        {% if job.latitude and job.longitude %}
+            { text: '<h4>{{ job.name}}</h4> {{ description|raw }} <br /> Разместил(а): {{ job.user }}  <img class="rounded map-img" src="{{ asset('uploads/files/' ~ job.user.avatar) }}" width="50" height="50"/> Стоимость:{{ job.payment }} <br /><a href="{{ path('app_detail_job', { id: job.id}) }}">Подробнее ... </a>', latlng: [{{ job.latitude }}, {{ job.longitude }}], },
+        {% endif %}
         {% endif %}
         {% endfor %}
-
-        changeSizeButton.onclick = function() {
-            var mapDiv = document.getElementById('map');
-            mapDiv.style.height = (enabled ? '200' : '600') + 'px';
-            // обновление карты
-            map.invalidateSize();
-            $("#changeSize").css("display", "none");
-        }
-    });
+    ];
+    for(var i = 0; i<=marks.length; i++) {
+        L.marker(marks[i].latlng)
+            .bindPopup(marks[i].text, {
+                direction: 'top',
+                sticky: false,
+                offset: [0, -15],
+            })
+            .addTo(map);
+    }
 </script>

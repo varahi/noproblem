@@ -443,6 +443,7 @@ h2.main-page {
     font-size: 22px;
     color: #000;
 }
+
 .leaflet-container a {
     color: #000 !important;
     text-decoration: underline;
@@ -459,6 +460,12 @@ h2.main-page {
 }
 .leaflet-popup-content {
     margin:0!important;    /* Убираем отступы у попапа */
+}
+
+.leaflet-popup-content {
+    background: #fff;
+    padding: 20px;
+    color: #000;
 }
 
 /*.round_account img {

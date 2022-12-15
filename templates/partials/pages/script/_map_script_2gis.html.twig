@@ -1,0 +1,44 @@
+<script>
+    var changeSizeButton = document.getElementById('changeSize');
+
+    DG.then(function() {
+        var map, enabled = false;
+
+        {% if city is not null %}
+        map = DG.map('map', {
+            center: [{{ city.latitude }}, {{ city.longitude }}],
+            zoom: 10,
+            animate: true
+        });
+
+        {% else %}
+        map = DG.map('map', {
+            center: [55.751244, 37.618423],
+            zoom: 6,
+            animate: true
+        });
+        {% endif %}
+
+{#        {% set popup = '' %}#}
+{#        {% for job in jobs %}#}
+{#            {% if job.city is not null %}#}
+{#                {% set popup = '<div class="map-popup"><h4>{{ job.name }}</h4><br/>{{ job.description|length > 50 ? job.description|slice(0, 50) ~ \'...\' : job.description }} <br /><br /><a href='{{ path('app_detail_job', { id: job.id}) }}'>Подробнее ...</a></div>' %}#}
+{#            {% endif %}#}
+{#        {% endfor %}#}
+
+        {% for job in jobs %}
+            {% if job.city is not null %}
+                DG.marker([{{ job.latitude }},
+                    {{ job.longitude }}]).addTo(map).bindPopup( '<div class="map-popup"><h4>{{ job.name }}</h4>ID Вакансии: {{ job.id }}<br /><br />Разместил(а): <br />{{ job.owner }}  <img class="rounded map-img" src="{{ asset('uploads/files/' ~ job.owner.avatar) }}" width="50" height="50"/> <br /><br />Стоимость:{{ job.payment }} <br /><br /><a href="{{ path('app_detail_job', { id: job.id}) }}">Подробнее ...</a></div>' );
+            {% endif %}
+        {% endfor %}
+
+        changeSizeButton.onclick = function() {
+            var mapDiv = document.getElementById('map');
+            mapDiv.style.height = (enabled ? '200' : '600') + 'px';
+            // обновление карты
+            map.invalidateSize();
+            $("#changeSize").css("display", "none");
+        }
+    });
+</script>
