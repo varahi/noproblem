@@ -91,7 +91,11 @@
                                     <img src="{{ asset('assets/img/verif.svg') }}" class="lazyLoad isLoaded" alt="">
                                 </div>
                                 <p>Паспорт - <span>не загружен</span></p>
-                                <p> Телефон -  <span>не подтвержден</span></p>
+                                {% if user.smsVerified == 1 %}
+                                    <p>Телефон -  подтвержден</p>
+                                {% else %}
+                                    <p><a href="{{ path('app_sms_verify', { id: user.id}) }}">Подтвердить телефон</a></p>
+                                {% endif %}
                                 <p> Почта - <span>не пожтверждена</span></p>
                             </div>
                             <div class="window_account ">

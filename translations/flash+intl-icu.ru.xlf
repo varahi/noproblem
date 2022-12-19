@@ -69,6 +69,31 @@
         <source>Email verifyed</source>
         <target>Ваш аккаунт подтвержден, вы можете войти в систему.</target>
       </trans-unit>
+
+      <trans-unit id="Enter sms code" resname="Enter sms code">
+        <source>Enter sms code</source>
+        <target>Введите смс код</target>
+      </trans-unit>
+      <trans-unit id="Code not sended" resname="Code not sended">
+        <source>Code not sended</source>
+        <target>Код отправлен</target>
+      </trans-unit>
+      <trans-unit id="Code not executed" resname="Code not executed">
+        <source>Code not executed</source>
+        <target>Код не выполнен</target>
+      </trans-unit>
+      <trans-unit id="Cant connect with server" resname="Cant connect with server">
+        <source>Cant connect with server</source>
+        <target>Не могу установить связь с сервером</target>
+      </trans-unit>
+      <trans-unit id="Phone verified" resname="Phone verified">
+        <source>Phone verified</source>
+        <target>Телефон подтвержден</target>
+      </trans-unit>
+      <trans-unit id="Please fill the phone number" resname="Please fill the phone number">
+        <source>Please fill the phone number</source>
+        <target>Пожалуйста укажите телефон в ашем профиле</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -230,6 +230,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $currentChatRoom;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $smsVerified;
+
     public function __construct()
     {
         $this->ticket = new ArrayCollection();
@@ -988,6 +993,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCurrentChatRoom(?int $currentChatRoom): self
     {
         $this->currentChatRoom = $currentChatRoom;
+
+        return $this;
+    }
+
+    public function isSmsVerified(): ?bool
+    {
+        return $this->smsVerified;
+    }
+
+    public function setSmsVerified(?bool $smsVerified): self
+    {
+        $this->smsVerified = $smsVerified;
 
         return $this;
     }

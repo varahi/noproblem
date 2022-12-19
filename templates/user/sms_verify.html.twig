@@ -1,0 +1,45 @@
+{% extends 'layouts/lk.html.twig' %}
+{% block title %}Редактировать профиль - Онлайн-сервис по подбору домашнего персонала{% endblock %}
+{% block body %}
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
+
+    {% include 'partials/header.html.twig' %}
+    <div>
+        <div class="main_account content">
+            <div  class="bread">
+                <a  href="/" class="nuxt-link-active">Главная</a>
+                <a href="{{ path('app_lk') }}">/ {{ 'Personal area'|trans }}</a>
+                <a>/ Подтвердите ваш номер</a>
+            </div>
+            <div class="mobfile mobs">
+                <p>Мой профиль</p>
+            </div>
+            <div class="large_account fon">
+                <div class="in_account">
+                    {% include 'partials/_message.html.twig' %}
+                    <h2>Подтвердите ваш номер</h2>
+                    <p style="text-align: center">Подтвердите ваш номер введя код из смс сообщения</p>
+
+                    <form name="verify_sms_form" method="post" class="form-std form-std-custom" autocomplete="off">
+                        <div class="form-group grig-group">
+                            <div>
+                                <label for="edit_profile_form_email">SMS код</label>
+                                <input type="number" id="edit_profile_form_email" name="verify_sms_form[code]" required>
+                                <br /><br />
+                                <div class="btn_try _btn_try_custom">
+                                    <button type="submit" class="btn btn-success">Отправить</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}

@@ -11,6 +11,7 @@ parameters:
     default_scheme: 'https'
     recaptcha_site_key: ''
     recaptcha_secret_key: ''
+    sms_api_key: ''
 
 services:
     # default configuration for services in *this* file
@@ -24,6 +25,7 @@ services:
             $defailtScheme: "%env(string:default:default_scheme:DEFAULT_SCHEME)%"
             $recaptchaSiteKey: "%env(string:default:recaptcha_site_key:RECAPTCHA_SITE_KEY)%"
             $recaptchaSecretKey: "%env(string:default:recaptcha_secret_key:RECAPTCHA_SECRET_KEY)%"
+            $smsApiKey: "%env(string:default:sms_api_key:SMS_API_KEY)%"
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

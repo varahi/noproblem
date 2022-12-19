@@ -8,7 +8,9 @@ use App\Controller\Traits\AbstractTrait;
 use App\Controller\Traits\DataTrait;
 use App\Entity\Worksheet;
 use App\Entity\Job;
+use App\Entity\User;
 use App\Entity\City;
+use App\Form\RegistrationFormType;
 use App\ImageOptimizer;
 use App\Repository\CityRepository;
 use App\Repository\JobRepository;
@@ -60,6 +62,8 @@ class UserController extends AbstractController
      */
     private $security;
 
+    private $smsApiKey;
+
     /**
      * @param Security $security
      * @param Environment $twig
@@ -76,7 +80,8 @@ class UserController extends AbstractController
         ModalForms $modalForms,
         ImageOptimizer $imageOptimizer,
         string $targetDirectory,
-        SessionService $sessionService
+        SessionService $sessionService,
+        string $smsApiKey
     ) {
         $this->security = $security;
         $this->twig = $twig;
@@ -85,6 +90,7 @@ class UserController extends AbstractController
         $this->imageOptimizer = $imageOptimizer;
         $this->targetDirectory = $targetDirectory;
         $this->sessionService = $sessionService;
+        $this->smsApiKey = $smsApiKey;
     }
 
     /**
@@ -530,5 +536,101 @@ class UserController extends AbstractController
         $persentFilled = count($filledFieldsArr) / count($fieldsArr);
 
         return $persentFilled;
+    }
+
+    /**
+     *
+     * @Route("/sms-verify/user-{id}", name="app_sms_verify")
+     */
+    public function smsVerify(
+        Request $request,
+        User $user,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier
+    ): Response {
+        $smsCode = "";
+        $ji = '0123456789'; #The string can be taken as a subscript
+        do {
+            for ($i=0;$i<4;$i++) {
+                $smsCode .= $ji[rand(0, strlen($ji)-1)];
+            }
+        } while (false);
+
+        if ($user->getPhone() !=='') {
+            $smsTel = preg_replace("/[^0-9]/", '', $user->getPhone());
+            $url = 'https://sms.ru/sms/send?api_id='.$this->smsApiKey.'&to='.$smsTel.'&msg=' . $smsCode . '&json=1';
+            $body = file_get_contents($url);
+            $json = json_decode($body);
+
+            // Get json from sms.ru
+            if ($json) {
+                if ($json->status == "OK") {
+                    foreach ($json->sms as $phone => $data) {
+                        if ($data->status == "OK") {
+
+                            //echo "Код на номер $phone УСПЕШНО ОТПРАВЛЕН. ";
+                            $message = $translator->trans('Enter sms code', array(), 'flash');
+                            $notifier->send(new Notification($message, ['browser']));
+                        //$referer = $request->headers->get('referer');
+                            //return new RedirectResponse($referer);
+                        } else { // Ошибка в отправке
+                            //echo "Код на номер $phone НЕ ОТПРАВЛЕН. $data->status_text. ";
+                            $message = $translator->trans('Code not sended', array(), 'flash');
+                            $notifier->send(new Notification($message, ['browser']));
+                            return $this->redirectToRoute("app_lk_customer");
+                        }
+                    }
+                } else {
+                    //echo "Запрос не выполнился: $json->status_code. ";
+                    $message = $translator->trans('Code not executed', array(), 'flash');
+                    $notifier->send(new Notification($message, ['browser']));
+                    return $this->redirectToRoute("app_lk_customer");
+                }
+            } else {
+                //echo "Запрос не выполнился. Не удалось установить связь с сервером. ";
+                $message = $translator->trans('Cant connect with server', array(), 'flash');
+                return $this->redirectToRoute("app_lk_customer");
+            }
+
+            // Enter and check post
+            if ($_POST) {
+                file_put_contents('verify_sms_form.txt', $_POST['verify_sms_form']['code'] . PHP_EOL, FILE_APPEND|LOCK_EX);
+                file_put_contents('smsCode.txt', $smsCode . PHP_EOL, FILE_APPEND|LOCK_EX);
+
+                $user->setSmsVerified(true);
+                $entityManager = $this->doctrine->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                $message = $translator->trans('Phone verified', array(), 'flash');
+                $notifier->send(new Notification($message, ['browser']));
+                return $this->redirectToRoute("app_lk_customer");
+
+                /*                if ($_POST['verify_sms_form']['code'] == $smsCode) {
+                                    $user->setSmsVerified(true);
+                                    $entityManager = $this->doctrine->getManager();
+                                    $entityManager->persist($user);
+                                    $entityManager->flush();
+
+                                    $message = $translator->trans('Phone verified', array(), 'flash');
+                                    $notifier->send(new Notification($message, ['browser']));
+                                    return $this->redirectToRoute("app_lk_customer");
+                                } else {
+                                    $message = $translator->trans('Incorrect code', array(), 'flash');
+                                    $notifier->send(new Notification($message, ['browser']));
+                                    //return $this->redirectToRoute("app_lk_customer");
+                                    $referer = $request->headers->get('referer');
+                                    return new RedirectResponse($referer);
+                                }*/
+            }
+        } else {
+            $message = $translator->trans('Please fill the phone number', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_lk_customer");
+        }
+
+        return new Response($this->twig->render('user/sms_verify.html.twig', [
+            'user' => $user,
+        ]));
     }
 }
