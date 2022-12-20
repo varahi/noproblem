@@ -1,8 +1,8 @@
 
 // Import Vue components
 import Courses from './components/Pages/Courses/CourseList';
-import Announcements from './components/User/Announcements';
-import TryAndRegister from './components/TryAndRegister';
+//import Announcements from './components/User/Announcements';
+//import TryAndRegister from './components/TryAndRegister';
 
 //import TryAndRegisterModal from './components/TryAndRegisterModal';
 import Register from './components/Register';
@@ -24,14 +24,14 @@ Vue.use(VeeValidate, {
 //import '../css/style.css';
 //import '../css/custom.css';
 
-/*new Vue({
+new Vue({
     el: '#app',
     components: {
         Courses,
-        TryAndRegister,
-        Announcements
+        //TryAndRegister,
+        //Announcements
     }
-});*/
+});
 
 new Vue({
     el: '#login',
