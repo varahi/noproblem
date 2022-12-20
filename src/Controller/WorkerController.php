@@ -79,7 +79,6 @@ class WorkerController extends AbstractController
      */
     public function allWorkers(
         Request $request,
-        ReviewRepository $reviewRepository,
         CategoryRepository $categoryRepository,
         CityRepository $cityRepository,
         DistrictRepository $districtRepository,
@@ -455,12 +454,11 @@ class WorkerController extends AbstractController
     public function worksheetDetailPage(
         Request $request,
         Worksheet $worksheet,
-        WorksheetRepository $worksheetRepository
+        WorksheetRepository $worksheetRepository,
+        CityRepository $cityRepository
     ): Response {
         $category = $worksheet->getCategory();
         $user = $this->security->getUser();
-
-        //dd($user);
 
         if (isset($category) && $category !==null) {
             $relatedJobs = $worksheetRepository->findByCategory($category->getId(), $worksheet->getId(), '10');
@@ -468,8 +466,10 @@ class WorkerController extends AbstractController
             $relatedJobs = null;
         }
 
-        // Get liked ancets
+        // Get liked worksheet
         $featuredProfiles = $this->getFeaturedProfiles($user);
+        // Set coords for worksheet
+        $this->setCoordsByAddress($cityRepository, $worksheet);
 
         return new Response($this->twig->render('pages/worksheet/detail.html.twig', [
             'user' => $user,

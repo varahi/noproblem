@@ -1,7 +1,7 @@
 {% extends 'layouts/map.html.twig' %}
 {% block title %}Анкеты - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block body %}
-{#    <script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script>#}
+
     {% include 'partials/header.html.twig' %}
     <div class="">
         <div class="content">
@@ -39,7 +39,7 @@
 
                     <div id="map" style="height: 300px;"></div>
                     {% include 'partials/pages/script/_map_script_workers.html.twig' %}
-                    <div class="open_map" onClick="changeHeight();">Раскрыть карту</div>
+                    <div class="open_map" onClick="changeHeight();" id="open-map">Раскрыть карту</div>
                     <div class="large fon">
                         <div class="in" >
                             {% include 'partials/_message.html.twig' %}

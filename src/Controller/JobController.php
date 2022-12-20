@@ -606,7 +606,8 @@ class JobController extends AbstractController
     public function detailJob(
         Request $request,
         Job $job,
-        JobRepository $jobRepository
+        JobRepository $jobRepository,
+        CityRepository $cityRepository
     ): Response {
         $category = $job->getCategory();
         $relatedJobs = $jobRepository->findByCategory($category->getId(), $job->getId(), '10');
@@ -647,7 +648,8 @@ class JobController extends AbstractController
             $testArray[] = $i + 11;
         }
 
-        //dd($dayKeys);
+        // Set coords for worksheet
+        $this->setCoordsByAddress($cityRepository, $job);
 
         $featuredJobs = $this->getFeaturedJobs($user);
 

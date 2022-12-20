@@ -122,7 +122,7 @@
                         <div class="line_one_vacan">
                             <div class="city2_one_vacan">
                                 <img  src="{{ asset('assets/img/city_map.svg') }}" class="lazyLoad isLoaded" alt="">
-                                <span>{{ worksheet.city.name }} {% if worksheet.district %}, {{ worksheet.district.name }} {% endif %}</span>
+                                <span>{{ worksheet.city.name }} {% if worksheet.address %}, {{ worksheet.address }} {% endif %}</span>
                             </div>
                             {% if worksheet.payment %}
                                 <div class="city2_one_vacan">

@@ -1,7 +1,6 @@
 <script type="text/javascript">
     var map = L.map( 'map', {
         center: [{{ lat }}, {{ lng }}],
-        //center: [55.7400000, 37.6672000],
         zoom: 11,
     });
 
@@ -36,6 +35,9 @@
     // ToDo: set map update size
     function changeHeight() {
         document.getElementById('map').style.height = "600px";
+        document.getElementById('open-map').style.display = "none";
+        //document.getElementById('map').updateSize();
         map.updateSize();
+
     }
 </script>
