@@ -39,8 +39,8 @@ class AcquiringController extends AbstractController
     ];
 
     private $acq_array_yookassa = [
-        'shopId'=>'949967',
-        'secretKey'=>'live_Lpu1u-LVIpOk-yXy5NVOQIdCx1XGyei9FVC5-Lpxukk'
+        'shopId' => '949967',
+        'secretKey' => 'live_Lpu1u-LVIpOk-yXy5NVOQIdCx1XGyei9FVC5-Lpxukk'
     ];
 
     /**
@@ -52,6 +52,16 @@ class AcquiringController extends AbstractController
      * @var string
      */
     private $defailtDomain;
+
+    const YOOKASSA_METHODS = [
+        'bank_card',
+        'sberbank',
+        'yoo_money',
+        'alfabank',
+        'tinkoff_bank',
+        'qiwi',
+        'cash'
+    ];
 
     /**
      * @param Security $security
@@ -78,6 +88,8 @@ class AcquiringController extends AbstractController
         NotifierInterface $notifier,
         TariffRepository $tariffRepository
     ) {
+        // $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        // $user = $this->getUser();
         $user = $this->security->getUser();
         if ((int)$user->getId() !== (int)$request->get('user')) {
             $message = $translator->trans('Access denied for this operation', array(), 'flash');
@@ -86,9 +98,9 @@ class AcquiringController extends AbstractController
         }
 
         // выбрать тип оплаты:
-        $bank = $request->get('bank')??'';
+        $bank = $request->get('bank') ?? '';
 
-        if ($bank=='sber') {
+        if ($bank == 'sber') {
             $client = new Client($this->acq_array_sber);
             $orderId     = uniqid("", true);
             // // Required arguments
@@ -99,7 +111,7 @@ class AcquiringController extends AbstractController
             $tariff = $request->get('tariff');
             $tariff = $tariffRepository->findOneBy(['id' => $tariff]);
             $orderAmount = $tariff->getAmount();
-            $returnUrl   = 'https://'.$this->defailtDomain.'/pay/proceed_sber/'.$orderId;
+            $returnUrl   = 'https://' . $this->defailtDomain . '/pay/proceed_sber/' . $orderId;
 
             // You can pass additional parameters like a currency code and etc.
             $params['currency'] = Currency::RUB;
@@ -113,50 +125,53 @@ class AcquiringController extends AbstractController
             $response->headers->setCookie($cookie);
 
             return $response;
-        } elseif ($bank=='yookassa') {
-            $client = new YooClient();
-            $client->setAuth($this->acq_array_yookassa['shopId'], $this->acq_array_yookassa['secretKey']);
+        } elseif ($bank == 'yookassa') {
+            $method = $request->get('method') ?? '';
+            if (in_array($method, self::YOOKASSA_METHODS)) {
+                $client = new YooClient();
+                $client->setAuth($this->acq_array_yookassa['shopId'], $this->acq_array_yookassa['secretKey']);
 
-            $orderId     = uniqid("", true);
-            $tariff = $request->get('tariff');
-            $tariff = $tariffRepository->findOneBy(['id' => $tariff]);
-            $orderAmount = $tariff->getAmount()/100;
-            $returnUrl   = 'https://'.$this->defailtDomain.'/pay/proceed_yookassa/'.$orderId;
+                $orderId     = uniqid("", true);
+                $tariff = $request->get('tariff');
+                $tariff = $tariffRepository->findOneBy(['id' => $tariff]);
+                $orderAmount = $tariff->getAmount() / 100;
+                $returnUrl   = 'https://' . $this->defailtDomain . '/pay/proceed_yookassa/' . $orderId;
 
-            $idempotenceKey = uniqid('', true);
-            $response = $client->createPayment(
-                [
-                    'amount' => [
-                        'value' => $orderAmount,
-                        'currency' => 'RUB',
+                $idempotenceKey = uniqid('', true);
+                $response = $client->createPayment(
+                    [
+                        'amount' => [
+                            'value' => $orderAmount,
+                            'currency' => 'RUB',
+                        ],
+                        'capture' => true,
+                        'description' => $tariff->getId(),
+                        'metadata' => [
+                            'orderNumber' => $orderId
+                        ],
+                        "confirmation" => [
+                            "type" => "redirect",
+                            'return_url' => $returnUrl,
+                        ],
+                        'payment_method_data' => array(
+                            'type' => $method,
+                        ),
                     ],
-                    'capture' => true,
-                    'description' => $tariff->getId(),
-                    'metadata' => [
-                        'orderNumber' => $orderId
-                    ],
-                    "payment_method_data"=> [
-                        "type"=> "bank_card"
-                    ],
-                    "confirmation"=> [
-                        "type"=> "redirect",
-                        "return_url"=> $returnUrl
-                    ],
-                ],
-                $idempotenceKey
-            );
+                    $idempotenceKey
+                );
 
-            //получаем confirmationUrl для дальнейшего редиректа
-            $confirmationUrl = $response->getConfirmation()->getConfirmationUrl();
+                $confirmationUrl = $response->getConfirmation()->getConfirmationUrl();
 
-            $response = new RedirectResponse($confirmationUrl);
-            $cookie = new Cookie('orderId', $orderId, strtotime('now + 2 days'));
-            $response->headers->setCookie($cookie);
+                $response = $this->redirect($confirmationUrl);
+                $cookie = new Cookie('orderId', $orderId, strtotime('now + 2 days'));
+                $response->headers->setCookie($cookie);
 
-            return $response;
+                return $response;
+            } else {
+                return $this->render('pages/yookassa_widget.html.twig');
+            }
         } else {
-            return $this->render('pages/choose_bank.html.twig', [
-            ]);
+            return $this->render('pages/choose_bank.html.twig', []);
         }
     }
 
@@ -171,6 +186,7 @@ class AcquiringController extends AbstractController
         TranslatorInterface $translator,
         NotifierInterface $notifier
     ) {
+
         $client = new Client($this->acq_array_sber);
         $entityManager = $this->doctrine->getManager();
 
@@ -191,7 +207,7 @@ class AcquiringController extends AbstractController
                     $tariff = $result['orderDescription'];
                     $tariff = $tariffRepository->findOneBy(['id' => $tariff]);
                     $order = new Order();
-                    $order->setName('Order #' .'User ID - '. $user->getId() .' Tariff ID - '. $tariff->getId());
+                    $order->setName('Order #' . 'User ID - ' . $user->getId() . ' Tariff ID - ' . $tariff->getId());
                     $order->setUser($user);
                     $order->setActive(1);
                     //$order->setEndDate()
@@ -204,7 +220,7 @@ class AcquiringController extends AbstractController
 
                     $currentDateStr = date('Y-m-d H:i:s');
                     $currentDate = new \DateTime($currentDateStr);
-                    $interval = '+' .$tariff->getTermDays(). 'day';
+                    $interval = '+' . $tariff->getTermDays() . 'day';
                     $endDate = $currentDate->modify($interval);
                     $order->setEndDate($endDate);
 
@@ -246,7 +262,7 @@ class AcquiringController extends AbstractController
     ) {
         $entityManager = $this->doctrine->getManager();
         if ($request->getMethod() != 'POST') {
-            return $this->json(['data'=>'prohobited']);
+            return $this->json(['data' => 'prohobited']);
         }
         $content = $request->getContent();
 
@@ -273,7 +289,7 @@ class AcquiringController extends AbstractController
                     $tariff = $request->get('tariff');
                     $tariff = $tariffRepository->findOneBy(['id' => $tariff]);
                     $order = new Order();
-                    $order->setName('Order #' .'User ID - '. $user->getId() .' Tariff ID - '. $tariff->getId());
+                    $order->setName('Order #' . 'User ID - ' . $user->getId() . ' Tariff ID - ' . $tariff->getId());
                     $order->setUser($user);
                     $order->setActive(1);
                     //$order->setEndDate()
@@ -285,7 +301,7 @@ class AcquiringController extends AbstractController
 
                     $currentDateStr = date('Y-m-d H:i:s');
                     $currentDate = new \DateTime($currentDateStr);
-                    $interval = '+' .$tariff->getTermDays(). 'day';
+                    $interval = '+' . $tariff->getTermDays() . 'day';
                     $endDate = $currentDate->modify($interval);
                     $order->setEndDate($endDate);
 
