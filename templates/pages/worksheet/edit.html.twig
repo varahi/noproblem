@@ -1,4 +1,4 @@
-{% extends 'layouts/base.html.twig' %}
+{% extends 'layouts/map.html.twig' %}
 {% block title %}Редактировать анкету - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block body %}
 
@@ -56,6 +56,43 @@
                                         <p class="required">Адрес</p>
                                         {{ form_row(form.address) }}
                                     </div>
+                                </div>
+
+
+                                <div class="single-map" style="min-width: 640px;">
+                                    <div id="map" style="height: 480px; width: 100%;"></div>
+                                    <script type="text/javascript">
+                                        var map = L.map( 'map', {
+                                            center: [{{ lat }}, {{ lng }}],
+                                            zoom: 11,
+                                        });
+
+                                        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                                            subdomains: ['a','b','c']
+                                        }).addTo(map);
+
+                                        var marks = [
+                                            {% if worksheet.city is not null %}
+                                            {% set description = '' %}
+                                            {% if worksheet.description %}
+                                            {% set description = worksheet.description|striptags|u.truncate(50,  '...')  %}
+                                            {% endif %}
+                                            {% if worksheet.latitude and worksheet.longitude %}
+                                            { text: '<h4>{{ worksheet.name}}</h4> <br /> Разместил(а): {{ worksheet.user }}  <img class="rounded map-img" src="{{ asset('uploads/files/' ~ worksheet.user.avatar) }}" width="50" height="50"/> Стоимость:{{ worksheet.payment }} <br /><a href="{{ path('app_detail_job', { id: worksheet.id}) }}">Подробнее ... </a>', latlng: [{{ worksheet.latitude }}, {{ worksheet.longitude }}], },
+                                            {% endif %}
+                                            {% endif %}
+                                        ];
+                                        for(var i = 0; i<=marks.length; i++) {
+                                            L.marker(marks[i].latlng)
+                                                .bindPopup(marks[i].text, {
+                                                    direction: 'top',
+                                                    sticky: false,
+                                                    offset: [0, -15],
+                                                })
+                                                .addTo(map);
+                                        }
+                                    </script>
                                 </div>
 
                                 <div class="abouts_creating_form grid_creating_form">

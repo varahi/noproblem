@@ -10,7 +10,7 @@
                 <a href="" class="nuxt-link-active" >Анкеты</a>
             </div>
             <div class="choose">
-                <p><a href="{{ path('app_all_jobs') }}" class="title-link">Все анкеты:</a></p>
+                <p><a href="{{ path('app_all_workers') }}" class="title-link">Все анкеты:</a></p>
                 {% include 'partials/pages/_categories.html.twig' with {'workers': 1} %}
             </div>
             <div class="mains">
@@ -39,9 +39,7 @@
 
                     <div id="map" style="height: 300px;"></div>
                     {% include 'partials/pages/script/_map_script_workers.html.twig' %}
-                    <div class="open_map" id="changeSize">Раскрыть карту</div>
-{#                    <div id="map" style="width: 100%; height: 300px;"></div>#}
-{#                    <div class="open_map" id="changeSize">Раскрыть карту</div>#}
+                    <div class="open_map" onClick="changeHeight();">Раскрыть карту</div>
                     <div class="large fon">
                         <div class="in" >
                             {% include 'partials/_message.html.twig' %}

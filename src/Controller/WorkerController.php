@@ -7,6 +7,7 @@ use App\Controller\Traits\DataTrait;
 use App\Controller\Traits\JobTrait;
 use App\Controller\Traits\MapTrait;
 use App\Entity\Worksheet;
+use App\Entity\City;
 use App\Form\Worksheet\WorksheetFormType;
 use App\Repository\BusynessRepository;
 use App\Repository\CategoryRepository;
@@ -175,6 +176,7 @@ class WorkerController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted()) {
+                $this->setCoordsByAddress($cityRepository, $worksheet);
                 $this->updateFields(
                     $request,
                     $form,
@@ -277,6 +279,47 @@ class WorkerController extends AbstractController
         $entityManager->flush();
     }
 
+    private function setCoordsByAddress(
+        CityRepository $cityRepository,
+        Worksheet $worksheet
+    ) {
+        if (isset($_POST['worksheet_form']['address']) && $_POST['worksheet_form']['address'] !=='') {
+            $post = $_POST['worksheet_form'];
+            $address = $post['address'];
+            $address = str_replace(" ", "+", $address);
+            $city = $cityRepository->findOneBy(['name' => $post['city']]);
+
+            if ($city instanceof City) {
+                // Serach by address
+                $urlRequest = 'https://nominatim.openstreetmap.org/search.php?q='.$address.'+'.$city->getName().'&countrycodes=ru&limit=1&format=jsonv2';
+
+                // Create a stream
+                $opts = array('http'=>array('header'=>"User-Agent: StevesCleverAddressScript 3.7.6\r\n"));
+                $context = stream_context_create($opts);
+
+                // Open the file using the HTTP headers set above
+                $data = file_get_contents($urlRequest, false, $context);
+                $json = json_decode($data);
+                foreach ($json as $data) {
+                    $lat = $data->lat;
+                    $lon = $data->lon;
+                }
+
+                if (isset($lat) && isset($lon)) {
+                    $worksheet->setLatitude($lat);
+                    $worksheet->setLongitude($lon);
+                } else {
+                    $worksheet->setLatitude($city->getLatitude());
+                    $worksheet->setLongitude($city->getLongitude());
+                }
+
+                $entityManager = $this->doctrine->getManager();
+                $entityManager->persist($worksheet);
+                $entityManager->flush();
+            }
+        }
+    }
+
     /**
      *
      * @IsGranted("ROLE_CUSTOMER")
@@ -350,7 +393,16 @@ class WorkerController extends AbstractController
                     $busynessArr = null;
                 }
 
+                if ($worksheet->getLongitude() !='' && $worksheet->getLatitude() !=='') {
+                    $lat = $worksheet->getLatitude();
+                    $lng = $worksheet->getLongitude();
+                } else {
+                    $lat = $worksheet->getCity()->getLatitude();
+                    $lng = $worksheet->getCity()->getLongitude();
+                }
+
                 if ($form->isSubmitted()) {
+                    $this->setCoordsByAddress($cityRepository, $worksheet);
                     $this->updateFields(
                         $request,
                         $form,
@@ -381,6 +433,8 @@ class WorkerController extends AbstractController
                     'form' => $form->createView(),
                     'worksheet' => $worksheet,
                     'cityName' => $this->sessionService->getCity(),
+                    'lat' => $lat,
+                    'lng' => $lng,
                     'ticketForm' => $this->modalForms->ticketForm($request)->createView()
                 ]));
             } else {
@@ -490,6 +544,8 @@ class WorkerController extends AbstractController
                 'featuredProfiles' => $featuredProfiles,
                 //'form' => $form->createView(),
                 'cityName' => $this->sessionService->getCity(),
+                'lat' => $this->getLatArr($worksheets),
+                'lng' => $this->getLngArr($worksheets),
                 'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             ]));
         } else {
