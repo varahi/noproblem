@@ -20,21 +20,19 @@
                 <div class="in_account">
                     {% include 'partials/_message.html.twig' %}
                     <h2>Подтвердите ваш номер</h2>
-                    <p style="text-align: center">Подтвердите ваш номер введя код из смс сообщения</p>
-
-                    <form name="verify_sms_form" method="post" class="form-std form-std-custom" autocomplete="off">
-                        <div class="form-group grig-group">
-                            <div>
-                                <label for="edit_profile_form_email">SMS код</label>
-                                <input type="number" id="edit_profile_form_email" name="verify_sms_form[code]" required>
-                                <br /><br />
-                                <div class="btn_try _btn_try_custom">
-                                    <button type="submit" class="btn btn-success">Отправить</button>
-                                </div>
+                    <div class="reset-form-content">
+                        <form name="verify_sms_form" method="post" class="form-std form-std-custom" autocomplete="off" action="{{ path('app_sms_verify_process') }}">
+                            <input type="number" name="verify_sms_form[code]" required="required">
+                            <input type="hidden" name="verify_sms_form[smsCode]" value="{{ smsCode }}">
+                            <input type="hidden" name="verify_sms_form[user]" value="{{ user.id }}">
+                            <div style="margin-bottom: 20px;">
+                                <small>Подтвердите ваш номер введя код из смс сообщения.</small>
                             </div>
-                        </div>
-                    </form>
-
+                            <div class="btn_try btn_try_custom">
+                                <button type="submit" class="btn btn-success">Отправить</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

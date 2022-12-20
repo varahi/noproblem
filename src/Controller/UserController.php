@@ -540,14 +540,44 @@ class UserController extends AbstractController
 
     /**
      *
+     * @Route("/sms-verify-process", name="app_sms_verify_process", methods={"POST"})
+     */
+    public function smsVerifyProcess(
+        UserRepository $userRepository,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier
+    ) {
+        $post = $_POST['verify_sms_form'];
+        $user = $userRepository->findOneBy(['id' => $post['user']]);
+        if ($_POST && $user instanceof User) {
+            if ($post['code'] == $post['smsCode']) {
+                $user->setPhoneVerified(true);
+                $entityManager = $this->doctrine->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                $message = $translator->trans('Phone verified', array(), 'flash');
+                $notifier->send(new Notification($message, ['browser']));
+                return $this->redirectToRoute("app_lk_customer");
+            } else {
+                $message = $translator->trans('Phone verified', array(), 'flash');
+                $notifier->send(new Notification($message, ['browser']));
+                return $this->redirectToRoute("app_lk_customer");
+            }
+        }
+    }
+
+    /**
+     *
      * @Route("/sms-verify/user-{id}", name="app_sms_verify")
      */
     public function smsVerify(
-        Request $request,
         User $user,
         TranslatorInterface $translator,
         NotifierInterface $notifier
-    ): Response {
+    ) {
+
+        // Generate random sms code
         $smsCode = "";
         $ji = '0123456789'; #The string can be taken as a subscript
         do {
@@ -556,81 +586,49 @@ class UserController extends AbstractController
             }
         } while (false);
 
-        if ($user->getPhone() !=='') {
-            $smsTel = preg_replace("/[^0-9]/", '', $user->getPhone());
-            $url = 'https://sms.ru/sms/send?api_id='.$this->smsApiKey.'&to='.$smsTel.'&msg=' . $smsCode . '&json=1';
-            $body = file_get_contents($url);
-            $json = json_decode($body);
-
-            // Get json from sms.ru
-            if ($json) {
-                if ($json->status == "OK") {
-                    foreach ($json->sms as $phone => $data) {
-                        if ($data->status == "OK") {
-
-                            //echo "Код на номер $phone УСПЕШНО ОТПРАВЛЕН. ";
-                            $message = $translator->trans('Enter sms code', array(), 'flash');
-                            $notifier->send(new Notification($message, ['browser']));
-                        //$referer = $request->headers->get('referer');
-                            //return new RedirectResponse($referer);
-                        } else { // Ошибка в отправке
-                            //echo "Код на номер $phone НЕ ОТПРАВЛЕН. $data->status_text. ";
-                            $message = $translator->trans('Code not sended', array(), 'flash');
-                            $notifier->send(new Notification($message, ['browser']));
-                            return $this->redirectToRoute("app_lk_customer");
-                        }
-                    }
-                } else {
-                    //echo "Запрос не выполнился: $json->status_code. ";
-                    $message = $translator->trans('Code not executed', array(), 'flash');
-                    $notifier->send(new Notification($message, ['browser']));
-                    return $this->redirectToRoute("app_lk_customer");
-                }
-            } else {
-                //echo "Запрос не выполнился. Не удалось установить связь с сервером. ";
-                $message = $translator->trans('Cant connect with server', array(), 'flash');
-                return $this->redirectToRoute("app_lk_customer");
-            }
-
-            // Enter and check post
-            if ($_POST) {
-                file_put_contents('verify_sms_form.txt', $_POST['verify_sms_form']['code'] . PHP_EOL, FILE_APPEND|LOCK_EX);
-                file_put_contents('smsCode.txt', $smsCode . PHP_EOL, FILE_APPEND|LOCK_EX);
-
-                $user->setSmsVerified(true);
-                $entityManager = $this->doctrine->getManager();
-                $entityManager->persist($user);
-                $entityManager->flush();
-
-                $message = $translator->trans('Phone verified', array(), 'flash');
-                $notifier->send(new Notification($message, ['browser']));
-                return $this->redirectToRoute("app_lk_customer");
-
-                /*                if ($_POST['verify_sms_form']['code'] == $smsCode) {
-                                    $user->setSmsVerified(true);
-                                    $entityManager = $this->doctrine->getManager();
-                                    $entityManager->persist($user);
-                                    $entityManager->flush();
-
-                                    $message = $translator->trans('Phone verified', array(), 'flash');
-                                    $notifier->send(new Notification($message, ['browser']));
-                                    return $this->redirectToRoute("app_lk_customer");
-                                } else {
-                                    $message = $translator->trans('Incorrect code', array(), 'flash');
-                                    $notifier->send(new Notification($message, ['browser']));
-                                    //return $this->redirectToRoute("app_lk_customer");
-                                    $referer = $request->headers->get('referer');
-                                    return new RedirectResponse($referer);
-                                }*/
-            }
-        } else {
+        if ($user->getPhone() == null) {
             $message = $translator->trans('Please fill the phone number', array(), 'flash');
             $notifier->send(new Notification($message, ['browser']));
             return $this->redirectToRoute("app_lk_customer");
         }
 
-        return new Response($this->twig->render('user/sms_verify.html.twig', [
-            'user' => $user,
-        ]));
+        // Normalize phone number
+        $smsTel = preg_replace("/[^0-9]/", '', $user->getPhone());
+        // Send request to sever to get sms
+        $url = 'https://sms.ru/sms/send?api_id='.$this->smsApiKey.'&to='.$smsTel.'&msg=' . $smsCode . '&json=1';
+        $body = file_get_contents($url);
+        $json = json_decode($body);
+
+        // Get json from sms.ru
+        if ($json) {
+            if ($json->status == "OK") {
+                foreach ($json->sms as $phone => $data) {
+                    if ($data->status == "OK") {
+                        //echo "Код на номер $phone УСПЕШНО ОТПРАВЛЕН. ";
+                        $message = $translator->trans('Enter sms code', array(), 'flash');
+                        $notifier->send(new Notification($message, ['browser']));
+
+                        return new Response($this->twig->render('user/sms_verify.html.twig', [
+                            'user' => $user,
+                            'smsCode' => $smsCode
+                        ]));
+                    } else { // Ошибка в отправке
+                        //echo "Код на номер $phone НЕ ОТПРАВЛЕН. $data->status_text. ";
+                        $message = $translator->trans('Code not sended', array(), 'flash');
+                        $notifier->send(new Notification($message, ['browser']));
+                        return $this->redirectToRoute("app_lk_customer");
+                    }
+                }
+            } else {
+                //echo "Запрос не выполнился: $json->status_code. ";
+                $message = $translator->trans('Code not executed', array(), 'flash');
+                $notifier->send(new Notification($message, ['browser']));
+                return $this->redirectToRoute("app_lk_customer");
+            }
+        } else {
+            //echo "Запрос не выполнился. Не удалось установить связь с сервером. ";
+            $message = $translator->trans('Cant connect with server', array(), 'flash');
+            return $this->redirectToRoute("app_lk_customer");
+        }
     }
 }

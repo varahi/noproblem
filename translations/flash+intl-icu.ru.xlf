@@ -76,7 +76,7 @@
       </trans-unit>
       <trans-unit id="Code not sended" resname="Code not sended">
         <source>Code not sended</source>
-        <target>Код отправлен</target>
+        <target>Код не отправлен, попробуйте еще раз</target>
       </trans-unit>
       <trans-unit id="Code not executed" resname="Code not executed">
         <source>Code not executed</source>
