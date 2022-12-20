@@ -1,0 +1,65 @@
+{% block head %}
+  <title>Выберите способ оплаты</title>
+  <link rel="stylesheet" href="{{asset('assets/css/style.css')}} "/>
+
+  <style>
+    @font-face {
+      font-family: futura;
+      /* Имя шрифта */
+      src: url({{asset('assets/fonts/FuturaPT.woff')}});
+      /* Путь к файлу со шрифтом */
+    }
+    body {
+      align-items: center;
+      font-family: 'futura';
+      text-align: center;
+    }
+    a {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      border-color: black;
+      border-width: 1px;
+      text-decoration: underline;
+    }
+    h3 {
+      font-size: xx-large;
+    }
+  </style>
+{% endblock %}
+{% block body %}
+
+  <h2>Выберите способ оплаты:</h2>
+  <a href="{{ app.request.getRequestUri() }}&method=bank_card">
+    <h3>Банковской картой</h3>
+  </a>
+  <br/>
+  <a href="{{ app.request.getRequestUri() }}&method=sberbank">
+    <h3>SberPay</h3>
+  </a>
+  <br/>
+  <a href="{{ app.request.getRequestUri() }}&method=yoo_money">
+    <h3>YooMoney</h3>
+  </a>
+  <br/>
+  <a href="{{ app.request.getRequestUri() }}&method=qiwi">
+    <h3>Qiwi</h3>
+  </a>
+  <br/>
+  <a href="{{ app.request.getRequestUri() }}&method=alfabank">
+    <h3>Альфа-Клик</h3>
+  </a>
+  <br/>
+  <a href="{{ app.request.getRequestUri() }}&method=tinkoff_bank">
+    <h3>Тинькофф</h3>
+  </a>
+  <br/>
+  <a href="{{ app.request.getRequestUri() }}&method=cash">
+    <h3>Наличные</h3>
+  </a>
+  <br/>
+
+  {# <a href="{{ app.request.getRequestUri() }}&bank=yookassa">
+    <img src="https://belimgroup.ru/wp-content/uploads/2021/06/logo-Ju.png" alt="YooKassa">
+  </a> #}
+{% endblock %}
