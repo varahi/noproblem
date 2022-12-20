@@ -393,6 +393,14 @@ class WorkerController extends AbstractController
                     $busynessArr = null;
                 }
 
+                if ($worksheet->getLongitude() !='' && $worksheet->getLatitude() !=='') {
+                    $lat = $worksheet->getLatitude();
+                    $lng = $worksheet->getLongitude();
+                } else {
+                    $lat = $worksheet->getCity()->getLatitude();
+                    $lng = $worksheet->getCity()->getLongitude();
+                }
+
                 if ($form->isSubmitted()) {
                     $this->setCoordsByAddress($cityRepository, $worksheet);
                     $this->updateFields(
@@ -425,6 +433,8 @@ class WorkerController extends AbstractController
                     'form' => $form->createView(),
                     'worksheet' => $worksheet,
                     'cityName' => $this->sessionService->getCity(),
+                    'lat' => $lat,
+                    'lng' => $lng,
                     'ticketForm' => $this->modalForms->ticketForm($request)->createView()
                 ]));
             } else {

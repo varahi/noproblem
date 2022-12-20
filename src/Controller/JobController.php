@@ -389,6 +389,14 @@ class JobController extends AbstractController
                 ];
             }
 
+            if ($job->getLongitude() !=='' && $job->getLatitude() !=='') {
+                $lat = $job->getLatitude();
+                $lng = $job->getLongitude();
+            } else {
+                $lat = $job->getCity()->getLatitude();
+                $lng = $job->getCity()->getLongitude();
+            }
+
             $form->handleRequest($request);
             if ($form->isSubmitted()) {
 
@@ -434,6 +442,8 @@ class JobController extends AbstractController
                 'additionalArr' => $additionalArr,
                 'form' => $form->createView(),
                 'cityName' => $this->sessionService->getCity(),
+                'lat' => $lat,
+                'lng' => $lng,
                 'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             ]);
         } else {

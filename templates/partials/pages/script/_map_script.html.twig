@@ -32,24 +32,10 @@
             .addTo(map);
     }
 
-    //var changeSizeButton = document.getElementById('changeSize');
-    //changeSizeButton.onclick = function() {
-        //alert('asdas');
-        // var mapDiv = document.getElementById('map');
-        // mapDiv.style.height = (enabled ? '300' : '600') + 'px';
-        // map.updateSize();
-        // $("#changeSize").css("display", "none");
-    //}
-
-    // var changeSizeButton = document.getElementById('changeSize');
-    //
-    // changeSizeButton.onclick = function() {
-    //     alert('asdasd');
-    //     var mapDiv = document.getElementById('map');
-    //     mapDiv.style.height = (enabled ? '200' : '600') + 'px';
-    //     // обновление карты
-    //     map.invalidateSize();
-    //     $("#changeSize").css("display", "none");
-    // }
+    // ToDo: set map update size
+    function changeHeight() {
+        document.getElementById('map').style.height = "600px";
+        map.updateSize();
+    }
 </script>
 
