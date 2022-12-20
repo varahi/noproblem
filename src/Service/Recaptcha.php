@@ -4,15 +4,11 @@ namespace App\Service;
 
 class Recaptcha
 {
-    //private $recaptchaSiteKey;
-
     private $recaptchaSecretKey;
 
     public function __construct(
-        //string  $recaptchaSiteKey,
         string  $recaptchaSecretKey
     ) {
-        //$this->recaptchaSiteKey = $recaptchaSiteKey;
         $this->recaptchaSecretKey = $recaptchaSecretKey;
     }
 

@@ -53,7 +53,7 @@ class AcquiringController extends AbstractController
      */
     private $defailtDomain;
 
-    const YOOKASSA_METHODS = [
+    public const YOOKASSA_METHODS = [
         'bank_card',
         'sberbank',
         'yoo_money',
@@ -186,7 +186,6 @@ class AcquiringController extends AbstractController
         TranslatorInterface $translator,
         NotifierInterface $notifier
     ) {
-
         $client = new Client($this->acq_array_sber);
         $entityManager = $this->doctrine->getManager();
 
