@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Controller\Traits\AbstractTrait;
 use App\Controller\Traits\DataTrait;
 use App\Controller\Traits\JobTrait;
-use App\Controller\Traits\MapTrait;
 use App\Entity\City;
 use App\Entity\Job;
 use App\Entity\Worksheet;
@@ -21,6 +20,7 @@ use App\Repository\DistrictRepository;
 use App\Repository\JobRepository;
 use App\Repository\TaskRepository;
 use App\Repository\WorksheetRepository;
+use App\Service\CoordinateService;
 use App\Service\FileUploader;
 use App\Service\ModalForms;
 use App\Service\SessionService;
@@ -47,8 +47,6 @@ class JobController extends AbstractController
 
     use AbstractTrait;
 
-    use MapTrait;
-
     public const ROLE_EMPLOYEE = 'ROLE_EMPLOYEE';
 
     public const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
@@ -66,7 +64,8 @@ class JobController extends AbstractController
         ModalForms $modalForms,
         ImageOptimizer $imageOptimizer,
         string $targetDirectory,
-        SessionService $sessionService
+        SessionService $sessionService,
+        CoordinateService $coordinateService
     ) {
         $this->security = $security;
         $this->twig = $twig;
@@ -75,6 +74,7 @@ class JobController extends AbstractController
         $this->imageOptimizer = $imageOptimizer;
         $this->targetDirectory = $targetDirectory;
         $this->sessionService = $sessionService;
+        $this->coordinateService = $coordinateService;
     }
 
     /**
@@ -152,8 +152,8 @@ class JobController extends AbstractController
             'featuredJobs' => $featuredJobs,
             'slug' => $slug,
             'cityName' => $cityName,
-            'lat' => $this->getLatArr($jobs),
-            'lng' => $this->getLngArr($jobs),
+            'lat' => $this->coordinateService->getLatArr($jobs, $city),
+            'lng' => $this->coordinateService->getLngArr($jobs, $city),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
@@ -236,9 +236,6 @@ class JobController extends AbstractController
                 }
                 $job->setCity($city);
 
-                // Set coordinates by address
-                $this->setCoordsByAddress($cityRepository, $job);
-
                 // Update fields
                 $this->updateFields(
                     $request,
@@ -253,6 +250,9 @@ class JobController extends AbstractController
                     $busynessRepository,
                     $fileUploader
                 );
+
+                // Set coordinates after object saved
+                $this->coordinateService->setCoordinates($job);
 
                 $message = $translator->trans('New job created', array(), 'flash');
                 $notifier->send(new Notification($message, ['browser']));
@@ -400,9 +400,6 @@ class JobController extends AbstractController
             $form->handleRequest($request);
             if ($form->isSubmitted()) {
 
-                // Set coordinates by address
-                $this->setCoordsByAddress($cityRepository, $job);
-
                 // Update fields
                 $this->updateFields(
                     $request,
@@ -417,6 +414,9 @@ class JobController extends AbstractController
                     $busynessRepository,
                     $fileUploader
                 );
+
+                // Set coordinates after object saved
+                $this->coordinateService->setCoordinates($job);
 
                 $message = $translator->trans('Job updated', array(), 'flash');
                 $notifier->send(new Notification($message, ['browser']));
@@ -444,54 +444,13 @@ class JobController extends AbstractController
                 'cityName' => $this->sessionService->getCity(),
                 'lat' => $lat,
                 'lng' => $lng,
+
                 'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             ]);
         } else {
             $message = $translator->trans('Please login', array(), 'flash');
             $notifier->send(new Notification($message, ['browser']));
             return $this->redirectToRoute("app_main");
-        }
-    }
-
-    private function setCoordsByAddress(
-        CityRepository $cityRepository,
-        Job $job
-    ) {
-        // Set coordinates by address
-        if (isset($_POST['job_form']['address']) && $_POST['job_form']['address'] !=='') {
-            $post = $_POST['job_form'];
-            $address = $post['address'];
-            $address = str_replace(" ", "+", $address);
-            $city = $cityRepository->findOneBy(['name' => $post['city']]);
-
-            if ($city instanceof City) {
-                // Serach by address
-                $urlRequest = 'https://nominatim.openstreetmap.org/search.php?q='.$address.'+'.$city->getName().'&countrycodes=ru&limit=1&format=jsonv2';
-
-                // Create a stream
-                $opts = array('http'=>array('header'=>"User-Agent: StevesCleverAddressScript 3.7.6\r\n"));
-                $context = stream_context_create($opts);
-
-                // Open the file using the HTTP headers set above
-                $data = file_get_contents($urlRequest, false, $context);
-                $json = json_decode($data);
-                foreach ($json as $data) {
-                    $lat = $data->lat;
-                    $lon = $data->lon;
-                }
-
-                if (isset($lat) && isset($lon)) {
-                    $job->setLatitude($lat);
-                    $job->setLongitude($lon);
-                } else {
-                    $job->setLatitude($city->getLatitude());
-                    $job->setLongitude($city->getLongitude());
-                }
-
-                $entityManager = $this->doctrine->getManager();
-                $entityManager->persist($job);
-                $entityManager->flush();
-            }
         }
     }
 
@@ -649,7 +608,7 @@ class JobController extends AbstractController
         }
 
         // Set coords for worksheet
-        $this->setCoordsByAddress($cityRepository, $job);
+        $this->coordinateService->setCoordinates($job);
 
         $featuredJobs = $this->getFeaturedJobs($user);
 

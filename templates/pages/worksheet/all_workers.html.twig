@@ -36,19 +36,18 @@
                     <div class="title" >
                         <h2>Все анкеты {% if category is not null %}- {{ category }} {% endif %}</h2>
                     </div>
-
                     <div id="map" style="height: 300px;"></div>
                     {% include 'partials/pages/script/_map_script_workers.html.twig' %}
                     <div class="open_map" onClick="changeHeight();" id="open-map">Раскрыть карту</div>
                     <div class="large fon">
                         <div class="in" >
                             {% include 'partials/_message.html.twig' %}
-                            {% if worksheets is not null %}
+                            {% if worksheets|length > 0 %}
                                 {% for job in worksheets %}
                                     {% include 'partials/pages/worksheet/_list_item.html.twig' %}
                                 {% endfor %}
                             {% else %}
-                                <p>По данному запросу анкет не найдено</p>
+                                <p>По вашему запросу анкет не найдено</p>
                             {% endif %}
                         </div>
                     </div>

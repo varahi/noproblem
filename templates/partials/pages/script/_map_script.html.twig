@@ -17,7 +17,7 @@
                     {% set description = job.description|striptags|u.truncate(50,  '...')  %}
                 {% endif %}
                     {% if job.latitude and job.longitude %}
-                        { text: '<h4>{{ job.name}}</h4> {{ description|raw }} <br /> Разместил(а): {{ job.owner }}  <img class="rounded map-img" src="{{ asset('uploads/files/' ~ job.owner.avatar) }}" width="50" height="50"/> Стоимость:{{ job.payment }} <br /><a href="{{ path('app_detail_job', { id: job.id}) }}">Подробнее ... </a>', latlng: [{{ job.latitude }}, {{ job.longitude }}], },
+                        { text: '<h4>{{ job.name}}</h4> Разместил(а): {{ job.owner }}  <img class="rounded map-img" src="{{ asset('uploads/files/' ~ job.owner.avatar) }}" width="50" height="50"/> Стоимость:{{ job.payment }} <br /><a href="{{ path('app_detail_job', { id: job.id}) }}">Подробнее ... </a>', latlng: [{{ job.latitude }}, {{ job.longitude }}], },
                     {% endif %}
             {% endif %}
         {% endfor %}

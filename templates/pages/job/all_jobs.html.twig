@@ -32,12 +32,12 @@
                     <div class="open_map" onClick="changeHeight();" id="open-map">Раскрыть карту</div>
                     <div class="large fon">
                         <div class="in" >
-                            {% if jobs is not null %}
+                            {% if jobs|length > 0 %}
                                 {% for job in jobs %}
                                     {% include 'partials/pages/job/_list_job_item.html.twig' %}
                                 {% endfor %}
                             {% else %}
-                                <p>По данному запросу анкет не найдено</p>
+                                <p>По вашему запросу вакансий не найдено</p>
                             {% endif %}
                             <div class="pagination">
                                 {{ knp_pagination_render(jobs) }}
