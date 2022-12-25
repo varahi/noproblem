@@ -30,20 +30,20 @@ class Citizen
     private $jobs;
 
     /**
-     * @ORM\OneToMany(targetEntity=Worksheet::class, mappedBy="citizen")
-     */
-    private $worksheets;
-
-    /**
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="citizen")
      */
     private $users;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Worksheet::class, mappedBy="citizen")
+     */
+    private $worksheets;
+
     public function __construct()
     {
         $this->jobs = new ArrayCollection();
-        $this->worksheets = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->worksheets = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -99,36 +99,6 @@ class Citizen
     }
 
     /**
-     * @return Collection<int, Worksheet>
-     */
-    public function getWorksheets(): Collection
-    {
-        return $this->worksheets;
-    }
-
-    public function addWorksheet(Worksheet $worksheet): self
-    {
-        if (!$this->worksheets->contains($worksheet)) {
-            $this->worksheets[] = $worksheet;
-            $worksheet->setCitizen($this);
-        }
-
-        return $this;
-    }
-
-    public function removeWorksheet(Worksheet $worksheet): self
-    {
-        if ($this->worksheets->removeElement($worksheet)) {
-            // set the owning side to null (unless already changed)
-            if ($worksheet->getCitizen() === $this) {
-                $worksheet->setCitizen(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, User>
      */
     public function getUsers(): Collection
@@ -153,6 +123,33 @@ class Citizen
             if ($user->getCitizen() === $this) {
                 $user->setCitizen(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Worksheet>
+     */
+    public function getWorksheets(): Collection
+    {
+        return $this->worksheets;
+    }
+
+    public function addWorksheet(Worksheet $worksheet): self
+    {
+        if (!$this->worksheets->contains($worksheet)) {
+            $this->worksheets[] = $worksheet;
+            $worksheet->addCitizen($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWorksheet(Worksheet $worksheet): self
+    {
+        if ($this->worksheets->removeElement($worksheet)) {
+            $worksheet->removeCitizen($this);
         }
 
         return $this;

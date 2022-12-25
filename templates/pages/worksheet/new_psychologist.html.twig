@@ -1,0 +1,213 @@
+{% extends 'layouts/base.html.twig' %}
+{% block title %}Создать анкету - Онлайн-сервис по подбору домашнего персонала{% endblock %}
+{% block body %}
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
+
+    {% include 'partials/header.html.twig' %}
+
+    <div class=" content">
+        <div class="bread_personal_account">
+            <a href="{{ path('app_main') }}" class="nuxt-link-active">Главная</a>
+            <a href="{{ path('app_lk') }}">/ Личный кабинет</a>
+            <a>/ Создать анкету</a>
+        </div>
+
+        <div class="large_creating_form fon">
+            <div class="in_creating_form">
+                <h1>Анкета психолога</h1>
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                {#                {{ form_widget(form) }}#}
+
+
+                <div class="_but_creating_form">
+                    <label> <p class="required">Фотография:</p>
+                        {{ form_row(form.image) }}
+                    </label>
+                </div><br />
+
+                <div class="abouts_creating_form grid_creating_form">
+                    <div class="dom_creating_form">
+                        <p class="required">ФИО контактного лица</p>
+                        {{ form_row(form.name) }}
+                    </div>
+                    <div class="dom_creating_form">
+                        <p class="required">Возраст</p>
+                        {{ form_row(form.age) }}
+                    </div>
+                </div>
+
+                <div class="abouts_creating_form grid_creating_form">
+                    <div class="dom_creating_form">
+                        <p class="required">Город</p>
+                        <input type="text" id="worksheet_form" name="worksheet_form[city]" required="required" placeholder="Ваш город" class="form-control">
+                    </div>
+                    <div class="dom_creating_form">
+                        <p class="required">Район</p>
+                        <input type="text" id="worksheet_form" name="worksheet_form[district]" required="required" placeholder="Район" class="form-control">
+                    </div>
+                </div>
+
+
+                <div class="abouts_creating_form">
+                    <div class="date_creating_form">
+                        <div class="but_creating_form">
+                            <label for="checkbox" class="work_start_now">Свободен для работы (если выбрать кнопку занят, то Ваша анкета не будет видна в поиске)
+                                {{ form_widget(form.isFree) }}
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="abouts_creating_form grid_creating_form">
+                    <div class="dom_creating_form">
+                        <p class="required">Образование</p>
+                        {{ form_row(form.additionalEducation) }}
+                    </div>
+
+                    <div class="dom_creating_form">
+                        <p class="required">Годы практики</p>
+                        {{ form_row(form.yearsOfPractice) }}
+                    </div>
+                </div>
+
+                <br /><br />
+
+                <div class="abouts_creating_form">
+                    <p>Оплата</p>
+                    <div class="ques_creating_form">
+                        {{ form_row(form.payment) }}<br />
+                        <div class="but_creating_form">
+                            <label for="checkbox" class="_work_contract_ques">Почасовая<br />
+                                {{ form_widget(form.paymentByHour) }}
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="but_creating_form">
+                            <label for="checkbox" class="_work_contract_ques">Помесячная<br />
+                                {{ form_widget(form.paymentByMonth) }}
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="abouts_creating_form">
+                    <p>Могу провести бесплатную демо сессию </p>
+                    <div class="date_creating_form">
+                        <div class="but_creating_form">
+                            <label for="checkbox" class="work_start_now">Да/Нет
+                                {{ form_widget(form.isDemo) }}
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="but_creating_form">
+                    <label>
+                        <p class="required"> Какие методы используете:</p>
+                        {{ form_widget(form.tasks) }}
+                    </label>
+                </div><br />
+
+                <div class="abouts_creating_form grid_creating_form">
+                    <div class="dom_creating_form">
+                        <p class="required">passportSeries</p>
+                        {{ form_widget(form.passportSeries) }}
+                    </div>
+                    <div class="dom_creating_form">
+                        <p class="required">passportNumber</p>
+                        {{ form_widget(form.passportNumber) }}
+                    </div>
+                </div>
+
+                <div class="abouts_creating_form grid_creating_form">
+                    <div class="dom_creating_form">
+                        <p class="required">passportPlaceOfIssue</p>
+                        {{ form_widget(form.passportPlaceOfIssue) }}
+                    </div>
+                    <div class="dom_creating_form">
+                        <p class="required">passportIssuingAuthority</p>
+                        {{ form_widget(form.passportIssuingAuthority) }}
+                    </div>
+                </div>
+
+                <div class="date_creating_form">
+                    <p class="required">passportDateOfIssue</p>
+                    {{ form_widget(form.passportDateOfIssue) }}
+                </div>
+
+                <div class="_but_creating_form">
+                    <label> <p class="required">Фотография паспорта:</p>
+                        {{ form_row(form.passportPhoto) }}
+                    </label>
+                </div><br />
+
+                <div class="but_creating_form send_message">
+                    <button type="submit">Отправить анкету</button>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        createDependableList ( '#worksheet_form_city', '#worksheet_form_district' );
+        $('#worksheet_form_city').change(function() {
+            $('#worksheet_form_district').prop('disabled', false);
+        });
+        function onlyOne(checkbox) {
+            var checkboxes = document.getElementsByName('worksheet_form[citizenship]')
+            checkboxes.forEach((item) => {
+                if (item !== checkbox) item.checked = false
+            })
+        }
+        function onlyOneAccommodation(checkbox) {
+            var checkboxes = document.getElementsByName('worksheet_form[accommodation]')
+            checkboxes.forEach((item) => {
+                if (item !== checkbox) item.checked = false
+            })
+        }
+        function onlyOneBusyness(checkbox) {
+            var checkboxes = document.getElementsByName('job_form[busyness]')
+            checkboxes.forEach((item) => {
+                if (item !== checkbox) item.checked = false
+            })
+        }
+
+        $( "#worksheet_form" ).autocomplete({
+            source: function( request, response ) {
+                $.ajax({
+                    url: "{{ path('api_cities') }}",
+                    dataType: "json",
+                    type: "POST",
+                    data: {
+                        maxRows: 15,
+                        name: request.term
+                    },
+                    success: function( data ) {
+                        response( $.map( data, function( item ) {
+                            return {
+                                label: item.name,
+                                lat: item.lat,
+                                lng: item.lng,
+                                district: item.district
+                            }
+                        }));
+                    }
+                });
+            },
+            minlength: 2
+        });
+    </script>
+
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}
+

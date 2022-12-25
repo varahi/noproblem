@@ -5,9 +5,14 @@ namespace App\Controller;
 use App\Controller\Traits\AbstractTrait;
 use App\Controller\Traits\DataTrait;
 use App\Controller\Traits\JobTrait;
+use App\Entity\Category;
 use App\Entity\Worksheet;
 use App\Entity\City;
 use App\Form\Worksheet\WorksheetFormType;
+use App\Form\Worksheet\WorksheetNannyFormType;
+use App\Form\Worksheet\WorksheetNurseFormType;
+use App\Form\Worksheet\WorksheetPsychologistFormType;
+use App\Form\Worksheet\WorksheetVolounteerFormType;
 use App\Repository\BusynessRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\CityRepository;
@@ -154,54 +159,155 @@ class WorkerController extends AbstractController
      */
     public function newWorksheet(
         Request $request,
-        TranslatorInterface $translator,
-        NotifierInterface $notifier,
-        ManagerRegistry $doctrine,
         CityRepository $cityRepository,
         DistrictRepository $districtRepository,
         TaskRepository $taskRepository,
         BusynessRepository $busynessRepository,
-        FileUploader $fileUploader
+        CategoryRepository $categoryRepository
     ): Response {
-        if ($this->isGranted(self::ROLE_CUSTOMER)) {
-            $user = $this->security->getUser();
-            $cities = $cityRepository->findLimitOrder('999', '0');
-            $districts = $districtRepository->findLimitOrder('999', '0');
-            $tasks = $taskRepository->findAllOrder(['id' => 'ASC']);
-            $busynessess = $busynessRepository->findAll();
+        $user = $this->security->getUser();
+        $cities = $cityRepository->findLimitOrder('999', '0');
+        $districts = $districtRepository->findLimitOrder('999', '0');
+        $tasks = $taskRepository->findAllOrder(['id' => 'ASC']);
+        $busynessess = $busynessRepository->findAll();
+        $categories = $categoryRepository->findAll();
+        $entityManager = $this->doctrine->getManager();
+
+        return $this->render('pages/worksheet/new.html.twig', [
+            'user' => $user,
+            'cities' => $cities,
+            'districts' => $districts,
+            'tasks' => $tasks,
+            'busynessess' => $busynessess,
+            'categories' => $categories,
+            'cityName' => $this->sessionService->getCity(),
+            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
+        ]);
+    }
+
+    /**
+     *
+     * @IsGranted("ROLE_CUSTOMER")
+     * @Route("/create-worksheet/category-{slug}", name="app_create_worksheet")
+     */
+    public function newWorksheetNurse(
+        Request $request,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier,
+        CityRepository $cityRepository,
+        DistrictRepository $districtRepository,
+        TaskRepository $taskRepository,
+        BusynessRepository $busynessRepository,
+        CategoryRepository $categoryRepository,
+        FileUploader $fileUploader,
+        Category $category
+    ): Response {
+        if (!$this->isGranted(self::ROLE_CUSTOMER)) {
+            $message = $translator->trans('Please login', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_main");
+        }
+
+        $user = $this->security->getUser();
+        $cities = $cityRepository->findLimitOrder('999', '0');
+        $districts = $districtRepository->findLimitOrder('999', '0');
+        $tasks = $taskRepository->findAllOrder(['id' => 'ASC']);
+        $busynessess = $busynessRepository->findAll();
+
+        $worksheet = new Worksheet();
+
+        if ($category->getId() == 1) {
+            $form = $this->createForm(WorksheetPsychologistFormType::class, $worksheet, [
+                'action' => $this->generateUrl('app_create_worksheet', ['slug' => $category->getSlug()]),
+                'categoryId' => $category->getId(),
+                'method' => 'POST'
+            ]);
+        } elseif ($category->getId() == 2) {
+            $form = $this->createForm(WorksheetVolounteerFormType::class, $worksheet, [
+                'action' => $this->generateUrl('app_create_worksheet', ['slug' => $category->getSlug()]),
+                'categoryId' => $category->getId(),
+                'method' => 'POST'
+            ]);
+        } elseif ($category->getId() == 3) {
+            $form = $this->createForm(WorksheetNannyFormType::class, $worksheet, [
+                'action' => $this->generateUrl('app_create_worksheet', ['slug' => $category->getSlug()]),
+                'categoryId' => $category->getId(),
+                'method' => 'POST'
+            ]);
+        } elseif ($category->getId() == 4) {
+            $form = $this->createForm(WorksheetNurseFormType::class, $worksheet, [
+                'action' => $this->generateUrl('app_create_worksheet', ['slug' => $category->getSlug()]),
+                'categoryId' => $category->getId(),
+                'method' => 'POST'
+            ]);
+        } else {
+            // Redirect
+        }
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            $this->updateFields(
+                $request,
+                $form,
+                $worksheet,
+                $cityRepository,
+                $districtRepository,
+                $taskRepository,
+                $fileUploader
+            );
+
+            $worksheet->setUser($user);
+            $worksheet->setHidden('0');
             $entityManager = $this->doctrine->getManager();
+            $entityManager->persist($worksheet);
+            $entityManager->flush();
 
-            $worksheet = new Worksheet();
-            $form = $this->createForm(WorksheetFormType::class, $worksheet);
-            $form->handleRequest($request);
+            // Set coordinates after object saved
+            $this->coordinateService->setCoordinates($worksheet);
 
-            if ($form->isSubmitted()) {
-                $this->updateFields(
-                    $request,
-                    $form,
-                    $worksheet,
-                    $cityRepository,
-                    $districtRepository,
-                    $taskRepository,
-                    $fileUploader
-                );
+            $message = $translator->trans('New worksheet created', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_new_worksheet");
+            //$referer = $request->headers->get('referer');
+            //return new RedirectResponse($referer);
+        }
 
-                $worksheet->setUser($user);
-                $worksheet->setHidden('0');
-                $entityManager = $doctrine->getManager();
-                $entityManager->persist($worksheet);
-                $entityManager->flush();
-
-                // Set coordinates after object saved
-                $this->coordinateService->setCoordinates($worksheet);
-
-                $message = $translator->trans('New worksheet created', array(), 'flash');
-                $notifier->send(new Notification($message, ['browser']));
-                $referer = $request->headers->get('referer');
-                return new RedirectResponse($referer);
-            }
-
-            return $this->render('pages/worksheet/new.html.twig', [
+        if ($category->getId() == 1) {
+            return $this->render('pages/worksheet/new_psychologist.html.twig', [
+                'user' => $user,
+                'form' => $form->createView(),
+                'cities' => $cities,
+                'districts' => $districts,
+                'tasks' => $tasks,
+                'busynessess' => $busynessess,
+                'cityName' => $this->sessionService->getCity(),
+                'ticketForm' => $this->modalForms->ticketForm($request)->createView()
+            ]);
+        } elseif ($category->getId() == 2) {
+            return $this->render('pages/worksheet/new_volunteer.html.twig', [
+                'user' => $user,
+                'form' => $form->createView(),
+                'cities' => $cities,
+                'districts' => $districts,
+                'tasks' => $tasks,
+                'busynessess' => $busynessess,
+                'cityName' => $this->sessionService->getCity(),
+                'ticketForm' => $this->modalForms->ticketForm($request)->createView()
+            ]);
+        } elseif ($category->getId() == 3) {
+            return $this->render('pages/worksheet/new_nanny.html.twig', [
+                'user' => $user,
+                'form' => $form->createView(),
+                'cities' => $cities,
+                'districts' => $districts,
+                'tasks' => $tasks,
+                'busynessess' => $busynessess,
+                'cityName' => $this->sessionService->getCity(),
+                'ticketForm' => $this->modalForms->ticketForm($request)->createView()
+            ]);
+        } elseif ($category->getId() == 4) {
+            return $this->render('pages/worksheet/new_nurse.html.twig', [
                 'user' => $user,
                 'form' => $form->createView(),
                 'cities' => $cities,
@@ -212,9 +318,7 @@ class WorkerController extends AbstractController
                 'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             ]);
         } else {
-            $message = $translator->trans('Please login', array(), 'flash');
-            $notifier->send(new Notification($message, ['browser']));
-            return $this->redirectToRoute("app_main");
+            // Redirect
         }
     }
 
@@ -275,6 +379,13 @@ class WorkerController extends AbstractController
         if ($imageFile) {
             $imageFileName = $fileUploader->upload($imageFile);
             $worksheet->setImage($imageFileName);
+        }
+
+        // Passport file upload
+        $passportPhoto = $form->get('passportPhoto')->getData();
+        if ($passportPhoto) {
+            $passportFileName = $fileUploader->upload($passportPhoto);
+            $worksheet->setPassportPhoto($passportFileName);
         }
 
         $entityManager->persist($worksheet);

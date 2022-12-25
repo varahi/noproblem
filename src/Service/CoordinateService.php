@@ -21,37 +21,39 @@ class CoordinateService extends AbstractController
     public function setCoordinates($item)
     {
         // Serach by address
-        $address = str_replace(" ", "+", $item->getAddress());
-        if ($item->getCity()) {
-            $urlRequest = 'https://nominatim.openstreetmap.org/search.php?q='.$address.'+'.$item->getCity()->getName().'&countrycodes=ru&limit=1&format=jsonv2';
-        } else {
-            $urlRequest = 'https://nominatim.openstreetmap.org/search.php?q='.$address.'+'.'&countrycodes=ru&limit=1&format=jsonv2';
+        if ($item->getAddress()) {
+            $address = str_replace(" ", "+", $item->getAddress());
+            if ($item->getCity()) {
+                $urlRequest = 'https://nominatim.openstreetmap.org/search.php?q='.$address.'+'.$item->getCity()->getName().'&countrycodes=ru&limit=1&format=jsonv2';
+            } else {
+                $urlRequest = 'https://nominatim.openstreetmap.org/search.php?q='.$address.'+'.'&countrycodes=ru&limit=1&format=jsonv2';
+            }
+
+            // Create a stream
+            $opts = array('http'=>array('header'=>"User-Agent: StevesCleverAddressScript 3.7.6\r\n"));
+            $context = stream_context_create($opts);
+
+            // Open the file using the HTTP headers set above
+            $data = file_get_contents($urlRequest, false, $context);
+
+            $json = json_decode($data);
+            foreach ($json as $data) {
+                $lat = $data->lat;
+                $lon = $data->lon;
+            }
+
+            if (isset($lat) && isset($lon)) {
+                $item->setLatitude($lat);
+                $item->setLongitude($lon);
+            } else {
+                $item->setLatitude($item->getCity()->getLatitude());
+                $item->setLongitude($item->getCity()->getLongitude());
+            }
+
+            $entityManager = $this->doctrine->getManager();
+            $entityManager->persist($item);
+            $entityManager->flush();
         }
-
-        // Create a stream
-        $opts = array('http'=>array('header'=>"User-Agent: StevesCleverAddressScript 3.7.6\r\n"));
-        $context = stream_context_create($opts);
-
-        // Open the file using the HTTP headers set above
-        $data = file_get_contents($urlRequest, false, $context);
-
-        $json = json_decode($data);
-        foreach ($json as $data) {
-            $lat = $data->lat;
-            $lon = $data->lon;
-        }
-
-        if (isset($lat) && isset($lon)) {
-            $item->setLatitude($lat);
-            $item->setLongitude($lon);
-        } else {
-            $item->setLatitude($item->getCity()->getLatitude());
-            $item->setLongitude($item->getCity()->getLongitude());
-        }
-
-        $entityManager = $this->doctrine->getManager();
-        $entityManager->persist($item);
-        $entityManager->flush();
     }
 
     /**

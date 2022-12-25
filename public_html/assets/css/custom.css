@@ -1098,3 +1098,8 @@ textarea {
 strike {
     font-size: 24px;
 }
+
+.abouts_creating_form input {
+    width: 100%;
+    max-width: 400px;
+}
