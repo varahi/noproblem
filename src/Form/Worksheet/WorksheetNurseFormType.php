@@ -215,7 +215,7 @@ class WorksheetNurseFormType extends AbstractType
                 'translation_domain' => 'forms',
             ])
 
-            ->add(
+/*            ->add(
                 'passportSeries',
                 TextType::class,
                 [
@@ -276,9 +276,9 @@ class WorksheetNurseFormType extends AbstractType
                     'label' => false,
                     'translation_domain' => 'forms',
                 ]
-            )
+            )*/
 
-            ->add('passportPhoto', FileType::class, [
+/*            ->add('passportPhoto', FileType::class, [
                 'required' => false,
                 'mapped' => false,
                 'constraints' => [
@@ -301,7 +301,7 @@ class WorksheetNurseFormType extends AbstractType
                 ],
                 'label' => false,
                 'translation_domain' => 'forms',
-            ])
+            ])*/
             ->add(
                 'clientAge',
                 ChoiceType::class,
@@ -320,35 +320,6 @@ class WorksheetNurseFormType extends AbstractType
                 ]
             )
 
-
-/*            ->add('name')
-            ->add('payment')
-            ->add('startNow')
-            ->add('startDate')
-            ->add('age')
-            ->add('description')
-            ->add('schedule')
-            ->add('preferredContactMethod')
-            ->add('created')
-            ->add('latitude')
-            ->add('longitude')
-            ->add('hidden')
-            ->add('address')
-            ->add('contactFullName')
-            ->add('paymentByAgreement')
-            ->add('reviews')
-            ->add('anotherTask')
-            ->add('image')
-            ->add('city')
-            ->add('district')
-            ->add('education')
-            ->add('experience')
-            ->add('citizen')
-            ->add('additional')
-            ->add('user')
-            ->add('category')
-            ->add('tasks')
-            ->add('featuredUsers')*/
         ;
     }
 

@@ -54,6 +54,14 @@ class WorkerController extends AbstractController
 
     private $security;
 
+    public const CATEGORY_PSYCHOLOGIST = '1';
+
+    public const CATEGORY_VOLOUNTEER = '2';
+
+    public const CATEGORY_NANNY = '3';
+
+    public const CATEGORY_NURSE = '4';
+
     public const LIMIT_PER_PAGE = '10';
 
     /**
@@ -216,25 +224,25 @@ class WorkerController extends AbstractController
 
         $worksheet = new Worksheet();
 
-        if ($category->getId() == 1) {
+        if ($category->getId() == self::CATEGORY_PSYCHOLOGIST) {
             $form = $this->createForm(WorksheetPsychologistFormType::class, $worksheet, [
                 'action' => $this->generateUrl('app_create_worksheet', ['slug' => $category->getSlug()]),
                 'categoryId' => $category->getId(),
                 'method' => 'POST'
             ]);
-        } elseif ($category->getId() == 2) {
+        } elseif ($category->getId() == self::CATEGORY_VOLOUNTEER) {
             $form = $this->createForm(WorksheetVolounteerFormType::class, $worksheet, [
                 'action' => $this->generateUrl('app_create_worksheet', ['slug' => $category->getSlug()]),
                 'categoryId' => $category->getId(),
                 'method' => 'POST'
             ]);
-        } elseif ($category->getId() == 3) {
+        } elseif ($category->getId() == self::CATEGORY_NANNY) {
             $form = $this->createForm(WorksheetNannyFormType::class, $worksheet, [
                 'action' => $this->generateUrl('app_create_worksheet', ['slug' => $category->getSlug()]),
                 'categoryId' => $category->getId(),
                 'method' => 'POST'
             ]);
-        } elseif ($category->getId() == 4) {
+        } elseif ($category->getId() == self::CATEGORY_NURSE) {
             $form = $this->createForm(WorksheetNurseFormType::class, $worksheet, [
                 'action' => $this->generateUrl('app_create_worksheet', ['slug' => $category->getSlug()]),
                 'categoryId' => $category->getId(),
@@ -273,7 +281,7 @@ class WorkerController extends AbstractController
             //return new RedirectResponse($referer);
         }
 
-        if ($category->getId() == 1) {
+        if ($category->getId() == self::CATEGORY_PSYCHOLOGIST) {
             return $this->render('pages/worksheet/new_psychologist.html.twig', [
                 'user' => $user,
                 'form' => $form->createView(),
@@ -284,7 +292,7 @@ class WorkerController extends AbstractController
                 'cityName' => $this->sessionService->getCity(),
                 'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             ]);
-        } elseif ($category->getId() == 2) {
+        } elseif ($category->getId() == self::CATEGORY_VOLOUNTEER) {
             return $this->render('pages/worksheet/new_volunteer.html.twig', [
                 'user' => $user,
                 'form' => $form->createView(),
@@ -295,7 +303,7 @@ class WorkerController extends AbstractController
                 'cityName' => $this->sessionService->getCity(),
                 'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             ]);
-        } elseif ($category->getId() == 3) {
+        } elseif ($category->getId() == self::CATEGORY_NANNY) {
             return $this->render('pages/worksheet/new_nanny.html.twig', [
                 'user' => $user,
                 'form' => $form->createView(),
@@ -306,7 +314,7 @@ class WorkerController extends AbstractController
                 'cityName' => $this->sessionService->getCity(),
                 'ticketForm' => $this->modalForms->ticketForm($request)->createView()
             ]);
-        } elseif ($category->getId() == 4) {
+        } elseif ($category->getId() == self::CATEGORY_NURSE) {
             return $this->render('pages/worksheet/new_nurse.html.twig', [
                 'user' => $user,
                 'form' => $form->createView(),

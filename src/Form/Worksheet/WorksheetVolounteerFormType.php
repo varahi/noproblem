@@ -210,7 +210,7 @@ class WorksheetVolounteerFormType extends AbstractType
                 'translation_domain' => 'forms',
             ])
 
-            ->add(
+/*            ->add(
                 'passportSeries',
                 TextType::class,
                 [
@@ -271,9 +271,9 @@ class WorksheetVolounteerFormType extends AbstractType
                     'label' => false,
                     'translation_domain' => 'forms',
                 ]
-            )
+            )*/
 
-            ->add('passportPhoto', FileType::class, [
+/*            ->add('passportPhoto', FileType::class, [
                 'required' => false,
                 'mapped' => false,
                 'constraints' => [
@@ -296,7 +296,7 @@ class WorksheetVolounteerFormType extends AbstractType
                 ],
                 'label' => false,
                 'translation_domain' => 'forms',
-            ])
+            ])*/
             ->add(
                 'clientAge',
                 ChoiceType::class,

@@ -170,7 +170,7 @@ class WorksheetPsychologistFormType extends AbstractType
                 'translation_domain' => 'forms',
             ])
 
-            ->add(
+/*            ->add(
                 'passportSeries',
                 TextType::class,
                 [
@@ -231,9 +231,9 @@ class WorksheetPsychologistFormType extends AbstractType
                     'label' => false,
                     'translation_domain' => 'forms',
                 ]
-            )
+            )*/
 
-            ->add('passportPhoto', FileType::class, [
+            /*->add('passportPhoto', FileType::class, [
                 'required' => false,
                 'mapped' => false,
                 'constraints' => [
@@ -256,7 +256,7 @@ class WorksheetPsychologistFormType extends AbstractType
                 ],
                 'label' => false,
                 'translation_domain' => 'forms',
-            ])
+            ])*/
         ;
     }
 
