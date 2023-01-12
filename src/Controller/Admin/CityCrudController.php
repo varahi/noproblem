@@ -32,6 +32,7 @@ class CityCrudController extends AbstractCrudController
     {
         yield FormField::addPanel('Main info')->setIcon('fa fa-info')->setCssClass('col-sm-12');
         yield BooleanField::new('isHidden');
+        yield BooleanField::new('isOnTop');
         yield TextField::new('name')->setColumns('col-md-10');
         yield TextareaField::new('description')->setColumns('col-md-10');
         yield NumberField::new('latitude')->hideOnIndex()->setFormTypeOption('scale', 8)->setColumns('col-md-10');

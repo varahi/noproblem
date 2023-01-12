@@ -66,7 +66,9 @@ class CityRepository extends ServiceEntityRepository
             ->where($expr->neq('c.isHidden', 1))
             ->setMaxResults($limit)
             ->setFirstResult($offset)
-            ->orderBy('c.name', 'ASC');
+            ->addOrderBy('c.isOnTop', 'DESC')
+            ->addOrderBy('c.name', 'ASC')
+        ;
 
         $reviews = $qb->getQuery()->getResult();
         return $reviews;

@@ -66,6 +66,11 @@ class City
      */
     private $longitude;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isOnTop;
+
     public function __construct()
     {
         $this->jobs = new ArrayCollection();
@@ -260,6 +265,18 @@ class City
     public function setLongitude(string $longitude): self
     {
         $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function isIsOnTop(): ?bool
+    {
+        return $this->isOnTop;
+    }
+
+    public function setIsOnTop(?bool $isOnTop): self
+    {
+        $this->isOnTop = $isOnTop;
 
         return $this;
     }

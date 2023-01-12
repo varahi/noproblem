@@ -218,7 +218,8 @@ class ApiController extends AbstractController
     public function apiGetCities(
         CityRepository $cityRepository
     ) {
-        $items = $cityRepository->findAllOrder(['name' => 'ASC']);
+        //$items = $cityRepository->findAllOrder(['name' => 'ASC']);
+        $items = $cityRepository->findLimitOrder('9999', '0');
 
         if ($items) {
             foreach ($items as $item) {
