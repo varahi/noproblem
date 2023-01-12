@@ -6303,9 +6303,9 @@ font-size: 12px;
   display: none;
 }
 
-.btn_try {
+/*.btn_try {
   display: none;
-}
+}*/
 
 .modal-content .btn_try {
     display: block;

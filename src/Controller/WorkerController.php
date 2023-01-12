@@ -9,6 +9,7 @@ use App\Entity\Category;
 use App\Entity\Worksheet;
 use App\Entity\City;
 use App\Form\Worksheet\WorksheetFormType;
+use App\Form\Worksheet\WorksheetMasterFormType;
 use App\Form\Worksheet\WorksheetNannyFormType;
 use App\Form\Worksheet\WorksheetNurseFormType;
 use App\Form\Worksheet\WorksheetPsychologistFormType;
@@ -62,7 +63,10 @@ class WorkerController extends AbstractController
 
     public const CATEGORY_NURSE = '4';
 
+    public const CATEGORY_MASTER = '5';
+
     public const LIMIT_PER_PAGE = '10';
+
 
     /**
      * @param Security $security
@@ -178,7 +182,7 @@ class WorkerController extends AbstractController
         $districts = $districtRepository->findLimitOrder('999', '0');
         $tasks = $taskRepository->findAllOrder(['id' => 'ASC']);
         $busynessess = $busynessRepository->findAll();
-        $categories = $categoryRepository->findAll();
+        $categories = $categoryRepository->findLimitOrder('10', '0');
         $entityManager = $this->doctrine->getManager();
 
         return $this->render('pages/worksheet/new.html.twig', [
@@ -244,6 +248,12 @@ class WorkerController extends AbstractController
             ]);
         } elseif ($category->getId() == self::CATEGORY_NURSE) {
             $form = $this->createForm(WorksheetNurseFormType::class, $worksheet, [
+                'action' => $this->generateUrl('app_create_worksheet', ['slug' => $category->getSlug()]),
+                'categoryId' => $category->getId(),
+                'method' => 'POST'
+            ]);
+        } elseif ($category->getId() == self::CATEGORY_MASTER) {
+            $form = $this->createForm(WorksheetMasterFormType::class, $worksheet, [
                 'action' => $this->generateUrl('app_create_worksheet', ['slug' => $category->getSlug()]),
                 'categoryId' => $category->getId(),
                 'method' => 'POST'
@@ -316,6 +326,17 @@ class WorkerController extends AbstractController
             ]);
         } elseif ($category->getId() == self::CATEGORY_NURSE) {
             return $this->render('pages/worksheet/new_nurse.html.twig', [
+                'user' => $user,
+                'form' => $form->createView(),
+                'cities' => $cities,
+                'districts' => $districts,
+                'tasks' => $tasks,
+                'busynessess' => $busynessess,
+                'cityName' => $this->sessionService->getCity(),
+                'ticketForm' => $this->modalForms->ticketForm($request)->createView()
+            ]);
+        } elseif ($category->getId() == self::CATEGORY_MASTER) {
+            return $this->render('pages/worksheet/new_master.html.twig', [
                 'user' => $user,
                 'form' => $form->createView(),
                 'cities' => $cities,

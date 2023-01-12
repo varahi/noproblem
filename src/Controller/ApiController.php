@@ -126,7 +126,8 @@ class ApiController extends AbstractController
     public function apiCategories(
         CategoryRepository $categoryRepository
     ) {
-        $items = $categoryRepository->findAllOrder(['id' => 'ASC']);
+        //$items = $categoryRepository->findAllOrder(['id' => 'ASC']);
+        $items = $categoryRepository->findLimitOrder('4', '0');
         $arrData = $this->getJsonArrData($items);
 
         $response = new Response();

@@ -873,6 +873,20 @@ Chat
         left: 5%;
         width: 90%;
     }
+    city, .menu {
+        justify-content: start;
+    }
+    .vhod {
+        position: absolute;
+        top: 25px;
+        left: 50%;
+    }
+    .job_form .grid_creating_form {
+        grid-template-columns: auto;
+    }
+    .dom_creating_form {
+        height: auto;
+    }
 }
 
 /* Medium and large screens */
@@ -1100,6 +1114,6 @@ strike {
 }
 
 .abouts_creating_form input {
-    width: 100%;
+    width: 90%;
     max-width: 400px;
 }

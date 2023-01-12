@@ -17,6 +17,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CategoryRepository extends ServiceEntityRepository
 {
+    public const CATEGORY_TABLE = 'App\Entity\Category';
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Category::class);
@@ -47,6 +49,29 @@ class CategoryRepository extends ServiceEntityRepository
     public function findAllOrder(array $order)
     {
         return $this->findBy([], $order);
+    }
+
+    /**
+     * @param $limit
+     * @param $offset
+     * @return float|int|mixed|string
+     */
+    public function findLimitOrder($limit, $offset)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $expr = $qb->expr();
+
+        $qb->select('c')
+            ->from(self::CATEGORY_TABLE, 'c')
+            ->where($expr->neq('c.isHidden', 1))
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->orderBy('c.id', 'ASC');
+
+        $reviews = $qb->getQuery()->getResult();
+        return $reviews;
+
+        //return $this->findBy([], $order);
     }
 
 //    /**
