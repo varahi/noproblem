@@ -28,9 +28,13 @@
                     <div class="title" >
                         <h2>Все вакансии {% if category is not null %}- {{ category }} {% endif %}</h2>
                     </div>
-                    <div id="map" style="height: 300px;"></div>
-                    {% include 'partials/pages/script/_map_script.html.twig' %}
-                    <div class="open_map" onClick="changeHeight();" id="open-map">Раскрыть карту</div>
+
+                    {% if jobs|length > 0 %}
+                        <div id="map" style="height: 300px;"></div>
+                        {% include 'partials/pages/script/_map_script.html.twig' %}
+                        <div class="open_map" onClick="changeHeight();" id="open-map">Раскрыть карту</div>
+                    {% endif %}
+
                     <div class="large fon">
                         <div class="in" >
                             {% if jobs|length > 0 %}

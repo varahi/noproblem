@@ -36,9 +36,13 @@
                     <div class="title" >
                         <h2>Все анкеты {% if category is not null %}- {{ category }} {% endif %}</h2>
                     </div>
+
+                    {% if worksheets|length > 0 %}
                     <div id="map" style="height: 300px;"></div>
-                    {% include 'partials/pages/script/_map_script_workers.html.twig' %}
-                    <div class="open_map" onClick="changeHeight();" id="open-map">Раскрыть карту</div>
+                        {% include 'partials/pages/script/_map_script_workers.html.twig' %}
+                        <div class="open_map" onClick="changeHeight();" id="open-map">Раскрыть карту</div>
+                    {% endif %}
+
                     <div class="large fon">
                         <div class="in" >
                             {% include 'partials/_message.html.twig' %}

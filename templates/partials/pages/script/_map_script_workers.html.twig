@@ -37,7 +37,41 @@
         document.getElementById('map').style.height = "600px";
         document.getElementById('open-map').style.display = "none";
         //document.getElementById('map').updateSize();
-        map.updateSize();
+        //map.updateSize();
+        map.remove();
+
+        var map2 = L.map( 'map', {
+            center: [{{ lat }}, {{ lng }}],
+            zoom: 11,
+        });
+
+        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            subdomains: ['a','b','c']
+        }).addTo(map2);
+
+        var marks2 = [
+            {% for job in worksheets %}
+            {% if job.city is not null %}
+            {% set description = '' %}
+            {% if job.description %}
+            {% set description = job.description|striptags|u.truncate(50,  '...')  %}
+            {% endif %}
+            {% if job.latitude and job.longitude %}
+            { text: '<h4>{{ job.name}}</h4> Разместил(а): {{ job.user }}  <img class="rounded map-img" src="{{ asset('uploads/files/' ~ job.user.avatar) }}" width="50" height="50"/> Стоимость:{{ job.payment }} <br /><a href="{{ path('app_detail_worksheet', { id: job.id}) }}">Подробнее ... </a>', latlng: [{{ job.latitude }}, {{ job.longitude }}], },
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+        ];
+        for(var i = 0; i<=marks2.length; i++) {
+            L.marker(marks2[i].latlng)
+                .bindPopup(marks2[i].text, {
+                    direction: 'top',
+                    sticky: false,
+                    offset: [0, -15],
+                })
+                .addTo(map2);
+        }
 
     }
 </script>

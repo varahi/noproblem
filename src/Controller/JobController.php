@@ -92,7 +92,8 @@ class JobController extends AbstractController
         $slug = $request->query->get('category');
         $cities = $cityRepository->findLimitOrder('999', '0');
         $districts = $districtRepository->findAll();
-        $categories = $categoryRepository->findAll();
+        //$categories = $categoryRepository->findAll();
+        $categories = $categoryRepository->findLimitOrder('4', '0');
 
         // Get different get params
         $cityId = trim($request->query->get('city'));

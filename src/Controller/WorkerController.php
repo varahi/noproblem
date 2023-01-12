@@ -105,7 +105,8 @@ class WorkerController extends AbstractController
         $slug = $request->query->get('category');
         $cities = $cityRepository->findLimitOrder('999', '0');
         $districts = $districtRepository->findAll();
-        $categories = $categoryRepository->findAll();
+        //$categories = $categoryRepository->findAll();
+        $categories = $categoryRepository->findLimitOrder('4', '0');
 
         $cityId = trim($request->query->get('city'));
         $districtId = trim($request->query->get('district'));
