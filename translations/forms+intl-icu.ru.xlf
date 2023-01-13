@@ -93,6 +93,10 @@
                 <source>Your citizen</source>
                 <target>Гражданство</target>
             </trans-unit>
+            <trans-unit id="customBusynesses" resname="customBusynesses">
+                <source>customBusynesses</source>
+                <target>Свой вариант графика</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
