@@ -110,7 +110,7 @@ class Job
     private $education;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Citizen::class, inversedBy="jobs")
+     * @ORM\ManyToMany(targetEntity=Citizen::class, inversedBy="worksheets")
      */
     private $citizen;
 
@@ -164,6 +164,56 @@ class Job
      */
     private $featuredUsers;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isFree;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $paymentByHour;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $paymentByMonth;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $customBusynesses;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $passportSeries;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $passportNumber;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $passportPlaceOfIssue;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $passportIssuingAuthority;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $passportDateOfIssue;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $passportPhoto;
+
     public function __construct()
     {
         $this->created = new \DateTime();
@@ -172,6 +222,7 @@ class Job
         $this->busynesses = new ArrayCollection();
         $this->accommodations = new ArrayCollection();
         $this->featuredUsers = new ArrayCollection();
+        $this->citizen = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -400,14 +451,26 @@ class Job
         return $this;
     }
 
-    public function getCitizen(): ?Citizen
+    /**
+     * @return Collection<int, Citizen>
+     */
+    public function getCitizen(): Collection
     {
         return $this->citizen;
     }
 
-    public function setCitizen(?Citizen $citizen): self
+    public function addCitizen(Citizen $citizen): self
     {
-        $this->citizen = $citizen;
+        if (!$this->citizen->contains($citizen)) {
+            $this->citizen[] = $citizen;
+        }
+
+        return $this;
+    }
+
+    public function removeCitizen(Citizen $citizen): self
+    {
+        $this->citizen->removeElement($citizen);
 
         return $this;
     }
@@ -603,6 +666,126 @@ class Job
         if ($this->featuredUsers->removeElement($featuredUser)) {
             $featuredUser->removeFeaturedJob($this);
         }
+
+        return $this;
+    }
+
+    public function isIsFree(): ?bool
+    {
+        return $this->isFree;
+    }
+
+    public function setIsFree(?bool $isFree): self
+    {
+        $this->isFree = $isFree;
+
+        return $this;
+    }
+
+    public function isPaymentByHour(): ?bool
+    {
+        return $this->paymentByHour;
+    }
+
+    public function setPaymentByHour(?bool $paymentByHour): self
+    {
+        $this->paymentByHour = $paymentByHour;
+
+        return $this;
+    }
+
+    public function isPaymentByMonth(): ?bool
+    {
+        return $this->paymentByMonth;
+    }
+
+    public function setPaymentByMonth(?bool $paymentByMonth): self
+    {
+        $this->paymentByMonth = $paymentByMonth;
+
+        return $this;
+    }
+
+    public function getCustomBusynesses(): ?string
+    {
+        return $this->customBusynesses;
+    }
+
+    public function setCustomBusynesses(?string $customBusynesses): self
+    {
+        $this->customBusynesses = $customBusynesses;
+
+        return $this;
+    }
+
+    public function getPassportSeries(): ?string
+    {
+        return $this->passportSeries;
+    }
+
+    public function setPassportSeries(?string $passportSeries): self
+    {
+        $this->passportSeries = $passportSeries;
+
+        return $this;
+    }
+
+    public function getPassportNumber(): ?string
+    {
+        return $this->passportNumber;
+    }
+
+    public function setPassportNumber(?string $passportNumber): self
+    {
+        $this->passportNumber = $passportNumber;
+
+        return $this;
+    }
+
+    public function getPassportPlaceOfIssue(): ?string
+    {
+        return $this->passportPlaceOfIssue;
+    }
+
+    public function setPassportPlaceOfIssue(?string $passportPlaceOfIssue): self
+    {
+        $this->passportPlaceOfIssue = $passportPlaceOfIssue;
+
+        return $this;
+    }
+
+    public function getPassportIssuingAuthority(): ?string
+    {
+        return $this->passportIssuingAuthority;
+    }
+
+    public function setPassportIssuingAuthority(?string $passportIssuingAuthority): self
+    {
+        $this->passportIssuingAuthority = $passportIssuingAuthority;
+
+        return $this;
+    }
+
+    public function getPassportDateOfIssue(): ?\DateTimeInterface
+    {
+        return $this->passportDateOfIssue;
+    }
+
+    public function setPassportDateOfIssue(?\DateTimeInterface $passportDateOfIssue): self
+    {
+        $this->passportDateOfIssue = $passportDateOfIssue;
+
+        return $this;
+    }
+
+    public function getPassportPhoto(): ?string
+    {
+        return $this->passportPhoto;
+    }
+
+    public function setPassportPhoto(?string $passportPhoto): self
+    {
+        $this->passportPhoto = $passportPhoto;
 
         return $this;
     }

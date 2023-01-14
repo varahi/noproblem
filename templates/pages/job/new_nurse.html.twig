@@ -1,5 +1,5 @@
 {% extends 'layouts/base.html.twig' %}
-{% block title %}Создать анкету - Онлайн-сервис по подбору домашнего персонала{% endblock %}
+{% block title %}Создать вакансию - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block body %}
 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -11,13 +11,13 @@
         <div class="bread_personal_account">
             <a href="{{ path('app_main') }}" class="nuxt-link-active">Главная</a>
             <a href="{{ path('app_lk') }}">/ Личный кабинет</a>
-            <a>/ Создать анкету</a>
+            <a>/ Создать вакасию</a>
         </div>
 
         <div class="large_creating_form fon">
             <div class="in_creating_form">
                 {% include 'partials/_message.html.twig' %}
-                <h1>Анкета мастера на час</h1>
+                <h1>Вакансия сиделки</h1>
                 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 {#                {{ form_widget(form) }}#}
 
@@ -41,7 +41,8 @@
                 <div class="abouts_creating_form grid_creating_form">
                     <div class="dom_creating_form">
                         <p class="required">Город</p>
-                        <input type="text" id="worksheet_form" name="worksheet_form[city]" required="required" placeholder="Ваш город" class="form-control">
+{#                        <input type="text" id="worksheet_form" name="worksheet_form[city]" required="required" placeholder="Ваш город" class="form-control">#}
+                        {{ form_widget(form.city) }}
                     </div>
                     <div class="dom_creating_form">
                         <p class="required">Район</p>
@@ -56,7 +57,7 @@
                         <div class="but_creating_form">
                             <label for="checkbox" class="work_start_now">Незамедлительно
                                 {{ form_widget(form.startNow) }}
-                                <span class="checkmark"></span>
+                                <span class="_checkmark"></span>
                             </label>
                         </div>
                     </div>
@@ -67,23 +68,23 @@
                         <div class="but_creating_form">
                             <label for="checkbox" class="work_start_now">Свободен для работы
                                 {{ form_widget(form.isFree) }}
-                                <span class="checkmark"></span>
+                                <span class="_checkmark"></span>
                             </label>
                         </div>
 
                         <div class="abouts_creating_form">
-                            <p class="required">Какой опыт работы желателен</p>
+                            <p class="required">Опыт работы</p>
                             <div class="work_experience_creating_form">
                                 {{ form_row(form.experience) }}
                             </div>
                         </div>
 
-                        <div class="abouts_creating_form">
-                            <p class="required">Возраст больного, с которым готов работать:</p>
-                            <div class="work_experience_creating_form">
-                                {{ form_row(form.clientAge) }}
-                            </div>
-                        </div>
+{#                        <div class="abouts_creating_form">#}
+{#                            <p class="required">Возраст больного, с которым готов работать:</p>#}
+{#                            <div class="work_experience_creating_form">#}
+{#                                {{ form_row(form.clientAge) }}#}
+{#                            </div>#}
+{#                        </div>#}
 
                     </div>
                 </div>
@@ -95,13 +96,13 @@
                         <div class="but_creating_form">
                             <label for="checkbox" class="_work_contract_ques">Почасовая<br />
                                 {{ form_widget(form.paymentByHour) }}
-                                <span class="checkmark"></span>
+                                <span class="_checkmark"></span>
                             </label>
                         </div>
                         <div class="but_creating_form">
                             <label for="checkbox" class="_work_contract_ques">Помесячная<br />
                                 {{ form_widget(form.paymentByMonth) }}
-                                <span class="checkmark"></span>
+                                <span class="_checkmark"></span>
                             </label>
                         </div>
                     </div>
@@ -127,11 +128,11 @@
                     </label>
                 </div><br />
 
-                <div class="but_creating_form">
-                    <label> <p class="required">Проживание:</p>
-                        {{ form_widget(form.accommodations) }}
-                    </label>
-                </div><br /><br />
+{#                <div class="but_creating_form">#}
+{#                    <label> <p class="required">Проживание:</p>#}
+{#                        {{ form_widget(form.accommodations) }}#}
+{#                    </label>#}
+{#                </div><br /><br />#}
 
                 <div class="but_creating_form">
                     <label> <p class="required">График работы:</p>

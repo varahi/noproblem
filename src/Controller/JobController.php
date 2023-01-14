@@ -5,11 +5,22 @@ namespace App\Controller;
 use App\Controller\Traits\AbstractTrait;
 use App\Controller\Traits\DataTrait;
 use App\Controller\Traits\JobTrait;
+use App\Entity\Category;
 use App\Entity\City;
 use App\Entity\Job;
 use App\Entity\Worksheet;
 use App\Form\Job\JobFormType;
+use App\Form\Job\JobMasterFormType;
+use App\Form\Job\JobNannyFormType;
+use App\Form\Job\JobNurseFormType;
+use App\Form\Job\JobPsychologistFormType;
+use App\Form\Job\JobVolounteerFormType;
 use App\Form\Worksheet\WorksheetFormType;
+use App\Form\Worksheet\WorksheetMasterFormType;
+use App\Form\Worksheet\WorksheetNannyFormType;
+use App\Form\Worksheet\WorksheetNurseFormType;
+use App\Form\Worksheet\WorksheetPsychologistFormType;
+use App\Form\Worksheet\WorksheetVolounteerFormType;
 use App\Repository\AccommodationRepository;
 use App\Repository\AdditionalInfoRepository;
 use App\Repository\BusynessRepository;
@@ -57,6 +68,16 @@ class JobController extends AbstractController
 
     public const LIMIT_PER_PAGE = '10';
 
+    public const CATEGORY_PSYCHOLOGIST = '1';
+
+    public const CATEGORY_VOLOUNTEER = '2';
+
+    public const CATEGORY_NANNY = '3';
+
+    public const CATEGORY_NURSE = '4';
+
+    public const CATEGORY_MASTER = '5';
+
     public function __construct(
         Security $security,
         Environment $twig,
@@ -87,11 +108,13 @@ class JobController extends AbstractController
         DistrictRepository $districtRepository,
         CategoryRepository $categoryRepository,
         JobRepository $jobRepository,
+        TaskRepository $taskRepository,
         PaginatorInterface $paginator
     ): Response {
         $slug = $request->query->get('category');
         $cities = $cityRepository->findLimitOrder('999', '0');
         $districts = $districtRepository->findAll();
+        $tags = $taskRepository->findAll();
         //$categories = $categoryRepository->findAll();
         $categories = $categoryRepository->findLimitOrder('4', '0');
 
@@ -153,19 +176,203 @@ class JobController extends AbstractController
             'featuredJobs' => $featuredJobs,
             'slug' => $slug,
             'cityName' => $cityName,
+            'tags' => $tags,
             'lat' => $this->coordinateService->getLatArr($jobs, $city),
             'lng' => $this->coordinateService->getLngArr($jobs, $city),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
 
-
     /**
      *
      * @IsGranted("ROLE_EMPLOYEE")
      * @Route("/new-job", name="app_new_job")
      */
-    public function newJob(
+    public function newJobAction(
+        Request $request,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier,
+        CategoryRepository $categoryRepository
+    ): Response {
+        if (!$this->isGranted(self::ROLE_EMPLOYEE)) {
+            $message = $translator->trans('Please login', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_main");
+        }
+
+        $user = $this->security->getUser();
+        $categories = $categoryRepository->findLimitOrder('10', '0');
+
+        return $this->render('pages/job/new.html.twig', [
+            'user' => $user,
+            'categories' => $categories,
+            'cityName' => $this->sessionService->getCity(),
+            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
+        ]);
+    }
+
+    /**
+     *
+     * @IsGranted("ROLE_EMPLOYEE")
+     * @Route("/create-job/category-{slug}", name="app_create_job")
+     */
+    public function createJobAction(
+        Request $request,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier,
+        ManagerRegistry $doctrine,
+        TaskRepository $taskRepository,
+        CityRepository $cityRepository,
+        DistrictRepository $districtRepository,
+        CitizenRepository $citizenRepository,
+        AdditionalInfoRepository $additionalInfoRepository,
+        AccommodationRepository $accommodationRepository,
+        BusynessRepository $busynessRepository,
+        FileUploader $fileUploader,
+        Category $category
+    ): Response {
+        if (!$this->isGranted(self::ROLE_EMPLOYEE)) {
+            $message = $translator->trans('Please login', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_main");
+        }
+
+        $user = $this->security->getUser();
+        $cities = $cityRepository->findLimitOrder('999', '0');
+        $districts = $districtRepository->findLimitOrder('999', '0');
+        $tasks = $taskRepository->findAllOrder(['id' => 'ASC']);
+        $busynessess = $busynessRepository->findAll();
+
+        $job = new Job();
+
+        if ($category->getId() == self::CATEGORY_PSYCHOLOGIST) {
+            $form = $this->createForm(JobPsychologistFormType::class, $job, [
+                'action' => $this->generateUrl('app_create_job', ['slug' => $category->getSlug()]),
+                'categoryId' => $category->getId(),
+                'method' => 'POST'
+            ]);
+        } elseif ($category->getId() == self::CATEGORY_VOLOUNTEER) {
+            $form = $this->createForm(JobVolounteerFormType::class, $job, [
+                'action' => $this->generateUrl('app_create_job', ['slug' => $category->getSlug()]),
+                'categoryId' => $category->getId(),
+                'method' => 'POST'
+            ]);
+        } elseif ($category->getId() == self::CATEGORY_NANNY) {
+            $form = $this->createForm(JobNannyFormType::class, $job, [
+                'action' => $this->generateUrl('app_create_job', ['slug' => $category->getSlug()]),
+                'categoryId' => $category->getId(),
+                'method' => 'POST'
+            ]);
+        } elseif ($category->getId() == self::CATEGORY_NURSE) {
+            $form = $this->createForm(JobNurseFormType::class, $job, [
+                'action' => $this->generateUrl('app_create_job', ['slug' => $category->getSlug()]),
+                'categoryId' => $category->getId(),
+                'method' => 'POST'
+            ]);
+        } elseif ($category->getId() == self::CATEGORY_MASTER) {
+            $form = $this->createForm(JobMasterFormType::class, $job, [
+                'action' => $this->generateUrl('app_create_job', ['slug' => $category->getSlug()]),
+                'categoryId' => $category->getId(),
+                'method' => 'POST'
+            ]);
+        } else {
+            // Redirect
+        }
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+
+            // Update fields
+            $this->updateFields(
+                $request,
+                $form,
+                $job,
+                $cityRepository,
+                $districtRepository,
+                $taskRepository,
+                $citizenRepository,
+                $additionalInfoRepository,
+                $accommodationRepository,
+                $busynessRepository,
+                $fileUploader
+            );
+
+            // Set coordinates after object saved
+            $this->coordinateService->setCoordinates($job);
+
+            $message = $translator->trans('New job created', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            $referer = $request->headers->get('referer');
+            return new RedirectResponse($referer);
+        }
+
+        if ($category->getId() == self::CATEGORY_PSYCHOLOGIST) {
+            return $this->render('pages/job/new_psychologist.html.twig', [
+                'user' => $user,
+                'form' => $form->createView(),
+                'cities' => $cities,
+                'districts' => $districts,
+                'tasks' => $tasks,
+                'busynessess' => $busynessess,
+                'cityName' => $this->sessionService->getCity(),
+                'ticketForm' => $this->modalForms->ticketForm($request)->createView()
+            ]);
+        } elseif ($category->getId() == self::CATEGORY_VOLOUNTEER) {
+            return $this->render('pages/job/new_volunteer.html.twig', [
+                'user' => $user,
+                'form' => $form->createView(),
+                'cities' => $cities,
+                'districts' => $districts,
+                'tasks' => $tasks,
+                'busynessess' => $busynessess,
+                'cityName' => $this->sessionService->getCity(),
+                'ticketForm' => $this->modalForms->ticketForm($request)->createView()
+            ]);
+        } elseif ($category->getId() == self::CATEGORY_NANNY) {
+            return $this->render('pages/job/new_nanny.html.twig', [
+                'user' => $user,
+                'form' => $form->createView(),
+                'cities' => $cities,
+                'districts' => $districts,
+                'tasks' => $tasks,
+                'busynessess' => $busynessess,
+                'cityName' => $this->sessionService->getCity(),
+                'ticketForm' => $this->modalForms->ticketForm($request)->createView()
+            ]);
+        } elseif ($category->getId() == self::CATEGORY_NURSE) {
+            return $this->render('pages/job/new_nurse.html.twig', [
+                'user' => $user,
+                'form' => $form->createView(),
+                'cities' => $cities,
+                'districts' => $districts,
+                'tasks' => $tasks,
+                'busynessess' => $busynessess,
+                'cityName' => $this->sessionService->getCity(),
+                'ticketForm' => $this->modalForms->ticketForm($request)->createView()
+            ]);
+        } elseif ($category->getId() == self::CATEGORY_MASTER) {
+            return $this->render('pages/job/new_master.html.twig', [
+                'user' => $user,
+                'form' => $form->createView(),
+                'cities' => $cities,
+                'districts' => $districts,
+                'tasks' => $tasks,
+                'busynessess' => $busynessess,
+                'cityName' => $this->sessionService->getCity(),
+                'ticketForm' => $this->modalForms->ticketForm($request)->createView()
+            ]);
+        } else {
+            // Redirect
+        }
+    }
+
+    /**
+     *
+     * @IsGranted("ROLE_EMPLOYEE")
+     * @Route("/_new-job", name="_app_new_job")
+     */
+    public function newJobBack(
         Request $request,
         TranslatorInterface $translator,
         NotifierInterface $notifier,
@@ -484,7 +691,7 @@ class JobController extends AbstractController
     ) {
         $entityManager = $this->doctrine->getManager();
         $user = $this->security->getUser();
-        $post = $request->request->get('job_form');
+        $post = $request->request->get($form->getConfig()->getName());
 
         // Week days start time and end time
         if (!empty($post['week']) && is_array($post['week'])) {
@@ -511,11 +718,11 @@ class JobController extends AbstractController
             $job->setCity($city);
         }*/
 
-        $city = $cityRepository->findOneBy(['name' => $post['city']]);
+        /*$city = $cityRepository->findOneBy(['name' => $post['city']]);
         if ($city == null) {
             $city = $this->setNewCity($request, 'job_form');
         }
-        $job->setCity($city);
+        $job->setCity($city);*/
 
         if (isset($post['district']) && $post['district'] !=='') {
             $district = $districtRepository->findOneBy(['id' => $post['district']]);
@@ -554,6 +761,13 @@ class JobController extends AbstractController
             $imageFileName = $fileUploader->upload($imageFile);
             $job->setImage($imageFileName);
         }
+
+        // Passport file upload
+        /*$passportPhoto = $form->get('passportPhoto')->getData();
+        if ($passportPhoto) {
+            $passportFileName = $fileUploader->upload($passportPhoto);
+            $job->setPassportPhoto($passportFileName);
+        }*/
 
         $entityManager->persist($job);
         $entityManager->flush();

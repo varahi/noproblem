@@ -6,6 +6,7 @@ use App\Controller\Traits\AbstractTrait;
 use App\Controller\Traits\DataTrait;
 use App\Controller\Traits\JobTrait;
 use App\Entity\Category;
+use App\Entity\Task;
 use App\Entity\Worksheet;
 use App\Entity\City;
 use App\Form\Worksheet\WorksheetFormType;
@@ -100,11 +101,13 @@ class WorkerController extends AbstractController
         CityRepository $cityRepository,
         DistrictRepository $districtRepository,
         WorksheetRepository $worksheetRepository,
+        TaskRepository $taskRepository,
         PaginatorInterface $paginator
     ): Response {
         $slug = $request->query->get('category');
         $cities = $cityRepository->findLimitOrder('999', '0');
         $districts = $districtRepository->findAll();
+        $tags = $taskRepository->findAll();
         //$categories = $categoryRepository->findAll();
         $categories = $categoryRepository->findLimitOrder('4', '0');
 
@@ -158,6 +161,7 @@ class WorkerController extends AbstractController
             'featuredProfiles' => $featuredProfiles,
             'slug' => $slug,
             'cityName' => $cityName,
+            'tags' => $tags,
             'lat' => $this->coordinateService->getLatArr($worksheets, $city),
             'lng' => $this->coordinateService->getLngArr($worksheets, $city),
 
@@ -203,7 +207,7 @@ class WorkerController extends AbstractController
      * @IsGranted("ROLE_CUSTOMER")
      * @Route("/create-worksheet/category-{slug}", name="app_create_worksheet")
      */
-    public function newWorksheetNurse(
+    public function createWorksheet(
         Request $request,
         TranslatorInterface $translator,
         NotifierInterface $notifier,
@@ -372,7 +376,8 @@ class WorkerController extends AbstractController
         FileUploader $fileUploader
     ) {
         $entityManager = $this->doctrine->getManager();
-        $post = $request->request->get('worksheet_form');
+        //$post = $request->request->get('worksheet_form');
+        $post = $request->request->get($form->getConfig()->getName());
 
         if (isset($post['startDate']) && $post['startDate'] !=='') {
             $datetime = new \DateTime();
@@ -412,11 +417,11 @@ class WorkerController extends AbstractController
         }
 
         // Passport file upload
-        $passportPhoto = $form->get('passportPhoto')->getData();
+        /*$passportPhoto = $form->get('passportPhoto')->getData();
         if ($passportPhoto) {
             $passportFileName = $fileUploader->upload($passportPhoto);
             $worksheet->setPassportPhoto($passportFileName);
-        }
+        }*/
 
         $entityManager->persist($worksheet);
         $entityManager->flush();

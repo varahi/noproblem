@@ -1,5 +1,5 @@
-{% extends 'layouts/map.html.twig' %}
-{% block title %}Редактировать вакансию - Онлайн-сервис по подбору домашнего персонала{% endblock %}
+{% extends 'layouts/base.html.twig' %}
+{% block title %}Создать вакансию - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block body %}
 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -10,8 +10,7 @@
         <div  class="bread nona">
             <a  href="{{ path('app_main') }}" class="nuxt-link-active">Главная</a>
             <a href="{{ path('app_lk') }}">/ Личный кабинет</a>
-            <a>/ Редактировать вакансию</a>
-            <a>/ {{ job.name }}</a>
+            <a>/ Создать вакансию</a>
         </div>
 
         <div class="large_creating_form fon">
@@ -42,8 +41,10 @@
 
                     <div class="abouts_creating_form grid_creating_form">
                         <div class="dom_creating_form">
-                            <p class="required">Город</p>
-                            <input type="text" id="job_form" name="job_form[city]" required="required" placeholder="Ваш город" class="form-control" value="{{ job.city.name }}">
+                            <div>
+                                <p class="required">Город</p>
+                                <input type="text" id="job_form" name="job_form[city]" required="required" placeholder="Ваш город" class="form-control">
+                            </div>
                         </div>
 
                         <div class="dom_creating_form">
@@ -53,18 +54,12 @@
 
 {#                        <div class="dom_creating_form">#}
 {#                            <p>Район</p>#}
-{#                            <select id="job_form_district" name="job_form[district]" class="text_input">#}
+{#                            <select id="job_form_district" name="job_form[district]" class="text_input" disabled>#}
 {#                                {% for district in districts %}#}
 {#                                    <option>Выберите район</option>#}
-{#                                    {% if job.district.id is defined %}#}
-{#                                        <option data-list-id="{{ district.city.id }}" value="{{ district.id }}" {% if district.id == job.district.id %} selected {% endif %}>#}
-{#                                            {{ district.name }}#}
-{#                                        </option>#}
-{#                                    {% else %}#}
-{#                                        <option data-list-id="{{ district.city.id }}" value="{{ district.id }}">#}
-{#                                            {{ district.name }}#}
-{#                                        </option>#}
-{#                                    {% endif %}#}
+{#                                    <option data-list-id="{{ district.city.id }}" value="{{ district.id }}">#}
+{#                                        {{ district.name }}#}
+{#                                    </option>#}
 {#                                {% endfor %}#}
 {#                            </select>#}
 {#                        </div>#}
@@ -72,51 +67,14 @@
                     </div>
 
                     <div class="abouts_creating_form grid_creating_form ">
-
-                        <div class="single-map" style="min-width: 640px;">
-                            <div id="map" style="height: 480px; width: 100%;"></div>
-                            <script type="text/javascript">
-                                var map = L.map( 'map', {
-                                    center: [{{ lat }}, {{ lng }}],
-                                    zoom: 11,
-                                });
-
-                                L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-                                    subdomains: ['a','b','c']
-                                }).addTo(map);
-
-                                var marks = [
-                                    {% if job.city is not null %}
-                                    {% set description = '' %}
-                                    {% if job.description %}
-                                    {% set description = job.description|striptags|u.truncate(50,  '...')  %}
-                                    {% endif %}
-                                    {% if job.latitude and job.longitude %}
-                                    { text: '<h4>{{ job.name}}</h4> {{ description|raw }} <br /> Разместил(а): {{ job.owner }}  <img class="rounded map-img" src="{{ asset('uploads/files/' ~ job.owner.avatar) }}" width="50" height="50"/> Стоимость:{{ job.payment }} <br /><a href="{{ path('app_detail_job', { id: job.id}) }}">Подробнее ... </a>', latlng: [{{ job.latitude }}, {{ job.longitude }}], },
-                                    {% endif %}
-                                    {% endif %}
-                                ];
-                                for(var i = 0; i<=marks.length; i++) {
-                                    L.marker(marks[i].latlng)
-                                        .bindPopup(marks[i].text, {
-                                            direction: 'top',
-                                            sticky: false,
-                                            offset: [0, -15],
-                                        })
-                                        .addTo(map);
-                                }
-                            </script>
-                        </div>
-
                         <div class="dom_creating_form">
-{#                            <p>Геолокация</p>#}
-{#                            <div class="location_creting_form">#}
-{#                                <img src="{{ asset('assets/img/locats.svg') }}" alt="">#}
-{#                                <span class="">Поиск по геолокации</span>#}
-{#                            </div>#}
-
+                            <p>Геолокация</p>
+                            <div class="location_creting_form">
+                                <img src="{{ asset('assets/img/locats.svg') }}" alt="">
+                                <span class="">Поиск по геолокации</span>
+                            </div>
                         </div>
+
                     </div>
 
                     <div class="did mobs">
@@ -175,6 +133,9 @@
                     <div class="tops">
                         <div class="only">
                             <p>Нужно выполнять:</p>
+                            <!--  <div class="sbros mobs" v-if="on" @click="choose=false,line=true,on=false">
+                               <span>Сбросить</span>
+                             </div> -->
                         </div>
                         <button class="choose_creating_form mobs accordion_filter_one_vacan">
                             <span>Выберите из списка</span>
@@ -184,10 +145,8 @@
                             <div class="need_creating_form">
                                 <section>
                                     {% for task in tasks %}
-                                        <label for="chk{{ task.id }}" class="tasks"
-                                               data-game="{% if task.category %}{% for category in task.category %}j-{{ category.id }} {% endfor %}{% endif %}">
-                                            <input type="checkbox" id="chk{{ task.id }}" name="job_form[task][]" value="{{ task.id }}"
-                                                    {% if task.id in selectedTasksArr %} checked {% endif %}>
+                                        <label for="chk{{ task.id }}" class="tasks" data-game="{% if task.category %}{% for category in task.category %}j-{{ category.id }} {% endfor %}{% endif %}">
+                                            <input type="checkbox" id="chk{{ task.id }}" name="worksheet_form[task][]" value="{{ task.id }}">
                                             <span>{{ task.name }}</span></label>
                                     {% endfor %}
                                 </section>
@@ -209,8 +168,7 @@
                             <div class="need_creating_form">
                                 {% for citizen in citizens %}
                                     <label for="citizenship{{ citizen.id }}" class="citizenship_chk">
-                                        <input type="checkbox" id="citizenship{{ citizen.id }}" name="job_form[citizenship]"
-                                                {% if citizen.id == job.citizen.id %} checked {% endif %} value="{{ citizen.id }}" onclick="onlyOne(this)">
+                                        <input type="checkbox" id="citizenship{{ citizen.id }}" name="job_form[citizenship]" value="{{ citizen.id }}" onclick="onlyOne(this)">
                                         <span>{{ citizen.name }}</span></label>
                                 {% endfor %}
                             </div>
@@ -235,7 +193,7 @@
                         <span>Добавьте вручную</span>
                         <img src="{{ asset('assets/img/str.svg" src="/preload.gif') }}" class="lazyLoad" alt="">
                     </button>
-{#                    {% include 'partials/pages/job/_scheduler.html.twig' %}#}
+                    {#{% include 'partials/pages/job/_scheduler.html.twig' %}#}
                 </div>
 
 {#                <div class="hide">#}
@@ -258,6 +216,7 @@
 {#                        </div>#}
 {#                    </div>#}
 {#                </div>#}
+
 
                 <div class="but_creating_form send_message">
                     <button type="submit">Отправить объявление</button>
@@ -320,3 +279,4 @@
 
     {% include 'partials/footer.html.twig' %}
 {% endblock %}
+

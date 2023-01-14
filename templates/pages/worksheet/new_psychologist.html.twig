@@ -16,6 +16,7 @@
 
         <div class="large_creating_form fon">
             <div class="in_creating_form">
+                {% include 'partials/_message.html.twig' %}
                 <h1>Анкета психолога</h1>
                 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
                 {#                {{ form_widget(form) }}#}

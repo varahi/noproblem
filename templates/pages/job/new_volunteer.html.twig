@@ -1,25 +1,22 @@
 {% extends 'layouts/base.html.twig' %}
-{% block title %}Создать анкету - Онлайн-сервис по подбору домашнего персонала{% endblock %}
+{% block title %}Создать вакансию - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block body %}
-
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
 
     {% include 'partials/header.html.twig' %}
-
     <div class=" content">
         <div class="bread_personal_account">
             <a href="{{ path('app_main') }}" class="nuxt-link-active">Главная</a>
             <a href="{{ path('app_lk') }}">/ Личный кабинет</a>
-            <a>/ Создать анкету</a>
+            <a>/ Создать вакансию</a>
         </div>
 
         <div class="large_creating_form fon">
             <div class="in_creating_form">
                 {% include 'partials/_message.html.twig' %}
-                <h1>Анкета мастера на час</h1>
+                <h1>Вакансия добработницы</h1>
                 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-{#                {{ form_widget(form) }}#}
 
                 <div class="_but_creating_form">
                     <label> <p class="required">Фотография:</p>
@@ -41,7 +38,8 @@
                 <div class="abouts_creating_form grid_creating_form">
                     <div class="dom_creating_form">
                         <p class="required">Город</p>
-                        <input type="text" id="worksheet_form" name="worksheet_form[city]" required="required" placeholder="Ваш город" class="form-control">
+{#                        <input type="text" id="worksheet_form" name="worksheet_form[city]" required="required" placeholder="Ваш город" class="form-control">#}
+                        {{ form_widget(form.city) }}
                     </div>
                     <div class="dom_creating_form">
                         <p class="required">Район</p>
@@ -56,7 +54,7 @@
                         <div class="but_creating_form">
                             <label for="checkbox" class="work_start_now">Незамедлительно
                                 {{ form_widget(form.startNow) }}
-                                <span class="checkmark"></span>
+                                <span class="__checkmark"></span>
                             </label>
                         </div>
                     </div>
@@ -67,23 +65,23 @@
                         <div class="but_creating_form">
                             <label for="checkbox" class="work_start_now">Свободен для работы
                                 {{ form_widget(form.isFree) }}
-                                <span class="checkmark"></span>
+                                <span class="__checkmark"></span>
                             </label>
                         </div>
 
                         <div class="abouts_creating_form">
-                            <p class="required">Какой опыт работы желателен</p>
+                            <p class="required">Опыт работы</p>
                             <div class="work_experience_creating_form">
                                 {{ form_row(form.experience) }}
                             </div>
                         </div>
 
-                        <div class="abouts_creating_form">
-                            <p class="required">Возраст больного, с которым готов работать:</p>
-                            <div class="work_experience_creating_form">
-                                {{ form_row(form.clientAge) }}
-                            </div>
-                        </div>
+{#                        <div class="abouts_creating_form">#}
+{#                            <p class="required">Возраст больного, с которым готов работать:</p>#}
+{#                            <div class="work_experience_creating_form">#}
+{#                                {{ form_row(form.clientAge) }}#}
+{#                            </div>#}
+{#                        </div>#}
 
                     </div>
                 </div>
@@ -95,13 +93,13 @@
                         <div class="but_creating_form">
                             <label for="checkbox" class="_work_contract_ques">Почасовая<br />
                                 {{ form_widget(form.paymentByHour) }}
-                                <span class="checkmark"></span>
+                                <span class="__checkmark"></span>
                             </label>
                         </div>
                         <div class="but_creating_form">
                             <label for="checkbox" class="_work_contract_ques">Помесячная<br />
                                 {{ form_widget(form.paymentByMonth) }}
-                                <span class="checkmark"></span>
+                                <span class="__checkmark"></span>
                             </label>
                         </div>
                     </div>
@@ -110,7 +108,7 @@
                 <div class="but_creating_form">
                     <label>
                         <p class="required">Могу выполнять (навыки):</p>
-                    {{ form_widget(form.tasks) }}
+                        {{ form_widget(form.tasks) }}
                     </label>
                 </div><br />
 
@@ -127,11 +125,11 @@
                     </label>
                 </div><br />
 
-                <div class="but_creating_form">
-                    <label> <p class="required">Проживание:</p>
-                        {{ form_widget(form.accommodations) }}
-                    </label>
-                </div><br /><br />
+{#                <div class="but_creating_form">#}
+{#                    <label> <p class="required">Проживание:</p>#}
+{#                        {{ form_widget(form.accommodations) }}#}
+{#                    </label>#}
+{#                </div><br /><br />#}
 
                 <div class="but_creating_form">
                     <label> <p class="required">График работы:</p>
@@ -195,55 +193,55 @@
 
     </div>
 
-<script>
-    createDependableList ( '#worksheet_form_city', '#worksheet_form_district' );
-    $('#worksheet_form_city').change(function() {
-        $('#worksheet_form_district').prop('disabled', false);
-    });
-    function onlyOne(checkbox) {
-        var checkboxes = document.getElementsByName('worksheet_form[citizenship]')
-        checkboxes.forEach((item) => {
-            if (item !== checkbox) item.checked = false
-        })
-    }
-    function onlyOneAccommodation(checkbox) {
-        var checkboxes = document.getElementsByName('worksheet_form[accommodation]')
-        checkboxes.forEach((item) => {
-            if (item !== checkbox) item.checked = false
-        })
-    }
-    function onlyOneBusyness(checkbox) {
-        var checkboxes = document.getElementsByName('job_form[busyness]')
-        checkboxes.forEach((item) => {
-            if (item !== checkbox) item.checked = false
-        })
-    }
+    <script>
+        createDependableList ( '#worksheet_form_city', '#worksheet_form_district' );
+        $('#worksheet_form_city').change(function() {
+            $('#worksheet_form_district').prop('disabled', false);
+        });
+        function onlyOne(checkbox) {
+            var checkboxes = document.getElementsByName('worksheet_form[citizenship]')
+            checkboxes.forEach((item) => {
+                if (item !== checkbox) item.checked = false
+            })
+        }
+        function onlyOneAccommodation(checkbox) {
+            var checkboxes = document.getElementsByName('worksheet_form[accommodation]')
+            checkboxes.forEach((item) => {
+                if (item !== checkbox) item.checked = false
+            })
+        }
+        function onlyOneBusyness(checkbox) {
+            var checkboxes = document.getElementsByName('job_form[busyness]')
+            checkboxes.forEach((item) => {
+                if (item !== checkbox) item.checked = false
+            })
+        }
 
-    $( "#worksheet_form" ).autocomplete({
-        source: function( request, response ) {
-            $.ajax({
-                url: "{{ path('api_cities') }}",
-                dataType: "json",
-                type: "POST",
-                data: {
-                    maxRows: 15,
-                    name: request.term
-                },
-                success: function( data ) {
-                    response( $.map( data, function( item ) {
-                        return {
-                            label: item.name,
-                            lat: item.lat,
-                            lng: item.lng,
-                            district: item.district
-                        }
-                    }));
-                }
-            });
-        },
-        minlength: 2
-    });
-</script>
+        $( "#worksheet_form" ).autocomplete({
+            source: function( request, response ) {
+                $.ajax({
+                    url: "{{ path('api_cities') }}",
+                    dataType: "json",
+                    type: "POST",
+                    data: {
+                        maxRows: 15,
+                        name: request.term
+                    },
+                    success: function( data ) {
+                        response( $.map( data, function( item ) {
+                            return {
+                                label: item.name,
+                                lat: item.lat,
+                                lng: item.lng,
+                                district: item.district
+                            }
+                        }));
+                    }
+                });
+            },
+            minlength: 2
+        });
+    </script>
 
     {% include 'partials/footer.html.twig' %}
 {% endblock %}
