@@ -95,7 +95,7 @@ class JobRepository extends ServiceEntityRepository
     /**
      * @param Job $job
      */
-    public function findByParams($category, $city, $district)
+    public function findByParams($category, $city, $district, $tasks)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('j')
@@ -113,6 +113,11 @@ class JobRepository extends ServiceEntityRepository
             $qb->andWhere($qb->expr()->eq('j.district', $district->getId()));
         } elseif ($city) {
             $qb->andWhere($qb->expr()->eq('j.city', $city->getId()));
+        }
+
+        if ($tasks) {
+            $qb->leftJoin('j.tasks', 't')
+                ->where($qb->expr()->in('t.id', [$tasks]));
         }
 
         return $qb->getQuery()->getResult();

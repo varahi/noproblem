@@ -146,7 +146,13 @@ class JobController extends AbstractController
             $category = null;
         }
 
-        $queryJobs = $jobRepository->findByParams($category, $city, $district);
+        if ($request->query->get('tag')) {
+            $tasks = implode(',', $request->query->get('tag'));
+        } else {
+            $tasks = null;
+        }
+
+        $queryJobs = $jobRepository->findByParams($category, $city, $district, $tasks);
         $jobs = $paginator->paginate(
             $queryJobs,
             $request->query->getInt('page', 1),

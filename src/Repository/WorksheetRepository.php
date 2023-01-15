@@ -65,7 +65,7 @@ class WorksheetRepository extends ServiceEntityRepository
     /**
      * @param Job $job
      */
-    public function findByParams($category, $city, $district)
+    public function findByParams($category, $city, $district, $tasks)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $expr = $qb->expr();
@@ -84,6 +84,11 @@ class WorksheetRepository extends ServiceEntityRepository
             $qb->andWhere($qb->expr()->eq('w.district', $district->getId()));
         } elseif ($city) {
             $qb->andWhere($qb->expr()->eq('w.city', $city->getId()));
+        }
+
+        if ($tasks) {
+            $qb->leftJoin('w.tasks', 't')
+                ->where($qb->expr()->in('t.id', [$tasks]));
         }
 
         return $qb->getQuery()->getResult();

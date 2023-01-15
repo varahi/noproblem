@@ -8,17 +8,22 @@
     <div class="inside_city">
         <div class="block_emp">
             <p>Город</p>
-            <select name="city" id="city">
-                <option>Выберите город</option>
+            <select name="city" id="city" required>
+                <option value="">Выберите город</option>
                 {% for city in cities %}
                     <option value="{{ city.id }}" {% if city.name == cityName %} selected {% endif %}>{{ city.name }}</option>
                 {% endfor %}
             </select>
         </div>
 
-{#        {% for tag in tags %}#}
-{#            {{ tag.name }}#}
-{#        {% endfor %}#}
+        <div class="input-select-multiple">
+            <p>Выберите дополнительные фильтры</p>
+            <select name="tag[]" multiple id="tags">
+                {% for tag in tags %}
+                    <option value="{{ tag.id }}">{{ tag.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
     </div>
     <div class="btn_try btn_try_side_filter">
@@ -30,5 +35,7 @@
     createDependableList ( '#city', '#district' );
     $('#city').change(function() {
         $('#district').prop('disabled', false);
+    });
+    $('.input-select-multiple select').select2({
     });
 </script>

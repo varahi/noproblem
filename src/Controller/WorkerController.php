@@ -138,7 +138,13 @@ class WorkerController extends AbstractController
             $category = null;
         }
 
-        $query = $worksheetRepository->findByParams($category, $city, $district);
+        if ($request->query->get('tag')) {
+            $tasks = implode(',', $request->query->get('tag'));
+        } else {
+            $tasks = null;
+        }
+
+        $query = $worksheetRepository->findByParams($category, $city, $district, $tasks);
         $worksheets = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
@@ -164,7 +170,6 @@ class WorkerController extends AbstractController
             'tags' => $tags,
             'lat' => $this->coordinateService->getLatArr($worksheets, $city),
             'lng' => $this->coordinateService->getLngArr($worksheets, $city),
-
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
