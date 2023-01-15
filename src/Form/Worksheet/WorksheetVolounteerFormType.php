@@ -5,6 +5,7 @@ namespace App\Form\Worksheet;
 use App\Entity\Accommodation;
 use App\Entity\AdditionalInfo;
 use App\Entity\Busyness;
+use App\Entity\City;
 use App\Entity\Education;
 use App\Entity\Worksheet;
 use App\Entity\Task;
@@ -209,6 +210,13 @@ class WorksheetVolounteerFormType extends AbstractType
                 'label' => false,
                 'translation_domain' => 'forms',
             ])
+            ->add('city', EntityType::class, [
+                'class' => City::class,
+                'multiple'  => false,
+                'expanded'  => false,
+                'label' => 'City',
+                'required' => true,
+            ])
 
 /*            ->add(
                 'passportSeries',
@@ -333,6 +341,7 @@ class WorksheetVolounteerFormType extends AbstractType
                     'data' => 'null'
                 ]
             )*/
+
         ;
     }
 

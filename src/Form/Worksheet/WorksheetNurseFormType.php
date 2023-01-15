@@ -5,6 +5,7 @@ namespace App\Form\Worksheet;
 use App\Entity\Accommodation;
 use App\Entity\AdditionalInfo;
 use App\Entity\Busyness;
+use App\Entity\City;
 use App\Entity\Worksheet;
 use App\Entity\Task;
 use App\Entity\Experience;
@@ -319,7 +320,13 @@ class WorksheetNurseFormType extends AbstractType
                     'data' => 'null'
                 ]
             )
-
+            ->add('city', EntityType::class, [
+                'class' => City::class,
+                'multiple'  => false,
+                'expanded'  => false,
+                'label' => 'City',
+                'required' => true,
+            ])
         ;
     }
 

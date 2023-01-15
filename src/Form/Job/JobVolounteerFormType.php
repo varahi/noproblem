@@ -6,6 +6,7 @@ use App\Entity\Accommodation;
 use App\Entity\AdditionalInfo;
 use App\Entity\Busyness;
 use App\Entity\Citizen;
+use App\Entity\City;
 use App\Entity\Experience;
 use App\Entity\Job;
 use App\Entity\Task;
@@ -138,6 +139,13 @@ class JobVolounteerFormType extends AbstractType
                 'multiple'  => true,
                 'expanded'  => true,
                 'label' => 'Citizen',
+                'required' => true,
+            ])
+            ->add('city', EntityType::class, [
+                'class' => City::class,
+                'multiple'  => false,
+                'expanded'  => false,
+                'label' => 'City',
                 'required' => true,
             ])
 

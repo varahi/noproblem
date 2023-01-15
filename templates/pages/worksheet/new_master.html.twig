@@ -41,7 +41,8 @@
                 <div class="abouts_creating_form grid_creating_form">
                     <div class="dom_creating_form">
                         <p class="required">Город</p>
-                        <input type="text" id="worksheet_form" name="worksheet_form[city]" required="required" placeholder="Ваш город" class="form-control">
+{#                        <input type="text" id="worksheet_form" name="worksheet_form[city]" required="required" placeholder="Ваш город" class="form-control">#}
+                        {{ form_widget(form.city) }}
                     </div>
                     <div class="dom_creating_form">
                         <p class="required">Район</p>
