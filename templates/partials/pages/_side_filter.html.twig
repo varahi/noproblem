@@ -20,7 +20,11 @@
             <p>Выберите дополнительные фильтры</p>
             <select name="tag[]" multiple id="tags">
                 {% for tag in tags %}
-                    <option value="{{ tag.id }}">{{ tag.name }}</option>
+                    {% if tag.id in tasks %}
+                        <option value="{{ tag.id }}" selected>{{ tag.name }}</option>
+                    {% else %}
+                        <option value="{{ tag.id }}">{{ tag.name }}</option>
+                    {% endif %}
                 {% endfor %}
             </select>
         </div>

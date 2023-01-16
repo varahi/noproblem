@@ -116,8 +116,9 @@ class JobRepository extends ServiceEntityRepository
         }
 
         if ($tasks) {
-            $qb->leftJoin('j.tasks', 't')
-                ->where($qb->expr()->in('t.id', [$tasks]));
+            $qb
+                ->leftJoin('j.tasks', 't')
+                ->andWhere($qb->expr()->in('t.id', [$tasks]));
         }
 
         return $qb->getQuery()->getResult();

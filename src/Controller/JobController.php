@@ -114,8 +114,6 @@ class JobController extends AbstractController
         $slug = $request->query->get('category');
         $cities = $cityRepository->findLimitOrder('999', '0');
         $districts = $districtRepository->findAll();
-        $tags = $taskRepository->findAll();
-        //$categories = $categoryRepository->findAll();
         $categories = $categoryRepository->findLimitOrder('4', '0');
 
         // Get different get params
@@ -144,6 +142,12 @@ class JobController extends AbstractController
             $category = $categoryRepository->findOneBy(['slug' => $slug]);
         } else {
             $category = null;
+        }
+
+        if ($category !==null) {
+            $tags = $taskRepository->findByCategory($category);
+        } else {
+            $tags = $taskRepository->findLimitOrder('999', '0');
         }
 
         if ($request->query->get('tag')) {
@@ -183,6 +187,7 @@ class JobController extends AbstractController
             'slug' => $slug,
             'cityName' => $cityName,
             'tags' => $tags,
+            'tasks' => $tasks,
             'lat' => $this->coordinateService->getLatArr($jobs, $city),
             'lng' => $this->coordinateService->getLngArr($jobs, $city),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()

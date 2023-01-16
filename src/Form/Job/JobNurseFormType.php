@@ -27,7 +27,7 @@ class JobNurseFormType extends AbstractType
     {
         $categoryId = $options['categoryId'];
         $builder
-            ->add(
+/*            ->add(
                 'name',
                 TextType::class,
                 [
@@ -39,7 +39,7 @@ class JobNurseFormType extends AbstractType
                     'label' => false,
                     'translation_domain' => 'forms',
                 ]
-            )
+            )*/
             ->add(
                 'age',
                 TextType::class,
@@ -62,14 +62,14 @@ class JobNurseFormType extends AbstractType
                 ],
             ])
 
-            ->add('isFree', CheckboxType::class, [
+/*            ->add('isFree', CheckboxType::class, [
                 'mapped' => false,
                 'required' => false,
                 'label' => false,
                 'attr' => [
                     'class' => 'white',
                 ],
-            ])
+            ])*/
             ->add('experience', EntityType::class, [
                 'class' => Experience::class,
                 'multiple'  => false,
@@ -190,7 +190,7 @@ class JobNurseFormType extends AbstractType
                 'required' => true,
             ])
 
-            ->add('image', FileType::class, [
+/*            ->add('image', FileType::class, [
                 'required' => false,
                 'mapped' => false,
                 'constraints' => [
@@ -213,7 +213,8 @@ class JobNurseFormType extends AbstractType
                 ],
                 'label' => false,
                 'translation_domain' => 'forms',
-            ])
+            ])*/
+
             ->add('city', EntityType::class, [
                 'class' => City::class,
                 'multiple'  => false,

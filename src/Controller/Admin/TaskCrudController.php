@@ -32,6 +32,7 @@ class TaskCrudController extends AbstractCrudController
     {
         //yield BooleanField::new('isHidden');
         yield IntegerField::new('id')->setFormTypeOption('disabled', 'disabled');
+        yield BooleanField::new('hidden');
         yield TextField::new('name')->setColumns('col-md-10');
         yield AssociationField::new('category')->setColumns('col-md-10');
     }

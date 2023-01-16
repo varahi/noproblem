@@ -27,19 +27,19 @@ class JobVolounteerFormType extends AbstractType
     {
         $categoryId = $options['categoryId'];
         $builder
-            ->add(
-                'name',
-                TextType::class,
-                [
-                    'required' => true,
-                    'attr' => [
-                        'placeholder' => 'Contact Full Name',
-                        'class' => 'text_input',
-                    ],
-                    'label' => false,
-                    'translation_domain' => 'forms',
-                ]
-            )
+//            ->add(
+//                'name',
+//                TextType::class,
+//                [
+//                    'required' => true,
+//                    'attr' => [
+//                        'placeholder' => 'Contact Full Name',
+//                        'class' => 'text_input',
+//                    ],
+//                    'label' => false,
+//                    'translation_domain' => 'forms',
+//                ]
+//            )
             ->add(
                 'age',
                 TextType::class,
@@ -62,14 +62,14 @@ class JobVolounteerFormType extends AbstractType
                 ],
             ])
 
-            ->add('isFree', CheckboxType::class, [
-                'mapped' => false,
-                'required' => false,
-                'label' => false,
-                'attr' => [
-                    'class' => 'white',
-                ],
-            ])
+//            ->add('isFree', CheckboxType::class, [
+//                'mapped' => false,
+//                'required' => false,
+//                'label' => false,
+//                'attr' => [
+//                    'class' => 'white',
+//                ],
+//            ])
             ->add('experience', EntityType::class, [
                 'class' => Experience::class,
                 'multiple'  => false,
@@ -107,19 +107,21 @@ class JobVolounteerFormType extends AbstractType
                     'class' => '_white',
                 ],
             ])
-            ->add(
-                'anotherTask',
-                TextType::class,
-                [
-                    'required' => false,
-                    'attr' => [
-                        'placeholder' => 'Другое',
-                        'class' => 'other_help',
-                    ],
-                    'label' => false,
-                    'translation_domain' => 'forms',
-                ]
-            )
+
+//            ->add(
+//                'anotherTask',
+//                TextType::class,
+//                [
+//                    'required' => false,
+//                    'attr' => [
+//                        'placeholder' => 'Свой вариант',
+//                        'class' => 'other_help',
+//                    ],
+//                    'label' => false,
+//                    'translation_domain' => 'forms',
+//                ]
+//            )
+
             ->add('tasks', EntityType::class, [
                 'class' => Task::class,
                 'multiple'  => true,
@@ -185,30 +187,30 @@ class JobVolounteerFormType extends AbstractType
                 'required' => true,
             ])
 
-            ->add('image', FileType::class, [
-                'required' => false,
-                'mapped' => false,
-                'constraints' => [
-                    new Image([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'image/gif',
-                            'image/jpeg',
-                            'image/pjpeg',
-                            'image/png',
-                            'image/webp',
-                            'image/vnd.wap.wbmp'
-                        ],
-                        'mimeTypesMessage' => 'Please upload a valid image document',
-                    ])
-                ],
-                'attr' => [
-                    //'onchange' => 'readURL(this);'
-                    //'class' => 'field field__file',
-                ],
-                'label' => false,
-                'translation_domain' => 'forms',
-            ])
+//            ->add('image', FileType::class, [
+//                'required' => false,
+//                'mapped' => false,
+//                'constraints' => [
+//                    new Image([
+//                        'maxSize' => '1024k',
+//                        'mimeTypes' => [
+//                            'image/gif',
+//                            'image/jpeg',
+//                            'image/pjpeg',
+//                            'image/png',
+//                            'image/webp',
+//                            'image/vnd.wap.wbmp'
+//                        ],
+//                        'mimeTypesMessage' => 'Please upload a valid image document',
+//                    ])
+//                ],
+//                'attr' => [
+//                    //'onchange' => 'readURL(this);'
+//                    //'class' => 'field field__file',
+//                ],
+//                'label' => false,
+//                'translation_domain' => 'forms',
+//            ])
 //            ->add(
 //                'clientAge',
 //                ChoiceType::class,

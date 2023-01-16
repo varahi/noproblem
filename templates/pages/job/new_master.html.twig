@@ -21,17 +21,17 @@
                 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 {#                {{ form_widget(form) }}#}
 
-                <div class="_but_creating_form">
-                    <label> <p class="required">Фотография:</p>
-                        {{ form_row(form.image) }}
-                    </label>
-                </div><br />
+{#                <div class="_but_creating_form">#}
+{#                    <label> <p class="required">Фотография:</p>#}
+{#                        {{ form_row(form.image) }}#}
+{#                    </label>#}
+{#                </div><br />#}
 
                 <div class="abouts_creating_form grid_creating_form">
-                    <div class="dom_creating_form">
-                        <p class="required">ФИО контактного лица</p>
-                        {{ form_row(form.name) }}
-                    </div>
+{#                    <div class="dom_creating_form">#}
+{#                        <p class="required">ФИО контактного лица</p>#}
+{#                        {{ form_row(form.name) }}#}
+{#                    </div>#}
                     <div class="dom_creating_form">
                         <p class="required">Возраст</p>
                         {{ form_row(form.age) }}
@@ -51,13 +51,13 @@
                 </div>
 
                 <div class="abouts_creating_form">
-                    <p>Когда вы можете приступить к работе</p>
+                    <p>Когда нужно приступить к работе</p>
                     <div class="date_creating_form">
                         <input type="date" id="worksheet_form_startDate" name="worksheet_form[startDate]" class="text_input date"><br />
                         <div class="but_creating_form">
                             <label for="checkbox" class="work_start_now">Незамедлительно
                                 {{ form_widget(form.startNow) }}
-                                <span class="_checkmark"></span>
+                                <span class="checkmark"></span>
                             </label>
                         </div>
                     </div>
@@ -65,12 +65,12 @@
 
                 <div class="abouts_creating_form">
                     <div class="date_creating_form">
-                        <div class="but_creating_form">
-                            <label for="checkbox" class="work_start_now">Свободен для работы
-                                {{ form_widget(form.isFree) }}
-                                <span class="_checkmark"></span>
-                            </label>
-                        </div>
+{#                        <div class="but_creating_form">#}
+{#                            <label for="checkbox" class="work_start_now">Свободен для работы#}
+{#                                {{ form_widget(form.isFree) }}#}
+{#                                <span class="_checkmark"></span>#}
+{#                            </label>#}
+{#                        </div>#}
 
                         <div class="abouts_creating_form">
                             <p class="required">Опыт работы</p>

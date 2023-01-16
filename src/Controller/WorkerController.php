@@ -138,6 +138,12 @@ class WorkerController extends AbstractController
             $category = null;
         }
 
+        if ($category !==null) {
+            $tags = $taskRepository->findByCategory($category);
+        } else {
+            $tags = $taskRepository->findLimitOrder('999', '0');
+        }
+
         if ($request->query->get('tag')) {
             $tasks = implode(',', $request->query->get('tag'));
         } else {
@@ -168,6 +174,7 @@ class WorkerController extends AbstractController
             'slug' => $slug,
             'cityName' => $cityName,
             'tags' => $tags,
+            'tasks' => $tasks,
             'lat' => $this->coordinateService->getLatArr($worksheets, $city),
             'lng' => $this->coordinateService->getLngArr($worksheets, $city),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
