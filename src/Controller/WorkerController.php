@@ -184,6 +184,7 @@ class WorkerController extends AbstractController
             'tasks' => $tasks,
             'ages' => $ages,
             'citizens' => $citizens,
+            'hasCategory' => $request->query->has('category'),
             'lat' => $this->coordinateService->getLatArr($worksheets, $city),
             'lng' => $this->coordinateService->getLngArr($worksheets, $city),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()

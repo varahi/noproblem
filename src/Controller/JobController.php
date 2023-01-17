@@ -119,20 +119,28 @@ class JobController extends AbstractController
         $citizens = $citizenRepository->findAll();
 
         // Get different get params
-        $cityId = trim($request->query->get('city'));
-        $districtId = trim($request->query->get('district'));
-
-        // If city in session not null // else get city from POST
-        $cityRequest = $request->query->get('city');
-        if (isset($cityRequest) && !empty($cityRequest)) {
-            $city = $cityRepository->findOneBy(['id' => $cityId]);
+        $params = $request->query->all();
+        if (isset($params['city']) && $params['city'] !=='') {
+            $city = $cityRepository->findOneBy(['id' => $params['city']]);
             $cityName = $city->getName();
         } else {
+            $city = null;
             $cityName = $this->sessionService->getCity();
-            $city = $cityRepository->findOneBy(['name' => $cityName]);
+        }
+        if (isset($params['district']) && $params['district'] !=='') {
+            $district = $districtRepository->findOneBy(['id' => $params['district']]);
+        }
+        if (isset($params['citizen']) && $params['citizen'] !=='') {
+            $citizen = $citizenRepository->findOneBy(['id' => $params['citizen']]);
+        } else {
+            $citizen = null;
         }
 
-        $district = $districtRepository->findOneBy(['id' => $districtId]);
+        $now = $params['now'] ?? '0';
+        $age = $params['age'] ?? '';
+        $payment = $params['payment'] ?? '';
+        $cityId = trim($request->query->get('city'));
+        $districtId = trim($request->query->get('district'));
 
         if ($this->security->getUser()) {
             $user = $this->security->getUser();
@@ -158,7 +166,7 @@ class JobController extends AbstractController
             $tasks = null;
         }
 
-        $queryJobs = $jobRepository->findByParams($category, $city, $district, $tasks);
+        $queryJobs = $jobRepository->findByParams($category, $tasks, $city, $citizen, $age, $now, $payment, $district = '');
         $jobs = $paginator->paginate(
             $queryJobs,
             $request->query->getInt('page', 1),
@@ -178,6 +186,7 @@ class JobController extends AbstractController
             $ages[] = $i + 18;
         }
 
+
         $featuredJobs = $this->getFeaturedJobs($user);
         return new Response($this->twig->render('pages/job/all_jobs.html.twig', [
             'cities' => $cities,
@@ -196,6 +205,7 @@ class JobController extends AbstractController
             'tasks' => $tasks,
             'ages' => $ages,
             'citizens' => $citizens,
+            'hasCategory' => $request->query->has('category'),
             'lat' => $this->coordinateService->getLatArr($jobs, $city),
             'lng' => $this->coordinateService->getLngArr($jobs, $city),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
