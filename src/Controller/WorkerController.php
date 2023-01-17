@@ -17,6 +17,7 @@ use App\Form\Worksheet\WorksheetPsychologistFormType;
 use App\Form\Worksheet\WorksheetVolounteerFormType;
 use App\Repository\BusynessRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\CitizenRepository;
 use App\Repository\CityRepository;
 use App\Repository\DistrictRepository;
 use App\Repository\ReviewRepository;
@@ -102,7 +103,8 @@ class WorkerController extends AbstractController
         DistrictRepository $districtRepository,
         WorksheetRepository $worksheetRepository,
         TaskRepository $taskRepository,
-        PaginatorInterface $paginator
+        PaginatorInterface $paginator,
+        CitizenRepository $citizenRepository
     ): Response {
         $slug = $request->query->get('category');
         $cities = $cityRepository->findLimitOrder('999', '0');
@@ -110,6 +112,7 @@ class WorkerController extends AbstractController
         $tags = $taskRepository->findAll();
         //$categories = $categoryRepository->findAll();
         $categories = $categoryRepository->findLimitOrder('4', '0');
+        $citizens = $citizenRepository->findAll();
 
         $cityId = trim($request->query->get('city'));
         $districtId = trim($request->query->get('district'));
@@ -157,6 +160,10 @@ class WorkerController extends AbstractController
             self::LIMIT_PER_PAGE
         );
 
+        for ($i = 0; $i < 48; ++$i) {
+            $ages[] = $i + 18;
+        }
+
         // Get liked ancets
         $featuredProfiles = $this->getFeaturedProfiles($user);
 
@@ -175,6 +182,8 @@ class WorkerController extends AbstractController
             'cityName' => $cityName,
             'tags' => $tags,
             'tasks' => $tasks,
+            'ages' => $ages,
+            'citizens' => $citizens,
             'lat' => $this->coordinateService->getLatArr($worksheets, $city),
             'lng' => $this->coordinateService->getLngArr($worksheets, $city),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()

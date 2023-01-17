@@ -109,12 +109,14 @@ class JobController extends AbstractController
         CategoryRepository $categoryRepository,
         JobRepository $jobRepository,
         TaskRepository $taskRepository,
-        PaginatorInterface $paginator
+        PaginatorInterface $paginator,
+        CitizenRepository $citizenRepository
     ): Response {
         $slug = $request->query->get('category');
         $cities = $cityRepository->findLimitOrder('999', '0');
         $districts = $districtRepository->findAll();
         $categories = $categoryRepository->findLimitOrder('4', '0');
+        $citizens = $citizenRepository->findAll();
 
         // Get different get params
         $cityId = trim($request->query->get('city'));
@@ -172,6 +174,10 @@ class JobController extends AbstractController
             }
         }
 
+        for ($i = 0; $i < 48; ++$i) {
+            $ages[] = $i + 18;
+        }
+
         $featuredJobs = $this->getFeaturedJobs($user);
         return new Response($this->twig->render('pages/job/all_jobs.html.twig', [
             'cities' => $cities,
@@ -188,6 +194,8 @@ class JobController extends AbstractController
             'cityName' => $cityName,
             'tags' => $tags,
             'tasks' => $tasks,
+            'ages' => $ages,
+            'citizens' => $citizens,
             'lat' => $this->coordinateService->getLatArr($jobs, $city),
             'lng' => $this->coordinateService->getLngArr($jobs, $city),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()

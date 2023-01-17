@@ -1,0 +1,115 @@
+<script src="{{ asset('assets/js/dependableList.js') }}"></script>
+
+<form class="form-search" autocomplete="off" action="" method="get">
+    {% if slug %}
+        <input type="hidden" name="category"  value="{{ slug }}">
+    {% endif %}
+
+    <div class="inside_city">
+        <div class="block_emp">
+            <p>Город</p>
+            <select name="city" id="city" required>
+                <option value="">Выберите город</option>
+                {% for city in cities %}
+                    <option value="{{ city.id }}" {% if city.name == cityName %} selected {% endif %}>{{ city.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="block_emp">
+            <p>Район</p>
+            <select name="district" disabled id="district">
+                <option>Выберите район</option>
+                {% for district in districts %}
+                    <option data-list-id="{{ district.city.id }}" value="{{ district.id }}" {% if district.id == districtId %} selected {% endif %}>
+                        {{ district.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="block_emp">
+            <p>Возраст</p>
+            <select name="age" id="age">
+                <option value="">Выберите возраст</option>
+                {% for age in ages %}
+                    <option value="{{ age }}" {% if app.request.query.get('age') == age %} selected {% endif %}>
+                        От {{ age }}-ти лет
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="block_emp">
+            <p>Гражданство</p>
+            <select name="citizen" id="citizen">
+                <option value="">Выберите гражданство</option>
+                {% for citizen in citizens %}
+                    <option value="{{ citizen.id }}" {% if app.request.query.get('citizen') == citizen.id %} selected {% endif %}>
+                        {{ citizen.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="block_emp">
+            <p>Когда нужно приступить к работе</p>
+            <div class="date_creating_form">
+                <input type="date" id="worksheet_form_startDate" name="date" class="text_input date" value="{{ app.request.query.get('date') }}"><br />
+                <div class="but_creating_form">
+                    <label for="checkbox" class="work_start_now">Незамедлительно
+                        <input type="checkbox" id="job_volounteer_form_startNow" name="now" class="white" value="1"
+                                {% if app.request.query.get('now') == 1 %} checked {% endif %} />
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <div class="block_emp">
+            <p>Оплата</p>
+            <fieldset id="payment">
+                <label for="radio" class="work_start_now">Почасовая
+                    <input type="radio" id="job_volounteer_form_startNow" name="payment" class="white" value="1"
+                            {% if app.request.query.get('payment') == 1 %} checked {% endif %} />
+                    <span class="checkmark"></span>
+                </label>
+                <label for="radio" class="work_start_now">Помесячная
+                    <input type="radio" id="job_volounteer_form_startNow" name="payment" class="white" value="2"
+                            {% if app.request.query.get('payment') == 2 %} checked {% endif %} />
+                    <span class="checkmark"></span>
+                </label>
+            </fieldset>
+        </div>
+
+
+        {#        <div class="block_emp">#}
+{#            <div class="input-select-multiple">#}
+{#                <p>Выберите дополнительные фильтры</p>#}
+{#                <select name="tag[]" multiple id="tags">#}
+{#                    {% for tag in tags %}#}
+{#                        {% if tag.id in tasks %}#}
+{#                            <option value="{{ tag.id }}" selected>{{ tag.name }}</option>#}
+{#                        {% else %}#}
+{#                            <option value="{{ tag.id }}">{{ tag.name }}</option>#}
+{#                        {% endif %}#}
+{#                    {% endfor %}#}
+{#                </select>#}
+{#            </div>#}
+{#        </div>#}
+
+    </div>
+    <div class="btn_try btn_try_side_filter">
+        <button type="submit" class="btn">Поиск</button>
+    </div>
+</form>
+
+<script>
+    createDependableList ( '#city', '#district' );
+    $('#city').change(function() {
+        $('#district').prop('disabled', false);
+    });
+    $('.input-select-multiple select').select2({
+    });
+</script>
