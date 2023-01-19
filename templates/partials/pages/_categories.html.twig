@@ -2,11 +2,21 @@
     {% for category in categories %}
         <div class="click_master">
 
+            {% if jobs is defined and jobs == 1 %}
                 {% if hasCategory == true %}
                     <a href="{{ app.request.requesturi }}&category={{ category.slug }}">{{ category.name }}</a>
                 {% else %}
-                        <a href="{{ path('app_all_jobs', { category: category.slug}) }}" class="">{{ category.name }}</a>
+                    <a href="{{ path('app_all_jobs', { category: category.slug}) }}" class="">{{ category.name }}</a>
                 {% endif %}
+            {% endif %}
+
+            {% if workers is defined and workers == 1 %}
+                {% if hasCategory == true %}
+                    <a href="{{ app.request.requesturi }}&category={{ category.slug }}">{{ category.name }}</a>
+                {% else %}
+                    <a href="{{ path('app_all_workers', { category: category.slug}) }}" class="">{{ category.name }}</a>
+                {% endif %}
+            {% endif %}
 
 
 {#            {% if jobs is defined and jobs == 1 %}#}

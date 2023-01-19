@@ -114,6 +114,8 @@ class WorkerController extends AbstractController
         $categories = $categoryRepository->findLimitOrder('4', '0');
         $citizens = $citizenRepository->findAll();
 
+        $params = $request->query->all();
+
         $cityId = trim($request->query->get('city'));
         $districtId = trim($request->query->get('district'));
         $district = $districtRepository->findOneBy(['id' => $districtId]);
@@ -128,6 +130,11 @@ class WorkerController extends AbstractController
             $city = $cityRepository->findOneBy(['name' => $cityName]);
         }
 
+        if (isset($params['citizen']) && $params['citizen'] !=='') {
+            $citizen = $citizenRepository->findOneBy(['id' => $params['citizen']]);
+        } else {
+            $citizen = null;
+        }
 
         if ($this->security->getUser()) {
             $user = $this->security->getUser();
@@ -153,7 +160,12 @@ class WorkerController extends AbstractController
             $tasks = null;
         }
 
-        $query = $worksheetRepository->findByParams($category, $city, $district, $tasks);
+        $now = $params['now'] ?? '0';
+        $age = $params['age'] ?? '';
+        $payment = $params['payment'] ?? '';
+
+        //s$query = $worksheetRepository->findByParams($category, $city, $district, $tasks);
+        $query = $worksheetRepository->findByParams($category, $tasks, $city, $citizen, $age, $now, $payment, $district = '');
         $worksheets = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
