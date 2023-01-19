@@ -76,6 +76,7 @@ class ListWorkController extends AbstractController
         $now = $params['now'] ?? '0';
         $age = $params['age'] ?? '';
         $payment = $params['payment'] ?? '';
+        $busyness = $params['busyness'] ?? '';
 
         $cityId = trim($request->query->get('city'));
         $districtId = trim($request->query->get('district'));
@@ -108,7 +109,7 @@ class ListWorkController extends AbstractController
             $tasks = null;
         }
 
-        $query = $worksheetRepository->findByParams($category, $tasks, $city, $citizen, $age, $now, $payment, $district);
+        $query = $worksheetRepository->findByParams($category, $tasks, $city, $citizen, $age, $now, $payment, $district, $busyness);
         $worksheets = $paginator->paginate($query, $request->query->getInt('page', 1), self::LIMIT_PER_PAGE);
 
         for ($i = 0; $i < 48; ++$i) {

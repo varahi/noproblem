@@ -65,10 +65,10 @@ class WorksheetRepository extends ServiceEntityRepository
     /**
      * @param Job $job
      */
-    public function findByParams($category, $tasks, $city, $citizen, $age, $now, $payment, $district = '')
+    public function findByParams($category, $tasks, $city, $citizen, $age, $now, $payment, $district, $busyness)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $expr = $qb->expr();
+        //$expr = $qb->expr();
         $qb->select('w')
             ->from(self::TABLE, 'w')
             ->orderBy('w.created', 'DESC')
@@ -88,15 +88,21 @@ class WorksheetRepository extends ServiceEntityRepository
 
         if ($tasks) {
             $qb->leftJoin('w.tasks', 't')
-                ->where($qb->expr()->in('t.id', [$tasks]));
+                ->andWhere($qb->expr()->in('t.id', $tasks));
         }
 
         if ($citizen) {
-            $qb->leftJoin('w.citizen', 'citizen')->andWhere($qb->expr()->in('citizen.id', [$citizen->getId()]));
+            $qb->leftJoin('w.citizen', 'citizen')
+                ->andWhere($qb->expr()->in('citizen.id', [$citizen->getId()]));
         }
 
         if ($age) {
             $qb->andWhere($qb->expr()->gte('w.age', $age));
+        }
+
+        if ($busyness) {
+            $qb->leftJoin('w.busynesses', 'b')
+                ->andWhere($qb->expr()->eq('b.id', $busyness));
         }
 
         $qb->andWhere($qb->expr()->eq('w.startNow', $now));

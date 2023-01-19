@@ -83,21 +83,43 @@
             </fieldset>
         </div>
 
+        {% if category is not null %}
+            <br />
+            <div class="block_emp">
+                <div class="input-select-multiple">
+                    <p>Требуемые навыки</p>
+                    <select name="tag[]" multiple id="tags">
+                        {% for tag in tags %}
+                            {% if tag.id in tasks %}
+                                <option value="{{ tag.id }}" selected>{{ tag.name }}</option>
+                            {% else %}
+                                <option value="{{ tag.id }}">{{ tag.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
 
-        {#        <div class="block_emp">#}
-{#            <div class="input-select-multiple">#}
-{#                <p>Выберите дополнительные фильтры</p>#}
-{#                <select name="tag[]" multiple id="tags">#}
-{#                    {% for tag in tags %}#}
-{#                        {% if tag.id in tasks %}#}
-{#                            <option value="{{ tag.id }}" selected>{{ tag.name }}</option>#}
-{#                        {% else %}#}
-{#                            <option value="{{ tag.id }}">{{ tag.name }}</option>#}
-{#                        {% endif %}#}
-{#                    {% endfor %}#}
-{#                </select>#}
-{#            </div>#}
-{#        </div>#}
+            <br />
+            <div class="block_emp">
+                <div class="input-select-multiple">
+                    <p>Занятость</p>
+                    <fieldset id="busyness" style="border: none">
+                        <label for="radio" class="work_start_now">Полная занятость
+                            <input type="radio" id="job_volounteer_form_busyness" name="busyness" class="white" value="1"
+                                    {% if app.request.query.get('busyness') == 1 %} checked {% endif %} />
+                            <span class="checkmark"></span>
+                        </label>
+                        <label for="radio" class="work_start_now">Частичная занятость
+                            <input type="radio" id="job_volounteer_form_busyness" name="busyness" class="white" value="2"
+                                    {% if app.request.query.get('busyness') == 2 %} checked {% endif %} />
+                            <span class="checkmark"></span>
+                        </label>
+                    </fieldset>
+                </div>
+            </div>
+        {% endif %}
+
 
     </div>
     <div class="btn_try btn_try_side_filter">

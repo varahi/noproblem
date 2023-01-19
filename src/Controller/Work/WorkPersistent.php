@@ -6,6 +6,7 @@ use App\Controller\Traits\AbstractTrait;
 use App\Controller\Traits\DataTrait;
 use App\Controller\Traits\JobTrait;
 use App\Entity\Category;
+use App\Entity\User;
 use App\Entity\Worksheet;
 use App\Form\Worksheet\WorksheetFormType;
 use App\Form\Worksheet\WorksheetMasterFormType;
@@ -38,6 +39,10 @@ use Symfony\Component\Routing\Annotation\Route;
 final class WorkPersistent extends AbstractController
 {
     use DataTrait;
+
+    use AbstractTrait;
+
+    use JobTrait;
 
     public const ROLE_EMPLOYEE = 'ROLE_EMPLOYEE';
 
@@ -148,6 +153,7 @@ final class WorkPersistent extends AbstractController
         if ($form->isSubmitted()) {
             $this->updateFields(
                 $request,
+                $category,
                 $form,
                 $worksheet,
                 $cityRepository,
@@ -173,63 +179,31 @@ final class WorkPersistent extends AbstractController
         }
 
         if ($category->getId() == self::CATEGORY_PSYCHOLOGIST) {
-            return $this->render('pages/worksheet/new_psychologist.html.twig', [
-                'user' => $user,
-                'form' => $form->createView(),
-                'cities' => $cities,
-                'districts' => $districts,
-                'tasks' => $tasks,
-                'busynessess' => $busynessess,
-                'cityName' => $this->sessionService->getCity(),
-                'ticketForm' => $this->modalForms->ticketForm($request)->createView()
-            ]);
+            $templateName = 'new_psychologist.html.twig';
         } elseif ($category->getId() == self::CATEGORY_VOLOUNTEER) {
-            return $this->render('pages/worksheet/new_volunteer.html.twig', [
-                'user' => $user,
-                'form' => $form->createView(),
-                'cities' => $cities,
-                'districts' => $districts,
-                'tasks' => $tasks,
-                'busynessess' => $busynessess,
-                'cityName' => $this->sessionService->getCity(),
-                'ticketForm' => $this->modalForms->ticketForm($request)->createView()
-            ]);
+            $templateName = 'new_volunteer.html.twig';
         } elseif ($category->getId() == self::CATEGORY_NANNY) {
-            return $this->render('pages/worksheet/new_nanny.html.twig', [
-                'user' => $user,
-                'form' => $form->createView(),
-                'cities' => $cities,
-                'districts' => $districts,
-                'tasks' => $tasks,
-                'busynessess' => $busynessess,
-                'cityName' => $this->sessionService->getCity(),
-                'ticketForm' => $this->modalForms->ticketForm($request)->createView()
-            ]);
+            $templateName = 'new_nanny.html.twig';
         } elseif ($category->getId() == self::CATEGORY_NURSE) {
-            return $this->render('pages/worksheet/new_nurse.html.twig', [
-                'user' => $user,
-                'form' => $form->createView(),
-                'cities' => $cities,
-                'districts' => $districts,
-                'tasks' => $tasks,
-                'busynessess' => $busynessess,
-                'cityName' => $this->sessionService->getCity(),
-                'ticketForm' => $this->modalForms->ticketForm($request)->createView()
-            ]);
+            $templateName = 'new_nurse.html.twig';
         } elseif ($category->getId() == self::CATEGORY_MASTER) {
-            return $this->render('pages/worksheet/new_master.html.twig', [
-                'user' => $user,
-                'form' => $form->createView(),
-                'cities' => $cities,
-                'districts' => $districts,
-                'tasks' => $tasks,
-                'busynessess' => $busynessess,
-                'cityName' => $this->sessionService->getCity(),
-                'ticketForm' => $this->modalForms->ticketForm($request)->createView()
-            ]);
+            $templateName = 'new_master.html.twig';
         } else {
             // Redirect
         }
+
+        //return $this->render('pages/worksheet/new_psychologist.html.twig', [
+
+        return $this->render('pages/worksheet/' . $templateName, [
+            'user' => $user,
+            'form' => $form->createView(),
+            'cities' => $cities,
+            'districts' => $districts,
+            'tasks' => $tasks,
+            'busynessess' => $busynessess,
+            'cityName' => $this->sessionService->getCity(),
+            'ticketForm' => $this->modalForms->ticketForm($request)->createView()
+        ]);
     }
 
     /**
@@ -288,6 +262,7 @@ final class WorkPersistent extends AbstractController
                 if ($form->isSubmitted()) {
                     $this->updateFields(
                         $request,
+                        $category = '',
                         $form,
                         $worksheet,
                         $cityRepository,
@@ -347,6 +322,7 @@ final class WorkPersistent extends AbstractController
      */
     private function updateFields(
         Request $request,
+        $category,
         $form,
         Worksheet $worksheet,
         CityRepository $cityRepository,
@@ -364,17 +340,21 @@ final class WorkPersistent extends AbstractController
             $worksheet->setStartDate($startDate);
         }
 
+        if (isset($post['category']) && $post['category'] !=='') {
+            $category = $entityManager->getRepository(Category::class)->findOneBy(['id' => $post['category']]) ?? null;
+        }
+        $worksheet->setCategory($category);
+
         /*if ($post['city'] !=='') {
             $city = $cityRepository->findOneBy(['id' => $post['city']]);
             $worksheet->setCity($city);
         }*/
 
-        $city = $cityRepository->findOneBy(['name' => $post['city']]);
-        if ($city == null) {
-            $city = $this->setNewCity($request, 'worksheet_form');
-        }
-
-        $worksheet->setCity($city);
+        //$city = $cityRepository->findOneBy(['name' => $post['city']]);
+        //if ($city == null) {
+        //    $city = $this->setNewCity($request, 'worksheet_form');
+        //}
+        //$worksheet->setCity($city);
 
         if (isset($post['district']) && $post['district'] !=='') {
             $district = $districtRepository->findOneBy(['id' => $post['district']]);
