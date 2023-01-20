@@ -1,44 +1,46 @@
 <?php
 
-namespace App\Controller\Work;
+namespace App\Controller\Job;
 
+use App\Controller\Traits\AbstractTrait;
+use App\Controller\Traits\DataTrait;
 use App\Controller\Traits\JobTrait;
 use App\Repository\CategoryRepository;
 use App\Repository\CitizenRepository;
 use App\Repository\CityRepository;
 use App\Repository\DistrictRepository;
+use App\Repository\JobRepository;
 use App\Repository\TaskRepository;
-use App\Repository\WorksheetRepository;
 use App\Service\CoordinateService;
 use App\Service\ModalForms;
 use App\Service\SessionService;
 use Doctrine\Persistence\ManagerRegistry;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 use Twig\Environment;
-use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
+use App\ImageOptimizer;
 
-class ListWorkController extends AbstractController
+class ListJobController extends AbstractController
 {
     use JobTrait;
 
+    use DataTrait;
+
+    use AbstractTrait;
+
     public const LIMIT_PER_PAGE = '10';
 
-    /**
-     * @param Security $security
-     * @param Environment $twig
-     * @param ManagerRegistry $doctrine
-     * @param ModalForms $modalForms
-     * @param SessionService $sessionService
-     */
     public function __construct(
         Security $security,
         Environment $twig,
         ManagerRegistry $doctrine,
         ModalForms $modalForms,
+        ImageOptimizer $imageOptimizer,
+        string $targetDirectory,
         SessionService $sessionService,
         CoordinateService $coordinateService
     ) {
@@ -46,26 +48,28 @@ class ListWorkController extends AbstractController
         $this->twig = $twig;
         $this->doctrine = $doctrine;
         $this->modalForms = $modalForms;
+        $this->imageOptimizer = $imageOptimizer;
+        $this->targetDirectory = $targetDirectory;
         $this->sessionService = $sessionService;
         $this->coordinateService = $coordinateService;
     }
 
-
     /**
-     * @Route("/workers", name="app_all_workers")
+     *
+     * @Route("/vacancies", name="app_all_jobs")
      */
-    public function allWorkers(
+    public function allJobs(
         Request $request,
-        CategoryRepository $categoryRepository,
         CityRepository $cityRepository,
         DistrictRepository $districtRepository,
-        WorksheetRepository $worksheetRepository,
+        CategoryRepository $categoryRepository,
+        JobRepository $jobRepository,
         TaskRepository $taskRepository,
         PaginatorInterface $paginator,
         CitizenRepository $citizenRepository
     ): Response {
         $slug = $request->query->get('category');
-        //$tags = $taskRepository->findAll();
+        $districts = $districtRepository->findAll();
 
         // Main params
         $user = $this->security->getUser() ?? null;
@@ -109,16 +113,30 @@ class ListWorkController extends AbstractController
             $tasks = null;
         }
 
-        $query = $worksheetRepository->findByParams($category, $tasks, $city, $citizen, $age, $now, $payment, $district, $busyness);
-        $worksheets = $paginator->paginate($query, $request->query->getInt('page', 1), self::LIMIT_PER_PAGE);
+        $queryJobs = $jobRepository->findByParams($category, $tasks, $city, $citizen, $age, $now, $payment, $district, $busyness);
+        $jobs = $paginator->paginate(
+            $queryJobs,
+            $request->query->getInt('page', 1),
+            self::LIMIT_PER_PAGE
+        );
+
+        // Resize avatar if exist
+        if ($jobs) {
+            foreach ($jobs as $job) {
+                if ($job->getOwner() && $job->getOwner()->getAvatar()) {
+                    $this->imageOptimizer->resize($this->targetDirectory.'/'.$job->getOwner()->getAvatar());
+                }
+            }
+        }
 
         for ($i = 0; $i < 48; ++$i) {
             $ages[] = $i + 18;
         }
 
-        return new Response($this->twig->render('pages/worksheet/all_workers.html.twig', [
+        return new Response($this->twig->render('pages/job/all_jobs.html.twig', [
             'city' => $city,
-            'worksheets' => $worksheets,
+            'districts' => $districts,
+            'jobs' => $jobs,
             'category' => $category,
             'user' => $user,
             'cityId' => $cityId,
@@ -129,13 +147,12 @@ class ListWorkController extends AbstractController
             'tasks' => $tasks,
             'ages' => $ages,
             'cities' => $cityRepository->findLimitOrder('999', '0'),
-            'districts' => $districtRepository->findAll(),
             'categories' => $categoryRepository->findLimitOrder('4', '0'),
-            'featuredProfiles' => $this->getFeaturedProfiles($user),
+            'featuredJobs' => $this->getFeaturedJobs($user),
             'citizens' => $citizenRepository->findAll(),
             'hasCategory' => $request->query->has('category'),
-            'lat' => $this->coordinateService->getLatArr($worksheets, $city),
-            'lng' => $this->coordinateService->getLngArr($worksheets, $city),
+            'lat' => $this->coordinateService->getLatArr($jobs, $city),
+            'lng' => $this->coordinateService->getLngArr($jobs, $city),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }

@@ -95,7 +95,7 @@ class JobRepository extends ServiceEntityRepository
     /**
      * @param Job $job
      */
-    public function findByParams($category, $tasks, $city, $citizen, $age, $now, $payment, $district = '')
+    public function findByParams($category, $tasks, $city, $citizen, $age, $now, $payment, $district, $busyness)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('j')
@@ -126,6 +126,11 @@ class JobRepository extends ServiceEntityRepository
 
         if ($age) {
             $qb->andWhere($qb->expr()->gte('j.age', $age));
+        }
+
+        if ($busyness) {
+            $qb->leftJoin('j.busynesses', 'b')
+                ->andWhere($qb->expr()->eq('b.id', $busyness));
         }
 
         $qb->andWhere($qb->expr()->eq('j.startNow', $now));
