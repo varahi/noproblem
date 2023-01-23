@@ -87,7 +87,7 @@
             <br />
             <div class="block_emp">
                 <div class="input-select-multiple">
-                    <p>Требуемые навыки</p>
+                    <p>Навыки</p>
                     <select name="tag[]" multiple id="tags">
                         {% for tag in tags %}
                             {% if tag.id in tasks %}
@@ -126,7 +126,12 @@
         {% if category is not null and category.id == 3 %}
             {% include 'partials/pages/_category3_filter.html.twig' %}
         {% endif %}
-
+        {% if category is not null and category.id == 4 %}
+            {% include 'partials/pages/_category4_filter.html.twig' %}
+        {% endif %}
+        {% if category is not null and category.id == 5 %}
+            {% include 'partials/pages/_category5_filter.html.twig' %}
+        {% endif %}
 
     </div>
     <div class="btn_try btn_try_side_filter">

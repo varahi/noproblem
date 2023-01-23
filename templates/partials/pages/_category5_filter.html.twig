@@ -1,0 +1,36 @@
+<br />
+<div class="block_emp">
+    <p>График работы:</p>
+    <select name="schedule" id="schedule">
+        <option value="">Выберите график работы</option>
+        {% for key, schedule in schedules %}
+            <option value="{{ key }}" {% if app.request.query.get('schedule') == key %} selected {% endif %}>
+                {{ schedule }}
+            </option>
+        {% endfor %}
+    </select>
+</div>
+
+<div class="block_emp">
+    <p>Дополнительная информация:</p>
+    <select name="additionalInfo" id="additionalInfo">
+        <option value="">Выберите</option>
+        {% for key, additionalInfo in additionalInfos %}
+            <option value="{{ additionalInfo.id }}" {% if app.request.query.get('additionalInfo') == additionalInfo.id %} selected {% endif %}>
+                {{ additionalInfo.name }}
+            </option>
+        {% endfor %}
+    </select>
+</div>
+
+<div class="block_emp">
+    <p>Инструменты:</p>
+    <select name="tool" id="tool">
+        <option value="">Выберите</option>
+        {% for key, tool in tools %}
+            <option value="{{ key }}" {% if app.request.query.get('tool') == key %} selected {% endif %}>
+                {{ tool }}
+            </option>
+        {% endfor %}
+    </select>
+</div>

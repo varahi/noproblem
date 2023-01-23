@@ -14,8 +14,8 @@
             <p>Возраст детей, с которыми нужно работать:</p>
             <select name="childrenAge" id="childrenAge">
                 <option value="">Выберите возраст</option>
-                {% for childrenAge in childrenAges %}
-                    <option value="{{ childrenAge }}" {% if app.request.query.get('childrenAge') == childrenAge %} selected {% endif %}>
+                {% for key, childrenAge in childrenAges %}
+                    <option value="{{ key }}" {% if app.request.query.get('childrenAge') == key %} selected {% endif %}>
                         {{ childrenAge }}
                     </option>
                 {% endfor %}
@@ -26,8 +26,8 @@
             <p>Количество детей, с которыми нужно работать:</p>
             <select name="childrenQty" id="childrenAge">
                 <option value="">Выберите количество</option>
-                {% for childrenQty in childrenQtys %}
-                    <option value="{{ childrenQty }}" {% if app.request.query.get('childrenQty') == childrenQty %} selected {% endif %}>
+                {% for key, childrenQty in childrenQtys %}
+                    <option value="{{ key }}" {% if app.request.query.get('childrenQty') == key %} selected {% endif %}>
                         {{ childrenQty }}
                     </option>
                 {% endfor %}

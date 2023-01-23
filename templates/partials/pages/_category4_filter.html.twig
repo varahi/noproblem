@@ -1,0 +1,31 @@
+<br />
+<div class="block_emp">
+
+    <p>Возраст больного, с которым готов работать:</p>
+    <select name="patientAge" id="childrenAge">
+        <option value="">Выберите возраст</option>
+        {% for key, patientAge in patientAges %}
+            <option value="{{ key }}" {% if app.request.query.get('patientAge') == key %} selected {% endif %}>
+                {{ patientAge }}
+            </option>
+        {% endfor %}
+    </select>
+</div>
+
+<div class="block_emp">
+    <div class="input-select-multiple">
+        <p>Проживание</p>
+        <fieldset id="accommodation" style="border: none">
+            <label for="radio" class="work_start_now">С проживанием
+                <input type="radio" name="accommodation" class="white" value="1"
+                        {% if app.request.query.get('accommodation') == 1 %} checked {% endif %} />
+                <span class="checkmark"></span>
+            </label>
+            <label for="radio" class="work_start_now">Без проживания
+                <input type="radio" name="accommodation" class="white" value="2"
+                        {% if app.request.query.get('accommodation') == 2 %} checked {% endif %} />
+                <span class="checkmark"></span>
+            </label>
+        </fieldset>
+    </div>
+</div>

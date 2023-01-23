@@ -5,6 +5,8 @@ namespace App\Controller\Job;
 use App\Controller\Traits\AbstractTrait;
 use App\Controller\Traits\DataTrait;
 use App\Controller\Traits\JobTrait;
+use App\Entity\AdditionalInfo;
+use App\Repository\AdditionalInfoRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\CitizenRepository;
 use App\Repository\CityRepository;
@@ -68,7 +70,8 @@ class ListJobController extends AbstractController
         TaskRepository $taskRepository,
         PaginatorInterface $paginator,
         CitizenRepository $citizenRepository,
-        EducationRepository $educationRepository
+        EducationRepository $educationRepository,
+        AdditionalInfoRepository $additionalInfoRepository
     ): Response {
         $slug = $request->query->get('category');
         $districts = $districtRepository->findAll();
@@ -84,7 +87,6 @@ class ListJobController extends AbstractController
         $payment = $params['payment'] ?? '';
         $busyness = $params['busyness'] ?? '';
         $educationId = $params['education'] ?? '';
-        $accommodation = $params['accommodation'] ?? '';
 
         $cityId = trim($request->query->get('city'));
         $districtId = trim($request->query->get('district'));
@@ -157,6 +159,26 @@ class ListJobController extends AbstractController
             '4' => 'другое',
         ];
 
+        $patientAges = [
+            '0' => 'Дети до 10 лет',
+            '1' => 'Подростки с 11 до 18 лет',
+            '2' => 'Взрослые с 19 до 59 лет',
+            '3' => 'Пожилые от 60 и старше',
+            '4' => 'другое'
+        ];
+
+        $schedules = [
+            '0' => '1 раз в неделю',
+            '1' => 'Несколько раз в неделю',
+            '2' => '1 раз в месяц',
+        ];
+
+        $tools = [
+            '0' => 'Работа со своими инструментами',
+            '1' => 'Работа с нашими инструментами',
+            '2' => 'По договорённости'
+        ];
+
         return new Response($this->twig->render('pages/job/all_jobs.html.twig', [
             'city' => $city,
             'districts' => $districts,
@@ -174,7 +196,12 @@ class ListJobController extends AbstractController
             'educationId' => $educationId,
             'childrenAges' => $childrenAges,
             'childrenQtys' => $childrenQtys,
-            'accommodation' => $accommodation,
+            'patientAges' => $patientAges,
+            'schedules' => $schedules,
+            'tools' => $tools,
+            'accommodation' => $params['accommodation'] ?? '',
+            'additionalInfo' => $params['additionalInfo'] ?? '',
+            'additionalInfos' => $additionalInfoRepository->findAll(),
             'educations' => $educationRepository->findAll(),
             'cities' => $cityRepository->findLimitOrder('999', '0'),
             'categories' => $categoryRepository->findLimitOrder('4', '0'),
