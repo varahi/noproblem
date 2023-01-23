@@ -120,6 +120,13 @@
             </div>
         {% endif %}
 
+        {% if category is not null and category.id == 2 %}
+            {% include 'partials/pages/_category2_filter.html.twig' %}
+        {% endif %}
+        {% if category is not null and category.id == 3 %}
+            {% include 'partials/pages/_category3_filter.html.twig' %}
+        {% endif %}
+
 
     </div>
     <div class="btn_try btn_try_side_filter">

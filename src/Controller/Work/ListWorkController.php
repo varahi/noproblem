@@ -7,6 +7,7 @@ use App\Repository\CategoryRepository;
 use App\Repository\CitizenRepository;
 use App\Repository\CityRepository;
 use App\Repository\DistrictRepository;
+use App\Repository\EducationRepository;
 use App\Repository\TaskRepository;
 use App\Repository\WorksheetRepository;
 use App\Service\CoordinateService;
@@ -62,7 +63,8 @@ class ListWorkController extends AbstractController
         WorksheetRepository $worksheetRepository,
         TaskRepository $taskRepository,
         PaginatorInterface $paginator,
-        CitizenRepository $citizenRepository
+        CitizenRepository $citizenRepository,
+        EducationRepository $educationRepository
     ): Response {
         $slug = $request->query->get('category');
         //$tags = $taskRepository->findAll();
@@ -77,6 +79,8 @@ class ListWorkController extends AbstractController
         $age = $params['age'] ?? '';
         $payment = $params['payment'] ?? '';
         $busyness = $params['busyness'] ?? '';
+        $educationId = $params['education'] ?? '';
+        $accommodation = $params['accommodation'] ?? '';
 
         $cityId = trim($request->query->get('city'));
         $districtId = trim($request->query->get('district'));
@@ -116,6 +120,27 @@ class ListWorkController extends AbstractController
             $ages[] = $i + 18;
         }
 
+        for ($i = 0; $i < 500; ++$i) {
+            $squares[] = $i + 1;
+        }
+
+        $childrenAges = [
+            '0' => '0-1 год',
+            '1' => '2-3 года',
+            '2' => '4-6 лет',
+            '3' => '7-10 лет',
+            '4' => '2-3 года',
+            '5' => 'другое'
+        ];
+
+        $childrenQtys = [
+            '0' => '1 ребенок',
+            '1' => '2 ребенка',
+            '2' => '3 ребенка',
+            '3' => '4 ребенка',
+            '4' => 'другое',
+        ];
+
         return new Response($this->twig->render('pages/worksheet/all_workers.html.twig', [
             'city' => $city,
             'worksheets' => $worksheets,
@@ -128,6 +153,12 @@ class ListWorkController extends AbstractController
             'tags' => $tags,
             'tasks' => $tasks,
             'ages' => $ages,
+            'squares' => $squares,
+            'educationId' => $educationId,
+            'childrenAges' => $childrenAges,
+            'childrenQtys' => $childrenQtys,
+            'accommodation' => $accommodation,
+            'educations' => $educationRepository->findAll(),
             'cities' => $cityRepository->findLimitOrder('999', '0'),
             'districts' => $districtRepository->findAll(),
             'categories' => $categoryRepository->findLimitOrder('4', '0'),

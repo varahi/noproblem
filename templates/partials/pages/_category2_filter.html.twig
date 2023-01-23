@@ -1,0 +1,58 @@
+<br />
+<div class="block_emp">
+    <div class="input-select-multiple">
+        <p>График работы</p>
+        <fieldset id="schedule" style="border: none">
+            <label for="radio" class="work_start_now">1 раз в неделю
+                <input type="radio" id="schedule1" name="schedule" class="white" value="1"
+                        {% if app.request.query.get('schedule') == 1 %} checked {% endif %} />
+                <span class="checkmark"></span>
+            </label>
+            <label for="radio" class="work_start_now"><span style="font-size: 18px">Несколько раз в неделю</span>
+                <input type="radio" id="schedule2" name="schedule" class="white" value="2"
+                        {% if app.request.query.get('schedule') == 2 %} checked {% endif %} />
+                <span class="checkmark"></span>
+            </label>
+            <label for="radio" class="work_start_now">1 раз в месяц
+                <input type="radio" id="schedule3" name="schedule" class="white" value="3"
+                        {% if app.request.query.get('schedule') == 2 %} checked {% endif %} />
+                <span class="checkmark"></span>
+            </label>
+        </fieldset>
+    </div>
+</div>
+
+<div class="block_emp">
+    <p>Площадь кв/дома: </p>
+    <select name="square" id="square">
+        <option value="">Выберите площадь</option>
+        {% for square in squares %}
+            <option value="{{ square }}" {% if app.request.query.get('square') == square %} selected {% endif %}>
+                Площадь {{ square }} м2
+            </option>
+        {% endfor %}
+    </select>
+</div>
+
+<div class="block_emp">
+    <div class="input-select-multiple">
+        <p>Уборка</p>
+        <fieldset id="cleaning" style="border: none">
+            <label for="radio" class="work_start_now">Своими средствами
+                <input type="radio" name="cleaning" class="white" value="1"
+                        {% if app.request.query.get('schedule') == 1 %} checked {% endif %} />
+                <span class="checkmark"></span>
+            </label>
+            <label for="radio" class="work_start_now">Нашими средствами
+                <input type="radio" name="cleaning" class="white" value="2"
+                        {% if app.request.query.get('schedule') == 2 %} checked {% endif %} />
+                <span class="checkmark"></span>
+            </label>
+            <label for="radio" class="work_start_now">По договорённости
+                <input type="radio" name="cleaning" class="white" value="3"
+                        {% if app.request.query.get('schedule') == 2 %} checked {% endif %} />
+                <span class="checkmark"></span>
+            </label>
+        </fieldset>
+    </div>
+</div>

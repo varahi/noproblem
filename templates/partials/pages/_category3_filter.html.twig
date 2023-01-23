@@ -1,0 +1,53 @@
+        <div class="block_emp">
+            <p>Образование</p>
+            <select name="education" id="education">
+                <option value="">Выберите образование</option>
+                {% for education in educations %}
+                    <option value="{{ education.id }}" {% if education.id == educationId %} selected {% endif %}>
+                        {{ education.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="block_emp">
+            <p>Возраст детей, с которыми нужно работать:</p>
+            <select name="childrenAge" id="childrenAge">
+                <option value="">Выберите возраст</option>
+                {% for childrenAge in childrenAges %}
+                    <option value="{{ childrenAge }}" {% if app.request.query.get('childrenAge') == childrenAge %} selected {% endif %}>
+                        {{ childrenAge }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="block_emp">
+            <p>Количество детей, с которыми нужно работать:</p>
+            <select name="childrenQty" id="childrenAge">
+                <option value="">Выберите количество</option>
+                {% for childrenQty in childrenQtys %}
+                    <option value="{{ childrenQty }}" {% if app.request.query.get('childrenQty') == childrenQty %} selected {% endif %}>
+                        {{ childrenQty }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="block_emp">
+            <div class="input-select-multiple">
+                <p>Проживание</p>
+                <fieldset id="accommodation" style="border: none">
+                    <label for="radio" class="work_start_now">С проживанием
+                        <input type="radio" name="accommodation" class="white" value="1"
+                                {% if app.request.query.get('accommodation') == 1 %} checked {% endif %} />
+                        <span class="checkmark"></span>
+                    </label>
+                    <label for="radio" class="work_start_now">Без проживания
+                        <input type="radio" name="accommodation" class="white" value="0"
+                                {% if app.request.query.get('accommodation') == 0 %} checked {% endif %} />
+                        <span class="checkmark"></span>
+                    </label>
+                </fieldset>
+            </div>
+        </div>
