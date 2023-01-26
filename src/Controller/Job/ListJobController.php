@@ -12,6 +12,7 @@ use App\Repository\CitizenRepository;
 use App\Repository\CityRepository;
 use App\Repository\DistrictRepository;
 use App\Repository\EducationRepository;
+use App\Repository\ExperienceRepository;
 use App\Repository\JobRepository;
 use App\Repository\TaskRepository;
 use App\Service\CoordinateService;
@@ -71,7 +72,8 @@ class ListJobController extends AbstractController
         PaginatorInterface $paginator,
         CitizenRepository $citizenRepository,
         EducationRepository $educationRepository,
-        AdditionalInfoRepository $additionalInfoRepository
+        AdditionalInfoRepository $additionalInfoRepository,
+        ExperienceRepository $experienceRepository
     ): Response {
         $slug = $request->query->get('category');
         $districts = $districtRepository->findAll();
@@ -87,9 +89,9 @@ class ListJobController extends AbstractController
         $payment = $params['payment'] ?? '';
         $busyness = $params['busyness'] ?? '';
         $educationId = $params['education'] ?? '';
+        $cityId = $params['city'] ?? '';
+        $districtId = $params['district'] ?? '';
 
-        $cityId = trim($request->query->get('city'));
-        $districtId = trim($request->query->get('district'));
         $district = $districtRepository->findOneBy(['id' => $districtId]);
 
         $cityRequest = $request->query->get('city');
@@ -199,6 +201,7 @@ class ListJobController extends AbstractController
             'patientAges' => $patientAges,
             'schedules' => $schedules,
             'tools' => $tools,
+            'experiences' => $experienceRepository->findAll(),
             'accommodation' => $params['accommodation'] ?? '',
             'additionalInfo' => $params['additionalInfo'] ?? '',
             'additionalInfos' => $additionalInfoRepository->findAll(),

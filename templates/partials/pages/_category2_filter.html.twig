@@ -1,26 +1,26 @@
-<br />
-<div class="block_emp">
-    <div class="input-select-multiple">
-        <p>График работы</p>
-        <fieldset id="schedule" style="border: none">
-            <label for="radio" class="work_start_now">1 раз в неделю
-                <input type="radio" id="schedule1" name="schedule" class="white" value="1"
-                        {% if app.request.query.get('schedule') == 1 %} checked {% endif %} />
-                <span class="checkmark"></span>
-            </label>
-            <label for="radio" class="work_start_now"><span style="font-size: 18px">Несколько раз в неделю</span>
-                <input type="radio" id="schedule2" name="schedule" class="white" value="2"
-                        {% if app.request.query.get('schedule') == 2 %} checked {% endif %} />
-                <span class="checkmark"></span>
-            </label>
-            <label for="radio" class="work_start_now">1 раз в месяц
-                <input type="radio" id="schedule3" name="schedule" class="white" value="3"
-                        {% if app.request.query.get('schedule') == 2 %} checked {% endif %} />
-                <span class="checkmark"></span>
-            </label>
-        </fieldset>
-    </div>
-</div>
+{#<br />#}
+{#<div class="block_emp">#}
+{#    <div class="input-select-multiple">#}
+{#        <p>График работы</p>#}
+{#        <fieldset id="schedule" style="border: none">#}
+{#            <label for="radio" class="work_start_now">1 раз в неделю#}
+{#                <input type="radio" id="schedule1" name="schedule" class="white" value="1"#}
+{#                        {% if app.request.query.get('schedule') == 1 %} checked {% endif %} />#}
+{#                <span class="checkmark"></span>#}
+{#            </label>#}
+{#            <label for="radio" class="work_start_now"><span style="font-size: 18px">Несколько раз в неделю</span>#}
+{#                <input type="radio" id="schedule2" name="schedule" class="white" value="2"#}
+{#                        {% if app.request.query.get('schedule') == 2 %} checked {% endif %} />#}
+{#                <span class="checkmark"></span>#}
+{#            </label>#}
+{#            <label for="radio" class="work_start_now">1 раз в месяц#}
+{#                <input type="radio" id="schedule3" name="schedule" class="white" value="3"#}
+{#                        {% if app.request.query.get('schedule') == 2 %} checked {% endif %} />#}
+{#                <span class="checkmark"></span>#}
+{#            </label>#}
+{#        </fieldset>#}
+{#    </div>#}
+{#</div>#}
 
 <div class="block_emp">
     <p>Площадь кв/дома: </p>

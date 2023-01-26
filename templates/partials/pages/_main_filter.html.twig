@@ -120,6 +120,33 @@
             </div>
         {% endif %}
 
+
+        <!--2,5-->
+        <br />
+        <div class="block_emp">
+            <p>График работы:</p>
+            <select name="schedule" id="schedule">
+                <option value="">Выберите график работы</option>
+                {% for key, schedule in schedules %}
+                    <option value="{{ key }}" {% if app.request.query.get('schedule') == key %} selected {% endif %}>
+                        {{ schedule }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="block_emp">
+            <p>Опыт работы:</p>
+            <select name="experience" id="experience">
+                <option value="">Выберите опыт работы</option>
+                {% for key, experience in experiences %}
+                    <option value="{{ key }}" {% if app.request.query.get('experience') == key %} selected {% endif %}>
+                        {{ experience }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
         {% if category is not null and category.id == 2 %}
             {% include 'partials/pages/_category2_filter.html.twig' %}
         {% endif %}
