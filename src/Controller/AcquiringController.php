@@ -34,8 +34,8 @@ class AcquiringController extends AbstractController
         'password' => 'T7736337091',
         'language' => 'ru',
         'currency' => Currency::RUB,
-        //'apiUri' => Client::API_URI_TEST,
-        'apiUri' => Client::API_URI,
+        'apiUri' => Client::API_URI_TEST,
+        //'apiUri' => Client::API_URI,
         'httpMethod' => AcqHttpClientInterface::METHOD_GET,
     ];
 

@@ -37,7 +37,7 @@
       </div>
     </div>
 
-    <div class="btn_worker" style="cursor: pointer;"  @click="showModal = true"><a>Стать работником</a></div>
+    <div class="_btn_worker btn_employer" style="cursor: pointer;"  @click="showModal = true"><a>Стать работником</a></div>
     <div class="btn_employer"  style="cursor: pointer;"  @click="showModal = true"><a>Стать работодателем</a></div>
   </div>
 </template>
@@ -249,6 +249,15 @@ input.form-control {
   input.form-control {
     width: auto;
     margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 325px) {
+  .login{
+    display: block;
+  }
+  .login .btn_employer {
+    margin-bottom: 20px !important;
   }
 }
 

@@ -157,8 +157,6 @@ for (i = 0; i < acc.length; i++) {
 }
 
 // до сюда
-
-
 var maxWidth = 200;
 var maxHeight = 100;
 

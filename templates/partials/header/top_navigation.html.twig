@@ -43,7 +43,7 @@
         <a href="{{ path('app_new_job') }}">Создать вакансию</a>
     </div>
 {% elseif is_granted('ROLE_CUSTOMER') %}
-    <div class="btn_worker" style="cursor: pointer;">
+    <div class="_btn_worker btn_employer" style="cursor: pointer;">
         <a href="{{ path('app_all_jobs') }}">Поиск вакансии</a>
     </div>
     <div class="btn_employer" style="cursor: pointer;">

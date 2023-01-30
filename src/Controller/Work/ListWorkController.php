@@ -157,12 +157,19 @@ class ListWorkController extends AbstractController
             '0' => '1 раз в неделю',
             '1' => 'Несколько раз в неделю',
             '2' => '1 раз в месяц',
+            '3' => 'С проживанием',
         ];
 
         $tools = [
-            '0' => 'Работа со своими инструментами',
+            '0' => 'Работа моими инструментами',
             '1' => 'Работа с нашими инструментами',
             '2' => 'По договорённости'
+        ];
+
+        $cleanings = [
+            '0' => 'Своими средствами',
+            '1' => 'Нашими средствами',
+            '2' => 'По договорённости',
         ];
 
         return new Response($this->twig->render('pages/worksheet/all_workers.html.twig', [
@@ -184,6 +191,7 @@ class ListWorkController extends AbstractController
             'patientAges' => $patientAges,
             'schedules' => $schedules,
             'tools' => $tools,
+            'cleanings' => $cleanings,
             'experiences' => $experienceRepository->findAll(),
             'accommodation' => $params['accommodation'] ?? '',
             'additionalInfo' => $params['additionalInfo'] ?? '',

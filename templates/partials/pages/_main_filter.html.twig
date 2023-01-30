@@ -30,11 +30,20 @@
 
         <div class="block_emp">
             <p>Возраст</p>
-            <select name="age" id="age">
-                <option value="">Выберите возраст</option>
+            <select name="ageFrom" id="ageFrom">
+                <option value="">От</option>
                 {% for age in ages %}
                     <option value="{{ age }}" {% if app.request.query.get('age') == age %} selected {% endif %}>
-                        От {{ age }}-ти лет
+                        От {{ age }}-ти
+                    </option>
+                {% endfor %}
+            </select>
+
+            <select name="ageTo" id="ageTo">
+                <option value="">До</option>
+                {% for age in ages %}
+                    <option value="{{ age }}" {% if app.request.query.get('age') == age %} selected {% endif %}>
+                        До {{ age }}-ти
                     </option>
                 {% endfor %}
             </select>
