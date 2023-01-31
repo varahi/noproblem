@@ -90,13 +90,15 @@
                                     <h5>Верификация</h5>
                                     <img src="{{ asset('assets/img/verif.svg') }}" class="lazyLoad isLoaded" alt="">
                                 </div>
-                                <p>Паспорт - <span>не загружен</span></p>
+
+{#                                <p>Паспорт - <span>не загружен</span></p>#}
                                 {% if user.phoneVerified == 1 %}
                                     <p>Телефон подтвержден</p>
                                 {% else %}
                                     <p><a href="{{ path('app_sms_verify', { id: user.id}) }}">Подтвердить телефон</a></p>
                                 {% endif %}
-                                <p> Почта - <span>не пожтверждена</span></p>
+
+                                <p> Почта - <span>не подтверждена</span></p>
                             </div>
                             <div class="window_account ">
                                 <div class="var_account">
