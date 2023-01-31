@@ -61,7 +61,8 @@ class AcquiringController extends AbstractController
         'alfabank',
         'tinkoff_bank',
         'qiwi',
-        'cash'
+        'cash',
+        'sbp'
     ];
 
     /**
@@ -160,11 +161,14 @@ class AcquiringController extends AbstractController
                     ],
                     $idempotenceKey
                 );
+                $paymentId = $response->getId();
 
                 $confirmationUrl = $response->getConfirmation()->getConfirmationUrl();
 
                 $response = $this->redirect($confirmationUrl);
                 $cookie = new Cookie('orderId', $orderId, strtotime('now + 2 days'));
+                $response->headers->setCookie($cookie);
+                $cookie = new Cookie('paymentId', $paymentId, strtotime('now + 2 days'));
                 $response->headers->setCookie($cookie);
 
                 return $response;
@@ -247,6 +251,75 @@ class AcquiringController extends AbstractController
             //return $this->json(['data' => "Order wasn't approved!"]);
             return $this->redirectToRoute("app_payment_error");
         }
+    }
+
+    /**
+     * @Route("/pay/proceed_yookassa/{id}", name="payment_proceed_yookassa")
+     * @return Response
+     */
+    public function proceedPaymentYookassa(
+        Request $request,
+        string $id,
+        TariffRepository $tariffRepository,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier
+    ) {
+        $client = new YooClient();
+        $client->setAuth($this->acq_array_yookassa['shopId'], $this->acq_array_yookassa['secretKey']);
+        $entityManager = $this->doctrine->getManager();
+
+        $cookies = $request->cookies;
+        if (!$cookies->has('paymentId'))
+            return $this->redirectToRoute("app_payment_error");
+        $paymentId = $cookies->get('paymentId');
+
+        $paymentInfo = $client->getPaymentInfo($paymentId);
+
+
+        if ($paymentInfo->getStatus() != "succeeded") {
+            //return $this->json(['data' => "Order wasn't approved!"]);
+            return $this->redirectToRoute("app_tarifs");
+        }
+
+
+        // Logic of succeed
+        // Создаем новый заказ
+        $user = $this->security->getUser();
+        // Необходимо получить id тарифа и найти его в БД
+        $tariff = $paymentInfo['description'];
+        $tariff = $tariffRepository->findOneBy(['id' => $tariff]);
+        $order = new Order();
+        $order->setName('Order #' . 'User ID - ' . $user->getId() . ' Tariff ID - ' . $tariff->getId());
+        $order->setUser($user);
+        $order->setActive(1);
+        //$order->setEndDate()
+        $order->setTariff($tariff);
+        $user->setActive(true);
+
+        // We need to save data here to get order created date
+        //$entityManager->persist($order);
+        //$entityManager->flush();
+
+        $currentDateStr = date('Y-m-d H:i:s');
+        $currentDate = new \DateTime($currentDateStr);
+        $interval = '+' . $tariff->getTermDays() . 'day';
+        $endDate = $currentDate->modify($interval);
+        $order->setEndDate($endDate);
+
+        // Flush data again
+        $entityManager->persist($order);
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        $order->setTariff($tariff);
+        $entityManager->persist($order);
+
+        // Redirect to lk with message
+        $message = $translator->trans('Order was approved', array(), 'flash');
+        $notifier->send(new Notification($message, ['browser']));
+        return $this->redirectToRoute("app_lk");
+        //return $this->json(['data' => "Order was approved! and it's working!"]);
+
     }
 
     /**
