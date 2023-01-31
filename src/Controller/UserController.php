@@ -558,11 +558,25 @@ class UserController extends AbstractController
 
                 $message = $translator->trans('Phone verified', array(), 'flash');
                 $notifier->send(new Notification($message, ['browser']));
-                return $this->redirectToRoute("app_lk_customer");
+
+                if ($this->isGranted(self::ROLE_CUSTOMER)) {
+                    return $this->redirectToRoute("app_lk_customer");
+                }
+                if ($this->isGranted(self::ROLE_EMPLOYEE)) {
+                    return $this->redirectToRoute("app_lk_employee");
+                }
+
             } else {
                 $message = $translator->trans('Phone verified', array(), 'flash');
                 $notifier->send(new Notification($message, ['browser']));
-                return $this->redirectToRoute("app_lk_customer");
+
+                if ($this->isGranted(self::ROLE_CUSTOMER)) {
+                    return $this->redirectToRoute("app_lk_customer");
+                }
+                if ($this->isGranted(self::ROLE_EMPLOYEE)) {
+                    return $this->redirectToRoute("app_lk_employee");
+                }
+
             }
         }
     }
@@ -622,19 +636,40 @@ class UserController extends AbstractController
                         //echo "Код на номер $phone НЕ ОТПРАВЛЕН. $data->status_text. ";
                         $message = $translator->trans('Code not sended', array(), 'flash');
                         $notifier->send(new Notification($message, ['browser']));
-                        return $this->redirectToRoute("app_lk_customer");
+
+                        if ($this->isGranted(self::ROLE_CUSTOMER)) {
+                            return $this->redirectToRoute("app_lk_customer");
+                        }
+                        if ($this->isGranted(self::ROLE_EMPLOYEE)) {
+                            return $this->redirectToRoute("app_lk_employee");
+                        }
+
                     }
                 }
             } else {
                 //echo "Запрос не выполнился: $json->status_code. ";
                 $message = $translator->trans('Code not executed', array(), 'flash');
                 $notifier->send(new Notification($message, ['browser']));
-                return $this->redirectToRoute("app_lk_customer");
+
+                if ($this->isGranted(self::ROLE_CUSTOMER)) {
+                    return $this->redirectToRoute("app_lk_customer");
+                }
+                if ($this->isGranted(self::ROLE_EMPLOYEE)) {
+                    return $this->redirectToRoute("app_lk_employee");
+                }
+
             }
         } else {
             //echo "Запрос не выполнился. Не удалось установить связь с сервером. ";
             $message = $translator->trans('Cant connect with server', array(), 'flash');
-            return $this->redirectToRoute("app_lk_customer");
+
+            if ($this->isGranted(self::ROLE_CUSTOMER)) {
+                return $this->redirectToRoute("app_lk_customer");
+            }
+            if ($this->isGranted(self::ROLE_EMPLOYEE)) {
+                return $this->redirectToRoute("app_lk_employee");
+            }
+
         }
     }
 }
