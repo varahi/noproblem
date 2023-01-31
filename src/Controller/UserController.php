@@ -589,7 +589,13 @@ class UserController extends AbstractController
         if ($user->getPhone() == null) {
             $message = $translator->trans('Please fill the phone number', array(), 'flash');
             $notifier->send(new Notification($message, ['browser']));
-            return $this->redirectToRoute("app_lk_customer");
+
+            if ($this->isGranted(self::ROLE_CUSTOMER)) {
+                return $this->redirectToRoute("app_lk_customer");
+            }
+            if ($this->isGranted(self::ROLE_EMPLOYEE)) {
+                return $this->redirectToRoute("app_lk_employee");
+            }
         }
 
         // Normalize phone number
