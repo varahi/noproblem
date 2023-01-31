@@ -1127,3 +1127,7 @@ strike {
     width: 45% !important;
     margin-right: 10px;
 }
+
+.date_creating_form input {
+    width: 210px;
+}

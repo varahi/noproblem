@@ -37,7 +37,7 @@
       </div>
     </div>
 
-    <div class="_btn_worker btn_employer" style="cursor: pointer;"  @click="showModal = true"><a>Стать работником</a></div>
+    <div class="btn_worker _btn_employer" style="cursor: pointer;"  @click="showModal = true"><a>Стать работником</a></div>
     <div class="btn_employer"  style="cursor: pointer;"  @click="showModal = true"><a>Стать работодателем</a></div>
   </div>
 </template>
@@ -126,6 +126,9 @@
 }
 .forgot-password a:hover {
   text-decoration: none;
+}
+.btn_worker a {
+  background: #fff;
 }
 
 /* Modal */

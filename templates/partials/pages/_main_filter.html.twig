@@ -34,7 +34,7 @@
                 <option value="">От</option>
                 {% for age in ages %}
                     <option value="{{ age }}" {% if app.request.query.get('age') == age %} selected {% endif %}>
-                        От {{ age }}-ти
+                        {{ age }}
                     </option>
                 {% endfor %}
             </select>
@@ -43,7 +43,7 @@
                 <option value="">До</option>
                 {% for age in ages %}
                     <option value="{{ age }}" {% if app.request.query.get('age') == age %} selected {% endif %}>
-                        До {{ age }}-ти
+                        {{ age }}
                     </option>
                 {% endfor %}
             </select>

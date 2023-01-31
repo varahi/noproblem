@@ -69,3 +69,22 @@
         {% endfor %}
     </select>
 </div>
+
+
+<div class="block_emp">
+    <div class="input-select-multiple">
+        <p>Проживание</p>
+        <fieldset id="accommodation" style="border: none">
+            <label for="radio" class="work_start_now">С проживанием
+                <input type="radio" name="accommodation" class="white" value="1"
+                        {% if app.request.query.get('accommodation') == 1 %} checked {% endif %} />
+                <span class="checkmark"></span>
+            </label>
+            <label for="radio" class="work_start_now">Без проживания
+                <input type="radio" name="accommodation" class="white" value="2"
+                        {% if app.request.query.get('accommodation') == 2 %} checked {% endif %} />
+                <span class="checkmark"></span>
+            </label>
+        </fieldset>
+    </div>
+</div>
