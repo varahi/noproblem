@@ -55,10 +55,30 @@ class Mailer
         $email = (new TemplatedEmail())
             ->subject($subject)
             ->htmlTemplate($template)
-            ->from($this->adminEmail)
-            ->to($user->getEmail())
+            ->from($user->getEmail())
+            ->to($this->adminEmail)
             ->context([
                 'user' => $user,
+                'date' => $date,
+                'ticket' => $ticket
+            ]);
+
+        $this->mailer->send($email);
+    }
+
+    /**
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     */
+    public function sendFeedbackRequestEmail(string $fromEmail, string $subject, string $template, Ticket $ticket)
+    {
+        $date = new \DateTime();
+        $email = (new TemplatedEmail())
+            ->subject($subject)
+            ->htmlTemplate($template)
+            ->from($fromEmail)
+            ->to($this->adminEmail)
+            ->context([
+                'fromEmail' => $fromEmail,
                 'date' => $date,
                 'ticket' => $ticket
             ]);

@@ -94,6 +94,10 @@
         <source>Please fill the phone number</source>
         <target>Пожалуйста укажите телефон в ашем профиле</target>
       </trans-unit>
+      <trans-unit id="Invalid email" resname="Invalid email">
+        <source>Invalid email</source>
+        <target>Вы ввели некорректный email</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -115,13 +115,8 @@ class TicketController extends AbstractController
             $ticket->setStatus(0);
             $entityManager->persist($ticket);
             $entityManager->flush();
-
             $subject = $translator->trans('Support request', array(), 'messages');
-            if (isset($adminUsers)) {
-                foreach ($adminUsers as $adminUser) {
-                    $mailer->sendTicketRequestEmail($adminUser, $subject, 'emails/ticket_request.html.twig', $ticket);
-                }
-            }
+            $mailer->sendTicketRequestEmail($user, $subject, 'emails/ticket_request.html.twig', $ticket);
 
             $message = $translator->trans('Ticket created', array(), 'flash');
             $notifier->send(new Notification($message, ['browser']));
@@ -177,8 +172,6 @@ class TicketController extends AbstractController
                 $message = $translator->trans('Answered', array(), 'flash');
                 $notifier->send(new Notification($message, ['browser']));
                 return $this->redirectToRoute("app_ticket_list");
-                //$referer = $request->headers->get('referer');
-            //return new RedirectResponse($referer);
             }
 
             return $this->render('ticket/ticket_edit.html.twig', [
@@ -218,5 +211,50 @@ class TicketController extends AbstractController
             $notifier->send(new Notification($message, ['browser']));
             return $this->redirectToRoute("app_login");
         }
+    }
+
+    /**
+     * @Route("/support/new-feedback", name="app_feedback_new")
+     */
+    public function newFeedback(
+        Request $request,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier,
+        ManagerRegistry $doctrine,
+        Mailer $mailer
+    ): Response {
+        $ticket = new Ticket();
+        $url = $this->generateUrl('app_ticket_new');
+        $ticketForm = $this->createForm(TicketFormType::class, $ticket, [
+            'action' => $url,
+            'method' => 'POST'
+        ]);
+        $ticketForm->handleRequest($request);
+
+        if ($ticketForm->isSubmitted() && $ticketForm->isValid()) {
+            if (!filter_var($_POST['ticket_form']['email'], FILTER_VALIDATE_EMAIL)) {
+                $message = $translator->trans('Invalid email', array(), 'flash');
+                $notifier->send(new Notification($message, ['browser']));
+                $referer = $request->headers->get('referer');
+                return new RedirectResponse($referer);
+            }
+
+            $entityManager = $doctrine->getManager();
+            //$ticket->setUser($user);
+            $ticket->setStatus(0);
+            $entityManager->persist($ticket);
+            $entityManager->flush();
+
+            $subject = $translator->trans('Support request', array(), 'messages');
+            $mailer->sendFeedbackRequestEmail($_POST['ticket_form']['email'], $subject, 'emails/feedback_request.html.twig', $ticket);
+            $message = $translator->trans('Ticket created', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            $referer = $request->headers->get('referer');
+            return new RedirectResponse($referer);
+        }
+
+        return $this->render('ticket/new_ticket.html.twig', [
+            'form' => $ticketForm->createView()
+        ]);
     }
 }

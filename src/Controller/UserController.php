@@ -565,7 +565,6 @@ class UserController extends AbstractController
                 if ($this->isGranted(self::ROLE_EMPLOYEE)) {
                     return $this->redirectToRoute("app_lk_employee");
                 }
-
             } else {
                 $message = $translator->trans('Phone verified', array(), 'flash');
                 $notifier->send(new Notification($message, ['browser']));
@@ -576,7 +575,6 @@ class UserController extends AbstractController
                 if ($this->isGranted(self::ROLE_EMPLOYEE)) {
                     return $this->redirectToRoute("app_lk_employee");
                 }
-
             }
         }
     }
@@ -643,7 +641,6 @@ class UserController extends AbstractController
                         if ($this->isGranted(self::ROLE_EMPLOYEE)) {
                             return $this->redirectToRoute("app_lk_employee");
                         }
-
                     }
                 }
             } else {
@@ -657,7 +654,6 @@ class UserController extends AbstractController
                 if ($this->isGranted(self::ROLE_EMPLOYEE)) {
                     return $this->redirectToRoute("app_lk_employee");
                 }
-
             }
         } else {
             //echo "Запрос не выполнился. Не удалось установить связь с сервером. ";
@@ -669,7 +665,6 @@ class UserController extends AbstractController
             if ($this->isGranted(self::ROLE_EMPLOYEE)) {
                 return $this->redirectToRoute("app_lk_employee");
             }
-
         }
     }
 }

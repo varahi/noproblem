@@ -269,8 +269,9 @@ class AcquiringController extends AbstractController
         $entityManager = $this->doctrine->getManager();
 
         $cookies = $request->cookies;
-        if (!$cookies->has('paymentId'))
+        if (!$cookies->has('paymentId')) {
             return $this->redirectToRoute("app_payment_error");
+        }
         $paymentId = $cookies->get('paymentId');
 
         $paymentInfo = $client->getPaymentInfo($paymentId);
@@ -319,7 +320,6 @@ class AcquiringController extends AbstractController
         $notifier->send(new Notification($message, ['browser']));
         return $this->redirectToRoute("app_lk");
         //return $this->json(['data' => "Order was approved! and it's working!"]);
-
     }
 
     /**
