@@ -1,70 +1,77 @@
 <script type="text/javascript">
-    function openMap() {
-        $("#map").css("height", "500px")
-    }
-
-    ymaps.ready(function () {
-        var myMap = new ymaps.Map('map', {
-                center: [55.751574, 37.573856],
-                zoom: 9
-            }, {
-                searchControlProvider: 'yandex#search'
-            }),
-
-            // Creating a content layout.
-            MyIconContentLayout = ymaps.templateLayoutFactory.createClass(
-                '<div style="color: #FFFFFF; font-weight: bold;">$[properties.iconContent]</div>'
-            ),
-
-            myPlacemark = new ymaps.Placemark(myMap.getCenter(), {
-                hintContent: 'Анкета №2',
-                balloonContent: '<div><div>Анкета №2</div><div>Описание анкеты</div></div>'
-            }, {
-                /**
-                 * Options.
-                 * You must specify this type of layout.
-                 */
-                iconLayout: 'default#image',
-                // Custom image for the placemark icon.
-                iconImageHref: 'assets/img/map_point.svg',
-                // The size of the placemark.
-                iconImageSize: [30, 30],
-                /**
-                 * The offset of the upper left corner of the icon relative
-                 * to its "tail" (the anchor point).
-                 */
-                iconImageOffset: [-5, -38]
-            }),
-
-            myPlacemarkWithContent = new ymaps.Placemark([55.661574, 37.573856], {
-                hintContent: 'Анкета №1',
-                balloonContent: '<div><div>Анкета №1</div><div>Описание анкеты</div></div>',
-                //iconContent: '12'
-
-            }, {
-                /**
-                 * Options.
-                 * You must specify this type of layout.
-                 */
-                iconLayout: 'default#imageWithContent',
-                // Custom image for the placemark icon.
-                iconImageHref: 'assets/img/map_point.svg',
-                // The size of the placemark.
-                iconImageSize: [30, 30],
-                /**
-                 * The offset of the upper left corner of the icon relative
-                 * to its "tail" (the anchor point).
-                 */
-                iconImageOffset: [-24, -24],
-                // Offset of the layer with content relative to the layer with the image.
-                iconContentOffset: [15, 15],
-                // Content layout.
-                iconContentLayout: MyIconContentLayout
-            });
-
-        myMap.geoObjects
-            .add(myPlacemark)
-            .add(myPlacemarkWithContent);
+    var map = L.map( 'map', {
+        center: [{{ lat }}, {{ lng }}],
+        zoom: 11,
     });
 
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        subdomains: ['a','b','c']
+    }).addTo(map);
+
+    var marks = [
+        {% for job in jobs %}
+            {% if job.city is not null %}
+                {% set description = '' %}
+                {% if job.description %}
+                    {% set description = job.description|striptags|u.truncate(50,  '...')  %}
+                {% endif %}
+                    {% if job.latitude and job.longitude %}
+                        { text: '<h4>{{ job.name}}</h4> Разместил(а): {{ job.owner }}  <img class="rounded map-img" src="{{ asset('uploads/files/' ~ job.owner.avatar) }}" width="50" height="50"/> Стоимость:{{ job.payment }} <br /><a href="{{ path('app_detail_job', { id: job.id}) }}">Подробнее ... </a>', latlng: [{{ job.latitude }}, {{ job.longitude }}], },
+                    {% endif %}
+            {% endif %}
+        {% endfor %}
+    ];
+    for(var i = 0; i<=marks.length; i++) {
+        L.marker(marks[i].latlng)
+            .bindPopup(marks[i].text, {
+                direction: 'top',
+                sticky: false,
+                offset: [0, -15],
+            })
+            .addTo(map);
+    }
+
+    // ToDo: set map update size
+    function changeHeight() {
+        document.getElementById('map').style.height = "600px";
+        document.getElementById('open-map').style.display = "none";
+        //document.getElementById('map').updateSize();
+        //map.updateSize();
+        map.remove();
+
+        var map2 = L.map( 'map', {
+            center: [{{ lat }}, {{ lng }}],
+            zoom: 11,
+        });
+
+        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            subdomains: ['a','b','c']
+        }).addTo(map2);
+
+        var marks2 = [
+            {% for job in jobs %}
+            {% if job.city is not null %}
+            {% set description = '' %}
+            {% if job.description %}
+            {% set description = job.description|striptags|u.truncate(50,  '...')  %}
+            {% endif %}
+            {% if job.latitude and job.longitude %}
+            { text: '<h4>{{ job.name}}</h4> Разместил(а): {{ job.owner }}  <img class="rounded map-img" src="{{ asset('uploads/files/' ~ job.owner.avatar) }}" width="50" height="50"/> Стоимость:{{ job.payment }} <br /><a href="{{ path('app_detail_job', { id: job.id}) }}">Подробнее ... </a>', latlng: [{{ job.latitude }}, {{ job.longitude }}], },
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+        ];
+        for(var i = 0; i<=marks2.length; i++) {
+            L.marker(marks2[i].latlng)
+                .bindPopup(marks2[i].text, {
+                    direction: 'top',
+                    sticky: false,
+                    offset: [0, -15],
+                })
+                .addTo(map2);
+        }
+    }
 </script>
+

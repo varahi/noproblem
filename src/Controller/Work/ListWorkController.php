@@ -142,7 +142,7 @@ class ListWorkController extends AbstractController
             '1' => '2 ребёнка',
             '2' => '3 ребёнка',
             '3' => '4 ребёнка',
-            '4' => 'другое',
+            '4' => 'Другое',
         ];
 
         $patientAges = [
