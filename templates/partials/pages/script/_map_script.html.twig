@@ -1,5 +1,19 @@
 <script type="text/javascript">
-    var map = L.map( 'map', {
+    let marks = [
+        {% for job in jobs %}
+            {% if job.city is not null %}
+                {% set description = '' %}
+                    {% if job.description %}
+                        {% set description = job.description|striptags|u.truncate(50,  '...')  %}
+                    {% endif %}
+                {% if job.latitude and job.longitude %}
+                    { text: '<h4>{{ job.name}}</h4> Разместил(а): {{ job.owner }}  <img class="rounded map-img" src="{{ asset('uploads/files/' ~ job.owner.avatar) }}" width="50" height="50"/> Стоимость:{{ job.payment }} <br /><a href="{{ path('app_detail_job', { id: job.id}) }}">Подробнее ... </a>', latlng: [{{ job.latitude }}, {{ job.longitude }}], },
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    ];
+
+    let map = L.map( 'map', {
         center: [{{ lat }}, {{ lng }}],
         zoom: 11,
     });
@@ -9,20 +23,7 @@
         subdomains: ['a','b','c']
     }).addTo(map);
 
-    var marks = [
-        {% for job in jobs %}
-            {% if job.city is not null %}
-                {% set description = '' %}
-                {% if job.description %}
-                    {% set description = job.description|striptags|u.truncate(50,  '...')  %}
-                {% endif %}
-                    {% if job.latitude and job.longitude %}
-                        { text: '<h4>{{ job.name}}</h4> Разместил(а): {{ job.owner }}  <img class="rounded map-img" src="{{ asset('uploads/files/' ~ job.owner.avatar) }}" width="50" height="50"/> Стоимость:{{ job.payment }} <br /><a href="{{ path('app_detail_job', { id: job.id}) }}">Подробнее ... </a>', latlng: [{{ job.latitude }}, {{ job.longitude }}], },
-                    {% endif %}
-            {% endif %}
-        {% endfor %}
-    ];
-    for(var i = 0; i<=marks.length; i++) {
+    for(let i = 0; i<=marks.length - 1; i++) {
         L.marker(marks[i].latlng)
             .bindPopup(marks[i].text, {
                 direction: 'top',
@@ -32,46 +33,54 @@
             .addTo(map);
     }
 
-    // ToDo: set map update size
-    function changeHeight() {
-        document.getElementById('map').style.height = "600px";
-        document.getElementById('open-map').style.display = "none";
-        //document.getElementById('map').updateSize();
-        //map.updateSize();
-        map.remove();
+    document.querySelector('.js-open-map').addEventListener( "click" , () => {
+        if(document.getElementById('map').classList.contains('big-map')){
+            document.getElementById('map').classList.remove('big-map');
+            document.querySelector('.js-open-map').innerHTML = 'Раскрыть карту';
+            map.remove();
+            map = L.map( 'map', {
+                center: [{{ lat }}, {{ lng }}],
+                zoom: 11,
+            });
 
-        var map2 = L.map( 'map', {
-            center: [{{ lat }}, {{ lng }}],
-            zoom: 11,
-        });
+            L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                subdomains: ['a','b','c']
+            }).addTo(map);
 
-        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-            subdomains: ['a','b','c']
-        }).addTo(map2);
+            for(let i = 0; i<=marks.length - 1; i++) {
+                L.marker(marks[i].latlng)
+                    .bindPopup(marks[i].text, {
+                        direction: 'top',
+                        sticky: false,
+                        offset: [0, -15],
+                    })
+                    .addTo(map);
+            }
+        }else{
+            document.getElementById('map').classList.add('big-map');
+            document.querySelector('.js-open-map').innerHTML = 'Свернуть карту';
 
-        var marks2 = [
-            {% for job in jobs %}
-            {% if job.city is not null %}
-            {% set description = '' %}
-            {% if job.description %}
-            {% set description = job.description|striptags|u.truncate(50,  '...')  %}
-            {% endif %}
-            {% if job.latitude and job.longitude %}
-            { text: '<h4>{{ job.name}}</h4> Разместил(а): {{ job.owner }}  <img class="rounded map-img" src="{{ asset('uploads/files/' ~ job.owner.avatar) }}" width="50" height="50"/> Стоимость:{{ job.payment }} <br /><a href="{{ path('app_detail_job', { id: job.id}) }}">Подробнее ... </a>', latlng: [{{ job.latitude }}, {{ job.longitude }}], },
-            {% endif %}
-            {% endif %}
-            {% endfor %}
-        ];
-        for(var i = 0; i<=marks2.length; i++) {
-            L.marker(marks2[i].latlng)
-                .bindPopup(marks2[i].text, {
-                    direction: 'top',
-                    sticky: false,
-                    offset: [0, -15],
-                })
-                .addTo(map2);
+            map.remove();
+            map = L.map( 'map', {
+                center: [{{ lat }}, {{ lng }}],
+                zoom: 11,
+            });
+
+            L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                subdomains: ['a','b','c']
+            }).addTo(map);
+
+            for(let i = 0; i<=marks.length - 1; i++) {
+                L.marker(marks[i].latlng)
+                    .bindPopup(marks[i].text, {
+                        direction: 'top',
+                        sticky: false,
+                        offset: [0, -15],
+                    })
+                    .addTo(map);
+            }
         }
-    }
+    });
 </script>
-

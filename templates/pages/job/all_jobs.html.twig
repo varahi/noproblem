@@ -1,7 +1,6 @@
 {% extends 'layouts/map.html.twig' %}
 {% block title %}Все вакансии - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block body %}
-{#    <script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script>#}
     {% include 'partials/header.html.twig' %}
     <div class="">
         <div class="content">
@@ -18,10 +17,6 @@
                     <button class="accordion_filter"><span>Фильтр анкет</span></button>
                     <div class="panel_filter">
                         {% include 'partials/pages/_main_filter.html.twig' %}
-
-{#                        <div class="knopka mob_emp mobs">#}
-{#                            <a href="#" aria-current="page" class="nuxt-link-exact-active nuxt-link-active" >Применить</a>#}
-{#                        </div>#}
                     </div>
                 </div>
                 <div class="big" >
@@ -30,9 +25,9 @@
                     </div>
 
                     {% if jobs|length > 0 %}
-                        <div id="map" style="height: 300px;"></div>
+                        <div id="map" class="map-open-street"></div>
+                        <div class="open_map js-open-map" id="open-map">Раскрыть карту</div>
                         {% include 'partials/pages/script/_map_script.html.twig' %}
-                        <div class="open_map" onClick="changeHeight();" id="open-map">Раскрыть карту</div>
                     {% endif %}
 
                     <div class="large fon">
@@ -54,5 +49,4 @@
         </div>
     </div>
     {% include 'partials/footer.html.twig' %}
-
 {% endblock %}

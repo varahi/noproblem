@@ -1131,3 +1131,9 @@ strike {
 .date_creating_form input {
     width: 210px;
 }
+.map-open-street{
+    height: 300px;
+}
+.map-open-street.big-map{
+    height: 600px;
+}

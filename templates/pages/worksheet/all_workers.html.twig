@@ -1,7 +1,6 @@
 {% extends 'layouts/map.html.twig' %}
 {% block title %}Анкеты - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block body %}
-
     {% include 'partials/header.html.twig' %}
     <div class="">
         <div class="content">
@@ -19,18 +18,6 @@
                     <button class="accordion_filter"><span>Фильтр анкет</span></button>
                     <div class="panel_filter">
                         {% include 'partials/pages/_main_filter.html.twig' %}
-
-                        <!--  <div class="sort mobs">
-                           <p >Сортировать по:</p>
-                           <select name="select" >
-                             <option value="value1" >Новизне</option>
-                             <option value="value2" selected="selected" >Новизне</option>
-                              <option value="value3">Новизне</option></select>
-                            </div>  -->
-
-{#                        <div class="knopka mob_emp mobs">#}
-{#                            <a href="/vacancies/domrabotnica" aria-current="page" class="nuxt-link-exact-active nuxt-link-active" >Применить</a>#}
-{#                        </div>#}
                     </div>
                 </div>
                 <div class="big" >
@@ -39,9 +26,9 @@
                     </div>
 
                     {% if worksheets|length > 0 %}
-                    <div id="map" style="height: 300px;"></div>
-                        {% include 'partials/pages/script/_map_script_workers.html.twig' %}
-                        <div class="open_map" onClick="changeHeight();" id="open-map">Раскрыть карту</div>
+                        <div id="map" class="map-open-street"></div>
+                        <div class="open_map js-open-map" id="open-map">Раскрыть карту</div>
+                        {% include 'partials/pages/script/_map_script_workers.html.twig'%}
                     {% endif %}
 
                     <div class="large fon">
