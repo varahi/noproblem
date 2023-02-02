@@ -125,7 +125,7 @@ class JobVolounteerFormType extends AbstractType
             ->add('tasks', EntityType::class, [
                 'class' => Task::class,
                 'multiple'  => true,
-                'expanded'  => true,
+                'expanded'  => false,
                 'by_reference' => false,
                 'query_builder' => function (EntityRepository $er) use ($categoryId) {
                     return $er->createQueryBuilder('t')
@@ -139,7 +139,7 @@ class JobVolounteerFormType extends AbstractType
             ->add('citizen', EntityType::class, [
                 'class' => Citizen::class,
                 'multiple'  => true,
-                'expanded'  => true,
+                'expanded'  => false,
                 'label' => 'Citizen',
                 'required' => true,
             ])
@@ -182,7 +182,7 @@ class JobVolounteerFormType extends AbstractType
             ->add('additional', EntityType::class, [
                 'class' => AdditionalInfo::class,
                 'multiple'  => true,
-                'expanded'  => true,
+                'expanded'  => false,
                 'label' => 'busynesses',
                 'required' => true,
             ])

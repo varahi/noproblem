@@ -105,7 +105,7 @@
                     </div>
                 </div>
 
-                <div class="but_creating_form">
+                <div class="but_creating_form input-select-multiple">
                     <label>
                         <p class="required">Могу выполнять (навыки):</p>
                         {{ form_widget(form.tasks) }}
@@ -119,7 +119,7 @@
                     </div>
                 </div>
 
-                <div class="but_creating_form">
+                <div class="but_creating_form input-select-multiple">
                     <label> <p class="required">Гражданство:</p>
                         {{ form_widget(form.citizen) }}
                     </label>
@@ -144,7 +144,7 @@
                     </div>
                 </div>
 
-                <div class="but_creating_form">
+                <div class="but_creating_form input-select-multiple">
                     <label> <p class="required">Доп информация:</p>
                         {{ form_widget(form.additional) }}
                     </label>
@@ -195,6 +195,7 @@
 
     <script>
         createDependableList ( '#worksheet_form_city', '#worksheet_form_district' );
+        $('.input-select-multiple select').select2({});
         $('#worksheet_form_city').change(function() {
             $('#worksheet_form_district').prop('disabled', false);
         });

@@ -1137,3 +1137,6 @@ strike {
 .map-open-street.big-map{
     height: 600px;
 }
+.input-select-multiple select {
+    min-width: 240px;
+}

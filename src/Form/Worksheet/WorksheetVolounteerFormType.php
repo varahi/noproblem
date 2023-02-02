@@ -109,14 +109,6 @@ class WorksheetVolounteerFormType extends AbstractType
                     'class' => '_white',
                 ],
             ])
-            /*->add('education', EntityType::class, [
-                'class' => Education::class,
-                'multiple'  => false,
-                'expanded'  => false,
-                'label' => false,
-                //'label' => 'Education',
-                'required' => true,
-            ])*/
             ->add(
                 'anotherTask',
                 TextType::class,
@@ -133,7 +125,7 @@ class WorksheetVolounteerFormType extends AbstractType
             ->add('tasks', EntityType::class, [
                 'class' => Task::class,
                 'multiple'  => true,
-                'expanded'  => true,
+                'expanded'  => false,
                 'by_reference' => false,
                 'query_builder' => function (EntityRepository $er) use ($categoryId) {
                     return $er->createQueryBuilder('t')
@@ -147,7 +139,7 @@ class WorksheetVolounteerFormType extends AbstractType
             ->add('citizen', EntityType::class, [
                 'class' => Citizen::class,
                 'multiple'  => true,
-                'expanded'  => true,
+                'expanded'  => false,
                 'label' => 'Citizen',
                 'required' => true,
             ])
@@ -181,7 +173,7 @@ class WorksheetVolounteerFormType extends AbstractType
             ->add('additional', EntityType::class, [
                 'class' => AdditionalInfo::class,
                 'multiple'  => true,
-                'expanded'  => true,
+                'expanded'  => false,
                 'label' => 'busynesses',
                 'required' => true,
             ])
