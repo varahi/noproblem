@@ -410,7 +410,7 @@ export default {
 input.form-control {
   color: #606060;
   font-size: 18px;
-  border-radius: 40px;
+  border-radius: 10px;
   border: 1px solid #dbdbdb;
   height: auto;
   padding: 12px 5px 12px 22px;
