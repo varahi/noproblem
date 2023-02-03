@@ -102,7 +102,6 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-
     /**
      * @ParamConverter(
      *      "signUpRequest",
@@ -117,8 +116,11 @@ class RegistrationController extends AbstractController
      */
     public function signUpHandlerCustomer(SignUpRequest $signUpRequest): JsonResponse
     {
+
+        $captchaEnable = 0;
+
         // Re-captcha validation
-        if ($this->requestStack->getCurrentRequest()->getContent()) {
+        if ($this->requestStack->getCurrentRequest()->getContent() && $captchaEnable === 1) {
             $request = $this->requestStack->getCurrentRequest()->getContent();
             $data = json_decode($request, true);
 
