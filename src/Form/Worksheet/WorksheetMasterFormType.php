@@ -63,14 +63,14 @@ class WorksheetMasterFormType extends AbstractType
                 ],
             ])
 
-            ->add('isFree', CheckboxType::class, [
-                'mapped' => false,
-                'required' => false,
-                'label' => false,
-                'attr' => [
-                    'class' => 'white',
-                ],
-            ])
+//            ->add('isFree', CheckboxType::class, [
+//                'mapped' => false,
+//                'required' => false,
+//                'label' => false,
+//                'attr' => [
+//                    'class' => 'white',
+//                ],
+//            ])
             ->add('experience', EntityType::class, [
                 'class' => Experience::class,
                 'multiple'  => false,
@@ -215,23 +215,23 @@ class WorksheetMasterFormType extends AbstractType
                 'label' => false,
                 'translation_domain' => 'forms',
             ])
-            ->add(
-                'clientAge',
-                ChoiceType::class,
-                [
-                    'required' => true,
-                    'label' => false,
-                    'translation_domain' => 'messages',
-                    'choices'  => [
-                        'Нет' => null,
-                        'дети до 10 лет' => 'дети до 10 лет',
-                        'подростки с 11 до 18 лет' => 'подростки с 11 до 18 лет',
-                        'взрослые с 19 до 59 лет' => 'взрослые с 19 до 59 лет',
-                        'пожилые от 60 и старше' => 'пожилые от 60 и старше',
-                    ],
-                    'data' => 'null'
-                ]
-            )
+//            ->add(
+//                'clientAge',
+//                ChoiceType::class,
+//                [
+//                    'required' => true,
+//                    'label' => false,
+//                    'translation_domain' => 'messages',
+//                    'choices'  => [
+//                        'Нет' => null,
+//                        'дети до 10 лет' => 'дети до 10 лет',
+//                        'подростки с 11 до 18 лет' => 'подростки с 11 до 18 лет',
+//                        'взрослые с 19 до 59 лет' => 'взрослые с 19 до 59 лет',
+//                        'пожилые от 60 и старше' => 'пожилые от 60 и старше',
+//                    ],
+//                    'data' => 'null'
+//                ]
+//            )
             ->add('city', EntityType::class, [
                 'class' => City::class,
                 'multiple'  => false,

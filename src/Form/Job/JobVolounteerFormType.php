@@ -107,21 +107,19 @@ class JobVolounteerFormType extends AbstractType
                     'class' => '_white',
                 ],
             ])
-
-//            ->add(
-//                'anotherTask',
-//                TextType::class,
-//                [
-//                    'required' => false,
-//                    'attr' => [
-//                        'placeholder' => 'Свой вариант',
-//                        'class' => 'other_help',
-//                    ],
-//                    'label' => false,
-//                    'translation_domain' => 'forms',
-//                ]
-//            )
-
+            ->add(
+                'anotherTask',
+                TextType::class,
+                [
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Другое',
+                        'class' => 'other_help',
+                    ],
+                    'label' => false,
+                    'translation_domain' => 'forms',
+                ]
+            )
             ->add('tasks', EntityType::class, [
                 'class' => Task::class,
                 'multiple'  => true,

@@ -1140,3 +1140,23 @@ strike {
 .input-select-multiple select {
     min-width: 240px;
 }
+
+
+.flex-parent {
+    display: flex;
+}
+.flex-child {
+    border-top: 1px solid #f5f5f5;
+    border-left: 1px solid #f5f5f5;
+    border-bottom: 1px solid #f5f5f5;
+    /*text-align: center;*/
+    padding: 15px;
+    box-sizing: border-box;
+    width: 50%;
+    white-space: nowrap;
+    /*display: flex;*/
+    flex-wrap: nowrap;
+}
+.flex-child:nth-of-type(2) {
+    border: 1px solid #f5f5f5;
+}

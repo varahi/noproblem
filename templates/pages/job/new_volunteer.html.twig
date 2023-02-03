@@ -17,165 +17,44 @@
                 {% include 'partials/_message.html.twig' %}
                 <h1>Вакансия Домработницы</h1>
                 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-
-{#                <div class="_but_creating_form">#}
-{#                    <label> <p class="required">Фотография:</p>#}
-{#                        {{ form_row(form.image) }}#}
-{#                    </label>#}
-{#                </div><br />#}
-
-                <div class="abouts_creating_form grid_creating_form">
-{#                    <div class="dom_creating_form">#}
-{#                        <p class="required">ФИО контактного лица</p>#}
-{#                        {{ form_row(form.name) }}#}
-{#                    </div>#}
-                    <div class="dom_creating_form">
-                        <p class="required">Возраст</p>
-                        {{ form_row(form.age) }}
-                    </div>
-                </div>
-
-                <div class="abouts_creating_form grid_creating_form">
-                    <div class="dom_creating_form">
-                        <p class="required">Город</p>
-{#                        <input type="text" id="worksheet_form" name="worksheet_form[city]" required="required" placeholder="Ваш город" class="form-control">#}
-                        {{ form_widget(form.city) }}
-                    </div>
-                    <div class="dom_creating_form">
-                        <p class="required">Район</p>
-                        <input type="text" id="worksheet_form" name="worksheet_form[district]" required="required" placeholder="Район" class="form-control">
-                    </div>
-                </div>
-
-                <div class="abouts_creating_form">
-                    <p>Когда нужно приступить к работе</p>
-                    <div class="date_creating_form">
-                        <input type="date" id="worksheet_form_startDate" name="worksheet_form[startDate]" class="text_input date"><br />
-                        <div class="but_creating_form">
-                            <label for="checkbox" class="work_start_now">Незамедлительно
-                                {{ form_widget(form.startNow) }}
-                                <span class="__checkmark"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="abouts_creating_form">
-                    <div class="date_creating_form">
+                {% include 'partials/pages/job/form/_age_column.html.twig' %}
+                {% include 'partials/pages/job/form/_city_column.html.twig' %}
+                {% include 'partials/pages/job/form/_start_column.html.twig' %}
+                <div class="flex-parent">
+                    <div class="flex-child">
                         <div class="abouts_creating_form">
-                            <p class="required">Опыт работы</p>
-                            <div class="work_experience_creating_form">
-                                {{ form_row(form.experience) }}
+                            <p>Оплата</p>
+                            <div class="ques_creating_form">
+                                {{ form_row(form.payment) }}<br />
+                                <div class="but_creating_form">
+                                    <label for="checkbox" class="work_start_now">Почасовая
+                                        {{ form_widget(form.paymentByHour) }}
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <div class="but_creating_form">
+                                    <label for="checkbox" class="work_start_now">Помесячная
+                                        {{ form_widget(form.paymentByMonth) }}
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="flex-child"></div>
                 </div>
 
-                <div class="abouts_creating_form">
-                    <p>Оплата</p>
-                    <div class="ques_creating_form">
-                        {{ form_row(form.payment) }}<br />
-                        <div class="but_creating_form">
-                            <label for="checkbox" class="_work_contract_ques">Почасовая<br />
-                                {{ form_widget(form.paymentByHour) }}
-                                <span class="__checkmark"></span>
-                            </label>
-                        </div>
-                        <div class="but_creating_form">
-                            <label for="checkbox" class="_work_contract_ques">Помесячная<br />
-                                {{ form_widget(form.paymentByMonth) }}
-                                <span class="__checkmark"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
+                {% include 'partials/pages/job/form/_busynesses_column.html.twig' %}
+                {% include 'partials/pages/job/form/_tasks_column.html.twig' %}
+                {% include 'partials/pages/job/form/_citizen_column.html.twig' %}
 
-                <div class="but_creating_form input-select-multiple">
-                    <label>
-                        <p class="required">Требуемые навыки:</p>
-                        {{ form_widget(form.tasks) }}
-                    </label>
-                </div><br />
-
-{#                <div class="abouts_creating_form grid_creating_form">#}
-{#                    <div class="dom_creating_form">#}
-{#                        <p class="required">Другие навыки</p>#}
-{#                        {{ form_widget(form.anotherTask) }}#}
-{#                    </div>#}
-{#                </div>#}
-
-                <div class="but_creating_form input-select-multiple">
-                    <label> <p class="required">Гражданство:</p>
-                        {{ form_widget(form.citizen) }}
-                    </label>
-                </div><br />
-
-{#                <div class="but_creating_form">#}
-{#                    <label> <p class="required">Проживание:</p>#}
-{#                        {{ form_widget(form.accommodations) }}#}
-{#                    </label>#}
-{#                </div><br /><br />#}
-
-                <div class="but_creating_form">
-                    <label> <p class="required">График работы:</p>
-                        {{ form_widget(form.busynesses) }}
-                    </label>
-                </div><br />
-
-                <div class="abouts_creating_form grid_creating_form">
-                    <div class="dom_creating_form">
-                        <p class="required">Свой вариант графика</p>
-                        {{ form_row(form.customBusynesses) }}
-                    </div>
-                </div>
-
-                <div class="but_creating_form input-select-multiple">
-                    <label> <p class="required">Доп информация:</p>
-                        {{ form_widget(form.additional) }}
-                    </label>
-                </div><br />
-
-{#                <div class="abouts_creating_form grid_creating_form">#}
-{#                    <div class="dom_creating_form">#}
-{#                        <p class="required">passportSeries</p>#}
-{#                        {{ form_widget(form.passportSeries) }}#}
-{#                    </div>#}
-{#                    <div class="dom_creating_form">#}
-{#                        <p class="required">passportNumber</p>#}
-{#                        {{ form_widget(form.passportNumber) }}#}
-{#                    </div>#}
-{#                </div>#}
-
-{#                <div class="abouts_creating_form grid_creating_form">#}
-{#                    <div class="dom_creating_form">#}
-{#                        <p class="required">passportPlaceOfIssue</p>#}
-{#                        {{ form_widget(form.passportPlaceOfIssue) }}#}
-{#                    </div>#}
-{#                    <div class="dom_creating_form">#}
-{#                        <p class="required">passportIssuingAuthority</p>#}
-{#                        {{ form_widget(form.passportIssuingAuthority) }}#}
-{#                    </div>#}
-{#                </div>#}
-
-{#                <div class="date_creating_form">#}
-{#                    <p class="required">passportDateOfIssue</p>#}
-{#                    {{ form_widget(form.passportDateOfIssue) }}#}
-{#                </div>#}
-
-{#                <div class="_but_creating_form">#}
-{#                    <label> <p class="required">Фотография паспорта:</p>#}
-{#                        {{ form_row(form.passportPhoto) }}#}
-{#                    </label>#}
-{#                </div><br />#}
-
+                <br /><br />
                 <div class="but_creating_form send_message">
                     <button type="submit">Разместить вакансию</button>
                 </div>
-
                 {{ form_end(form) }}
             </div>
         </div>
-
     </div>
 
     <script>

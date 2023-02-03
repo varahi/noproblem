@@ -1,0 +1,17 @@
+<div class="flex-parent">
+    <div class="flex-child">
+        <div class="but_creating_form">
+            <label> <p class="required">График работы:</p><br />
+                {{ form_widget(form.busynesses) }}
+            </label>
+        </div>
+    </div>
+    <div class="flex-child">
+        <div class="abouts_creating_form grid_creating_form">
+            <div class="dom_creating_form">
+                <p class="required">Свой вариант графика</p>
+                {{ form_row(form.customBusynesses) }}
+            </div>
+        </div>
+    </div>
+</div>

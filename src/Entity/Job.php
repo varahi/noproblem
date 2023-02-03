@@ -214,6 +214,16 @@ class Job
      */
     private $passportPhoto;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $amountOfChildren;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $ageOfChildren;
+
     public function __construct()
     {
         $this->created = new \DateTime();
@@ -786,6 +796,30 @@ class Job
     public function setPassportPhoto(?string $passportPhoto): self
     {
         $this->passportPhoto = $passportPhoto;
+
+        return $this;
+    }
+
+    public function getAmountOfChildren(): ?string
+    {
+        return $this->amountOfChildren;
+    }
+
+    public function setAmountOfChildren(?string $amountOfChildren): self
+    {
+        $this->amountOfChildren = $amountOfChildren;
+
+        return $this;
+    }
+
+    public function getAgeOfChildren(): ?string
+    {
+        return $this->ageOfChildren;
+    }
+
+    public function setAgeOfChildren(?string $ageOfChildren): self
+    {
+        $this->ageOfChildren = $ageOfChildren;
 
         return $this;
     }

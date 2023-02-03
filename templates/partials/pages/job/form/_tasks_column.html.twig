@@ -1,0 +1,19 @@
+<div class="flex-parent">
+    <div class="flex-child">
+        <div class="abouts_creating_form grid_creating_form input-select-multiple">
+            <div class="dom_creating_form">
+                <p class="required">Могу выполнять (навыки):</p>
+                {{ form_widget(form.tasks) }}
+            </div>
+        </div>
+
+    </div>
+    <div class="flex-child">
+        <div class="abouts_creating_form grid_creating_form">
+            <div class="dom_creating_form">
+                <p class="required">Другие навыки</p>
+                {{ form_widget(form.anotherTask) }}
+            </div>
+        </div>
+    </div>
+</div>

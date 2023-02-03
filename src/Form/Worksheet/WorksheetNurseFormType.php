@@ -63,14 +63,14 @@ class WorksheetNurseFormType extends AbstractType
                 ],
             ])
 
-            ->add('isFree', CheckboxType::class, [
-                'mapped' => false,
-                'required' => false,
-                'label' => false,
-                'attr' => [
-                    'class' => 'white',
-                ],
-            ])
+//            ->add('isFree', CheckboxType::class, [
+//                'mapped' => false,
+//                'required' => false,
+//                'label' => false,
+//                'attr' => [
+//                    'class' => 'white',
+//                ],
+//            ])
             ->add('experience', EntityType::class, [
                 'class' => Experience::class,
                 'multiple'  => false,

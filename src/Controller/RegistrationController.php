@@ -116,7 +116,6 @@ class RegistrationController extends AbstractController
      */
     public function signUpHandlerCustomer(SignUpRequest $signUpRequest): JsonResponse
     {
-
         $captchaEnable = 0;
 
         // Re-captcha validation

@@ -57,14 +57,14 @@ class WorksheetPsychologistFormType extends AbstractType
                 ]
             )
 
-            ->add('isFree', CheckboxType::class, [
-                'mapped' => false,
-                'required' => false,
-                'label' => false,
-                'attr' => [
-                    'class' => 'white',
-                ],
-            ])
+//            ->add('isFree', CheckboxType::class, [
+//                'mapped' => false,
+//                'required' => false,
+//                'label' => false,
+//                'attr' => [
+//                    'class' => 'white',
+//                ],
+//            ])
             ->add(
                 'additionalEducation',
                 TextareaType::class,

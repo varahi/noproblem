@@ -217,6 +217,42 @@ class JobNannyFormType extends AbstractType
                 'label' => 'City',
                 'required' => true,
             ])
+            ->add(
+                'amountOfChildren',
+                ChoiceType::class,
+                [
+                    'required' => true,
+                    'label' => false,
+                    'translation_domain' => 'messages',
+                    'choices'  => [
+                        'Выберите количество' => null,
+                        '1 ребенок' => '1',
+                        '2 ребенка' => '2',
+                        '3 ребенка' => '3',
+                        '4 ребенка' => '4',
+                        'Другое' => '999',
+                    ],
+                    'data' => 'null'
+                ]
+            )
+            ->add(
+                'ageOfChildren',
+                ChoiceType::class,
+                [
+                    'required' => true,
+                    'label' => false,
+                    'translation_domain' => 'messages',
+                    'choices'  => [
+                        'Выберите возраст' => null,
+                        '0-1 год' => '0-1',
+                        '2-3 года' => '2-3',
+                        '4-6 лет' => '4-6',
+                        '7-10 лет' => '7-10',
+                        'Другое' => '999',
+                    ],
+                    'data' => 'null'
+                ]
+            )
 /*            ->add(
                 'clientAge',
                 ChoiceType::class,
@@ -231,24 +267,6 @@ class JobNannyFormType extends AbstractType
                         '4-6 лет' => '4-6 лет',
                         '7-10 лет' => '7-10 лет',
                         '11-14 лет' => '11-14 лет',
-                    ],
-                    'data' => 'null'
-                ]
-            )*/
-/*            ->add(
-                'amountOfChildren',
-                ChoiceType::class,
-                [
-                    'required' => true,
-                    'label' => false,
-                    'translation_domain' => 'messages',
-                    'choices'  => [
-                        'Нет' => null,
-                        '1 ребенок' => '1 ребенок',
-                        '2 ребенка' => '2 ребенка',
-                        '3 ребенка' => '3 ребенка',
-                        '4 ребенка' => '4 ребенка',
-                        '5 детей' => '5 детей',
                     ],
                     'data' => 'null'
                 ]

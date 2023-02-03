@@ -1,0 +1,30 @@
+<div class="flex-parent">
+    <div class="flex-child">
+        <div class="abouts_creating_form">
+            <p>Оплата</p>
+            <div class="ques_creating_form">
+                {{ form_row(form.payment) }}<br />
+                <div class="but_creating_form">
+                    <label for="checkbox" class="work_start_now">Почасовая
+                        {{ form_widget(form.paymentByHour) }}
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div class="but_creating_form">
+                    <label for="checkbox" class="work_start_now">Помесячная
+                        {{ form_widget(form.paymentByMonth) }}
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex-child">
+        <div class="abouts_creating_form">
+            <p class="required">Образование</p>
+            <div class="work_experience_creating_form">
+                {{ form_row(form.education) }}
+            </div>
+        </div>
+    </div>
+</div>
