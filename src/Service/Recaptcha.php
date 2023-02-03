@@ -65,8 +65,15 @@ class Recaptcha
 
     private function getHTTP($data)
     {
+        $arrContextOptions = [
+            'ssl' => [
+                'verify_peer'=> false,
+                'verify_peer_name'=> false,
+            ],
+        ];
+
         $url = 'https://www.google.com/recaptcha/api/siteverify?'.http_build_query($data);
-        $response = file_get_contents($url);
+        $response = file_get_contents($url, false, stream_context_create($arrContextOptions));
 
         return $response;
     }
