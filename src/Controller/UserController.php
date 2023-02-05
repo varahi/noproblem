@@ -52,6 +52,10 @@ class UserController extends AbstractController
 
     public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 
+    public const WELCOME_ACCESS_1 = '1';
+
+    public const WELCOME_ACCESS_2 = '7';
+
     /**
      * Time in seconds 3600 - one hour
      */
@@ -144,6 +148,9 @@ class UserController extends AbstractController
             // Check days left and set user status
             $order = $orderRepository->findByUserAndActive($user->getId());
             $daysLeft = $this->getDaysLeft($order, $user);
+            if ($order && $order->getTariff()->getId() == self::WELCOME_ACCESS_1 || $order->getTariff()->getId() == self::WELCOME_ACCESS_2) {
+                $daysLeft = $this->getDaysLeft($order, $user) + 1;
+            }
 
             // Get percents how profile filled to show modal warning window
             $persentFilled = $this->getPersentFilled($user);
@@ -162,9 +169,7 @@ class UserController extends AbstractController
             $encoders = [new XmlEncoder(), new JsonEncoder()];
             $normalizers = [new ObjectNormalizer()];
             $serializer = new Serializer($normalizers, $encoders);*/
-
             //$cityName = $this->sessionService->getCity();
-            //dd($cityName);
 
             {
                 return $this->render('user/lk_customer.html.twig', [
@@ -209,7 +214,11 @@ class UserController extends AbstractController
 
             // Check days left and set user status
             $order = $orderRepository->findByUserAndActive($user->getId());
+
             $daysLeft = $this->getDaysLeft($order, $user);
+            if ($order && $order->getTariff()->getId() == self::WELCOME_ACCESS_1 || $order->getTariff()->getId() == self::WELCOME_ACCESS_2) {
+                $daysLeft = $this->getDaysLeft($order, $user) + 1;
+            }
 
             // Get percents how profile filled to show modal warning window
             $persentFilled = $this->getPersentFilled($user);

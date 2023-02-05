@@ -114,10 +114,9 @@ class YookassaController extends AbstractController
             ],
             $idempotenceKey
         );
+
         $paymentId = $response->getId();
-
         $confirmationUrl = $response->getConfirmation()->getConfirmationUrl();
-
         $response = $this->redirect($confirmationUrl);
         $cookie = new Cookie('orderId', $orderId, strtotime('now + 2 days'));
         $response->headers->setCookie($cookie);

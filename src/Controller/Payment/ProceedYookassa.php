@@ -2,8 +2,8 @@
 
 namespace App\Controller\Payment;
 
-use App\Entity\Order;
 use App\Repository\TariffRepository;
+use App\Service\SaveOrderService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,55 +46,31 @@ class ProceedYookassa extends AbstractController
         string $id,
         TariffRepository $tariffRepository,
         TranslatorInterface $translator,
-        NotifierInterface $notifier
+        NotifierInterface $notifier,
+        SaveOrderService $saveOrderService
     ): Response {
         $client = new YooClient();
         $client->setAuth($this->acq_array_yookassa['shopId'], $this->acq_array_yookassa['secretKey']);
-        $entityManager = $this->doctrine->getManager();
-
         $cookies = $request->cookies;
         if (!$cookies->has('paymentId')) {
             return $this->redirectToRoute("app_payment_error");
         }
         $paymentId = $cookies->get('paymentId');
-        $paymentInfo = $client->getPaymentInfo($paymentId);
 
-        if ($paymentInfo->getStatus() != "succeeded") {
-            //return $this->json(['data' => "Order wasn't approved!"]);
-            return $this->redirectToRoute("app_tarifs");
+        try {
+            $response = $client->getPaymentInfo($paymentId);
+        } catch (\Exception $e) {
+            $response = $e;
         }
 
-        // Logic of succeed
-        // Создаем новый заказ
-        $user = $this->security->getUser();
-        // Необходимо получить id тарифа и найти его в БД
-        $tariff = $paymentInfo['description'];
-        $tariff = $tariffRepository->findOneBy(['id' => $tariff]);
-        $order = new Order();
-        $order->setName('Order #' . 'User ID - ' . $user->getId() . ' Tariff ID - ' . $tariff->getId());
-        $order->setUser($user);
-        $order->setActive(1);
-        //$order->setEndDate()
-        $order->setTariff($tariff);
-        $user->setActive(true);
-
-        // We need to save data here to get order created date
-        //$entityManager->persist($order);
-        //$entityManager->flush();
-
-        $currentDateStr = date('Y-m-d H:i:s');
-        $currentDate = new \DateTime($currentDateStr);
-        $interval = '+' . $tariff->getTermDays() . 'day';
-        $endDate = $currentDate->modify($interval);
-        $order->setEndDate($endDate);
-
-        // Flush data again
-        $entityManager->persist($order);
-        $entityManager->persist($user);
-        $entityManager->flush();
-
-        $order->setTariff($tariff);
-        $entityManager->persist($order);
+        //ToDo: is this condition correct?
+        if ($cookies->get('paymentId') == $client->getPaymentInfo($paymentId)->getId()) {
+            if ($response->getStatus() == 'succeeded') {
+                $tariff = $tariffRepository->findOneBy(['id' => $response->getDescription()]);
+                $user = $this->security->getUser();
+                $saveOrderService->saveOrder($user, $tariff);
+            }
+        }
 
         // Redirect to lk with message
         $message = $translator->trans('Order was approved', array(), 'flash');
