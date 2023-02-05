@@ -45,20 +45,16 @@
           <div class="alert alert-success" role="alert" v-if="formSubmittedEmployerSuccess">
             Поздравляем вас! Вы успешно зарегистрировались. Проверьте вашу почту и активируйте аккаунт.
           </div>
+          <div class="alert alert-danger" role="alert" v-if="validationErrors.email">{{ validationErrors.email }}</div>
+          <div class="alert alert-danger" role="alert" v-if="validationErrors.password">{{ validationErrors.password }}</div>
           <form method="post" class="form-std" v-on:submit.prevent="submitFormEmployer" v-else>
             <div class="form-group">
               <label for="email">Ваш E-mail</label>
               <input type="email" class="form-control" id="email" v-model="email" aria-describedby="emailHelp" placeholder="Ваш E-mail">
-              <small class="form-text text-danger" v-if="validationErrors.email">
-                {{ validationErrors.email }}
-              </small>
             </div>
             <div class="form-group">
               <label for="password">Пароль</label>
               <input type="password" class="form-control" id="password" v-model="password" placeholder="Пароль">
-              <small class="form-text text-danger" v-if="validationErrors.password">
-                {{ validationErrors.password }}
-              </small>
             </div>
             <div class="captcha-block">
               <vue-recaptcha
@@ -76,7 +72,6 @@
         </div>
       </div>
 
-
       <!-- Registration customer modal box -->
       <div class="modal" v-if="showModalCustomer">
         <div class="modal-title">
@@ -90,21 +85,16 @@
           <div class="alert alert-success" role="alert" v-if="formSubmittedCustomerSuccess">
             Поздравляем вас! Вы успешно зарегистрировались. Проверьте вашу почту и активируйте аккаунт.
           </div>
-
+          <div class="alert alert-danger" role="alert" v-if="validationErrors.email">{{ validationErrors.email }}</div>
+          <div class="alert alert-danger" role="alert" v-if="validationErrors.password">{{ validationErrors.password }}</div>
           <form method="post" class="form-std" @submit.prevent="validate" v-else>
             <div class="form-group">
               <label for="email">Ваш E-mail</label>
               <input type="email" class="form-control" id="email" v-model="email" aria-describedby="emailHelp" placeholder="Ваш E-mail">
-              <small class="form-text text-danger" v-if="validationErrors.email">
-                {{ validationErrors.email }}
-              </small>
             </div>
             <div class="form-group">
               <label for="password">Пароль</label>
               <input type="password" class="form-control" id="password" v-model="password" placeholder="Пароль">
-              <small class="form-text text-danger" v-if="validationErrors.password">
-                {{ validationErrors.password }}
-              </small>
             </div>
             <div class="captcha-block">
               <vue-recaptcha
@@ -198,14 +188,14 @@ export default {
       formSubmittedBuyerSuccess: false,
       sitekey: '6LeK-XcjAAAAACtV8r7cQMCc2lFskfpLAr04HyMu'
       //sitekey: '6LccSEwkAAAAAHmAWznmB2hglqKc9N7h_bBUyFz2' // http://noproblem.localhost/
-      //sitekey: process.env.RECAPTCHA_SITE_KEY
+      //sitekey: process.env.RECAPTCHA_SITE_KEY // ToDo
     }
   },
   methods: {
     // Decomposition component
     // Register Employer
-    submitFormEmployer: function (recaptchaToken, event) {
-      event.preventDefault();
+    submitFormEmployer: function (recaptchaToken) {
+      //event.preventDefault();
 
       let component = this;
       let body = {
