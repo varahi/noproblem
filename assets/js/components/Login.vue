@@ -83,7 +83,7 @@
         })
             .catch(error => {
               this.alert = true;
-              this.alertMessage = 'Неверная пара логин/пароль';
+              this.alertMessage = 'Недействительные аутентификационные данные.';
             });
 
 

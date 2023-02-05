@@ -47,7 +47,7 @@
           </div>
           <div class="alert alert-danger" role="alert" v-if="validationErrors.email">{{ validationErrors.email }}</div>
           <div class="alert alert-danger" role="alert" v-if="validationErrors.password">{{ validationErrors.password }}</div>
-          <form method="post" class="form-std" v-on:submit.prevent="submitFormEmployer" v-else>
+          <form method="post" autocomplete="off" class="form-std" v-on:submit.prevent="submitFormEmployer" v-else>
             <div class="form-group">
               <label for="email">Ваш E-mail</label>
               <input type="email" class="form-control" id="email" v-model="email" aria-describedby="emailHelp" placeholder="Ваш E-mail">
@@ -87,7 +87,7 @@
           </div>
           <div class="alert alert-danger" role="alert" v-if="validationErrors.email">{{ validationErrors.email }}</div>
           <div class="alert alert-danger" role="alert" v-if="validationErrors.password">{{ validationErrors.password }}</div>
-          <form method="post" class="form-std" @submit.prevent="validate" v-else>
+          <form method="post" autocomplete="off" class="form-std" @submit.prevent="validate" v-else>
             <div class="form-group">
               <label for="email">Ваш E-mail</label>
               <input type="email" class="form-control" id="email" v-model="email" aria-describedby="emailHelp" placeholder="Ваш E-mail">
@@ -127,7 +127,7 @@
             Поздравляем вас! Вы успешно зарегистрировались. Проверьте вашу почту и активируйте аккаунт.
           </div>
 
-          <form method="post" class="form-std" v-on:submit.prevent="submitFormBuyer" v-else>
+          <form method="post" autocomplete="off" class="form-std" v-on:submit.prevent="submitFormBuyer" v-else>
             <div class="form-group">
               <label for="email">Ваш E-mail</label>
               <input type="email" class="form-control" id="email" v-model="email" aria-describedby="emailHelp" placeholder="Ваш E-mail">
