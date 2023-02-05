@@ -148,8 +148,10 @@ class UserController extends AbstractController
             // Check days left and set user status
             $order = $orderRepository->findByUserAndActive($user->getId());
             $daysLeft = $this->getDaysLeft($order, $user);
-            if ($order && $order->getTariff()->getId() == self::WELCOME_ACCESS_1 || $order->getTariff()->getId() == self::WELCOME_ACCESS_2) {
-                $daysLeft = $this->getDaysLeft($order, $user) + 1;
+            if ($order !==null) {
+                if ($order->getTariff()->getId() == self::WELCOME_ACCESS_1 || $order->getTariff()->getId() == self::WELCOME_ACCESS_2) {
+                    $daysLeft = $this->getDaysLeft($order, $user) + 1;
+                }
             }
 
             // Get percents how profile filled to show modal warning window
@@ -214,10 +216,11 @@ class UserController extends AbstractController
 
             // Check days left and set user status
             $order = $orderRepository->findByUserAndActive($user->getId());
-
             $daysLeft = $this->getDaysLeft($order, $user);
-            if ($order && $order->getTariff()->getId() == self::WELCOME_ACCESS_1 || $order->getTariff()->getId() == self::WELCOME_ACCESS_2) {
-                $daysLeft = $this->getDaysLeft($order, $user) + 1;
+            if ($order !==null) {
+                if ($order->getTariff()->getId() == self::WELCOME_ACCESS_1 || $order->getTariff()->getId() == self::WELCOME_ACCESS_2) {
+                    $daysLeft = $this->getDaysLeft($order, $user) + 1;
+                }
             }
 
             // Get percents how profile filled to show modal warning window
