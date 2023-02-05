@@ -17,13 +17,13 @@
 
         <form class="form-std" autocomplete="off" method="post" v-on:submit.prevent="performLogin" v-else>
           <div class="form-input">
-            <input type="text" class="form-control" id="inputEmail" v-model="email" placeholder="E-mail">
+            <input type="text" class="form-control" id="inputEmail" v-model="email" placeholder="Ваш E-mail">
             <small class="form-text text-danger" v-if="validationErrors.email">
               {{ validationErrors.email }}
             </small>
           </div>
           <div class="form-input">
-            <input type="password" class="form-control" id="password" v-model="password" placeholder="Password">
+            <input type="password" class="form-control" id="password" v-model="password" placeholder="Пароль">
             <small class="form-text text-danger" v-if="validationErrors.password">
               {{ validationErrors.password }}
             </small>

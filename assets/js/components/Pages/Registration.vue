@@ -54,7 +54,7 @@
           <form class="form-std" method="post" v-on:submit.prevent="submitForm" v-else>
 
             <div class="form-group">
-              <label for="email">Email address</label>
+              <label for="email">Ваш E-mail</label>
               <input type="email" class="form-control" id="email" v-model="email" aria-describedby="emailHelp" placeholder="Enter email">
               <small class="form-text text-danger" v-if="validationErrors.email">
                 {{ validationErrors.email }}
@@ -62,7 +62,7 @@
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input type="password" class="form-control" id="password" v-model="password" placeholder="Password">
+              <input type="password" class="form-control" id="password" v-model="password" placeholder="Пароль">
               <small class="form-text text-danger" v-if="validationErrors.password">
                 {{ validationErrors.password }}
               </small>
