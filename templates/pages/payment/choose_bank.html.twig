@@ -24,13 +24,11 @@
 	</style>
 {% endblock %}
 {% block body %}
-
 	<h1>Выберите способ оплаты:</h1>
-	<a href="{{ app.request.getRequestUri() }}&bank=sber">
+	<a href="{{ path('app_payment_sber', { tariff: tariff, user: user.id }) }}">
 		<img src={{ asset('assets/img/sber.png') }} alt="Sber">
-	</a>
-	<br/>
-	<a href="{{ app.request.getRequestUri() }}&bank=yookassa">
+	</a><br />
+	<a href="{{ path('app_payment_yookassa', { tariff: tariff, user: user.id }) }}">
 		<img src="https://belimgroup.ru/wp-content/uploads/2021/06/logo-Ju.png" alt="YooKassa">
 	</a>
 {% endblock %}

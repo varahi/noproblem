@@ -25,7 +25,7 @@
 
                 {% if is_granted('ROLE_EMPLOYEE') %}
                     {#							<a class="employer_card-btn" href="pay/new?amount={{ tariff.amount }}&tariff={{ tariff.id }}&user={{ user.id }}" type="button">Приобрести</a>#}
-                    <a class="employer_card-btn" href="{{ path('payment_new', { tariff: tariff.id, user: user.id}) }}" type="button">Приобрести</a>
+                    <a class="employer_card-btn" href="{{ path('app_choose_bank', { tariff: tariff.id, user: user.id }) }}" type="button">Приобрести</a>
                 {% else %}
                     <a class="employer_card-btn" href="{{ path('app_login') }}" type="button">Приобрести</a>
                 {% endif %}
