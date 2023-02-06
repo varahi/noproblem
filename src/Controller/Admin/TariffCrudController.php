@@ -26,7 +26,7 @@ class TariffCrudController extends AbstractCrudController
             ->setEntityLabelInSingular('Tariff')
             ->setEntityLabelInPlural('Tariff')
             ->setSearchFields(['task'])
-            ->setDefaultSort(['name' => 'ASC']);
+            ->setDefaultSort(['type' => 'ASC']);
     }
 
     public function configureFields(string $pageName): iterable

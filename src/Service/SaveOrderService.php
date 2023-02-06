@@ -44,6 +44,12 @@ class SaveOrderService extends AbstractController
         $entityManager->flush();
 
         $order->setTariff($tariff);
+
+        $user->addOrder($order);
+        $user->setTariff($tariff);
+
         $entityManager->persist($order);
+        $entityManager->persist($tariff);
+        $entityManager->flush();
     }
 }

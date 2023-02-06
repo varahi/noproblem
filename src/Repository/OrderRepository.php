@@ -52,8 +52,10 @@ class OrderRepository extends ServiceEntityRepository
             ->from(self::TABLE, 'o')
             ->join('o.user', 'u')
             ->where($qb->expr()->eq('u.id', $id))
-            ->andWhere($qb->expr()->eq('o.active', true))
-            ->andWhere($qb->expr()->neq('o.disabled', true))
+            ->orderBy("o.id", "DESC")
+            ->setMaxResults(1)
+            //->andWhere($qb->expr()->eq('o.active', true))
+            //->andWhere($qb->expr()->neq('o.disabled', true))
         ;
 
         return $qb->getQuery()->getOneOrNullResult();

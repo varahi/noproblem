@@ -38,7 +38,7 @@ class ProceedYookassa extends AbstractController
     }
 
     /**
-     * @Route("/pay/proceed_yookassa/{id}", name="payment_proceed_sber")
+     * @Route("/pay/proceed_yookassa/{id}", name="payment_proceed_yookassa")
      * @return Response
      */
     public function proceedPayment(
@@ -64,13 +64,13 @@ class ProceedYookassa extends AbstractController
         }
 
         //ToDo: is this condition correct?
-        if ($cookies->get('paymentId') == $client->getPaymentInfo($paymentId)->getId()) {
+        //if ($cookies->get('paymentId') == $client->getPaymentInfo($paymentId)->getId()) {
             if ($response->getStatus() == 'succeeded') {
                 $tariff = $tariffRepository->findOneBy(['id' => $response->getDescription()]);
                 $user = $this->security->getUser();
                 $saveOrderService->saveOrder($user, $tariff);
             }
-        }
+        //}
 
         // Redirect to lk with message
         $message = $translator->trans('Order was approved', array(), 'flash');

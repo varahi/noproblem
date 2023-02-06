@@ -24,7 +24,7 @@ class OrderCrudController extends AbstractCrudController
             ->setEntityLabelInSingular('Order')
             ->setEntityLabelInPlural('Order')
             ->setSearchFields(['name'])
-            ->setDefaultSort(['name' => 'ASC']);
+            ->setDefaultSort(['id' => 'DESC']);
     }
 
     public function configureFields(string $pageName): iterable
