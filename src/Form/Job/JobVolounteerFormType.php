@@ -27,19 +27,6 @@ class JobVolounteerFormType extends AbstractType
     {
         $categoryId = $options['categoryId'];
         $builder
-//            ->add(
-//                'name',
-//                TextType::class,
-//                [
-//                    'required' => true,
-//                    'attr' => [
-//                        'placeholder' => 'Contact Full Name',
-//                        'class' => 'text_input',
-//                    ],
-//                    'label' => false,
-//                    'translation_domain' => 'forms',
-//                ]
-//            )
             ->add(
                 'age',
                 TextType::class,
@@ -157,13 +144,13 @@ class JobVolounteerFormType extends AbstractType
                 'required' => true,
             ])*/
 
-            ->add('busynesses', EntityType::class, [
-                'class' => Busyness::class,
-                'multiple'  => true,
-                'expanded'  => true,
-                'label' => 'busynesses',
-                'required' => true,
-            ])
+//            ->add('busynesses', EntityType::class, [
+//                'class' => Busyness::class,
+//                'multiple'  => true,
+//                'expanded'  => true,
+//                'label' => 'busynesses',
+//                'required' => true,
+//            ])
             ->add(
                 'customBusynesses',
                 TextType::class,

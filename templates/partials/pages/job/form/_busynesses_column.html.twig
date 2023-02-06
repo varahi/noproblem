@@ -1,9 +1,28 @@
 <div class="flex-parent">
     <div class="flex-child">
-        <div class="but_creating_form">
-            <label> <p class="required">График работы:</p><br />
-                {{ form_widget(form.busynesses) }}
-            </label>
+{#        <div class="but_creating_form">#}
+{#            <label> <p class="required">График работы:</p><br />#}
+{#                {{ form_widget(form.busynesses) }}#}
+{#                <span class="checkmark"></span>#}
+{#            </label>#}
+{#        </div>#}
+
+        <div class="abouts_creating_form">
+            <p>График работы:</p><br />
+            <div class="ques_creating_form">
+                <div class="but_creating_form">
+                    <label for="checkbox" class="work_start_now">Полная занятость
+                        <input type="checkbox" id="job_volounteer_form_busynesses" name="job_volounteer_form[busynesses][]" class="_white" value="1" />
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div class="but_creating_form">
+                    <label for="checkbox" class="work_start_now">Полная занятость
+                        <input type="checkbox" id="job_volounteer_form_busynesses" name="job_volounteer_form[busynesses][]" class="_white" value="2" />
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
     <div class="flex-child">
@@ -11,6 +30,7 @@
             <div class="dom_creating_form">
                 <p class="required">Свой вариант графика</p>
                 {{ form_row(form.customBusynesses) }}
+                <span class="checkmark"></span>
             </div>
         </div>
     </div>
