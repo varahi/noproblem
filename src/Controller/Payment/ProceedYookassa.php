@@ -3,6 +3,7 @@
 namespace App\Controller\Payment;
 
 use App\Repository\TariffRepository;
+use App\Repository\UserRepository;
 use App\Service\SaveOrderService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,6 +18,7 @@ use YooKassa\Client as YooClient;
 
 class ProceedYookassa extends AbstractController
 {
+
     private $acq_array_yookassa = [
         'shopId' => '949967',
         'secretKey' => 'live_Lpu1u-LVIpOk-yXy5NVOQIdCx1XGyei9FVC5-Lpxukk'
@@ -65,11 +67,11 @@ class ProceedYookassa extends AbstractController
 
         //ToDo: is this condition correct?
         //if ($cookies->get('paymentId') == $client->getPaymentInfo($paymentId)->getId()) {
-            if ($response->getStatus() == 'succeeded') {
-                $tariff = $tariffRepository->findOneBy(['id' => $response->getDescription()]);
-                $user = $this->security->getUser();
-                $saveOrderService->saveOrder($user, $tariff);
-            }
+        if ($response->getStatus() == 'succeeded') {
+            $tariff = $tariffRepository->findOneBy(['id' => $response->getMetadata()['tariff']]);
+            $user = $this->security->getUser();
+            $saveOrderService->saveOrder($user, $tariff);
+        }
         //}
 
         // Redirect to lk with message
@@ -77,5 +79,42 @@ class ProceedYookassa extends AbstractController
         $notifier->send(new Notification($message, ['browser']));
         return $this->redirectToRoute("app_lk");
         //return $this->json(['data' => "Order was approved! and it's working!"]);
+    }
+
+    /**
+     * @Route("/pay/yookassa_hooks", name="payment_hook_yookassa")
+     * @return Response
+     */
+    public function hooks(
+        Request $request,
+        TariffRepository $tariffRepository,
+        UserRepository $userRepository,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier,
+        SaveOrderService $saveOrderService
+    ): Response {
+        $client = new YooClient();
+        $client->setAuth($this->acq_array_yookassa['shopId'], $this->acq_array_yookassa['secretKey']);
+
+        $hook_data = json_decode($request->getContent(), true);
+        if ($hook_data['event'] != 'payment.succeeded') {
+            return $this->json(['data' => 'we dont proceed this type of event yet']);
+        }
+        $paymentId = $hook_data['object']['id'];
+
+        try {
+            $response = $client->getPaymentInfo($paymentId);
+        } catch (\Exception $e) {
+            return $this->json(['data' => 'no payment data found']);
+        }
+
+
+        if ($response->getStatus() == 'succeeded') {
+            $tariff = $tariffRepository->findOneBy(['id' => $response->getMetadata()['tariff']]);
+            $user = $userRepository->findOneBy(['id' => $response->getMetadata()['userId']]);
+            $saveOrderService->saveOrder($user, $tariff);
+        }
+
+        return $this->json(['data' => 'success']);
     }
 }

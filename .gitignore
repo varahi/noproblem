@@ -44,3 +44,4 @@ logs/
 private/
 public_shtml/
 composer.lock
+public_html/bundles/fosckeditor/*
