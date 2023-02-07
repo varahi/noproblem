@@ -65,11 +65,11 @@ class ProceedYookassa extends AbstractController
 
         //ToDo: is this condition correct?
         //if ($cookies->get('paymentId') == $client->getPaymentInfo($paymentId)->getId()) {
-            if ($response->getStatus() == 'succeeded') {
-                $tariff = $tariffRepository->findOneBy(['id' => $response->getDescription()]);
-                $user = $this->security->getUser();
-                $saveOrderService->saveOrder($user, $tariff);
-            }
+        if ($response->getStatus() == 'succeeded') {
+            $tariff = $tariffRepository->findOneBy(['id' => $response->getDescription()]);
+            $user = $this->security->getUser();
+            $saveOrderService->saveOrder($user, $tariff);
+        }
         //}
 
         // Redirect to lk with message

@@ -59,7 +59,7 @@
       </trans-unit>
       <trans-unit id="Your account has not been activated yet" resname="Your account has not been activated yet">
         <source>Your account has not been activated yet</source>
-        <target><![CDATA[Ваш аккунт еще не активирован. <br />Пожалуйста перейдите по ссылке в отправленном вам письме!]]></target>
+        <target><![CDATA[Ваш аккаунт еще не активирован. <br />Пожалуйста перейдите по ссылке в отправленном вам письме!]]></target>
       </trans-unit>
       <trans-unit id="Something wrong" resname="Something wrong">
         <source>Something wrong</source>

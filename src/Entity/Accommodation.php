@@ -30,14 +30,9 @@ class Accommodation
     private $job;
 
     /**
-     * @ORM\OneToMany(targetEntity=Worksheet::class, mappedBy="accommodations")
+     * @ORM\ManyToOne(targetEntity=Worksheet::class, inversedBy="accommodations")
      */
-    private $worksheets;
-
-    public function __construct()
-    {
-        $this->worksheets = new ArrayCollection();
-    }
+    private $worksheet;
 
     public function __toString(): string
     {
@@ -73,32 +68,14 @@ class Accommodation
         return $this;
     }
 
-    /**
-     * @return Collection<int, Worksheet>
-     */
-    public function getWorksheets(): Collection
+    public function getWorksheet(): ?Worksheet
     {
-        return $this->worksheets;
+        return $this->worksheet;
     }
 
-    public function addWorksheet(Worksheet $worksheet): self
+    public function setWorksheet(?Worksheet $worksheet): self
     {
-        if (!$this->worksheets->contains($worksheet)) {
-            $this->worksheets[] = $worksheet;
-            $worksheet->setAccommodations($this);
-        }
-
-        return $this;
-    }
-
-    public function removeWorksheet(Worksheet $worksheet): self
-    {
-        if ($this->worksheets->removeElement($worksheet)) {
-            // set the owning side to null (unless already changed)
-            if ($worksheet->getAccommodations() === $this) {
-                $worksheet->setAccommodations(null);
-            }
-        }
+        $this->worksheet = $worksheet;
 
         return $this;
     }

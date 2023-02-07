@@ -40,6 +40,19 @@ class JobMasterFormType extends AbstractType
                     'translation_domain' => 'messages',
                 ]
             )
+            ->add(
+                'name',
+                TextType::class,
+                [
+                    'required' => true,
+                    'attr' => [
+                        'placeholder' => '',
+                        'class' => 'form-control',
+                    ],
+                    'label' => false,
+                    'translation_domain' => 'messages',
+                ]
+            )
             ->add('startNow', CheckboxType::class, [
                 'mapped' => false,
                 'required' => false,
@@ -149,13 +162,14 @@ class JobMasterFormType extends AbstractType
                 'label' => 'City',
                 'required' => true,
             ])
-/*            ->add('accommodations', EntityType::class, [
+            ->add('accommodations', EntityType::class, [
                 'class' => Accommodation::class,
-                'multiple'  => false,
-                'expanded'  => true,
+                'multiple'  => true,
+                'expanded'  => false,
                 'label' => 'Accommodations',
                 'required' => true,
-            ])*/
+            ])
+
 //            ->add('busynesses', EntityType::class, [
 //                'class' => Busyness::class,
 //                'multiple'  => true,
@@ -167,7 +181,7 @@ class JobMasterFormType extends AbstractType
                 'customBusynesses',
                 TextType::class,
                 [
-                    'required' => true,
+                    'required' => false,
                     'attr' => [
                         'placeholder' => 'customBusynesses',
                         'class' => 'form-control',
@@ -181,7 +195,7 @@ class JobMasterFormType extends AbstractType
                 'multiple'  => true,
                 'expanded'  => false,
                 'label' => 'busynesses',
-                'required' => true,
+                'required' => false,
             ])
 
 /*            ->add('image', FileType::class, [

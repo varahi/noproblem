@@ -145,8 +145,8 @@ class WorksheetVolounteerFormType extends AbstractType
             ])
             ->add('accommodations', EntityType::class, [
                 'class' => Accommodation::class,
-                'multiple'  => false,
-                'expanded'  => true,
+                'multiple'  => true,
+                'expanded'  => false,
                 'label' => 'Accommodations',
                 'required' => true,
             ])
@@ -161,7 +161,7 @@ class WorksheetVolounteerFormType extends AbstractType
                 'customBusynesses',
                 TextType::class,
                 [
-                    'required' => true,
+                    'required' => false,
                     'attr' => [
                         'placeholder' => 'customBusynesses',
                         'class' => 'form-control',
@@ -175,7 +175,7 @@ class WorksheetVolounteerFormType extends AbstractType
                 'multiple'  => true,
                 'expanded'  => false,
                 'label' => 'busynesses',
-                'required' => true,
+                'required' => false,
             ])
 
             ->add('image', FileType::class, [

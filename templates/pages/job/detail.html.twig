@@ -113,7 +113,7 @@
                             <p>ФИО контактного лица: {{ job.contactFullName }}</p>
                             <p>Email: <a class="link" href="mailto:{{ job.owner.email }}?subject=Запрос на выполнение работы">{{ job.owner.email }}</a></p>
                         </div>
-                        {% elseif user.active == 0 or user.inactive == 1 %}
+                        {% elseif user.inactive == 1 %}
                             <div class="additional-info additional-info-{{ job.id }} hidden">
                                 <p>Доступ к системе ограничен. <a style="text-decoration: underline" href="{{ path('app_tarifs') }}">Пожалуйста пополните ваш баланс.</a></p>
                             </div>

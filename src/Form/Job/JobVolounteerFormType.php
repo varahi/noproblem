@@ -7,6 +7,7 @@ use App\Entity\AdditionalInfo;
 use App\Entity\Busyness;
 use App\Entity\Citizen;
 use App\Entity\City;
+use App\Entity\District;
 use App\Entity\Experience;
 use App\Entity\Job;
 use App\Entity\Task;
@@ -29,6 +30,19 @@ class JobVolounteerFormType extends AbstractType
         $builder
             ->add(
                 'age',
+                TextType::class,
+                [
+                    'required' => true,
+                    'attr' => [
+                        'placeholder' => '',
+                        'class' => 'form-control',
+                    ],
+                    'label' => false,
+                    'translation_domain' => 'messages',
+                ]
+            )
+            ->add(
+                'name',
                 TextType::class,
                 [
                     'required' => true,
@@ -135,7 +149,6 @@ class JobVolounteerFormType extends AbstractType
                 'label' => 'City',
                 'required' => true,
             ])
-
             /*->add('accommodations', EntityType::class, [
                 'class' => Accommodation::class,
                 'multiple'  => false,
@@ -155,7 +168,7 @@ class JobVolounteerFormType extends AbstractType
                 'customBusynesses',
                 TextType::class,
                 [
-                    'required' => true,
+                    'required' => false,
                     'attr' => [
                         'placeholder' => 'customBusynesses',
                         'class' => 'form-control',
@@ -169,7 +182,7 @@ class JobVolounteerFormType extends AbstractType
                 'multiple'  => true,
                 'expanded'  => false,
                 'label' => 'busynesses',
-                'required' => true,
+                'required' => false,
             ])
 
 //            ->add('image', FileType::class, [

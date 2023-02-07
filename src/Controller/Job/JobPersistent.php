@@ -458,10 +458,15 @@ class JobPersistent extends AbstractController
         }
 
         // File upload
-        $imageFile = $form->get('image')->getData();
-        if ($imageFile) {
-            $imageFileName = $fileUploader->upload($imageFile);
-            $job->setImage($imageFileName);
+        //dd($form->getData());
+        if ($form->getData()->getImage() !== null) {
+            if ($form->get('image')) {
+                $imageFile = $form->get('image')->getData();
+                if ($imageFile) {
+                    $imageFileName = $fileUploader->upload($imageFile);
+                    $job->setImage($imageFileName);
+                }
+            }
         }
 
         // Passport file upload

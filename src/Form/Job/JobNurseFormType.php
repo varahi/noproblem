@@ -40,6 +40,19 @@ class JobNurseFormType extends AbstractType
                     'translation_domain' => 'messages',
                 ]
             )
+            ->add(
+                'name',
+                TextType::class,
+                [
+                    'required' => true,
+                    'attr' => [
+                        'placeholder' => '',
+                        'class' => 'form-control',
+                    ],
+                    'label' => false,
+                    'translation_domain' => 'messages',
+                ]
+            )
             ->add('startNow', CheckboxType::class, [
                 'mapped' => false,
                 'required' => false,
@@ -160,7 +173,7 @@ class JobNurseFormType extends AbstractType
                 'customBusynesses',
                 TextType::class,
                 [
-                    'required' => true,
+                    'required' => false,
                     'attr' => [
                         'placeholder' => 'customBusynesses',
                         'class' => 'form-control',
@@ -174,7 +187,7 @@ class JobNurseFormType extends AbstractType
                 'multiple'  => true,
                 'expanded'  => false,
                 'label' => 'busynesses',
-                'required' => true,
+                'required' => false,
             ])
 
 /*            ->add('image', FileType::class, [

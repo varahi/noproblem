@@ -63,15 +63,6 @@ class WorksheetNannyFormType extends AbstractType
                     'class' => 'white',
                 ],
             ])
-
-//            ->add('isFree', CheckboxType::class, [
-//                'mapped' => false,
-//                'required' => false,
-//                'label' => false,
-//                'attr' => [
-//                    'class' => 'white',
-//                ],
-//            ])
             ->add('experience', EntityType::class, [
                 'class' => Experience::class,
                 'multiple'  => false,
@@ -153,23 +144,16 @@ class WorksheetNannyFormType extends AbstractType
             ])
             ->add('accommodations', EntityType::class, [
                 'class' => Accommodation::class,
-                'multiple'  => false,
-                'expanded'  => true,
+                'multiple'  => true,
+                'expanded'  => false,
                 'label' => 'Accommodations',
                 'required' => true,
             ])
-//            ->add('busynesses', EntityType::class, [
-//                'class' => Busyness::class,
-//                'multiple'  => true,
-//                'expanded'  => true,
-//                'label' => 'busynesses',
-//                'required' => true,
-//            ])
             ->add(
                 'customBusynesses',
                 TextType::class,
                 [
-                    'required' => true,
+                    'required' => false,
                     'attr' => [
                         'placeholder' => 'customBusynesses',
                         'class' => 'form-control',
@@ -183,7 +167,7 @@ class WorksheetNannyFormType extends AbstractType
                 'multiple'  => true,
                 'expanded'  => false,
                 'label' => 'busynesses',
-                'required' => true,
+                'required' => false,
             ])
 
             ->add('image', FileType::class, [
@@ -228,94 +212,6 @@ class WorksheetNannyFormType extends AbstractType
                     'data' => 'null'
                 ]
             )
-
-            /*->add(
-                'passportSeries',
-                TextType::class,
-                [
-                    'required' => true,
-                    'attr' => [
-                        'placeholder' => 'passportSeries',
-                        'class' => 'form-control',
-                    ],
-                    'label' => false,
-                    'translation_domain' => 'forms',
-                ]
-            )
-            ->add(
-                'passportNumber',
-                TextType::class,
-                [
-                    'required' => true,
-                    'attr' => [
-                        'placeholder' => 'passportNumber',
-                        'class' => 'form-control',
-                    ],
-                    'label' => false,
-                    'translation_domain' => 'forms',
-                ]
-            )
-            ->add('passportDateOfIssue', DateType::class, [
-                'label'     => false,
-                'required' => false,
-                'widget' => 'single_text',
-                'format' => 'yyyy-MM-dd',
-                'html5' => true,
-                'attr' => [
-                    'class' => 'text_input date',
-                ]
-            ])
-            ->add(
-                'passportPlaceOfIssue',
-                TextType::class,
-                [
-                    'required' => true,
-                    'attr' => [
-                        'placeholder' => 'passportPlaceOfIssue',
-                        'class' => 'form-control',
-                    ],
-                    'label' => false,
-                    'translation_domain' => 'forms',
-                ]
-            )
-            ->add(
-                'passportIssuingAuthority',
-                TextType::class,
-                [
-                    'required' => true,
-                    'attr' => [
-                        'placeholder' => 'passportIssuingAuthority',
-                        'class' => 'form-control',
-                    ],
-                    'label' => false,
-                    'translation_domain' => 'forms',
-                ]
-            )*/
-
-/*            ->add('passportPhoto', FileType::class, [
-                'required' => false,
-                'mapped' => false,
-                'constraints' => [
-                    new Image([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'image/gif',
-                            'image/jpeg',
-                            'image/pjpeg',
-                            'image/png',
-                            'image/webp',
-                            'image/vnd.wap.wbmp'
-                        ],
-                        'mimeTypesMessage' => 'Please upload a valid image document',
-                    ])
-                ],
-                'attr' => [
-                    //'onchange' => 'readURL(this);'
-                    //'class' => 'field field__file',
-                ],
-                'label' => false,
-                'translation_domain' => 'forms',
-            ])*/
             ->add(
                 'clientAge',
                 ChoiceType::class,
