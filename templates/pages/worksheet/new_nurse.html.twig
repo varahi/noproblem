@@ -18,7 +18,7 @@
                 {% include 'partials/_message.html.twig' %}
                 <h1>Анкета сиделки</h1>
 
-                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                {{ form_start(form, {'attr' : {'class': 'form job_form', 'autocomplete': 'off'}} ) }}
 
                     {% include 'partials/pages/worksheet/form/_image_column.html.twig' %}
                     {% include 'partials/pages/worksheet/form/_name_column.html.twig' %}

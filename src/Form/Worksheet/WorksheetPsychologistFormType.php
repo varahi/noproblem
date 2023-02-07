@@ -69,7 +69,7 @@ class WorksheetPsychologistFormType extends AbstractType
                 'additionalEducation',
                 TextareaType::class,
                 [
-                    'required' => true,
+                    'required' => false,
                     'attr' => [
                         'placeholder' => 'additionalEducation',
                         'class' => 'text_input',

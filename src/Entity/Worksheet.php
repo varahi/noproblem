@@ -180,11 +180,6 @@ class Worksheet
     private $paymentByMonth;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Accommodation::class, inversedBy="worksheets")
-     */
-    private $accommodations;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $customBusynesses;
@@ -249,6 +244,11 @@ class Worksheet
      */
     private $isDemo;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Accommodation::class, mappedBy="worksheet")
+     */
+    private $accommodations;
+
     public function __construct()
     {
         $this->created = new \DateTime();
@@ -257,6 +257,7 @@ class Worksheet
         $this->busynesses = new ArrayCollection();
         $this->featuredUsers = new ArrayCollection();
         $this->citizen = new ArrayCollection();
+        $this->accommodations = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -710,18 +711,6 @@ class Worksheet
         return $this;
     }
 
-    public function getAccommodations(): ?Accommodation
-    {
-        return $this->accommodations;
-    }
-
-    public function setAccommodations(?Accommodation $accommodations): self
-    {
-        $this->accommodations = $accommodations;
-
-        return $this;
-    }
-
     public function getCustomBusynesses(): ?string
     {
         return $this->customBusynesses;
@@ -886,6 +875,36 @@ class Worksheet
     public function setIsDemo(?bool $isDemo): self
     {
         $this->isDemo = $isDemo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Accommodation>
+     */
+    public function getAccommodations(): Collection
+    {
+        return $this->accommodations;
+    }
+
+    public function addAccommodation(Accommodation $accommodation): self
+    {
+        if (!$this->accommodations->contains($accommodation)) {
+            $this->accommodations[] = $accommodation;
+            $accommodation->setWorksheet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAccommodation(Accommodation $accommodation): self
+    {
+        if ($this->accommodations->removeElement($accommodation)) {
+            // set the owning side to null (unless already changed)
+            if ($accommodation->getWorksheet() === $this) {
+                $accommodation->setWorksheet(null);
+            }
+        }
 
         return $this;
     }

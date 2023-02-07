@@ -369,10 +369,12 @@ final class WorkPersistent extends AbstractController
         }
 
         // File upload
-        $imageFile = $form->get('image')->getData();
-        if ($imageFile) {
-            $imageFileName = $fileUploader->upload($imageFile);
-            $worksheet->setImage($imageFileName);
+        if ($form->getData()->getImage() !== null) {
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile) {
+                $imageFileName = $fileUploader->upload($imageFile);
+                $worksheet->setImage($imageFileName);
+            }
         }
 
         // Passport file upload

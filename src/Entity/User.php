@@ -198,11 +198,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $active;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
     private $inactive;
 
     /**
@@ -858,18 +853,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeFeaturedJob(Job $featuredJob): self
     {
         $this->featuredJobs->removeElement($featuredJob);
-
-        return $this;
-    }
-
-    public function isActive(): ?bool
-    {
-        return $this->active;
-    }
-
-    public function setActive(?bool $active): self
-    {
-        $this->active = $active;
 
         return $this;
     }

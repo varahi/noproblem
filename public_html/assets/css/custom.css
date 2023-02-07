@@ -1153,10 +1153,17 @@ strike {
     padding: 15px;
     box-sizing: border-box;
     width: 50%;
-    white-space: nowrap;
+    /*white-space: nowrap;*/
     /*display: flex;*/
     flex-wrap: nowrap;
 }
 .flex-child:nth-of-type(2) {
     border: 1px solid #f5f5f5;
+}
+
+.job_form .grid_creating_form {
+     grid-template-columns: auto;
+}
+.grid_creating_form {
+    display: block;
 }

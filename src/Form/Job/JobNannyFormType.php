@@ -41,6 +41,19 @@ class JobNannyFormType extends AbstractType
                     'translation_domain' => 'messages',
                 ]
             )
+            ->add(
+                'name',
+                TextType::class,
+                [
+                    'required' => true,
+                    'attr' => [
+                        'placeholder' => '',
+                        'class' => 'form-control',
+                    ],
+                    'label' => false,
+                    'translation_domain' => 'messages',
+                ]
+            )
             ->add('startNow', CheckboxType::class, [
                 'mapped' => false,
                 'required' => false,
@@ -156,7 +169,7 @@ class JobNannyFormType extends AbstractType
                 'customBusynesses',
                 TextType::class,
                 [
-                    'required' => true,
+                    'required' => false,
                     'attr' => [
                         'placeholder' => 'customBusynesses',
                         'class' => 'form-control',
@@ -170,7 +183,7 @@ class JobNannyFormType extends AbstractType
                 'multiple'  => true,
                 'expanded'  => false,
                 'label' => 'busynesses',
-                'required' => true,
+                'required' => false,
             ])
 
 /*            ->add('image', FileType::class, [

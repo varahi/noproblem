@@ -16,7 +16,7 @@
             <div class="in_creating_form">
                 {% include 'partials/_message.html.twig' %}
                 <h1>Вакансия Домработницы</h1>
-                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                {{ form_start(form, {'attr' : {'class': 'form job_form', 'autocomplete': 'off'}} ) }}
                 {% include 'partials/pages/job/form/_age_column.html.twig' %}
                 {% include 'partials/pages/job/form/_city_column.html.twig' %}
                 {% include 'partials/pages/job/form/_start_column.html.twig' %}

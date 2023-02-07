@@ -515,10 +515,8 @@ class UserController extends AbstractController
             }
             if (isset($daysLeft) && $daysLeft <= 0) {
                 $user->setInactive(true);
-                $user->setActive(false);
             } else {
                 $user->setInactive(false);
-                $user->setActive(true);
             }
         } else {
             $daysLeft = null;

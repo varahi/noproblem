@@ -17,10 +17,7 @@
         <div class="large_creating_form fon">
             <div class="in_creating_form">
                 <h1>Анкета психолога</h1>
-                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-                {#                {{ form_widget(form) }}#}
-
-
+                {{ form_start(form, {'attr' : {'class': 'form job_form', 'autocomplete': 'off'}} ) }}
                 <div class="_but_creating_form">
                     <label> <p class="required">Фотография:</p>
                         {{ form_row(form.image) }}

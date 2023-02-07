@@ -85,7 +85,7 @@ class UserEmployeeCrudController extends AbstractCrudController
             ->setColumns('col-md-8');
         //->setFormTypeOption('disabled', 'disabled');
         yield BooleanField::new('hidden');
-        yield BooleanField::new('active')->setLabel('Active user');
+        yield BooleanField::new('isVerified')->setLabel('Is verified');
         yield BooleanField::new('inactive')->setLabel('Inactive user');
         yield TextField::new('firstName')->setColumns('col-md-10');
         yield TextField::new('lastName')->setColumns('col-md-10');
