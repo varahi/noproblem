@@ -29,3 +29,14 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(function(){
+        $("input:checkbox.chkclass").each(function(){
+            $(this).change(function(){
+                $("input:checkbox.chkclass").not($(this)).prop("checked",false);
+                $(this).prop("checked", $(this).prop("checked"));
+            });
+        });
+    });
+</script>

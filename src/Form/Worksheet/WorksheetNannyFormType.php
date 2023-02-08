@@ -89,7 +89,7 @@ class WorksheetNannyFormType extends AbstractType
                 'required' => false,
                 'label' => false,
                 'attr' => [
-                    'class' => '_white',
+                    'class' => 'chkclass',
                 ],
             ])
             ->add('paymentByMonth', CheckboxType::class, [
@@ -97,7 +97,7 @@ class WorksheetNannyFormType extends AbstractType
                 'required' => false,
                 'label' => false,
                 'attr' => [
-                    'class' => '_white',
+                    'class' => 'chkclass',
                 ],
             ])
             ->add('education', EntityType::class, [

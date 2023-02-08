@@ -111,7 +111,7 @@ class WorksheetNurseFormType extends AbstractType
                 'required' => false,
                 'label' => false,
                 'attr' => [
-                    'class' => '_white',
+                    'class' => 'chkclass',
                 ],
             ])
             ->add('paymentByMonth', CheckboxType::class, [
@@ -119,7 +119,7 @@ class WorksheetNurseFormType extends AbstractType
                 'required' => false,
                 'label' => false,
                 'attr' => [
-                    'class' => '_white',
+                    'class' => 'chkclass',
                 ],
             ])
             ->add(

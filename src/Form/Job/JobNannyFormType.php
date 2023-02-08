@@ -98,7 +98,7 @@ class JobNannyFormType extends AbstractType
                 'required' => false,
                 'label' => false,
                 'attr' => [
-                    'class' => '_white',
+                    'class' => 'chkclass',
                 ],
             ])
             ->add('paymentByMonth', CheckboxType::class, [
@@ -106,7 +106,7 @@ class JobNannyFormType extends AbstractType
                 'required' => false,
                 'label' => false,
                 'attr' => [
-                    'class' => '_white',
+                    'class' => 'chkclass',
                 ],
             ])
             ->add('education', EntityType::class, [

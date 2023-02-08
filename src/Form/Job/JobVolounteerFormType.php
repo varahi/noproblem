@@ -97,7 +97,7 @@ class JobVolounteerFormType extends AbstractType
                 'required' => false,
                 'label' => false,
                 'attr' => [
-                    'class' => '_white',
+                    'class' => 'chkclass',
                 ],
             ])
             ->add('paymentByMonth', CheckboxType::class, [
@@ -105,7 +105,7 @@ class JobVolounteerFormType extends AbstractType
                 'required' => false,
                 'label' => false,
                 'attr' => [
-                    'class' => '_white',
+                    'class' => 'chkclass',
                 ],
             ])
             ->add(
