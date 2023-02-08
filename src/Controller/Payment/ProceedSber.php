@@ -76,6 +76,7 @@ class ProceedSber extends AbstractController
                     $tariffId = $result['orderDescription'];
                     $tariff = $tariffRepository->findOneBy(['id' => $tariffId]);
                     $user = $this->security->getUser();
+                    $user->setisActive(true);
                     $saveOrderService->saveOrder($user, $tariff);
 
                     // Redirect to lk with message

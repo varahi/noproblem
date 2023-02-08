@@ -514,9 +514,9 @@ class UserController extends AbstractController
                 $daysLeft = $order->getEndDate()->diff($currentDate)->format("%a");
             }
             if (isset($daysLeft) && $daysLeft <= 0) {
-                $user->setInactive(true);
+                $user->setIsActive(false);
             } else {
-                $user->setInactive(false);
+                $user->setIsActive(true);
             }
         } else {
             $daysLeft = null;

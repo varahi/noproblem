@@ -657,6 +657,10 @@
             <source>Please Confirm your Email</source>
             <target>Подтвердите свой Email</target>
         </trans-unit>
+        <trans-unit id="Is verified" resname="Is verified">
+            <source>Is verified</source>
+            <target>Email подтверждён</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>

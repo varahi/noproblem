@@ -196,11 +196,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $featuredJobs;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $inactive;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Citizen::class, inversedBy="users")
      */
     private $citizen;
@@ -229,6 +224,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $fullName;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isActive;
 
     public function __construct()
     {
@@ -857,18 +857,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isInactive(): ?bool
-    {
-        return $this->inactive;
-    }
-
-    public function setInactive(?bool $inactive): self
-    {
-        $this->inactive = $inactive;
-
-        return $this;
-    }
-
     public function getCitizen(): ?Citizen
     {
         return $this->citizen;
@@ -988,6 +976,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setFullName(string $fullName): self
     {
         $this->fullName = $fullName;
+
+        return $this;
+    }
+
+    public function isIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(?bool $isActive): self
+    {
+        $this->isActive = $isActive;
 
         return $this;
     }

@@ -68,6 +68,7 @@ class ProceedYookassa extends AbstractController
         if ($response->getStatus() == 'succeeded') {
             $tariff = $tariffRepository->findOneBy(['id' => $response->getDescription()]);
             $user = $this->security->getUser();
+            $user->setisActive(true);
             $saveOrderService->saveOrder($user, $tariff);
         }
         //}
