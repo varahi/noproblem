@@ -18,7 +18,6 @@ use YooKassa\Client as YooClient;
 
 class ProceedYookassa extends AbstractController
 {
-
     private $acq_array_yookassa = [
         'shopId' => '949967',
         'secretKey' => 'live_Lpu1u-LVIpOk-yXy5NVOQIdCx1XGyei9FVC5-Lpxukk'

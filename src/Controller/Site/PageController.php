@@ -1,38 +1,29 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Site;
 
-use App\Entity\Course;
-use App\Entity\District;
-use App\Entity\Message;
 use App\Entity\Article;
-use App\Entity\City;
 use App\Entity\ArticleCategory;
-use App\Entity\Worksheet;
-use App\Repository\ArticleRepository;
+use App\Entity\Course;
+use App\Entity\Message;
+use App\Form\MessageFormType;
 use App\Repository\ArticleCategoryRepository;
+use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
-use App\Repository\CityRepository;
-use App\Repository\DistrictRepository;
 use App\Repository\PageRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\TariffRepository;
-use App\Repository\WorksheetRepository;
-use App\Service\SessionService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use App\Controller\Traits\DataTrait;
-use App\Form\MessageFormType;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Notifier\Notification\Notification;
-use Symfony\Component\Notifier\NotifierInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Security\Core\Security;
-use Twig\Environment;
-use Doctrine\Persistence\ManagerRegistry;
 use App\Service\ModalForms;
+use App\Service\SessionService;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Notifier\NotifierInterface;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Twig\Environment;
 
 class PageController extends AbstractController
 {

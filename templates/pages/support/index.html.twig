@@ -1,0 +1,22 @@
+{% extends 'layouts/base.html.twig' %}
+{% block title %}Служба поддержки - Онлайн-сервис по подбору домашнего персонала{% endblock %}
+{% block body %}
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
+    {% include 'partials/header.html.twig' %}
+    <div class=" content">
+        <div class="bread_personal_account">
+            <a href="{{ path('app_main') }}" class="nuxt-link-active">Главная</a>
+            <a>/ Служба поддержки</a>
+        </div>
+
+        <div class="large_creating_form fon">
+            <div class="in_creating_form">
+                {% include 'partials/_message.html.twig' %}
+                <h1>Служба поддержки</h1>
+                <p></p>
+            </div>
+        </div>
+    </div>
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}

@@ -26,8 +26,8 @@
             <a href="{{ path('app_all_workers') }}">Все анкеты</a>
             <a href="{{ path('app_all_jobs') }}">Все вакансии</a>
 {#            <a href="#">Мои курсы</a>#}
-            <a href="#">История платежей</a>
-            <a href="#">Служба поддержки</a>
+            <a href="{{ path('app_history') }}">История платежей</a>
+            <a href="{{ path('app_support') }}">Служба поддержки</a>
             <a href="{{ path('app_tarifs') }}">Тарифы</a>
             <a href="{{ path('app_logout') }}">Выход</a>
         {% elseif is_granted('ROLE_CUSTOMER') %}
@@ -38,8 +38,8 @@
             <a href="{{ path('app_selected_jobs') }}">Избранные вакансии</a>
             <a href="{{ path('app_all_jobs') }}">Все вакансии</a>
 {#            <a href="#">Мои курсы</a>#}
-            <a href="#">История платежей</a>
-            <a href="#">Служба поддержки</a>
+            <a href="{{ path('app_history') }}">История платежей</a>
+            <a href="{{ path('app_support') }}">Служба поддержки</a>
             <a href="{{ path('app_tarifs') }}">Тарифы</a>
             <a href="{{ path('app_logout') }}">Выход</a>
         {% elseif is_granted('ROLE_BUYER') %}
@@ -48,8 +48,8 @@
             {# <a href="#">Мои вакансии</a>
             <a href="#">Избранные анкеты</a>#}
 {#            <a href="#">Мои курсы</a>#}
-            <a href="#">История платежей</a>
-            <a href="#">Служба поддержки</a>
+            <a href="{{ path('app_history') }}">История платежей</a>
+            <a href="{{ path('app_support') }}">Служба поддержки</a>
             <a href="{{ path('app_tarifs') }}">Тарифы</a>
             <a href="{{ path('app_logout') }}">Выход</a>
         {% elseif is_granted('ROLE_SUPER_ADMIN') %}
