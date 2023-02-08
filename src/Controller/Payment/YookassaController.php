@@ -90,7 +90,9 @@ class YookassaController extends AbstractController
         $tariff = $request->get('tariff');
         $tariff = $tariffRepository->findOneBy(['id' => $tariff]);
         $orderAmount = $tariff->getAmount() / 100;
-        $returnUrl   = 'https://' . $this->defailtDomain . '/pay/proceed_yookassa/' . $orderId;
+        // $orderAmount = 1;
+        // $returnUrl   = 'https://' . $this->defailtDomain . '/pay/proceed_yookassa/' . $orderId;
+        $returnUrl = 'https://' . $this->defailtDomain . '/lk/employer';
 
         $idempotenceKey = uniqid('', true);
         $response = $client->createPayment(
@@ -100,9 +102,11 @@ class YookassaController extends AbstractController
                     'currency' => 'RUB',
                 ],
                 'capture' => true,
-                'description' => $tariff->getId(),
+                'description' => 'Тариф ' . $tariff->getId(),
                 'metadata' => [
-                    'orderNumber' => $orderId
+                    'orderNumber' => $orderId,
+                    'userId' => (int)$this->security->getUser()->getId(),
+                    'tariff' => $tariff->getId()
                 ],
                 "confirmation" => [
                     "type" => "redirect",
