@@ -7,7 +7,7 @@
     <body>
       <trans-unit id="Please login" resname="Please login">
         <source>Please login</source>
-        <target>Пожалуйста войдите в систему</target>
+        <target>Пожалуйста, войдите в систему</target>
       </trans-unit>
       <trans-unit id="New job created" resname="New job created">
         <source>New job created</source>

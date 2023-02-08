@@ -579,9 +579,8 @@ blockquote p::after {
 .button_footer {
     /*margin-top: 0px;*/
 }
-.three {
-    width: 400px;
-}
+
+
 .three .comapny-info {
     position: relative;
     top: 40px;
@@ -597,13 +596,14 @@ blockquote p::after {
 
 span.like {
     cursor: pointer;
-    margin-left: 10px;
+    left: 207px;
     display: block;
     width: 22px;
     height: 22px;
     background-image: url('../img/like.svg');
     background-size: 22px 22px;
     background-repeat: no-repeat;
+    position: absolute;
 }
 
 span.liked {
@@ -1115,7 +1115,7 @@ strike {
 
 .abouts_creating_form input {
     width: 90%;
-    max-width: 400px;
+    max-width: 360px;
 }
 
 #payment {
@@ -1137,8 +1137,8 @@ strike {
 .map-open-street.big-map{
     height: 600px;
 }
-.input-select-multiple select {
-    min-width: 240px;
+.but_creating_form select {
+    min-width: 400px;
 }
 
 

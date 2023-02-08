@@ -56,7 +56,6 @@
                             <div class="text_owns">
                                 <p>Телефон подтвержден</p>
                                 <p>Почта подтверждена</p>
-                                <p>Паспортные данные подтверждены</p>
                             </div>
 
                             {% if app.user %}
@@ -115,7 +114,7 @@
                                 </div>
                             {% else %}
                                 <div class="additional-info additional-info-{{ job.id }} hidden">
-                                    <p>Доступ к системе ограничен. <a style="text-decoration: underline" href="{{ path('app_tarifs') }}">Пожалуйста пополните ваш баланс.</a></p>
+                                    <p>Доступ к системе ограничен. <a style="text-decoration: underline" href="{{ path('app_tarifs') }}">Пожалуйста, пополните ваш баланс.</a></p>
                                 </div>
                             {% endif %}
                         {% endif %}

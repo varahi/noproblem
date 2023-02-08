@@ -12,6 +12,14 @@
                 <div class="name_verif">
                     <p>{{ job.user }}</p>
                     <img class="verif_green" src="{{ asset('assets/img/verif_green.svg') }}" alt="">
+                     {% if app.user %}
+                    {% if featuredProfiles %} {% endif %}
+                    {% if job.id in featuredProfiles %}
+                        <span class="remove-job-{{ job.id }} like liked" title="Удалить из избранного"></span>
+                    {% else %}
+                        <span class="add-job-{{ job.id }} like" title="Добавить в избранное"></span>
+                    {% endif %}
+                {% endif %}
                 </div>
                 <div class="city_icon_vacan">
                     <img src="{{ asset('assets/img/city_map.svg') }}" class="lazyLoad isLoaded" alt="">
@@ -28,14 +36,6 @@
         <div class="title_vacan_box">
             <div class="title_vacan">
                 <h4>{{ job.name }}</h4>
-                {% if app.user %}
-                    {% if featuredProfiles %} {% endif %}
-                    {% if job.id in featuredProfiles %}
-                        <span class="remove-job-{{ job.id }} like liked" title="Удалить из избранного"></span>
-                    {% else %}
-                        <span class="add-job-{{ job.id }} like" title="Добавить в избранное"></span>
-                    {% endif %}
-                {% endif %}
             </div>
             <div class="date_vacan">
                 <p>{{ job.created|format_datetime(locale='ru') }}</p>
@@ -57,7 +57,7 @@
                 </div>
             {% else %}
                 <div class="additional-info additional-info-{{ job.id }} hidden">
-                    <p>Доступ к системе ограничен. <a style="text-decoration: underline" href="{{ path('app_tarifs') }}">Пожалуйста пополните ваш баланс.</a></p>
+                    <p>Доступ к системе ограничен. <a style="text-decoration: underline" href="{{ path('app_tarifs') }}">Пожалуйста, пополните ваш баланс.</a></p>
                 </div>
             {% endif %}
         {% endif %}

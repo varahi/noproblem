@@ -4,7 +4,7 @@
     {% include 'partials/header.html.twig' %}
     {% include 'partials/_message.html.twig' %}
     {% for message in app.flashes('notification') %}
-        <div class="alert-success alert alert-dismissible" role="alert">
+        <div class="alert-success alert alert-dismissible position__message" role="alert">
             <p>{{ message }}</p>
         </div>
     {% endfor %}
