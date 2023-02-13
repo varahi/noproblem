@@ -49,6 +49,7 @@
     height: auto;
     padding: 12px 5px 12px 22px;
     width: 80%;
+    font-family: futura;
 }
 .form-std-custom textarea {
     width: 91%;
@@ -244,6 +245,7 @@ input[required] + label:after {
 /*    width: 300px;*/
     width: 80%;
     height: 100px;
+     font-family: futura;
 }
 
 #job_form_startNow {
@@ -584,7 +586,16 @@ blockquote p::after {
 .three .comapny-info {
     position: relative;
     top: 40px;
+    width: 300px;
 }
+
+
+.input-select-multiple select:checked~.input-select-multiple{
+   height: 400px;
+  transition: all 0.4s ease-in;
+}
+
+
 .three .comapny-info p {
     padding-bottom: 5px;
     font-size: 14px !important;
@@ -659,7 +670,7 @@ span.detail-liked {
 }
 .dom-3 img {
     position: relative;
-    right: 40px;
+    
 }
 
 .in_account a,
@@ -1013,6 +1024,17 @@ Chat
         margin-top: 20px;
         text-align: center;
     }
+
+    .btn_resize button {
+    padding: 10px 12px;
+    font-size: 12px;
+}
+
+.date_creating_form input {
+    width: 90%;
+}
+
+
 }
 
 /* 320px 480px: мобильные устройства; */
@@ -1062,7 +1084,7 @@ Chat
         border: 1px solid #dbdbdb;
         height: auto;
         padding: 0;
-        min-width: 110px;
+        min-width: 149px;
         width: 100%;
     }
     .name_account .round_account {
@@ -1129,7 +1151,7 @@ strike {
 }
 
 .date_creating_form input {
-    width: 210px;
+    max-width: 210px;
 }
 .map-open-street{
     height: 300px;
@@ -1156,6 +1178,7 @@ strike {
     /*white-space: nowrap;*/
     /*display: flex;*/
     flex-wrap: nowrap;
+
 }
 .flex-child:nth-of-type(2) {
     border: 1px solid #f5f5f5;

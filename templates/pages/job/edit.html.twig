@@ -46,6 +46,13 @@
                             <input type="text" id="job_form" name="job_form[city]" required="required" placeholder="Ваш город" class="form-control" value="{{ job.city.name }}">
                         </div>
 
+                         <label for="citizenship{{ citizen.id }}" class="citizenship_chk">
+                                        <input type="checkbox" id="citizenship{{ citizen.id }}" name="job_form[citizenship]"
+                                                {% if citizen.id == job.citizen.id %} checked {% endif %} value="{{ citizen.id }}" onclick="onlyOne(this)">
+                                        <span>{{ citizen.name }}</span></label>
+
+
+
                         <div class="dom_creating_form">
                             <p class="required">Адрес</p>
                             {{ form_row(form.address) }}
@@ -176,7 +183,7 @@
                         <div class="only">
                             <p>Нужно выполнять:</p>
                         </div>
-                        <button class="choose_creating_form mobs accordion_filter_one_vacan">
+                        <button class="choose_creating_form  accordion_filter_one_vacan">
                             <span>Выберите из списка</span>
                             <img src="{{ asset('assets/img/str.svg" src="/preload.gif ') }}" class="lazyLoad" alt="">
                         </button>

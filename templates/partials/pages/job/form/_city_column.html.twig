@@ -2,9 +2,8 @@
     <!-- Left col -->
     <div class="flex-child">
         <div class="abouts_creating_form">
-            <div class="dom_creating_form">
-                <p class="required">Город</p>
-                {#   <input type="text" id="worksheet_form" name="worksheet_form[city]" required="required" placeholder="Ваш город" class="form-control">#}
+            <div class="dom_creating_form input-select-multiple">
+               <p class="required">Город:</p>
                 {{ form_widget(form.city) }}
             </div>
         </div>
