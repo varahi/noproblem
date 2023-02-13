@@ -66,7 +66,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             {% if user.avatar %}
                                 <div class="upload-image-message"></div>
                                 <div class="btn_resize">
@@ -80,18 +79,17 @@
                                     <a href="{{ path('app_edit_profile') }}">Редактировать профиль</a>
                                 </div>
                             </div>
-{#                            <div class="btn_account_mob mobs">#}
-{#                                <a href="{{ path('app_edit_profile') }}">Редактировать</a>#}
-{#                            </div>#}
                         </div>
                         <div class="right_account">
                             <div class="window_account">
                                 <div class="var_account">
                                     <h5>Верификация</h5>
-                                    <img src="{{ asset('assets/img/verif.svg') }}" class="lazyLoad isLoaded" alt="">
+                                    {% if user.phoneVerified == 1 %}
+                                        <img src="{{ asset('assets/img/verif_green.svg') }}" class="lazyLoad isLoaded" alt="">
+                                    {% else %}
+                                            <img src="{{ asset('assets/img/verif.svg') }}" class="lazyLoad isLoaded" alt="">
+                                    {% endif %}
                                 </div>
-
-{#                                <p>Паспорт - <span>не загружен</span></p>#}
                                 {% if user.phoneVerified == 1 %}
                                     <p>Телефон подтвержден</p>
                                 {% else %}
