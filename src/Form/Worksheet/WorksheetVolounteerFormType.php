@@ -297,24 +297,24 @@ class WorksheetVolounteerFormType extends AbstractType
                 'label' => false,
                 'translation_domain' => 'forms',
             ])*/
-            ->add(
-                'clientAge',
-                ChoiceType::class,
-                [
-                    'required' => true,
-                    'label' => false,
-                    'translation_domain' => 'messages',
-                    'choices'  => [
-                        'Нет' => null,
-                        '0-1 года' => '0-1 года',
-                        '2-3 года' => '2-3 года',
-                        '4-6 лет' => '4-6 лет',
-                        '7-10 лет' => '7-10 лет',
-                        '11-14 лет' => '11-14 лет',
-                    ],
-                    'data' => 'null'
-                ]
-            )
+//            ->add(
+//                'clientAge',
+//                ChoiceType::class,
+//                [
+//                    'required' => true,
+//                    'label' => false,
+//                    'translation_domain' => 'messages',
+//                    'choices'  => [
+//                        'Нет' => null,
+//                        '0-1 года' => '0-1 года',
+//                        '2-3 года' => '2-3 года',
+//                        '4-6 лет' => '4-6 лет',
+//                        '7-10 лет' => '7-10 лет',
+//                        '11-14 лет' => '11-14 лет',
+//                    ],
+//                    'data' => 'null'
+//                ]
+//            )
 /*            ->add(
                 'amountOfChildren',
                 ChoiceType::class,
