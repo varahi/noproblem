@@ -14,77 +14,39 @@
             <div class="in_creating_form history__btn">
                 {% include 'partials/_message.html.twig' %}
                 <div class="btn_employer" style="cursor: pointer;">
-                   <a href="">Скачать историю</a>
+                   <a href="{{ path('app_download_history') }}">Скачать историю</a>
                 </div>
-        
-                    <div class="history__pay fon">
-                        <div class="history__pay-box1">
-                            <p class="history__header">Номер заказа</p>
-                            <p class="history__text">892484213</p>
-                        </div>
-                        <div class="history__pay-box2">
-                            <p class="history__header">Номер телефона</p>
-                            <p class="history__text">+7 (111) 111-11-11</p>
-                        </div>
-                        <div class="history__pay-box3">
-                            <p class="history__header">Дата платежа</p>
-                            <p class="history__text">01.01.2023</p>
-                        </div>
-                        <div class="history__pay-box4">
-                            <p class="history__header">Сумма платежа</p>
-                            <p class="history__text">999 999.00₽</p>
-                        </div>
-                        <div class="history__pay-box5">
-                            <p class="history__header">Метод оплаты</p>
-                            <p class="history__text">Оплата картой выпущенной в РФ</p>
-                        </div>
-                    </div>
-                      <div class="history__pay fon">
-                        <div class="history__pay-box1">
-                            <p class="history__header">Номер заказа</p>
-                            <p class="history__text">892484213</p>
-                        </div>
-                        <div class="history__pay-box2">
-                            <p class="history__header">Номер телефона</p>
-                            <p class="history__text">+7 (111) 111-11-11</p>
-                        </div>
-                        <div class="history__pay-box3">
-                            <p class="history__header">Дата платежа</p>
-                            <p class="history__text">01.01.2023</p>
-                        </div>
-                        <div class="history__pay-box4">
-                            <p class="history__header">Сумма платежа</p>
-                            <p class="history__text">999 999.00₽</p>
-                        </div>
-                        <div class="history__pay-box5">
-                            <p class="history__header">Метод оплаты</p>
-                            <p class="history__text">Оплата картой выпущенной в РФ</p>
-                        </div>
-                    </div>
-                      <div class="history__pay fon">
-                        <div class="history__pay-box1">
-                            <p class="history__header">Номер заказа</p>
-                            <p class="history__text">892484213</p>
-                        </div>
-                        <div class="history__pay-box2">
-                            <p class="history__header">Номер телефона</p>
-                            <p class="history__text">+7 (111) 111-11-11</p>
-                        </div>
-                        <div class="history__pay-box3">
-                            <p class="history__header">Дата платежа</p>
-                            <p class="history__text">01.01.2023</p>
-                        </div>
-                        <div class="history__pay-box4">
-                            <p class="history__header">Сумма платежа</p>
-                            <p class="history__text">999 999.00₽</p>
-                        </div>
-                        <div class="history__pay-box5">
-                            <p class="history__header">Метод оплаты</p>
-                            <p class="history__text">Оплата картой выпущенной в РФ</p>
-                        </div>
-                    </div>
 
-         
+                    {% if orders %}
+                        {% for order in orders %}
+                            <div class="history__pay fon">
+                                <div class="history__pay-box1">
+                                    <p class="history__header">Номер заказа</p>
+                                    <p class="history__text">{{ order.id }}</p>
+                                </div>
+                                <div class="history__pay-box2">
+                                    <p class="history__header">Номер телефона</p>
+                                    <p class="history__text">{{ order.user.phone }}</p>
+                                </div>
+                                <div class="history__pay-box3">
+                                    <p class="history__header">Дата платежа</p>
+                                    <p class="history__text">{{ order.created|date("Y-m-d H:i:s") }}</p>
+                                </div>
+                                <div class="history__pay-box5">
+                                    <p class="history__header">Сумма платежа</p>
+                                    <p class="history__text">{{ order.tariff.amount / 100 }} ₽</p>
+                                </div>
+{#                                <div class="history__pay-box5">#}
+{#                                    <p class="history__header">Метод оплаты</p>#}
+{#                                    <p class="history__text">Оплата картой выпущенной в РФ</p>#}
+{#                                </div>#}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="history__pay fon">
+                            <p>У вас пока нет заказов</p>
+                        </div>
+                    {% endif %}
         </div>
     </div>
     {% include 'partials/footer.html.twig' %}

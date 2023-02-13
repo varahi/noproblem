@@ -61,6 +61,23 @@ class OrderRepository extends ServiceEntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    /**
+     * @param int $id
+     * @return int|mixed|string
+     */
+    public function findByUser(int $id)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('o')
+            ->from(self::TABLE, 'o')
+            ->join('o.user', 'u')
+            ->where($qb->expr()->eq('u.id', $id))
+            ->orderBy("o.id", "DESC")
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Order[] Returns an array of Order objects
 //     */
