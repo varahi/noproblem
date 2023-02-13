@@ -551,6 +551,63 @@ width: 400px!important}
 .select2-container--classic.select2-container--open .select2-dropdown {
   border-color: #5897fb; }
 
+  #select__workers .select2-selection__rendered {
+    width: 244px!important;
+  }
+
+  #select__workers.select2-selection__rendered {
+      width: 244px!important;
+    }
+
+ #select__workers .select2-container--default .select2-selection--single {
+  width: 244px!important;
+ }
+
+  #select__workers .select2-container--default .select2-results > .select2-results__options {
+    width: 244px!important;
+  }
+   #select__workers .select2-dropdown .select2-dropdown--below {
+       width: 244px!important;
+   }
+
+   #select__workers .select2-city-results {
+    width: 244px!important;
+   }
+
+ #select__workers .select2-container--open .select2-dropdown--below  {
+   width: 244px!important;
+ }
+
+#select__workers .select2-container--default .select2-results > .select2-results__options {
+  width: 244px!important;
+}
+
+#select__workers .select2-container--default .select2-results > .select2-results__option {
+  width: 244px!important;
+}
+
+  #select__workers .select2-container  {
+    width: 244px!important;
+    margin-bottom: 13px;
+  }
+
+  #select__workers.select2-container--open .select2-dropdown--above {
+    width: 244px!important;
+  }
+
+  #select__workers .select2-container--default .select2-selection--multiple {
+    width: 244px!important;
+  }
+
+
+   #select__workers ul .select2-container--default .select2-results > .select2-results__options {
+    width: 244px!important;
+}
+
+  #select__workers .select2-results {
+    width: 244!important;
+  }
+
 @media only screen and (max-width: 800px) {
 
   .select2-container--default .select2-selection--single {
