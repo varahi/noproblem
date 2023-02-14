@@ -1,0 +1,54 @@
+{% extends 'layouts/base.html.twig' %}
+{% block title %}Служба поддержки - Онлайн-сервис по подбору домашнего персонала{% endblock %}
+{% block body %}
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
+    {% include 'partials/header.html.twig' %}
+    <div class=" content">
+        <div class="bread_personal_account">
+            <a href="{{ path('app_main') }}" class="nuxt-link-active">Главная</a>
+            <a>/ Список заявок</a>
+        </div>
+
+        <div class="large_creating_form fon">
+            <div class="in_creating_form">
+                {% include 'partials/_message.html.twig' %}
+                <div class="create__appeal">
+                   <div class="name__create-appeal">
+                    <div class="img__create-appeal">
+                        <img id="avatar" src="/uploads/files/pole-dozhd-tuchi-pejzazh-638dea9f06a10.jpg" class="lazyLoad isLoaded" alt="avatar">
+                </div>
+                <div class="name__appeal">
+                    <div class="name__appeal-city">
+                    <p>Васильев Дмитрий Сергеевич</p>
+                    <p>Астрахань</p>
+                    </div>
+                    <div class="name__appeal-specialization">
+                    <p>Специальность/Роль</p> 
+                    </div>
+                    </div>
+                   </div> 
+                
+                <div class="create__appeal-btn">
+                    <button>Создать обращение</button>
+                </div>
+                </div>
+
+                <h2>Новые заявки</h2>
+                <div class="check__boxes">
+                    <div class="check__box">
+                       <div></div>
+                       <div></div> 
+                    </div>
+                    <div class="check__box">
+                        
+                    </div>
+                    <div class="check__box">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}

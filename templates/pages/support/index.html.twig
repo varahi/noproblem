@@ -14,7 +14,17 @@
             <div class="in_creating_form">
                 {% include 'partials/_message.html.twig' %}
                 <h1>Служба поддержки</h1>
-                <p></p>
+                <div>
+                    <h2>Создание обращения</h2>
+                    <p>Заполните все поля</p>
+                    <input type="text" name="topic__message" placeholder="Тема обращения">
+                    <select>Срочность</select>
+                    <option value="1">Низкая</option>
+                    <option value="1">Средняя</option>
+                    <option value="1">Высокая</option>
+                    </select>
+                    <input type="text" name="text__message" placeholder="Комментарий">
+                </div>
             </div>
         </div>
     </div>
