@@ -35,7 +35,7 @@ class District
     private $jobs;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $hidden;
 
