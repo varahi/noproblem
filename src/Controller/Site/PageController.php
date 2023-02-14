@@ -95,6 +95,18 @@ class PageController extends AbstractController
     }
 
     /**
+     * @Route("/test-page", name="app_test_page")
+     */
+    public function testPage(
+        Request $request,
+        ReviewRepository $reviewRepository,
+        CategoryRepository $categoryRepository
+    ): Response {
+        return $this->render('pages/test/index.html.twig', [
+        ]);
+    }
+
+    /**
      * @Route("/tarifs", name="app_tarifs")
      */
     public function tarifsPage(
