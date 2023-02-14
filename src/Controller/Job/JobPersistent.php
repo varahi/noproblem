@@ -90,7 +90,6 @@ class JobPersistent extends AbstractController
         Request $request,
         TranslatorInterface $translator,
         NotifierInterface $notifier,
-        ManagerRegistry $doctrine,
         TaskRepository $taskRepository,
         CityRepository $cityRepository,
         DistrictRepository $districtRepository,

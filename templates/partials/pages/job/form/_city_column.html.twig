@@ -11,10 +11,15 @@
     <!-- Right col -->
     <div class="flex-child">
         <div class="abouts_creating_form">
-            <div class="dom_creating_form">
+            <div class="dom_creating_form input-select-multiple">
                 <p class="_required">Район</p>
-                <input type="text" id="_worksheet_form" name="worksheet_form[district]" placeholder="Район" class="form-control">
-{#                {{ form_widget(form.district) }}#}
+                <select id="job_form_district" name="registration_form[district]">
+                    {% for district in districts %}
+                        <option data-list-id="{{ district.city.id }}" value="{{ district.id }}">
+                            {{ district.name }}
+                        </option>
+                    {% endfor %}
+                </select>
             </div>
         </div>
     </div>

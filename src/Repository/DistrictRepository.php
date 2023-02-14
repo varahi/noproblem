@@ -53,7 +53,7 @@ class DistrictRepository extends ServiceEntityRepository
 
         $qb->select('c')
             ->from(self::TABLE, 'c')
-            ->where($expr->neq('c.hidden', 1))
+            //->where($expr->neq('c.hidden', 1))
             ->setMaxResults($limit)
             ->setFirstResult($offset)
             ->orderBy('c.name', 'ASC');
