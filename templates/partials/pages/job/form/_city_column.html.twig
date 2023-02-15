@@ -13,7 +13,7 @@
         <div class="abouts_creating_form">
             <div class="dom_creating_form input-select-multiple">
                 <p class="_required">Район</p>
-                <select id="job_form_district" name="registration_form[district]">
+                <select id="job_form_district" name="district">
                     {% for district in districts %}
                         <option data-list-id="{{ district.city.id }}" value="{{ district.id }}">
                             {{ district.name }}

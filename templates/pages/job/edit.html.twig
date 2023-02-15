@@ -46,36 +46,20 @@
                             <input type="text" id="job_form" name="job_form[city]" required="required" placeholder="Ваш город" class="form-control" value="{{ job.city.name }}">
                         </div>
 
-                         <label for="citizenship{{ citizen.id }}" class="citizenship_chk">
-                                        <input type="checkbox" id="citizenship{{ citizen.id }}" name="job_form[citizenship]"
-                                                {% if citizen.id == job.citizen.id %} checked {% endif %} value="{{ citizen.id }}" onclick="onlyOne(this)">
-                                        <span>{{ citizen.name }}</span></label>
+                        <div class="_abouts_creating_form input-select-multiple">
+                            <div class="but_creating_form">
+                                <label> <p class="required">Гражданство:</p><br /><br />
+                                    {{ form_row(form.citizen) }}
+                                </label>
+                            </div><br /><br />
+                        </div>
 
-
+                        {{ form_row(form.anotherCitizen) }}
 
                         <div class="dom_creating_form">
                             <p class="required">Адрес</p>
                             {{ form_row(form.address) }}
                         </div>
-
-{#                        <div class="dom_creating_form">#}
-{#                            <p>Район</p>#}
-{#                            <select id="job_form_district" name="job_form[district]" class="text_input">#}
-{#                                {% for district in districts %}#}
-{#                                    <option>Выберите район</option>#}
-{#                                    {% if job.district.id is defined %}#}
-{#                                        <option data-list-id="{{ district.city.id }}" value="{{ district.id }}" {% if district.id == job.district.id %} selected {% endif %}>#}
-{#                                            {{ district.name }}#}
-{#                                        </option>#}
-{#                                    {% else %}#}
-{#                                        <option data-list-id="{{ district.city.id }}" value="{{ district.id }}">#}
-{#                                            {{ district.name }}#}
-{#                                        </option>#}
-{#                                    {% endif %}#}
-{#                                {% endfor %}#}
-{#                            </select>#}
-{#                        </div>#}
-
                     </div>
 
                     <div class="abouts_creating_form grid_creating_form ">
@@ -212,19 +196,19 @@
                             <img src="{{ asset('assets/img/str.svg" src="/preload.gif ') }}" class="lazyLoad" alt="">
                         </button>
 
-                        <div class="panel_filter">
-                            <div class="need_creating_form">
-                                {% for citizen in citizens %}
-                                    <label for="citizenship{{ citizen.id }}" class="citizenship_chk">
-                                        <input type="checkbox" id="citizenship{{ citizen.id }}" name="job_form[citizenship]"
-                                                {% if citizen.id == job.citizen.id %} checked {% endif %} value="{{ citizen.id }}" onclick="onlyOne(this)">
-                                        <span>{{ citizen.name }}</span></label>
-                                {% endfor %}
-                            </div>
-                            <div class="abouts_creating_form">
-                                {{ form_row(form.anotherCitizen) }}
-                            </div>
-                        </div>
+{#                        <div class="panel_filter">#}
+{#                            <div class="need_creating_form">#}
+{#                                {% for citizen in citizens %}#}
+{#                                    <label for="citizenship{{ citizen.id }}" class="citizenship_chk">#}
+{#                                        <input type="checkbox" id="citizenship{{ citizen.id }}" name="job_form[citizenship]"#}
+{#                                                {% if citizen.id == job.citizen.id %} checked {% endif %} value="{{ citizen.id }}" onclick="onlyOne(this)">#}
+{#                                        <span>{{ citizen.name }}</span></label>#}
+{#                                {% endfor %}#}
+{#                            </div>#}
+{#                            <div class="abouts_creating_form">#}
+{#                                {{ form_row(form.anotherCitizen) }}#}
+{#                            </div>#}
+{#                        </div>#}
 
                         <div class="did mobs">
                             <img src="{{ asset('assets/img/gala.svg') }}" alt="">

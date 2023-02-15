@@ -425,8 +425,8 @@ class JobPersistent extends AbstractController
         }
         $job->setCity($city);*/
 
-        if (isset($post['district']) && $post['district'] !=='') {
-            $district = $districtRepository->findOneBy(['id' => $post['district']]);
+        if (isset($_POST['district']) && $_POST['district'] !=='') {
+            $district = $districtRepository->findOneBy(['id' => $_POST['district']]);
             $job->setDistrict($district);
         }
         if (isset($post['task']) && $post['task'] !=='' && is_array($post['task'])) {
