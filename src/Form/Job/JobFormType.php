@@ -115,13 +115,13 @@ class JobFormType extends AbstractType
                     'class' => 'select_education nona',
                 ],
             ])
-            /*->add('citizen', EntityType::class, [
+            ->add('citizen', EntityType::class, [
                 'class' => Citizen::class,
-                'multiple'  => false,
+                'multiple'  => true,
                 'expanded'  => false,
                 'label' => false,
                 'required' => true,
-            ])*/
+            ])
             ->add('startNow', CheckboxType::class, [
                 'mapped' => false,
                 'required' => false,

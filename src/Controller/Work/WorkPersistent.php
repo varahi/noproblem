@@ -356,8 +356,8 @@ final class WorkPersistent extends AbstractController
         //}
         //$worksheet->setCity($city);
 
-        if (isset($post['district']) && $post['district'] !=='') {
-            $district = $districtRepository->findOneBy(['id' => $post['district']]);
+        if (isset($_POST['district']) && $_POST['district'] !=='') {
+            $district = $districtRepository->findOneBy(['id' => $_POST['district']]);
             $worksheet->setDistrict($district);
         }
         if (isset($post['task']) && $post['task'] !=='' && is_array($post['task'])) {
