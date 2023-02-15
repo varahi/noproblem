@@ -2961,6 +2961,10 @@ margin-left: 117px}
   color: #ffffff;
 }
 
+.description__vacan {
+  margin-top: 30px;
+}
+
 
 .btn_one_vacan a,
 .btn_one_vacan span {
@@ -3725,9 +3729,14 @@ padding-left: 20px;}
 .checkmark {
   position: absolute;
   left: 0;
+  top: 0px;
   height: 25px;
   width: 25px;
   background-color: #eee;
+}
+
+.list__vacan {
+  display: none;
 }
 
 .work_start_now:hover input ~ .checkmark {
@@ -4690,6 +4699,10 @@ margin-left: 82px;}
     grid-template-columns: 1fr;
 }
 */
+.list__vacan {
+  display: block;
+}
+
 #map {
 width: 90%!important;
 height: 300px!important;

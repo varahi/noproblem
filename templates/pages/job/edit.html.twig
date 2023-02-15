@@ -30,11 +30,11 @@
                             <p class="required">Категория</p>
                             {{ form_row(form.category) }}
                         </div>
-                        <div class="dom_creating_form">
+                        <div class="dom_creating_form description__vacan">
                             <p class="required">Краткое описание вакансии</p>
                             {{ form_row(form.name) }}
                         </div>
-                        <div class="dom_creating_form">
+                        <div class="dom_creating_form description__vacan">
                             <p>Описание вакансии</p>
                             {{ form_row(form.description) }}
                         </div>
@@ -46,17 +46,18 @@
                             <input type="text" id="job_form" name="job_form[city]" required="required" placeholder="Ваш город" class="form-control" value="{{ job.city.name }}">
                         </div>
 
-                        <div class="block_emp input-select-multiple">
-                            <div class="but_creating_form">
+                          <div class="block_emp input-select-multiple">
+                            <div class="but_creating_form description__vacan">
                                 <label> <p class="required">Гражданство:</p>
                                     {{ form_row(form.citizen) }}
                                 </label>
                             </div><br /><br />
-                        </div>
+                        </div>  
+
 
                         {{ form_row(form.anotherCitizen) }}
 
-                        <div class="dom_creating_form">
+                        <div class="dom_creating_form description__vacan">
                             <p class="required">Адрес</p>
                             {{ form_row(form.address) }}
                         </div>
@@ -100,7 +101,7 @@
                             </script>
                         </div>
 
-                        <div class="dom_creating_form">
+                        <div class="">
 {#                            <p>Геолокация</p>#}
 {#                            <div class="location_creting_form">#}
 {#                                <img src="{{ asset('assets/img/locats.svg') }}" alt="">#}
@@ -124,7 +125,7 @@
                             <div class="but_creating_form">
                                 <label for="checkbox" class="work_start_now">Незамедлительно
                                     {{ form_widget(form.startNow) }}
-                                    <span class="_checkmark"></span>
+                                    <span class="checkmark"></span>
                                 </label>
                             </div>
                         </div>
@@ -168,7 +169,7 @@
                             <p>Нужно выполнять:</p>
                         </div>
                         <button class="choose_creating_form  accordion_filter_one_vacan">
-                            <span>Выберите из списка</span>
+                            <span class="list__vacan">Выберите из списка</span>
                             <img src="{{ asset('assets/img/str.svg" src="/preload.gif ') }}" class="lazyLoad" alt="">
                         </button>
                         <div class="panel_filter">
@@ -190,11 +191,11 @@
                     </div>
 
                     <div class="abouts_creating_form citizenship">
-                        <p>Гражданство:</p>
-                        <button class="choose_creating_form mobs accordion_filter_one_vacan">
+                        <!-- <p>Гражданство:</p> -->
+                       <!--  <button class="choose_creating_form mobs accordion_filter_one_vacan">
                             <span>Выберите из списка</span>
                             <img src="{{ asset('assets/img/str.svg" src="/preload.gif ') }}" class="lazyLoad" alt="">
-                        </button>
+                        </button> -->
 
 {#                        <div class="panel_filter">#}
 {#                            <div class="need_creating_form">#}
@@ -221,7 +222,7 @@
                     {% include 'partials/pages/job/_accommodation.html.twig' %}
                     {% include 'partials/pages/job/_busyness.html.twig' %}
 
-                    <p class="arm_creating_form">Или добавьте вручную</p>
+                    <!-- <p class="arm_creating_form">Или добавьте вручную</p> -->
                     <button class="choose_creating_form mobs accordion_filter_one_vacan">
                         <span>Добавьте вручную</span>
                         <img src="{{ asset('assets/img/str.svg" src="/preload.gif') }}" class="lazyLoad" alt="">
