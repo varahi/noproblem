@@ -102,17 +102,18 @@ class ProfileJobController extends AbstractController
     ): Response {
         if ($this->isGranted(self::ROLE_EMPLOYEE) || $this->isGranted(self::ROLE_CUSTOMER)) {
             $user = $this->security->getUser() ?? null;
-            $query = $jobRepository->findSelectedProfiles($user);
 
+
+            /*$query = $jobRepository->findSelectedProfiles($user);
             $jobs = $paginator->paginate(
                 $query,
                 $request->query->getInt('page', 1),
                 self::LIMIT_PER_PAGE
-            );
+            );*/
 
             return new Response($this->twig->render('user/selected_jobs.html.twig', [
                 'user' => $user,
-                'jobs' => $jobs,
+                'jobs' => $jobRepository->findSelectedProfiles($user),
                 'featuredJobs' => $this->getFeaturedJobs($user),
                 'cityName' => $this->sessionService->getCity(),
                 'ticketForm' => $this->modalForms->ticketForm($request)->createView()

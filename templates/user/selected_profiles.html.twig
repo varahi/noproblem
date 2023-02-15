@@ -21,12 +21,12 @@
                     <div class="large fon">
                         <div class="in" >
                             {% include 'partials/_message.html.twig' %}
-                            {% if worksheets is not null %}
+                            {% if worksheets %}
                                 {% for job in worksheets %}
                                     {% include 'partials/pages/worksheet/_list_item.html.twig' %}
                                 {% endfor %}
                             {% else %}
-                                <p>У вас нет избранных анкет</p>
+                                <p>Вы ещё не добавили никого в избранные</p>
                             {% endif %}
                         </div>
                     </div>
