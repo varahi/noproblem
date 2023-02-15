@@ -80,14 +80,12 @@
     }
 
     let coockieCity = getCookie('city');
-
-
-
     if (coockieCity === null) {
-
         console.log(coockieCity);
-        fetch('https://shelikhov.me/noproblem/getCityByIP.php').then(async function (response) {
-            let text = await response.text();
+        //fetch('https://shelikhov.me/noproblem/getCityByIP.php').then(async function (response)
+        fetch('city-by-ip').then(async function (response)
+        {
+            let text = await response.json();
             console.log(text);
             document.querySelectorAll('.js-name-city-detected').forEach((span) => {
                 span.innerHTML = text;
@@ -109,6 +107,24 @@
     document.querySelector('.js-close-2').addEventListener('click', () => {
         document.querySelector('#openModalCity').style.display="none";
     });
+
+
+    $(document).ready(function(){
+        $('.js-city-success').click(function(){
+            var url = '{{ path('app_city_by_ip') }}';
+            //dataString = '';
+            jQuery.ajax({
+                url: url,
+                data: dataString,
+                type: "POST",
+                success:function(){
+
+                },
+                error:function (){}
+            });
+        });
+    });
+
 </script>
 
 {% include 'partials/footer.html.twig' %}
