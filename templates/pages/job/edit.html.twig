@@ -46,8 +46,8 @@
                             <input type="text" id="job_form" name="job_form[city]" required="required" placeholder="Ваш город" class="form-control" value="{{ job.city.name }}">
                         </div>
 
-                         <label for="citizenship{{ citizen.id }}" class="citizenship_chk">
-                                        <input type="checkbox" id="citizenship{{ citizen.id }}" name="job_form[citizenship]"
+                    <label for="citizenship{{ citizen.id }}" class="citizenship_chk">
+                        <input type="checkbox" id="citizenship{{ citizen.id }}" name="job_form[citizenship]"
                                                 {% if citizen.id == job.citizen.id %} checked {% endif %} value="{{ citizen.id }}" onclick="onlyOne(this)">
                                         <span>{{ citizen.name }}</span></label>
 

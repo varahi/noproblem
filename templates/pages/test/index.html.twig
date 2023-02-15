@@ -10,11 +10,107 @@
             <a>/ Опередение города</a>
         </div>
 
-        <div class="large_creating_form fon">
-            <div class="in_creating_form">
 
-            </div>
+<!-- 1 мод окно -->
+<div id="openModal" class="modal__city" style="display: none">
+  <div class="modal-dialog">
+    <div class="modal-content-city">
+      <div class="modal-header">
+        <h3 class="modal-title">Ваш город <span class="js-name-city-detected"></span>?</h3>
+        <a href="#close" title="Close" class="close__city js-close-1"><img src="/assets/img/krest.svg" alt=""></a>
+      </div>
+      <div class="modal-body">    
+        <div class="btn_city-group btn_try_custom">
+            <button type="button" class="btn btn__city-true js-city-success">Да, все верно</button>
+            <button type="button" class="btn btn-city-search js-city-warning">Выбрать город</button>
         </div>
+      </div>
     </div>
-    {% include 'partials/footer.html.twig' %}
+  </div>
+</div>
+
+<!-- 2 мод окно -->
+<div id="openModalCity" class="modal__city" style="display: none">
+  <div class="modal-dialog-search">
+    <div class="modal-content-city-search">
+      <div class="modal-header">
+        <h3 class="modal-title">Ваш город <span class="js-name-city-detected"></span>?</h3>
+        <a href="#close" title="Close" class="close__city js-close-2">×</a>
+      </div>
+      <div class="modal-body">
+        <div class="input__modal">
+          <input type="text" name="input__search" id="myInput" placeholder="Ваш город" >
+          <img class="search__city" src="/assets/img/search.svg" alt="search">
+          <ul class="city__list">
+            <li class="city__list-item">Москва</li>
+            <li>Екатеринбург</li>
+            <li>Санкт-Петербург</li>
+            <li>Казань</li>
+            <li>Москва</li>
+            <li>Екатеринбург</li>
+            <li>Санкт-Петербург</li>
+            <li>Казань</li>
+          </ul>
+          <img class="seach__check" src="/assets/img/check.svg" alt="search">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+    function getCookie(name) {
+        let dc = document.cookie;
+        let prefix = name + "=";
+        let begin = dc.indexOf("; " + prefix);
+        if (begin === -1) {
+            begin = dc.indexOf(prefix);
+            if (begin !== 0) return null;
+        }
+        else
+        {
+            begin += 2;
+            var end = document.cookie.indexOf(";", begin);
+            if (end === -1) {
+                end = dc.length;
+            }
+        }
+        return decodeURI(dc.substring(begin + prefix.length, end));
+    }
+
+    let coockieCity = getCookie('city');
+
+
+
+    if (coockieCity === null) {
+
+        console.log(coockieCity);
+        fetch('https://shelikhov.me/noproblem/getCityByIP.php').then(async function (response) {
+            let text = await response.text();
+            console.log(text);
+            document.querySelectorAll('.js-name-city-detected').forEach((span) => {
+                span.innerHTML = text;
+                document.querySelector('#openModal').style.display="flex";
+            });
+        });
+    }
+
+    document.querySelector('.js-close-1').addEventListener('click', () => {
+        document.querySelector('#openModal').style.display="none";
+    });
+    document.querySelector('.js-city-success').addEventListener('click', () => {
+        document.querySelector('#openModal').style.display="none";
+    });
+    document.querySelector('.js-city-warning').addEventListener('click', () => {
+        document.querySelector('#openModal').style.display="none";
+        document.querySelector('#openModalCity').style.display="flex";
+    });
+    document.querySelector('.js-close-2').addEventListener('click', () => {
+        document.querySelector('#openModalCity').style.display="none";
+    });
+</script>
+
+{% include 'partials/footer.html.twig' %}
 {% endblock %}
+

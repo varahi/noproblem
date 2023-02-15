@@ -1,0 +1,46 @@
+{% extends 'layouts/base.html.twig' %}
+{% block title %}Служба поддержки - Онлайн-сервис по подбору домашнего персонала{% endblock %}
+{% block body %}
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
+    {% include 'partials/header.html.twig' %}
+    <div class=" content">
+        <div class="bread_personal_account">
+            <a href="{{ path('app_main') }}" class="nuxt-link-active">Главная</a>
+            <a>/ Ответ на заявку</a>
+            
+        </div>
+
+            <div class="answer-aplication-box fon">
+            <div class="in_creating_form">
+                <div class="form__answer-aplication">
+                    <div class="answer-aplication-text">
+                      <p>Не работает сортировка</p>
+                    </div>
+                    <div class="answer-aplication-status">
+                      <p class="aplication__status-id">id3239432</p>
+                      <p class="aplication__status-text">Срочно</p>
+                      <p class="aplication__status-work">В работе</p>
+                    </div>
+              </div>
+        </div>
+    </div>
+
+    <div class="message__answer-posit">
+      <div class="message__answer-box">
+          <div class="message__answer-aplication fon">
+              <p class="username__answer">Васильев Дмитрий Сергеевич, +7 (999) 999-99-99</p>
+              <p class="username__text-aplication">Добрый день, ничего не работает, рву на себе волосы... Помогите!!!</p>
+        </div>
+      
+          <textarea class="text__answer-aplication fon" type="text" name="answer-aplication" placeholder="Написать сообщение"></textarea>
+        
+        <div class="answer__aplication-btn">
+          <button>Ответить на заявку</button>
+        </div>
+  </div>
+</div>
+    </div>
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}

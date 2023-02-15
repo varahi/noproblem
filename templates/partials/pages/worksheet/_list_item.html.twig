@@ -10,14 +10,18 @@
             </div>
             <div class="name_vacancies">
                 <div class="name_verif">
+                    <div class="name_verif-user">
                     <p>{{ job.user }}</p>
+                    </div>
                     <img class="verif_green" src="{{ asset('assets/img/verif_green.svg') }}" alt="">
                      {% if app.user %}
                     {% if featuredProfiles %} {% endif %}
                     {% if job.id in featuredProfiles %}
+                    
                         <span class="remove-job-{{ job.id }} like liked" title="Удалить из избранного"></span>
                     {% else %}
                         <span class="add-job-{{ job.id }} like" title="Добавить в избранное"></span>
+
                     {% endif %}
                 {% endif %}
                 </div>

@@ -52,7 +52,7 @@
 {#                                        </select>#}
 {#                                    </div>#}
 
-                                    <div class="dom_creating_form">
+                                    <div class="dom_creating_form adress__form">
                                         <p class="required">Адрес</p>
                                         {{ form_row(form.address) }}
                                     </div>
@@ -100,7 +100,7 @@
                                         <p class="required">Категория</p>
                                         {{ form_row(form.category) }}
                                     </div>
-                                    <div class="dom_creating_form">
+                                    <div class="dom_creating_form adress__form">
                                         <p class="required">Краткое описание анкеты</p>
                                         {{ form_row(form.name) }}
                                     </div>
@@ -165,6 +165,7 @@
                                         <img src="{{ asset('assets/img/str.svg') }}" class="lazyLoad" alt="">
                                     </button>
                                     <div class="panel_filter">
+
                                         <div class="need_creating_form">
                                             <section>
                                                 {% for task in tasks %}
@@ -178,18 +179,18 @@
                                             <div class="abouts_creating_form">
                                                 {{ form_widget(form.anotherTask) }}
                                             </div>
-                                        </div>
+                                        </div> 
                                     </div>
                                 </div>
                             </div>
-
+ 
                             <div class="hide">
                                 {% include 'partials/pages/worksheet/_busyness.html.twig' %}
-                                <p class="arm_creating_form">Или добавьте вручную</p>
+                                <!-- <p class="arm_creating_form">Или добавьте вручную</p>
                                 <button class="choose_creating_form mobs accordion_filter_one_vacan">
                                     <span>Добавьте вручную</span>
                                     <img src="{{ asset('assets/img/str.svg') }}" class="lazyLoad" alt="">
-                                </button>
+                                </button> -->
                             </div>
 
 {#                            <div class="hide">#}

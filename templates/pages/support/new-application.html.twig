@@ -1,6 +1,7 @@
 {% extends 'layouts/base.html.twig' %}
 {% block title %}Служба поддержки - Онлайн-сервис по подбору домашнего персонала{% endblock %}
 {% block body %}
+
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
     {% include 'partials/header.html.twig' %}
@@ -8,19 +9,20 @@
         <div class="bread_personal_account">
             <a href="{{ path('app_main') }}" class="nuxt-link-active">Главная</a>
             <a>/ Список заявок</a>
+            
         </div>
 
-        <div class="large_creating_form fon">
-            <div class="in_creating_form">
-                {% include 'partials/_message.html.twig' %}
+          <div class="large_creating_form ">
+            <div class="in_creating_form fon">
                 <div class="create__appeal">
                    <div class="name__create-appeal">
                     <div class="img__create-appeal">
-                        <img id="avatar" src="/uploads/files/pole-dozhd-tuchi-pejzazh-638dea9f06a10.jpg" class="lazyLoad isLoaded" alt="avatar">
+                        <img id="avatar"src="/uploads/files/pole-dozhd-tuchi-pejzazh-638dea9f06a10.jpg" class="lazyLoad isLoaded round_account" alt="avatar">
                 </div>
                 <div class="name__appeal">
                     <div class="name__appeal-city">
-                    <p>Васильев Дмитрий Сергеевич</p>
+                    <h5>Васильев Дмитрий Сергеевич</h5>
+                    <img src="/assets/img/verif_green.svg" class="lazyLoad isLoaded avatar__appeal" alt="">
                     <p>Астрахань</p>
                     </div>
                     <div class="name__appeal-specialization">
@@ -34,19 +36,197 @@
                 </div>
                 </div>
 
-                <h2>Новые заявки</h2>
+               
+            </div>
+        </div>
+
+        <div class="new__aplication-box">
+            <h2>Новые заявки</h2>
+            <div class="new__aplication-pad">
                 <div class="check__boxes">
-                    <div class="check__box">
-                       <div></div>
-                       <div></div> 
+                    <div class="check__box fon">
+                       <div class="check__number">
+                          <div class="check__text">
+                             <p class="check__in__text">Проверка</p>
+                             <p class="check__problem-text">Не работает сортировка</p>
+                          </div>
+                          <div class="id__number">
+                            <p>id3239432</p>
+                          </div>
+                       </div>
+                       <div class="check__wait">
+                        <p class="urgently__check">Срочно</p>
+                        <p class="check__wait-text">Ждет выполнения</p>
+                           <a href="#">
+                           <img src="/assets/img/img__btn__check.svg" class="lazyLoad isLoaded btn__check" alt="">
+                          </a>
+                       </div> 
                     </div>
-                    <div class="check__box">
-                        
+                    <div class="check__box fon">
+                        <div class="check__number">
+                            <div class="check__text">
+                               <p class="check__in__text">Проверка</p>
+                               <p class="check__problem-text">Не работает сортировка</p>
+                            </div>
+                            <div class="id__number">
+                              <p>id3239432</p>
+                            </div>
+                         </div>
+                         <div class="check__wait">
+                            <p class="urgently__check">Срочно</p>
+                            <p class="check__wait-text">Ждет выполнения</p>
+                             <a href="#">
+                             <img src="/assets/img/img__btn__check.svg" class="lazyLoad isLoaded btn__check" alt="">
+                            </a>
+                         </div> 
                     </div>
-                    <div class="check__box">
-                        
+                    <div class="check__box fon">
+                        <div class="check__number">
+                            <div class="check__text">
+                               <p class="check__in__text">Проверка</p>
+                               <p class="check__problem-text">Не работает сортировка</p>
+                            </div>
+                            <div class="id__number">
+                              <p>id3239432</p>
+                            </div>
+                         </div>
+                         <div class="check__wait">
+                             <p class="urgently__check">Срочно</p>
+                             <p class="check__wait-text">Ждет выполнения</p>
+                             <a href="#">
+                             <img src="/assets/img/img__btn__check.svg" class="lazyLoad isLoaded btn__check" alt="">
+                             </a>
+                         </div> 
                     </div>
-                </div>
+                </div> 
+            </div>
+        </div>
+
+
+
+        <div class="work__aplication-box">
+            <h2>Заявки в работе</h2>
+            <div class="new__aplication-pad">
+                <div class="check__boxes">
+                    <div class="check__box fon work__check">
+                       <div class="check__number">
+                          <div class="check__text">
+                             <p class="check__in__text">Проверка</p>
+                             <p class="check__problem-text">Не работает сортировка</p>
+                          </div>
+                          <div class="id__number">
+                            <p>id3239432</p>
+                          </div>
+                       </div>
+                       <div class="check__wait">
+                        <p class="urgently__check">Срочно</p>
+                        <p class="check__wait-text">В работе</p>
+                           <a href="#">
+                           <img src="/assets/img/img__btn__check.svg" class="lazyLoad isLoaded btn__check" alt="">
+                          </a>
+                       </div> 
+                    </div>
+                    <div class="check__box fon work__check">
+                        <div class="check__number">
+                            <div class="check__text">
+                               <p class="check__in__text">Проверка</p>
+                               <p class="check__problem-text">Не работает сортировка</p>
+                            </div>
+                            <div class="id__number">
+                              <p>id3239432</p>
+                            </div>
+                         </div>
+                         <div class="check__wait">
+                            <p class="urgently__check">Срочно</p>
+                            <p class="check__wait-text">В работе</p>
+                             <a href="#">
+                             <img src="/assets/img/img__btn__check.svg" class="lazyLoad isLoaded btn__check" alt="">
+                            </a>
+                         </div> 
+                    </div>
+                    <div class="check__box fon work__check">
+                        <div class="check__number">
+                            <div class="check__text">
+                               <p class="check__in__text">Проверка</p>
+                               <p class="check__problem-text">Не работает сортировка</p>
+                            </div>
+                            <div class="id__number">
+                              <p>id3239432</p>
+                            </div>
+                         </div>
+                         <div class="check__wait">
+                             <p class="urgently__check">Срочно</p>
+                             <p class="check__wait-text">В работе</p>
+                             <a href="#">
+                             <img src="/assets/img/img__btn__check.svg" class="lazyLoad isLoaded btn__check" alt="">
+                             </a>
+                         </div> 
+                    </div>
+                </div> 
+            </div>
+        </div>
+
+
+
+        <div class="work__aplication-box done__padd">
+            <h2>Заявки в работе</h2>
+            <div class="new__aplication-pad">
+                <div class="check__boxes">
+                    <div class="check__box fon done__check">
+                       <div class="check__number">
+                          <div class="check__text">
+                             <p class="check__in__text">Проверка</p>
+                             <p class="check__problem-text">Не работает сортировка</p>
+                          </div>
+                          <div class="id__number">
+                            <p>id3239432</p>
+                          </div>
+                       </div>
+                       <div class="check__wait">
+                        <p class="urgently__check">Срочно</p>
+                        <p class="check__done-text">Выполнено</p>
+                           <a href="#">
+                           <img src="/assets/img/img__btn__check.svg" class="lazyLoad isLoaded btn__check" alt="">
+                          </a>
+                       </div> 
+                    </div>
+                    <div class="check__box fon done__check">
+                        <div class="check__number">
+                            <div class="check__text">
+                               <p class="check__in__text">Проверка</p>
+                               <p class="check__problem-text">Не работает сортировка</p>
+                            </div>
+                            <div class="id__number">
+                              <p>id3239432</p>
+                            </div>
+                         </div>
+                         <div class="check__wait">
+                            <p class="urgently__check">Срочно</p>
+                            <p class="check__done-text">Выполнено</p>
+                             <a href="#">
+                             <img src="/assets/img/img__btn__check.svg" class="lazyLoad isLoaded btn__check" alt="">
+                            </a>
+                         </div> 
+                    </div>
+                    <div class="check__box fon done__check">
+                        <div class="check__number">
+                            <div class="check__text">
+                               <p class="check__in__text">Проверка</p>
+                               <p class="check__problem-text">Не работает сортировка</p>
+                            </div>
+                            <div class="id__number">
+                              <p>id3239432</p>
+                            </div>
+                         </div>
+                         <div class="check__wait">
+                             <p class="urgently__check">Срочно</p>
+                             <p class="check__done-text">Выполнено</p>
+                             <a href="#">
+                             <img src="/assets/img/img__btn__check.svg" class="lazyLoad isLoaded btn__check" alt="">
+                             </a>
+                         </div> 
+                    </div>
+                </div> 
             </div>
         </div>
     </div>

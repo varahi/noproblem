@@ -36,7 +36,7 @@
 .form-std-custom label {
     display: block;
     font-size: 18px;
-    margin: 10px 0 10px 10px;
+    margin: 10px 0 10px 0px;
 }
 
 .form-std-custom input,
@@ -625,7 +625,10 @@ span.liked {
 .like-info {
     font-size: 16px;
     color: #118324;
-    margin-left: 10px;
+    position: absolute;
+    left: 197px;
+    top: 27px;
+    width: 90px;
 }
 
 span.detail-like {
