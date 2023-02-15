@@ -17,16 +17,15 @@
                     <div class="title" >
                         <h2>Избранные вакансии</h2>
                     </div>
-
                     <div class="large fon">
                         <div class="in" >
                             {% include 'partials/_message.html.twig' %}
-                            {% if jobs is not null %}
+                            {% if jobs %}
                                 {% for job in jobs %}
                                     {% include 'partials/pages/job/_list_job_item.html.twig' %}
                                 {% endfor %}
                             {% else %}
-                                <p>У вас нет избранных вакансий</p>
+                                <p>Вы ещё не добавили никого в избранные</p>
                             {% endif %}
                         </div>
                     </div>

@@ -165,14 +165,14 @@ class ProfileWorkController extends AbstractController
                 $query = $worksheetRepository->findBy(['category' => $category]);
             }*/
 
-            $query = $worksheetRepository->findSelectedProfiles($user);
-
+            /*$query = $worksheetRepository->findSelectedProfiles($user);
             $worksheets = $paginator->paginate(
                 $query,
                 $request->query->getInt('page', 1),
                 self::LIMIT_PER_PAGE
-            );
+            );*/
 
+            $worksheets = $worksheetRepository->findSelectedProfiles($user);
             $user = $this->security->getUser();
             $featuredProfiles = $this->getFeaturedProfiles($user);
 
@@ -182,12 +182,10 @@ class ProfileWorkController extends AbstractController
                 'city' => $city,
                 'districts' => $districts,
                 'categories' => $categories,
-                //'category' => $category,
                 'cityId' => $cityId,
                 'districtId' => $districtId,
                 'worksheets' => $worksheets,
                 'featuredProfiles' => $featuredProfiles,
-                //'form' => $form->createView(),
                 'cityName' => $this->sessionService->getCity(),
                 'lat' => $this->coordinateService->getLatArr($worksheets, $city),
                 'lng' => $this->coordinateService->getLngArr($worksheets, $city),

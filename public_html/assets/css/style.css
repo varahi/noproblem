@@ -3799,7 +3799,7 @@ background: var(--violet);
 }
 
 
-.need_creating_form span {
+/*.need_creating_form span {
   display: inline-block;
   cursor: pointer;
   line-height: 30px;
@@ -3813,7 +3813,7 @@ background: var(--violet);
   font-size: 16px;
   color:#fff ;
   margin: 3px;
-}
+}*/
 
 
 
