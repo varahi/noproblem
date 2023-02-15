@@ -167,15 +167,19 @@
                                     <div class="panel_filter">
 
                                         <div class="need_creating_form">
-                                            <section>
-                                                {% for task in tasks %}
-                                                    <label for="chk{{ task.id }}" class="tasks"
-                                                           data-work="{% if task.category %}{% for category in task.category %}j-{{ category.id }} {% endfor %}{% endif %}">
-                                                        <input type="checkbox" id="chk{{ task.id }}" name="worksheet_form[task][]" value="{{ task.id }}"
-                                                                {% if task.id in selectedTasksArr %} checked {% endif %}>
-                                                        <span>{{ task.name }}</span></label>
-                                                {% endfor %}
-                                            </section>
+{#                                            <section>#}
+{#                                                {% for task in tasks %}#}
+{#                                                    <label for="chk{{ task.id }}" class="tasks"#}
+{#                                                           data-work="{% if task.category %}{% for category in task.category %}j-{{ category.id }} {% endfor %}{% endif %}">#}
+{#                                                        <input type="checkbox" id="chk{{ task.id }}" name="worksheet_form[task][]" value="{{ task.id }}"#}
+{#                                                                {% if task.id in selectedTasksArr %} checked {% endif %}>#}
+{#                                                        <span>{{ task.name }}</span></label>#}
+{#                                                {% endfor %}#}
+{#                                            </section>#}
+
+
+                                            {{ form_row(form.tasks) }}<br />
+
                                             <div class="abouts_creating_form">
                                                 {{ form_widget(form.anotherTask) }}
                                             </div>

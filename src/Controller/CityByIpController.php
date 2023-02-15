@@ -28,13 +28,13 @@ class CityByIpController extends AbstractController
     /**
      * @Route("/city-by-ip", name="app_city_by_ip")
      */
-    public function index(): Response
+    public function getCityByIp(): Response
     {
         $dadata = new Dadata('62ae4a81a51849da1013da68f2ff86d8938292af', '6d240b631a8301e11edfdc12ad0ad27ef1a84a70');
         $dadata->init();
 
-        //$result = $dadata->iplocate($_SERVER['REMOTE_ADDR']);
-        $result = $dadata->iplocate('95.27.197.131');
+        $result = $dadata->iplocate($_SERVER['REMOTE_ADDR']);
+        //$result = $dadata->iplocate('95.27.197.131');
 
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');

@@ -8,6 +8,7 @@ use App\Entity\City;
 use App\Entity\District;
 use App\Entity\Education;
 use App\Entity\Experience;
+use App\Entity\Task;
 use App\Entity\Worksheet;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -210,6 +211,14 @@ class WorksheetFormType extends AbstractType
                 'label' => false,
                 'required' => true,
                 'placeholder' => 'Выберите категорию'
+            ])
+            ->add('tasks', EntityType::class, [
+                'class' => Task::class,
+                'multiple'  => true,
+                'expanded'  => false,
+                //'label' => 'Experience',
+                'label' => false,
+                'required' => true,
             ])
             ->add(
                 'anotherTask',

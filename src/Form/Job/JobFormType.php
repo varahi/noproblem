@@ -130,14 +130,14 @@ class JobFormType extends AbstractType
                     'class' => 'white',
                 ],
             ])
-            /*->add('tasks', EntityType::class, [
+            ->add('tasks', EntityType::class, [
                 'class' => Task::class,
                 'multiple'  => true,
-                'expanded'  => true,
+                'expanded'  => false,
                 //'label' => 'Experience',
                 'label' => false,
                 'required' => true,
-            ])*/
+            ])
             ->add(
                 'anotherTask',
                 TextType::class,
