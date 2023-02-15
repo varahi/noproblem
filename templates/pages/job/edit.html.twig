@@ -46,19 +46,9 @@
                             <input type="text" id="job_form" name="job_form[city]" required="required" placeholder="Ваш город" class="form-control" value="{{ job.city.name }}">
                         </div>
 
-                    <label for="citizenship{{ citizen.id }}" class="citizenship_chk">
-                        <input type="checkbox" id="citizenship{{ citizen.id }}" name="job_form[citizenship]"
-                                                {% if citizen.id == job.citizen.id %} checked {% endif %} value="{{ citizen.id }}" onclick="onlyOne(this)">
-                                        <span>{{ citizen.name }}</span></label>
-
-                         <label for="citizenship{{ citizen.id }}" class="citizenship_chk">
-                                        <input type="checkbox" id="citizenship{{ citizen.id }}" name="job_form[citizenship]"
-                                                {% if citizen.id == job.citizen.id %} checked {% endif %} value="{{ citizen.id }}" onclick="onlyOne(this)">
-                                        <span>{{ citizen.name }}</span></label>
-
-                        <div class="_abouts_creating_form input-select-multiple">
+                        <div class="block_emp input-select-multiple">
                             <div class="but_creating_form">
-                                <label> <p class="required">Гражданство:</p><br /><br />
+                                <label> <p class="required">Гражданство:</p>
                                     {{ form_row(form.citizen) }}
                                 </label>
                             </div><br /><br />
