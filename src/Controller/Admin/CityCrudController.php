@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\City;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -26,7 +27,13 @@ class CityCrudController extends AbstractCrudController
             ->setEntityLabelInSingular('City')
             ->setEntityLabelInPlural('City')
             ->setSearchFields(['name', 'description'])
-            ->setDefaultSort(['name' => 'DESC']);
+            ->setDefaultSort(['id' => 'ASC']);
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->disable('new', 'delete');
     }
 
     public function configureFields(string $pageName): iterable
@@ -36,10 +43,10 @@ class CityCrudController extends AbstractCrudController
         yield BooleanField::new('isHidden');
         yield BooleanField::new('isOnTop');
         yield TextField::new('name')->setColumns('col-md-10');
-        yield TextareaField::new('description')->setColumns('col-md-10');
+        //yield TextareaField::new('description')->setColumns('col-md-10');
         yield NumberField::new('latitude')->hideOnIndex()->setFormTypeOption('scale', 8)->setColumns('col-md-10');
         yield NumberField::new('longitude')->hideOnIndex()->setFormTypeOption('scale', 8)->setColumns('col-md-10');
-        yield AssociationField::new('districts')->setColumns('col-md-6')->hideOnIndex();
+        yield AssociationField::new('districts')->setColumns('col-md-6')->hideOnIndex()->setFormTypeOption('disabled', 'disabled');
     }
 
     /*

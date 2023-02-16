@@ -23,6 +23,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ImportDistrictsCommand extends Command
 {
+    // php bin/console import:district:start moscow_districts.csv
+    // php bin/console import:district:start districts.csv
     protected static $defaultName = 'import:district:start';
 
     /**
@@ -61,6 +63,7 @@ class ImportDistrictsCommand extends Command
     {
         $this
             ->setDescription('Import dictricts from CSV file')
+            ->addArgument('fileName', InputArgument::OPTIONAL, 'CSV file name')
         ;
     }
 
@@ -72,8 +75,10 @@ class ImportDistrictsCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
+        $fileName = $input->getArgument('fileName');
 
-        $csvFile = file($this->defailtScheme .'://'. $this->defailtDomain . '/data/districts.csv');
+        //$csvFile = file($this->defailtScheme .'://'. $this->defailtDomain . '/data/moscow_districts.csv');
+        $csvFile = file($this->defailtScheme .'://'. $this->defailtDomain . '/data/' . $fileName);
 
         foreach ($csvFile as $line) {
             $data = str_getcsv($line);
@@ -88,7 +93,7 @@ class ImportDistrictsCommand extends Command
                 $this->em->flush();
             }
         }
-
+        $io->success(sprintf('Districts imported'));
         return 0;
     }
 }
