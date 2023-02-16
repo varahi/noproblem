@@ -158,8 +158,10 @@ class UserEmployeeCrudController extends AbstractCrudController
 
         yield FormField::addRow();
         yield AssociationField::new('category')->hideOnIndex()->setColumns('col-md-4');
-        yield AssociationField::new('tariff')->hideOnIndex()->setColumns('col-md-4');
-        yield AssociationField::new('orders')->hideOnIndex()->setColumns('col-md-4');
+        yield AssociationField::new('tariff')->hideOnIndex()->setColumns('col-md-4')
+            ->setFormTypeOption('disabled', 'disabled');
+        yield AssociationField::new('orders')->hideOnIndex()->setColumns('col-md-4')
+            ->setFormTypeOption('disabled', 'disabled');
 
         yield FormField::addRow();
         yield AssociationField::new('ownersJobs')

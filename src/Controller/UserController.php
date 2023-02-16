@@ -21,6 +21,7 @@ use App\Repository\UserRepository;
 use App\Service\FileUploader;
 use App\Service\ModalForms;
 use App\Service\SessionService;
+use App\Service\User\DaysLeftService;
 use App\Service\SignUpValidator;
 use App\Service\UserCreator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -52,10 +53,6 @@ class UserController extends AbstractController
 
     public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 
-    public const WELCOME_ACCESS_1 = '1';
-
-    public const WELCOME_ACCESS_2 = '7';
-
     /**
      * Time in seconds 3600 - one hour
      */
@@ -76,6 +73,7 @@ class UserController extends AbstractController
      * @param ImageOptimizer $imageOptimizer
      * @param string $targetDirectory
      * @param SessionService $sessionService
+     * @param DaysLeftService $daysLeftService
      */
     public function __construct(
         Security $security,
@@ -85,7 +83,8 @@ class UserController extends AbstractController
         ImageOptimizer $imageOptimizer,
         string $targetDirectory,
         SessionService $sessionService,
-        string $smsApiKey
+        string $smsApiKey,
+        DaysLeftService $daysLeftService
     ) {
         $this->security = $security;
         $this->twig = $twig;
@@ -95,6 +94,7 @@ class UserController extends AbstractController
         $this->targetDirectory = $targetDirectory;
         $this->sessionService = $sessionService;
         $this->smsApiKey = $smsApiKey;
+        $this->daysLeftService = $daysLeftService;
     }
 
     /**
@@ -147,12 +147,6 @@ class UserController extends AbstractController
 
             // Check days left and set user status
             $order = $orderRepository->findByUserAndActive($user->getId());
-            $daysLeft = $this->getDaysLeft($order, $user);
-            if ($order !==null) {
-                if ($order->getTariff()->getId() == self::WELCOME_ACCESS_1 || $order->getTariff()->getId() == self::WELCOME_ACCESS_2) {
-                    $daysLeft = $this->getDaysLeft($order, $user) + 1;
-                }
-            }
 
             // Get percents how profile filled to show modal warning window
             $persentFilled = $this->getPersentFilled($user);
@@ -177,7 +171,7 @@ class UserController extends AbstractController
                 return $this->render('user/lk_customer.html.twig', [
                     'user' => $user,
                     'order' => $order,
-                    'daysLeft' => $daysLeft,
+                    'daysLeft' => $this->daysLeftService->getDaysLeft($order, $user),
                     'worksheets' => $worksheets,
                     'profleFilled' => $profleFilled,
                     'persentFilled' => $persentFilled,
@@ -216,12 +210,6 @@ class UserController extends AbstractController
 
             // Check days left and set user status
             $order = $orderRepository->findByUserAndActive($user->getId());
-            $daysLeft = $this->getDaysLeft($order, $user);
-            if ($order !==null) {
-                if ($order->getTariff()->getId() == self::WELCOME_ACCESS_1 || $order->getTariff()->getId() == self::WELCOME_ACCESS_2) {
-                    $daysLeft = $this->getDaysLeft($order, $user) + 1;
-                }
-            }
 
             // Get percents how profile filled to show modal warning window
             $persentFilled = $this->getPersentFilled($user);
@@ -235,7 +223,7 @@ class UserController extends AbstractController
                 return $this->render('user/lk_customer.html.twig', [
                     'user' => $user,
                     'jobs' => $jobs,
-                    'daysLeft' => $daysLeft,
+                    'daysLeft' => $this->daysLeftService->getDaysLeft($order, $user),
                     'profleFilled' => $profleFilled,
                     'persentFilled' => $persentFilled,
                     'cityName' => $this->sessionService->getCity(),
@@ -497,36 +485,6 @@ class UserController extends AbstractController
             $referer = $request->headers->get('referer');
             return new RedirectResponse($referer);
         }
-    }
-
-    /**
-     * @param $order
-     * @param $user
-     * @return null
-     * @throws \Exception
-     */
-    private function getDaysLeft($order, $user)
-    {
-        if ($order !==null) {
-            $currentDateStr = date('Y-m-d H:i:s');
-            $currentDate = new \DateTime($currentDateStr);
-            if ($order->getEndDate() !==null) {
-                $daysLeft = $order->getEndDate()->diff($currentDate)->format("%a");
-            }
-            if (isset($daysLeft) && $daysLeft <= 0) {
-                $user->setIsActive(false);
-            } else {
-                $user->setIsActive(true);
-            }
-        } else {
-            $daysLeft = null;
-        }
-
-        $entityManager = $this->doctrine->getManager();
-        $entityManager->persist($user);
-        $entityManager->flush();
-
-        return $daysLeft;
     }
 
     /**

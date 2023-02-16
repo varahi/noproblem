@@ -166,22 +166,24 @@ class UserCustomerCrudController extends AbstractCrudController
 
         yield FormField::addRow();
         yield AssociationField::new('category')->hideOnIndex()->setColumns('col-md-4');
-        yield AssociationField::new('tariff')->hideOnIndex()->setColumns('col-md-4');
-        yield AssociationField::new('jobs')->hideOnIndex()->setColumns('col-md-4');
+
+        yield AssociationField::new('tariff')->hideOnIndex()->setColumns('col-md-4')
+            ->setFormTypeOption('disabled', 'disabled');
+        yield AssociationField::new('orders')->hideOnIndex()->setColumns('col-md-4')
+            ->setFormTypeOption('disabled', 'disabled');
 
         yield FormField::addRow();
-        yield AssociationField::new('worksheets')->hideOnIndex()->setColumns('col-md-12');
+        yield AssociationField::new('jobs')->hideOnIndex()->setColumns('col-md-4');
+        yield AssociationField::new('worksheets')->hideOnIndex()->setColumns('col-md-4');
         yield AssociationField::new('featuredProfiles')
             ->setFormTypeOptions([
                 'by_reference' => false,
             ])->hideOnIndex()
-            ->setColumns('col-md-12');
+            ->setColumns('col-md-4');
         yield AssociationField::new('featuredJobs')
             ->setFormTypeOptions([
                 'by_reference' => false,
             ])->hideOnIndex()
             ->setColumns('col-md-12');
-
-        yield AssociationField::new('orders')->hideOnIndex()->setColumns('col-md-12');
     }
 }

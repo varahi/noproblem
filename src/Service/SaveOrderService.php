@@ -7,6 +7,7 @@ namespace App\Service;
 use App\Entity\Order;
 use App\Entity\Tariff;
 use App\Entity\User;
+use App\Service\User\DaysLeftService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -14,11 +15,14 @@ class SaveOrderService extends AbstractController
 {
     /**
      * @param ManagerRegistry $doctrine
+     * @param DaysLeftService $daysLeftService
      */
     public function __construct(
-        ManagerRegistry $doctrine
+        ManagerRegistry $doctrine,
+        DaysLeftService $daysLeftService
     ) {
         $this->doctrine = $doctrine;
+        $this->daysLeftService = $daysLeftService;
     }
 
     public function saveOrder(
@@ -35,7 +39,8 @@ class SaveOrderService extends AbstractController
 
         $currentDateStr = date('Y-m-d H:i:s');
         $currentDate = new \DateTime($currentDateStr);
-        $interval = '+' . $tariff->getTermDays() . 'day';
+        $daysLeft = $this->daysLeftService->getDaysLeft($order, $user); // Get already existing days
+        $interval = '+' . ($daysLeft + $tariff->getTermDays()) . 'day';
         $endDate = $currentDate->modify($interval);
         $order->setEndDate($endDate);
 
