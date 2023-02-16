@@ -53,11 +53,11 @@ class CityByIpController extends AbstractController
         CityRepository $cityRepository
     ): JsonResponse {
         if ($request) {
-            $session = new Session();
 
-            // Получаем из POST массива название города, здесь в примере это переменная cityName
-            //$city = $cityRepository->findOneBy(['name' => $cityName]);
-            //$session->set('city', $city->getId());
+            // Получаем из POST массива название города
+            $city = $cityRepository->findOneBy(['name' => $request->get('city')]);
+            $session = new Session();
+            $session->set('city', $city->getName());
 
             return new JsonResponse([
                 'status' => Response::HTTP_OK,

@@ -10,6 +10,7 @@ use App\Form\MessageFormType;
 use App\Repository\ArticleCategoryRepository;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\CityRepository;
 use App\Repository\PageRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\TariffRepository;
@@ -18,7 +19,9 @@ use App\Service\SessionService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
@@ -44,13 +47,15 @@ class PageController extends AbstractController
         ManagerRegistry $doctrine,
         Security $security,
         ModalForms $modalForms,
-        SessionService $sessionService
+        SessionService $sessionService,
+        RequestStack $requestStack
     ) {
         $this->twig = $twig;
         $this->doctrine = $doctrine;
         $this->security = $security;
         $this->modalForms = $modalForms;
         $this->sessionService = $sessionService;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -98,11 +103,11 @@ class PageController extends AbstractController
      * @Route("/test-page", name="app_test_page")
      */
     public function testPage(
-        Request $request,
-        ReviewRepository $reviewRepository,
-        CategoryRepository $categoryRepository
+        CityRepository $cityRepository
     ): Response {
         return $this->render('pages/test/index.html.twig', [
+            'cityName' => $this->sessionService->getCity(),
+            'cities' => $cityRepository->findLimitOrder('999', '0'),
         ]);
     }
 

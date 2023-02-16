@@ -39,19 +39,18 @@
       </div>
       <div class="modal-body">
         <div class="input__modal">
-{#          <input type="text" name="input__search" id="myInput" placeholder="Ваш город" >#}
+          <input type="text" name="input__search" id="myInput" placeholder="Ваш город" >
           <img class="search__city" src="/assets/img/search.svg" alt="search">
-
-            <form action="">
-                <select name="city" id="city" required>
-                    <option value="">Выберите город</option>
-                    {% for city in cities %}
-                        <option value="{{ city.id }}">{{ city.name }}</option>
-                    {% endfor %}
-                </select><br />
-                <button value="Отправить">Отправить</button>
-            </form>
-
+          <ul class="city__list">
+            <li class="city__list-item">Москва</li>
+            <li>Екатеринбург</li>
+            <li>Санкт-Петербург</li>
+            <li>Казань</li>
+            <li>Москва</li>
+            <li>Екатеринбург</li>
+            <li>Санкт-Петербург</li>
+            <li>Казань</li>
+          </ul>
           <img class="seach__check" src="/assets/img/check.svg" alt="search">
         </div>
       </div>
@@ -60,9 +59,29 @@
 </div>
 </div>
 
+<script>
+    function getCookie(name) {
+        let dc = document.cookie;
+        let prefix = name + "=";
+        let begin = dc.indexOf("; " + prefix);
+        if (begin === -1) {
+            begin = dc.indexOf(prefix);
+            if (begin !== 0) return null;
+        }
+        else
+        {
+            begin += 2;
+            var end = document.cookie.indexOf(";", begin);
+            if (end === -1) {
+                end = dc.length;
+            }
+        }
+        return decodeURI(dc.substring(begin + prefix.length, end));
+    }
 
-{% if cityName is null %}
-    <script>
+    let coockieCity = getCookie('city');
+    if (coockieCity === null) {
+        console.log(coockieCity);
         fetch('{{ path('app_city_by_ip') }}').then(async function (response)
         {
             let text = await response.json();
@@ -72,34 +91,46 @@
                 document.querySelector('#openModal').style.display="flex";
             });
         });
+    }
 
-        document.querySelector('.js-close-1').addEventListener('click', () => {
-            document.querySelector('#openModal').style.display="none";
+    fetch('{{ path('app_city_by_ip') }}').then(async function (response)
+    {
+        let text = await response.json();
+        console.log(text);
+        document.querySelectorAll('.js-name-city-detected').forEach((span) => {
+            span.innerHTML = text;
+            document.querySelector('#openModal').style.display="flex";
         });
-        document.querySelector('.js-city-success').addEventListener('click', async () => {
-            document.querySelector('#openModal').style.display = "none";
-            let response = await fetch('{{ path('app_set_city_by_ip') }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8'
-                },
-                //body: 'city='+document.querySelector('.js-name-city-detected').innerHTML
-                body: JSON.stringify({
-                    city: document.querySelector('.js-name-city-detected').innerHTML,
-                })
-            });
-        });
-        document.querySelector('.js-city-warning').addEventListener('click', () => {
-            document.querySelector('#openModal').style.display="none";
-            document.querySelector('#openModalCity').style.display="flex";
-        });
-        document.querySelector('.js-close-2').addEventListener('click', () => {
-            document.querySelector('#openModalCity').style.display="none";
-        });
-    </script>
-{% endif %}
+    });
 
-<script>
+    document.querySelector('.js-close-1').addEventListener('click', () => {
+        document.querySelector('#openModal').style.display="none";
+    });
+    document.querySelector('.js-city-success').addEventListener('click', async () => {
+
+        document.querySelector('#openModal').style.display = "none";
+
+        let response = await fetch('{{ path('app_set_city_by_ip') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            //body: 'city='+document.querySelector('.js-name-city-detected').innerHTML
+            body: JSON.stringify({
+                city: document.querySelector('.js-name-city-detected').innerHTML,
+            })
+        });
+    });
+    document.querySelector('.js-city-warning').addEventListener('click', () => {
+        document.querySelector('#openModal').style.display="none";
+        document.querySelector('#openModalCity').style.display="flex";
+    });
+    document.querySelector('.js-close-2').addEventListener('click', () => {
+        document.querySelector('#openModalCity').style.display="none";
+    });
+
+
+
     $(document).ready(function(){
         $('span.add-job-8').click(function(){
             let url;
