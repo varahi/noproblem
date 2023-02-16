@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 
 class DistrictCrudController extends AbstractCrudController
 {
@@ -26,6 +27,13 @@ class DistrictCrudController extends AbstractCrudController
             ->setSearchFields(['name', 'id'])
             ->setDefaultSort(['name' => 'DESC']);
     }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->disable('new', 'edit', 'delete');
+    }
+
 
     public function configureFields(string $pageName): iterable
     {

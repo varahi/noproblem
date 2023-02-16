@@ -215,7 +215,9 @@ class JobNannyFormType extends AbstractType
                 'multiple'  => false,
                 'expanded'  => false,
                 'label' => 'City',
-                'required' => true,
+                'required' => false,
+                'placeholder' => 'Выберите город',
+                'empty_data' => null,
             ])
             ->add(
                 'amountOfChildren',
