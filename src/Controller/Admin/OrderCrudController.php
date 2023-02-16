@@ -33,9 +33,9 @@ class OrderCrudController extends AbstractCrudController
         yield BooleanField::new('active');
         yield BooleanField::new('disabled');
         yield DateTimeField::new('created')->setFormTypeOption('disabled', 'disabled');
-        yield DateTimeField::new('startDate');
-        yield DateTimeField::new('endDate');
-        yield TextField::new('name')->setColumns('col-md-10');
+        yield DateTimeField::new('startDate')->hideOnIndex();
+        yield DateTimeField::new('endDate')->hideOnIndex();
+        yield TextField::new('name')->setColumns('col-md-10')->hideOnIndex();
         yield AssociationField::new('user')->setColumns('col-md-10');
         yield AssociationField::new('tariff')->setColumns('col-md-10');
     }
