@@ -157,17 +157,8 @@
 
                             <div class="hide" v-if="three">
                                 <div class="tops">
-                                    <div class="only">
-                                        <p>Навыки:</p>
-                                    </div>
-                                    <button class="choose_creating_form mobs accordion_filter_one_vacan">
-                                        <span>Выберите из списка</span>
-                                        <img src="{{ asset('assets/img/str.svg') }}" class="lazyLoad" alt="">
-                                    </button>
-                                    <div class="panel_filter">
 
-                                     <div class="need_creating_form input-select-multiple">
-{#                                            <section>#}
+<!-- {#                                            <section>#}
 {#                                                {% for task in tasks %}#}
 {#                                                    <label for="chk{{ task.id }}" class="tasks"#}
 {#                                                           data-work="{% if task.category %}{% for category in task.category %}j-{{ category.id }} {% endfor %}{% endif %}">#}
@@ -175,21 +166,24 @@
 {#                                                                {% if task.id in selectedTasksArr %} checked {% endif %}>#}
 {#                                                        <span>{{ task.name }}</span></label>#}
 {#                                                {% endfor %}#}
-{#                                            </section>#}
+{#                                            </section>#} -->
 
-                                            <div class="block_emp input-select-multiple">
+                                            <div class="input-select-multiple abouts_creating_form">
+                                            <div class="dom_creating_form">
+                                                 <p>Навыки:</p>
                                                 {{ form_row(form.tasks) }}
+                                            </div>
                                             </div>
 
                                             <div class="abouts_creating_form">
                                                 {{ form_widget(form.anotherTask) }}
                                             </div>
                                         </div> 
-                                    </div>
+                                   
                                 </div>
-                            </div>
+                          
  
-                            <div class="hide">
+                            <div class="hide need_creating_form">
                                 {% include 'partials/pages/worksheet/_busyness.html.twig' %}
                                 <!-- <p class="arm_creating_form">Или добавьте вручную</p>
                                 <button class="choose_creating_form mobs accordion_filter_one_vacan">

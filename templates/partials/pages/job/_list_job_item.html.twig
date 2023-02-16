@@ -74,18 +74,11 @@
 </div>
 
 <script>
+    
 
-       $(document).on('click', 'span.add-job-{{ job.id }}', function () {
-    var id = $(this).hasClass('like-info');
-    if (!id) {
-        $(this).addClass('like-info');
-    } else {
-        $(this).removeClass('like-info');
-    }
-});
 
     $(document).ready(function(){
-        $('span.add-job-{{ job.id }}').click(function(){
+        $ ('span.add-job-{{ job.id }}').click(function(){
             var url = '{{ path('app_add_job_to_favorite', { id: job.id}) }}';
             dataString = 'Добавлено в избранное';
             jQuery.ajax({
@@ -113,7 +106,7 @@
         });
 
 
-     
+  
         $(".btn-show-info-{{ job.id }}").click(function(){
             $(".additional-info-{{ job.id }}").show();
             $(".btn-show-info-{{ job.id }}").addClass('hidden');

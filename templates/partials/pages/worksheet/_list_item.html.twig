@@ -18,9 +18,9 @@
                     {% if featuredProfiles %} {% endif %}
                     {% if job.id in featuredProfiles %}
                     
-                        <span class="remove-job-{{ job.id }} like liked" title="Удалить из избранного"></span>
+                        <span class="js-remove-job like liked" data-id="{{ job.id }}" title="Удалить из избранного"></span>
                     {% else %}
-                        <span class="add-job-{{ job.id }} like" title="Добавить в избранное"></span>
+                        <span class="js-add-job like" data-id="{{ job.id }}" title="Добавить в избранное"></span>
 
                     {% endif %}
                 {% endif %}
@@ -78,6 +78,9 @@
 </div>
 
 <script>
+
+
+
     $(document).ready(function(){
         $('span.add-job-{{ job.id }}').click(function(){
             var url = '{{ path('app_add_worksheet_to_favorite', { id: job.id}) }}';
@@ -92,6 +95,9 @@
                 error:function (){}
             });
         });
+
+      
+
         $('span.remove-job-{{ job.id }}').click(function(){
             var url = '{{ path('app_remove_worksheet_from_favorite', { id: job.id}) }}';
             dataString = 'Удалено из избранного';

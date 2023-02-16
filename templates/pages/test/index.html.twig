@@ -97,8 +97,20 @@
     document.querySelector('.js-close-1').addEventListener('click', () => {
         document.querySelector('#openModal').style.display="none";
     });
-    document.querySelector('.js-city-success').addEventListener('click', () => {
-        document.querySelector('#openModal').style.display="none";
+    document.querySelector('.js-city-success').addEventListener('click', async () => {
+
+        document.querySelector('#openModal').style.display = "none";
+
+        let response = await fetch('{{ path('app_city_by_ip') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            //body: 'city='+document.querySelector('.js-name-city-detected').innerHTML
+            body: JSON.stringify({
+                city: document.querySelector('.js-name-city-detected').innerHTML,
+            })
+        });
     });
     document.querySelector('.js-city-warning').addEventListener('click', () => {
         document.querySelector('#openModal').style.display="none";
@@ -108,7 +120,7 @@
         document.querySelector('#openModalCity').style.display="none";
     });
 
-
+/*
     $(document).ready(function(){
         $('.js-city-success').click(function(){
             var url = '{{ path('app_city_by_ip') }}';
@@ -124,7 +136,41 @@
             });
         });
     });
+*/
 
+
+
+
+
+
+    $(document).ready(function(){
+        $('span.add-job-8').click(function(){
+            let url;
+            if($(this).hasClass('active')){
+                url = '/remove-from-favorite/job-8';
+                $.get(url, function (data){
+                    $(".add-job-8").removeClass('liked');
+                    $('.like-info-8').remove();
+                });
+            }else{
+                url = '/add-to-favorite/job-8';
+                $.get(url, function (data){
+                    $(".add-job-8").addClass('liked');
+                    $(".add-job-8").after(' <div class="like-info like-info-8">Добавлено в избранное</div>');
+                });
+            }
+        });
+
+
+
+
+
+        $(".btn-show-info-8").click(function(){
+            $(".additional-info-8").show();
+            $(".btn-show-info-8").addClass('hidden');
+            $(".btn_box_account_two_vacan_8").css('margin-left', '0');
+        });
+    });
 </script>
 
 {% include 'partials/footer.html.twig' %}

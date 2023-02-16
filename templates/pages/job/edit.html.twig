@@ -48,7 +48,7 @@
 
                           <div class="block_emp input-select-multiple">
                             <div class="but_creating_form description__vacan">
-                                <label> <p class="required">Гражданство:</p>
+                                <label> <p>Гражданство:</p>
                                     {{ form_row(form.citizen) }}
                                 </label>
                             </div><br /><br />
@@ -165,15 +165,13 @@
 
                 <div class="hide">
                     <div class="tops">
-                        <div class="only">
-                            <p>Нужно выполнять:</p>
-                        </div>
-                        <button class="choose_creating_form  accordion_filter_one_vacan">
+
+<!--                         <button class="choose_creating_form  accordion_filter_one_vacan">
                             <span class="list__vacan">Выберите из списка</span>
                             <img src="{{ asset('assets/img/str.svg" src="/preload.gif ') }}" class="lazyLoad" alt="">
-                        </button>
-                        <div class="panel_filter">
-{#                            <div class="need_creating_form">#}
+                        </button> -->
+                     
+<!-- {#                            <div class="need_creating_form">#}
 {#                                <section>#}
 {#                                    {% for task in tasks %}#}
 {#                                        <label for="chk{{ task.id }}" class="tasks"#}
@@ -185,13 +183,17 @@
 {#                                </section>#}
 {#                            </div>#}
 
-
-                            {{ form_row(form.tasks) }}<br />
+ -->
+<div class="abouts_creating_form input-select-multiple">
+            <div class="dom_creating_form">
+                <p class="required">Могу выполнять (навыки):</p>
+                     {{ form_row(form.tasks) }}<br />
+            </div>
+        </div>
 
                             <div class="abouts_creating_form">
                                 {{ form_row(form.anotherTask) }}
                             </div>
-                        </div>
                     </div>
 
                     <div class="abouts_creating_form citizenship">
@@ -265,6 +267,7 @@
 
     <script>
         createDependableList ( '#job_form_city', '#job_form_district' );
+        $('.input-select-multiple select').select2({});
         $('#job_form_city').change(function() {
             $('#job_form_district').prop('disabled', false);
         });
