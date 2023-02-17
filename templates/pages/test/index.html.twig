@@ -42,15 +42,14 @@
 {#          <input type="text" name="input__search" id="myInput" placeholder="Ваш город" >#}
           <img class="search__city" src="/assets/img/search.svg" alt="search">
 
-            <form action="">
                 <select name="city" id="city" required>
                     <option value="">Выберите город</option>
                     {% for city in cities %}
-                        <option value="{{ city.id }}">{{ city.name }}</option>
+                        <option value="{{ city.name }}">{{ city.name }}</option>
                     {% endfor %}
                 </select><br />
-                <button value="Отправить">Отправить</button>
-            </form>
+                <button type="button" class="js-send-new-city">Отправить</button>
+
 
           <img class="seach__check" src="/assets/img/check.svg" alt="search">
         </div>
@@ -88,6 +87,27 @@
                     city: document.querySelector('.js-name-city-detected').innerHTML,
                 })
             });
+        });
+
+        document.querySelector('.js-send-new-city').addEventListener('click', async () => {
+            let city = document.querySelector('#city').value;
+
+            if(city.length > 0){
+                let response = await fetch('{{ path('app_set_city_by_ip') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    //body: 'city='+document.querySelector('.js-name-city-detected').innerHTML
+                    body: JSON.stringify({
+                        city: city,
+                    })
+                });
+
+                document.querySelector('#openModalCity').style.display = "none";
+            }
+
+
         });
         document.querySelector('.js-city-warning').addEventListener('click', () => {
             document.querySelector('#openModal').style.display="none";
