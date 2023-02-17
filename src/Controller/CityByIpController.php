@@ -13,16 +13,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CityByIpController extends AbstractController
 {
-//    public $token = "62ae4a81a51849da1013da68f2ff86d8938292af";
+//    private $dadataToken;
 //
-//    public $secret = "6d240b631a8301e11edfdc12ad0ad27ef1a84a70";
+//    private $dadataSecret;
 //
 //    public function __construct(
-//        string $token,
-//        string $secret
-//    ) {
-//        $this->token = $token;
-//        $this->secret = $secret;
+//        string $dadataToken,
+//        string $dadataSecret
+//    )
+//    {
+//        $this->dadataToken = $dadataToken;
+//        $this->dadataSecret = $dadataSecret;
 //    }
 
     /**
@@ -31,10 +32,11 @@ class CityByIpController extends AbstractController
     public function getCityByIp(): Response
     {
         $dadata = new Dadata('62ae4a81a51849da1013da68f2ff86d8938292af', '6d240b631a8301e11edfdc12ad0ad27ef1a84a70');
+        //$dadata = new Dadata($this->dadataToken, $this->dadataSecret);
         $dadata->init();
 
-        $result = $dadata->iplocate($_SERVER['REMOTE_ADDR']);
-        //$result = $dadata->iplocate('95.27.197.131');
+        //$result = $dadata->iplocate($_SERVER['REMOTE_ADDR']);
+        $result = $dadata->iplocate('95.27.197.131');
 
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');
@@ -48,7 +50,7 @@ class CityByIpController extends AbstractController
     /**
      * @Route("/set-city-by-ip", name="app_set_city_by_ip")
      */
-    public function setCityByIp(
+    public function setCity(
         Request $request,
         CityRepository $cityRepository
     ): JsonResponse {

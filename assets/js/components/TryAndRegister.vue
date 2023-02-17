@@ -40,7 +40,7 @@
       <!-- Registration employer modal box -->
       <div class="modal" v-if="showModalEmployer">
         <div class="modal-title">
-          <h2>Регистрация работадателя</h2>
+          <h2>Регистрация работодателя</h2>
           <button class="close" @click="showModalEmployer = false">
             <img src="/assets/img/krest.svg" alt="">
           </button>

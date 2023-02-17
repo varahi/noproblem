@@ -102,9 +102,9 @@ class Dadata
         $result = curl_exec($this->handle);
         $info = curl_getinfo($this->handle);
         if ($info['http_code'] == 429) {
-            throw new TooManyRequests();
+            throw new \TooManyRequests();
         } elseif ($info['http_code'] != 200) {
-            throw new Exception('Request failed with http code ' . $info['http_code'] . ': ' . $result);
+            throw new \Exception('Request failed with http code ' . $info['http_code'] . ': ' . $result);
         }
         return $result;
     }

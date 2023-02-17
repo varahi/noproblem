@@ -1,0 +1,106 @@
+{% if cities is defined %}
+    <!-- 1 мод окно -->
+    <div id="openModal" class="modal__city" style="display: none">
+        <div class="modal-dialog">
+            <div class="modal-content-city">
+                <div class="modal-header">
+                    <h3 class="modal-title">Ваш город <span class="js-name-city-detected"></span>?</h3>
+                    <a href="#close" title="Close" class="close__city js-close-1"><img src="/assets/img/krest.svg" alt=""></a>
+                </div>
+                <div class="modal-body">
+                    <div class="btn_city-group btn_try_custom">
+                        <button type="button" class="btn btn__city-true js-city-success">Да, все верно</button>
+                        <button type="button" class="btn btn-city-search js-city-warning">Выбрать город</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2 мод окно -->
+    <div id="openModalCity" class="modal__city" style="display: none">
+        <div class="modal-dialog-search">
+            <div class="modal-content-city-search">
+                <div class="modal-header">
+                    <h3 class="modal-title">Ваш город <span class="js-name-city-detected"></span>?</h3>
+                    <a href="#close" title="Close" class="close__city js-close-2">×</a>
+                </div>
+                <div class="modal-body">
+                    <div class="input__modal">
+                        <img class="search__city" src="/assets/img/search.svg" alt="search">
+                        <select name="city" id="city" required>
+                            <option value="">Выберите город</option>
+                            {% for city in cities %}
+                                <option value="{{ city.name }}">{{ city.name }}</option>
+                            {% endfor %}
+                        </select><br />
+                        <button type="button" class="js-send-new-city">Отправить</button>
+                        <img class="seach__check" src="/assets/img/check.svg" alt="search">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endif %}
+
+{% if cityName is defined and cities is defined %}
+    {% if cityName is null %}
+        <script>
+            fetch('{{ path('app_city_by_ip') }}').then(async function (response)
+            {
+                let text = await response.json();
+                console.log(text);
+                document.querySelectorAll('.js-name-city-detected').forEach((span) => {
+                    span.innerHTML = text;
+                    document.querySelector('#openModal').style.display="flex";
+                });
+            });
+
+            document.querySelector('.js-close-1').addEventListener('click', () => {
+                document.querySelector('#openModal').style.display="none";
+            });
+            document.querySelector('.js-city-success').addEventListener('click', async () => {
+                document.querySelector('#openModal').style.display = "none";
+                let response = await fetch('{{ path('app_set_city_by_ip') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    //body: 'city='+document.querySelector('.js-name-city-detected').innerHTML
+                    body: JSON.stringify({
+                        city: document.querySelector('.js-name-city-detected').innerHTML,
+                    })
+                });
+            });
+
+            document.querySelector('.js-send-new-city').addEventListener('click', async () => {
+                let city = document.querySelector('#city').value;
+
+                if(city.length > 0){
+                    let response = await fetch('{{ path('app_set_city_by_ip') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8'
+                        },
+                        //body: 'city='+document.querySelector('.js-name-city-detected').innerHTML
+                        body: JSON.stringify({
+                            city: city,
+                        })
+                    });
+
+                    document.querySelector('#openModalCity').style.display = "none";
+                }
+
+
+            });
+            document.querySelector('.js-city-warning').addEventListener('click', () => {
+                document.querySelector('#openModal').style.display="none";
+                document.querySelector('#openModalCity').style.display="flex";
+            });
+            document.querySelector('.js-close-2').addEventListener('click', () => {
+                document.querySelector('#openModalCity').style.display="none";
+            });
+        </script>
+    {% endif %}
+{% endif %}

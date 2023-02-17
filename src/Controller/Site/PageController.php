@@ -48,7 +48,8 @@ class PageController extends AbstractController
         Security $security,
         ModalForms $modalForms,
         SessionService $sessionService,
-        RequestStack $requestStack
+        RequestStack $requestStack,
+        CityRepository $cityRepository
     ) {
         $this->twig = $twig;
         $this->doctrine = $doctrine;
@@ -56,6 +57,7 @@ class PageController extends AbstractController
         $this->modalForms = $modalForms;
         $this->sessionService = $sessionService;
         $this->requestStack = $requestStack;
+        $this->cityRepository = $cityRepository;
     }
 
     /**
@@ -79,6 +81,7 @@ class PageController extends AbstractController
             'user' => $user,
             'form' => $form->createView(),
             'cityName' => $this->sessionService->getCity(),
+            'cities' => $this->cityRepository->findLimitOrder('999', '0'),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }
@@ -95,6 +98,7 @@ class PageController extends AbstractController
         return new Response($this->twig->render('pages/company.html.twig', [
             'user' => $user,
             'cityName' => $this->sessionService->getCity(),
+            'cities' => $this->cityRepository->findLimitOrder('999', '0'),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
@@ -103,11 +107,10 @@ class PageController extends AbstractController
      * @Route("/test-page", name="app_test_page")
      */
     public function testPage(
-        CityRepository $cityRepository
     ): Response {
         return $this->render('pages/test/index.html.twig', [
             'cityName' => $this->sessionService->getCity(),
-            'cities' => $cityRepository->findLimitOrder('999', '0'),
+            'cities' => $this->cityRepository->findLimitOrder('999', '0'),
         ]);
     }
 
@@ -131,6 +134,7 @@ class PageController extends AbstractController
             'employerTariffs' => $employerTariffs,
             'customerTariffs' => $customerTariffs,
             'cityName' => $this->sessionService->getCity(),
+            'cities' => $this->cityRepository->findLimitOrder('999', '0'),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
@@ -151,6 +155,7 @@ class PageController extends AbstractController
             'categories' => $categories,
             'user' => $user,
             'cityName' => $this->sessionService->getCity(),
+            'cities' => $this->cityRepository->findLimitOrder('999', '0'),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }
@@ -173,6 +178,7 @@ class PageController extends AbstractController
             'categories' => $categories,
             'user' => $user,
             'cityName' => $this->sessionService->getCity(),
+            'cities' => $this->cityRepository->findLimitOrder('999', '0'),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }
@@ -194,6 +200,7 @@ class PageController extends AbstractController
             'categories' => $categories,
             'user' => $user,
             'cityName' => $this->sessionService->getCity(),
+            'cities' => $this->cityRepository->findLimitOrder('999', '0'),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
@@ -211,6 +218,7 @@ class PageController extends AbstractController
         $user = $this->security->getUser();
         return $this->render('pages/courses/list.html.twig', [
             'cityName' => $this->sessionService->getCity(),
+            'cities' => $this->cityRepository->findLimitOrder('999', '0'),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView(),
             'user' => $user
             //'articles' => $articles,
@@ -232,6 +240,7 @@ class PageController extends AbstractController
             'course' => $course,
             'user' => $user,
             'cityName' => $this->sessionService->getCity(),
+            'cities' => $this->cityRepository->findLimitOrder('999', '0'),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]));
     }
@@ -250,6 +259,7 @@ class PageController extends AbstractController
             'content' => $content,
             'user' => $user,
             'cityName' => $this->sessionService->getCity(),
+            'cities' => $this->cityRepository->findLimitOrder('999', '0'),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }
@@ -267,6 +277,7 @@ class PageController extends AbstractController
             'content' => $content,
             'user' => $user,
             'cityName' => $this->sessionService->getCity(),
+            'cities' => $this->cityRepository->findLimitOrder('999', '0'),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()
         ]);
     }
@@ -282,6 +293,7 @@ class PageController extends AbstractController
         $user = $this->security->getUser();
         return $this->render('pages/payment_error.html.twig', [
             'cityName' => $this->sessionService->getCity(),
+            'cities' => $this->cityRepository->findLimitOrder('999', '0'),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView(),
             'user' => $user
         ]);
