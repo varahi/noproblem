@@ -149,6 +149,16 @@ width: 400px!important}
   width: 400px;
   height: 41px;
 }
+
+
+.select2-container--default:invalid .select2-selection--single:invalid {
+  border: 1px solid black;
+}
+
+select2 .select2-container .select2-container--default .select2-container--below .select2-container--focus {
+ border: 1px solid black;
+}
+
   .select2-container--default .select2-selection--single .select2-selection__rendered {
     color: #A6A6A6;
     font-family: futura;

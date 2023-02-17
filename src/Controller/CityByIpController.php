@@ -35,8 +35,8 @@ class CityByIpController extends AbstractController
         //$dadata = new Dadata($this->dadataToken, $this->dadataSecret);
         $dadata->init();
 
-        //$result = $dadata->iplocate($_SERVER['REMOTE_ADDR']);
-        $result = $dadata->iplocate('95.27.197.131');
+        $result = $dadata->iplocate($_SERVER['REMOTE_ADDR']);
+        //$result = $dadata->iplocate('95.27.197.131');
 
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');

@@ -4427,6 +4427,20 @@ font-weight: 400!important;
   text-decoration: none;
 }
 
+
+.close__city2 {
+  position: absolute;
+  top: -27px;
+  right: -49px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  text-decoration: none;
+}
+
+
 .btn_city-group {
   display: flex;
     gap: 0 20px
@@ -4498,7 +4512,12 @@ background: transparent;
 }
 
 .modal-content-city-search {
- margin-top: 25px;
+ margin-top:38px;
+}
+
+.search__text {
+   font-family: futura;
+   font-size: 16px;
 }
 
 .close__city-search {
@@ -4539,12 +4558,35 @@ background: transparent;
 
 .search__city {
   position: absolute;
-  right: 10px;
-  top: 3px;
+  right: 18px;
+    top: 13px;
+    width: 24px;
 }
 
 .adress__form {
   margin-top: 30px;
+}
+
+.btn_search-city {
+  font-size: 18px;
+    color: #fff;
+    background: var(--violet);
+    border-radius: 10px;
+    padding: 11px 28px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn__search {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+#city {
+  padding: 5px;
+  border-radius: 5px;
+  margin-top:10px;
 }
 
 @media only screen and (max-width: 800px)
@@ -4721,11 +4763,23 @@ height: 300px!important;
     top: 5%;
     width: 320px;
     height: 200px;
+    left: -12%;
 
+}
+
+.modal-dialog-search {
+    top: 5%;
+    width: 360px;
+    height: 300px;
+    left: -13%;
 }
 
 .close__city img {
    width: 33px;
+}
+
+.close__city2 img {
+    width: 33px;
 }
 
 .modal-content-city {
@@ -5554,6 +5608,32 @@ display: block;
     margin-bottom: 0;
   }
 
+   .modal-dialog {
+    top: 5%;
+    width: 292px;
+    height: 176px;
+}
+
+.modal-dialog-search {
+    position: relative;
+    width: auto;
+    margin: 2px;
+    display: flex;
+    justify-content: center;
+    top: 4%;
+    width: 291px;
+    height: 274px;
+    background: #FFFFFF;
+    border-radius: 8px;
+}
+
+.close__city2 {
+   
+    top: -27px;
+    right: -21px;
+    font-size: 24px;
+   
+}
    .box_account {
     padding: 13px 11px 13px 13px;
     max-width: 75%!important;

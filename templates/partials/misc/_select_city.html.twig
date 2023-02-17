@@ -23,19 +23,21 @@
             <div class="modal-content-city-search">
                 <div class="modal-header">
                     <h3 class="modal-title">Ваш город <span class="js-name-city-detected"></span>?</h3>
-                    <a href="#close" title="Close" class="close__city js-close-2">×</a>
+                    <a href="#close" title="Close" class="close__city2 js-close-2"><img src="/assets/img/krest.svg"></a>
                 </div>
                 <div class="modal-body">
                     <div class="input__modal">
                         <img class="search__city" src="/assets/img/search.svg" alt="search">
-                        <select name="city" id="city" required>
+                        <select class="search__text" name="city" id="city" required>
                             <option value="">Выберите город</option>
                             {% for city in cities %}
                                 <option value="{{ city.name }}">{{ city.name }}</option>
                             {% endfor %}
                         </select><br />
-                        <button type="button" class="js-send-new-city">Отправить</button>
-                        <img class="seach__check" src="/assets/img/check.svg" alt="search">
+                        <div class="btn__search">
+                        <button type="button" class="js-send-new-city btn_search-city">Отправить</button>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
