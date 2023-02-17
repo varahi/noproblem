@@ -9,23 +9,19 @@
             <a href="{{ path('app_main') }}" class="nuxt-link-active">Главная</a>
             <a>/ Служба поддержки</a>
         </div>
-
-       
         <div class="large_creating_form">
             <div class="in_creating_form">
-                <div class="form__aplication">
+                {% include 'partials/_message.html.twig' %}
+                {{ form_start(form, {'attr' : {'class': 'form__aplication', 'autocomplete': 'on'}} ) }}
                     <h2>Создание обращения</h2>
-                    <p>Заполните все поля</p>
-                    <input class="topic__message-input" type="text" name="topic__message" placeholder="Тема обращения">
-                    <select class="urgency__aplication">
-                    <option value="1">Срочность высокая</option>
-                    <option value="2">Средняя</option>
-                    <option value="3">Низкая</option>
-                    </select>
-                    
-                    <textarea class="comment__aplication" type="text" name="text__message" placeholder="Комментарий"></textarea>
-                   
-                </div>
+                    {{ form_widget(form.title) }}
+                    {{ form_widget(form.email) }}
+                    {{ form_widget(form.priority) }}
+                    {{ form_widget(form.description) }}
+                    <div class="btn_try btn_try_custom">
+                        <button type="submit" class="btn btn-success">{{ 'Create ticket'|trans }}</button>
+                    </div>
+                {{ form_end(form) }}
             </div>
         </div>
     </div>
