@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Tariff;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -27,6 +28,12 @@ class TariffCrudController extends AbstractCrudController
             ->setEntityLabelInPlural('Tariff')
             ->setSearchFields(['task'])
             ->setDefaultSort(['type' => 'ASC']);
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->disable('new', 'delete');
     }
 
     public function configureFields(string $pageName): iterable

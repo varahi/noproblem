@@ -3,9 +3,9 @@
 namespace App\Controller\Site;
 
 use App\Repository\OrderRepository;
-use App\Service\FileService;
+use App\Service\File\FileService;
+use App\Service\File\PdfService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Notifier\Notification\Notification;
 use Symfony\Component\Notifier\NotifierInterface;
@@ -61,6 +61,39 @@ class HistoryController extends AbstractController
         $fileService->downloadFile($fileName);
 
         $response = new Response();
+        return $response;
+    }
+
+    /**
+     * @Route("/download-pdf-history", name="app_pdf_history")
+     */
+    public function downloadPdf(
+        PdfService $pdfService,
+        OrderRepository $orderRepository,
+        TranslatorInterface $translator,
+        NotifierInterface $notifier
+    ): Response {
+        $user = $this->security->getUser();
+
+        if (!$user) {
+            $message = $translator->trans('Please login', array(), 'flash');
+            $notifier->send(new Notification($message, ['browser']));
+            return $this->redirectToRoute("app_login");
+        }
+
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('pages/history/pdf.html.twig', [
+            'user' => $user,
+            'orders' => $orderRepository->findByUser($user->getId())
+        ]);
+
+        $dompdf = $pdfService->prepareDompdf($html, 'apartment.pdf');
+
+        $response = new Response();
+        $response->setContent($dompdf->output());
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Type', 'application/pdf');
+
         return $response;
     }
 

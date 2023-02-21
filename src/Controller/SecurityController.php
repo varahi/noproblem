@@ -67,7 +67,7 @@ class SecurityController extends AbstractController
             'error' => $errorMessage
         ]);
 
-        file_put_contents('login.json', json_encode($data));
+        //file_put_contents('login.json', json_encode($data));
         return $data;
     }
 
@@ -130,8 +130,6 @@ class SecurityController extends AbstractController
      */
     public function loginHandler(LoginRequest $loginRequest): JsonResponse
     {
-        dd($loginRequest);
-
         if (!$this->loginValidator->validate($loginRequest)) {
             return new JsonResponse([
                 'status' => Response::HTTP_BAD_REQUEST,

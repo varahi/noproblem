@@ -14,7 +14,7 @@
             <div class="in_creating_form history__btn">
                 {% include 'partials/_message.html.twig' %}
                 <div class="btn_employer" style="cursor: pointer;">
-                   <a href="{{ path('app_download_history') }}">Скачать историю</a>
+                   <a href="{{ path('app_pdf_history') }}" target="_blank">Скачать в формате PDF</a>
                 </div>
 
                     {% if orders %}

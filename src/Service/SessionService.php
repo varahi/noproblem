@@ -6,11 +6,10 @@ namespace App\Service;
 
 use App\Entity\City;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class SessionService extends AbstractController
+class SessionService
 {
     /**
      * @param ManagerRegistry $doctrine

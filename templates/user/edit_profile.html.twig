@@ -48,10 +48,13 @@
                                    placeholder="Ваш город" class="form-control" value="{{ user.city }}">
                         </div>
                         {{ form_row(form.address) }}
+                        <div class="input-select-multiple">
                         {{ form_row(form.citizen) }}
+                        </div>
                     </div>
 
                     <script type="text/javascript">
+                        $('.input-select-multiple select').select2({});
                         $( "#edit_profile_form_city" ).autocomplete({
                             source: function( request, response ) {
                                 $.ajax({

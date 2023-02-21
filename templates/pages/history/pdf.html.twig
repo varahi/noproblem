@@ -1,0 +1,38 @@
+{% extends 'layouts/pdf.html.twig' %}
+{% block body %}
+    <h1 style="text-align: center; text-transform: uppercase; color: #477CD5; font-weight: normal">История платежей {{ user.email }}</h1>
+
+    {% if orders %}
+        <table class="pdf-table">
+            <thead>
+            <tr>
+                <td>Номер заказа</td>
+                <td >Номер телефона</td>
+                <td >Дата платежа</td>
+                <td >Сумма платежа</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td>
+                        {{ order.id }}
+                    </td>
+                    <td>
+                        {{ order.user.phone }}
+                    </td>
+                    <td>
+                        {{ order.created|date("Y-m-d H:i:s") }}
+                    </td>
+                    <td>
+                        {{ order.tariff.amount / 100 }} ₽
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>У вас пока нет заказов</p>
+    {% endif %}
+
+{% endblock %}

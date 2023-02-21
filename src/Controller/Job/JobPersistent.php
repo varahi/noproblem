@@ -22,21 +22,21 @@ use App\Repository\CityRepository;
 use App\Repository\DistrictRepository;
 use App\Repository\TaskRepository;
 use App\Service\CoordinateService;
-use App\Service\FileUploader;
+use App\Service\File\FileUploader;
 use App\Service\ModalForms;
 use App\Service\SessionService;
 use Doctrine\Persistence\ManagerRegistry;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Notifier\Notification\Notification;
 use Symfony\Component\Notifier\NotifierInterface;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\Routing\Annotation\Route;
 
 class JobPersistent extends AbstractController
 {

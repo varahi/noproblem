@@ -35,8 +35,9 @@ class CityByIpController extends AbstractController
         //$dadata = new Dadata($this->dadataToken, $this->dadataSecret);
         $dadata->init();
 
-        $result = $dadata->iplocate($_SERVER['REMOTE_ADDR']);
+        //$result = $dadata->iplocate($_SERVER['REMOTE_ADDR']);
         //$result = $dadata->iplocate('95.27.197.131');
+        $result = $dadata->iplocate($this->getIPAddress());
 
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');
@@ -69,5 +70,22 @@ class CityByIpController extends AbstractController
                 'status' => Response::HTTP_BAD_REQUEST,
             ]);
         }
+    }
+
+    private function getIPAddress()
+    {
+        //whether ip is from the share internet
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        }
+        //whether ip is from the proxy
+        elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
+        //whether ip is from the remote address
+        else {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+        return $ip;
     }
 }

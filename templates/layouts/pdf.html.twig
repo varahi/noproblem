@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Download {% endblock %}</title>
+
+    {#
+    {% block stylesheets %}
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/pdf.css') }}" media="all">
+    {% endblock %}
+    #}
+
+    {% block stylesheets %}
+        <link rel="stylesheet" type="text/css" href="{{ asset('/app/public_html/css/pdf.css') }}" media="all">
+    {% endblock %}
+
+    <style>
+        body { font-family: DejaVu Sans }
+
+        //@font-face {
+        //    font-family: 'rockwell';
+        //    src: url("../../font/rockwell/Rockwell.woff2") format("woff2"), url("../../font/rockwell/Rockwell.woff") format("woff");
+        //    font-weight: normal;
+        //    font-style: normal;
+        //}
+        //
+        //h1{
+        //    font-family: 'rockwell', Arial;
+        //    font-weight: 700;
+        //}
+
+        table {
+            color: #000;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .icon-employee {
+            font-size: 12px;
+            font-family: "Heebo", sans-serif;
+            font-weight: 700;
+            margin-left: 3px;
+            margin-right: 3px;
+            color: #fff !important;
+            float: left;
+            width: 25px;
+            height: 25px;
+            line-height: 20px;
+            border-radius: 100%;
+        }
+        .employer-list {
+            margin-top: 40px;
+            margin-bottom: 30px;
+            height: 26px;
+            text-align: center;
+        }
+        .table-icon {
+            padding: 10px;
+        }
+
+
+        table th{
+            font-weight: 400;
+            font-size: 12px;
+            color: #000;
+        }
+        table th, table td{
+            border: none;
+            text-align: center;
+            font-family: DejaVu Sans
+        }
+        table td{
+            border-bottom: 1px solid rgba(112,112,112,0.25);
+            border-right: 1px solid #707070;
+            font-size: 14px;
+            padding: 10px 10px;
+            color: #707070;
+        }
+        table td.first{
+            text-align: left;
+            color: #131313;
+        }
+        table td.first span{
+            position: absolute;
+            display: inline-block;
+            width: 5px;
+            height: 5px;
+            line-height: 7px;
+            float: right;
+            color: #fff;
+            font-size: 12px;
+            font-family: DejaVu Sans
+            font-weight: 700;
+            text-align: center;
+            border-radius: 100%;
+            margin-top: -5px;
+        }
+
+
+        table.pdf-table {
+            font-size: 16px;
+        }
+    </style>
+
+</head>
+<body class="pdf">
+{% block body %}
+{% endblock %}
+</body>
+</html>
