@@ -12,13 +12,13 @@
                 <div class="name_verif">
                     <p>{{ job.owner.firstName }} {{ job.owner.lastName }}</p>
                     <img class="verif_green" src="{{ asset('assets/img/verif_green.svg') }}" alt="">
-                     {% if app.user %}
-                    {% if job.id in featuredJobs %}
-                        <span class="remove-job-{{ job.id }} js-add-job like liked" data-id="{{ job.id }}" title="Удалить из избранного"></span>
-                    {% else %}
-                        <span class="add-job-{{ job.id }} js-add-job like" data-id="{{ job.id }}" title="Добавить в избранное"></span>
+                    {% if app.user %}
+                        {% if job.id in featuredJobs %}
+                            <span class="remove-job-{{ job.id }} js-add-job like liked" data-id="{{ job.id }}" title="Удалить из избранного"></span>
+                        {% else %}
+                            <span class="add-job-{{ job.id }} js-add-job like" data-id="{{ job.id }}" title="Добавить в избранное"></span>
+                        {% endif %}
                     {% endif %}
-                {% endif %}
                 </div>
                 <div class="city_icon_vacan">
                     <img src="{{ asset('assets/img/city_map.svg') }}" class="lazyLoad isLoaded" alt="">
@@ -74,14 +74,11 @@
 </div>
 
 <script>
-    
-
-
     $(document).ready(function(){
         $('.js-add-job').click(function(){
             let id = $(this).data('id');
             let url;
-            if($(this).hasClass('active')){
+            if($(this).hasClass('liked')){
                 url = '/remove-from-favorite/job-'+id;
                 $.get(url, function (data){
                     $(this).removeClass('liked');
@@ -95,8 +92,6 @@
                 });
             }
         });
-
-
   
         $(".btn-show-info-{{ job.id }}").click(function(){
             $(".additional-info-{{ job.id }}").show();

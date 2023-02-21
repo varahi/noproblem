@@ -405,7 +405,7 @@ class UserController extends AbstractController
         Request $request,
         Worksheet $worksheet
     ): Response {
-        if ($this->isGranted(self::ROLE_EMPLOYEE)) {
+        if ($this->isGranted(self::ROLE_EMPLOYEE) || $this->isGranted(self::ROLE_CUSTOMER)) {
             $user = $this->security->getUser();
 
             $worksheet->addFeaturedUser($user);
@@ -426,9 +426,8 @@ class UserController extends AbstractController
         Request $request,
         Worksheet $worksheet
     ): Response {
-        if ($this->isGranted(self::ROLE_EMPLOYEE)) {
+        if ($this->isGranted(self::ROLE_EMPLOYEE) || $this->isGranted(self::ROLE_CUSTOMER)) {
             $user = $this->security->getUser();
-
             $worksheet->removeFeaturedUser($user);
             $entityManager = $this->doctrine->getManager();
             $entityManager->persist($worksheet);
@@ -448,7 +447,7 @@ class UserController extends AbstractController
         Request $request,
         Job $job
     ): Response {
-        if ($this->isGranted(self::ROLE_CUSTOMER)) {
+        if ($this->isGranted(self::ROLE_CUSTOMER) || $this->isGranted(self::ROLE_EMPLOYEE)) {
             $user = $this->security->getUser();
 
             $job->addFeaturedUser($user);
@@ -469,7 +468,7 @@ class UserController extends AbstractController
         Request $request,
         Job $job
     ): Response {
-        if ($this->isGranted(self::ROLE_CUSTOMER)) {
+        if ($this->isGranted(self::ROLE_CUSTOMER) || $this->isGranted(self::ROLE_EMPLOYEE)) {
             $user = $this->security->getUser();
 
             $job->removeFeaturedUser($user);

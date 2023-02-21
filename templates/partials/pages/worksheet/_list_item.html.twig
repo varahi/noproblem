@@ -14,16 +14,13 @@
                     <p>{{ job.user }}</p>
                     </div>
                     <img class="verif_green" src="{{ asset('assets/img/verif_green.svg') }}" alt="">
-                     {% if app.user %}
-                    {% if featuredProfiles %} {% endif %}
-                    {% if job.id in featuredProfiles %}
-                    
-                        <span class="js-remove-job like liked" data-id="{{ job.id }}" title="Удалить из избранного"></span>
-                    {% else %}
-                        <span class="js-add-job like" data-id="{{ job.id }}" title="Добавить в избранное"></span>
-
+                    {% if app.user %}
+                        {% if job.id in featuredProfiles %}
+                            <span class="remove-job-{{ job.id }} js-add-job like liked" data-id="{{ job.id }}" title="Удалить из избранного"></span>
+                        {% else %}
+                            <span class="add-job-{{ job.id }} js-add-job like" data-id="{{ job.id }}" title="Добавить в избранное"></span>
+                        {% endif %}
                     {% endif %}
-                {% endif %}
                 </div>
                 <div class="city_icon_vacan">
                     <img src="{{ asset('assets/img/city_map.svg') }}" class="lazyLoad isLoaded" alt="">
@@ -79,38 +76,25 @@
 
 <script>
 
-
-
     $(document).ready(function(){
-        $('span.add-job-{{ job.id }}').click(function(){
-            var url = '{{ path('app_add_worksheet_to_favorite', { id: job.id}) }}';
-            dataString = 'Добавлено в избранное';
-            jQuery.ajax({
-                url: url,
-                data: dataString,
-                type: "POST",
-                success:function(){
-                    $(".add-job-{{ job.id }}").addClass('liked').after(' <div class="like-info">Добавлено в избранное</div>');
-                },
-                error:function (){}
-            });
+        $('.js-add-job').click(function(){
+            let id = $(this).data('id');
+            let url;
+            if($(this).hasClass('liked')){
+                url = '/remove-from-favorite/worksheet-'+id;
+                $.get(url, function (data){
+                    $(this).removeClass('liked');
+                    $('.js-like-info-'+id).remove();
+                });
+            }else{
+                url = '/add-to-favorite/worksheet-'+id;
+                $.get(url, function (data){
+                    $(this).addClass('liked');
+                    $(".js-add-job like").after(' <div class="like-info js-like-info-'+id+' ">Добавлено в избранное</div>');
+                });
+            }
         });
 
-      
-
-        $('span.remove-job-{{ job.id }}').click(function(){
-            var url = '{{ path('app_remove_worksheet_from_favorite', { id: job.id}) }}';
-            dataString = 'Удалено из избранного';
-            jQuery.ajax({
-                url: url,
-                data: dataString,
-                type: "POST",
-                success:function(){
-                    $(".remove-job-{{ job.id }}").removeClass('liked').after(' <div class="like-info">Удалено из избранного</div>');
-                },
-                error:function (){}
-            });
-        });
         $(".btn-show-info-{{ job.id }}").click(function(){
             $(".additional-info-{{ job.id }}").show();
             $(".btn-show-info-{{ job.id }}").addClass('hidden');
