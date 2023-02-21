@@ -145,7 +145,7 @@ class WorksheetNannyFormType extends AbstractType
             ])
             ->add('accommodations', EntityType::class, [
                 'class' => Accommodation::class,
-                'multiple'  => true,
+                'multiple'  => false,
                 'expanded'  => false,
                 'label' => 'Accommodations',
                 'required' => true,
