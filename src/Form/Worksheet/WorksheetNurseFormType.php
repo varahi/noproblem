@@ -216,6 +216,18 @@ class WorksheetNurseFormType extends AbstractType
                 'label' => false,
                 'translation_domain' => 'forms',
             ])
+            ->add(
+                'address',
+                TextType::class,
+                [
+                    'required' => true,
+                    'attr' => [
+                        'placeholder' => 'Address',
+                        'class' => 'text_input',
+                    ],
+                    'label' => false
+                ]
+            )
 
 /*            ->add(
                 'passportSeries',

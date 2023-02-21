@@ -159,7 +159,7 @@ class WorksheetMasterFormType extends AbstractType
             ])
             ->add('accommodations', EntityType::class, [
                 'class' => Accommodation::class,
-                'multiple'  => true,
+                'multiple'  => false,
                 'expanded'  => false,
                 'label' => 'Accommodations',
                 'required' => true,
@@ -242,6 +242,18 @@ class WorksheetMasterFormType extends AbstractType
                 'placeholder' => 'Выберите город',
                 'empty_data' => null,
             ])
+            ->add(
+                'address',
+                TextType::class,
+                [
+                    'required' => true,
+                    'attr' => [
+                        'placeholder' => 'Address',
+                        'class' => 'text_input',
+                    ],
+                    'label' => false
+                ]
+            )
         ;
     }
 

@@ -26,6 +26,13 @@
 			{% include 'partials/pages/tarifs/_for_emploer.html.twig' %}
 			{% include 'partials/pages/tarifs/_for_customer.html.twig' %}
 		{% endif %}
+
+		{% if app.user %}
+			{% if is_granted('ROLE_SUPER_ADMIN') %}
+				{% include 'partials/pages/tarifs/_for_emploer.html.twig' %}
+				{% include 'partials/pages/tarifs/_for_customer.html.twig' %}
+			{% endif %}
+		{% endif %}
 	</main>
 	{% include 'partials/footer.html.twig' %}
 {% endblock %}

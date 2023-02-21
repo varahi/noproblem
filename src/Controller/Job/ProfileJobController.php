@@ -185,7 +185,7 @@ class ProfileJobController extends AbstractController
             'dayKeys' => $dayKeys,
             'scheduleKeys' => $scheduleKeys,
             'testArray' => $testArray,
-            'relatedJobs' => $jobRepository->findByCategory($category->getId(), $job->getId(), '10'),
+            'relatedJobs' => $jobRepository->findByCategory($category?->getId(), $job->getId(), '10') ?? null,
             'featuredJobs' => $this->getFeaturedJobs($user),
             'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()

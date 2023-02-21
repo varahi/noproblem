@@ -187,6 +187,18 @@ class JobVolounteerFormType extends AbstractType
                 'label' => 'busynesses',
                 'required' => false,
             ])
+            ->add(
+                'address',
+                TextType::class,
+                [
+                    'required' => true,
+                    'attr' => [
+                        'placeholder' => 'Address',
+                        'class' => 'text_input',
+                    ],
+                    'label' => false
+                ]
+            )
 
 //            ->add('image', FileType::class, [
 //                'required' => false,

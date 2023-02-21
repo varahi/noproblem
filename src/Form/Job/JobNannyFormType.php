@@ -256,6 +256,18 @@ class JobNannyFormType extends AbstractType
                     'data' => 'null'
                 ]
             )
+            ->add(
+                'address',
+                TextType::class,
+                [
+                    'required' => true,
+                    'attr' => [
+                        'placeholder' => 'Address',
+                        'class' => 'text_input',
+                    ],
+                    'label' => false
+                ]
+            )
 /*            ->add(
                 'clientAge',
                 ChoiceType::class,

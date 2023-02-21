@@ -111,17 +111,21 @@ class WorksheetRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param int $id
      * @return int|mixed|string
      */
-    public function findByCategory(int $id, $currentJob, $limit)
+    public function findByCategory($id, $currentJob, $limit)
     {
+        if ($id == null) {
+            return null;
+        }
+
         $qb = $this->getEntityManager()->createQueryBuilder();
         $expr = $qb->expr();
         $qb->select('w')
             ->from(self::TABLE, 'w')
             ->join('w.category', 'c')
             ->where($qb->expr()->eq('c.id', $id))
+            ->andWhere($expr->neq('w.hidden', 1))
             ->setMaxResults($limit)
             ->orderBy('w.created', 'DESC');
 

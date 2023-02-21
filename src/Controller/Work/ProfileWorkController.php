@@ -105,12 +105,6 @@ class ProfileWorkController extends AbstractController
         $category = $worksheet->getCategory();
         $user = $this->security->getUser();
 
-        if (isset($category) && $category !==null) {
-            $relatedJobs = $worksheetRepository->findByCategory($category->getId(), $worksheet->getId(), '10');
-        } else {
-            $relatedJobs = null;
-        }
-
         // Get liked worksheet
         $featuredProfiles = $this->getFeaturedProfiles($user);
         // Set coords for worksheet
@@ -119,7 +113,7 @@ class ProfileWorkController extends AbstractController
         return new Response($this->twig->render('pages/worksheet/detail.html.twig', [
             'user' => $user,
             'worksheet' => $worksheet,
-            'relatedJobs' => $relatedJobs,
+            'relatedJobs' => $worksheetRepository->findByCategory($category?->getId(), $worksheet->getId(), '10') ?? null,
             'featuredProfiles' => $featuredProfiles,
             'cityName' => $this->sessionService->getCity(),
             'ticketForm' => $this->modalForms->ticketForm($request)->createView()

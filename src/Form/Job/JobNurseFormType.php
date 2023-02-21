@@ -225,6 +225,18 @@ class JobNurseFormType extends AbstractType
                 'placeholder' => 'Выберите город',
                 'empty_data' => null,
             ])
+            ->add(
+                'address',
+                TextType::class,
+                [
+                    'required' => true,
+                    'attr' => [
+                        'placeholder' => 'Address',
+                        'class' => 'text_input',
+                    ],
+                    'label' => false
+                ]
+            )
 /*            ->add(
                 'clientAge',
                 ChoiceType::class,

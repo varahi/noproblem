@@ -245,7 +245,7 @@ class Worksheet
     private $isDemo;
 
     /**
-     * @ORM\OneToMany(targetEntity=Accommodation::class, mappedBy="worksheet")
+     * @ORM\ManyToOne(targetEntity=Accommodation::class, inversedBy="worksheet")
      */
     private $accommodations;
 
@@ -257,7 +257,6 @@ class Worksheet
         $this->busynesses = new ArrayCollection();
         $this->featuredUsers = new ArrayCollection();
         $this->citizen = new ArrayCollection();
-        $this->accommodations = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -880,32 +879,18 @@ class Worksheet
     }
 
     /**
-     * @return Collection<int, Accommodation>
+     * @return mixed
      */
-    public function getAccommodations(): Collection
+    public function getAccommodations()
     {
         return $this->accommodations;
     }
 
-    public function addAccommodation(Accommodation $accommodation): self
+    /**
+     * @param mixed $accommodations
+     */
+    public function setAccommodations($accommodations): void
     {
-        if (!$this->accommodations->contains($accommodation)) {
-            $this->accommodations[] = $accommodation;
-            $accommodation->setWorksheet($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAccommodation(Accommodation $accommodation): self
-    {
-        if ($this->accommodations->removeElement($accommodation)) {
-            // set the owning side to null (unless already changed)
-            if ($accommodation->getWorksheet() === $this) {
-                $accommodation->setWorksheet(null);
-            }
-        }
-
-        return $this;
+        $this->accommodations = $accommodations;
     }
 }

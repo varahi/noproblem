@@ -30,7 +30,7 @@ class Accommodation
     private $job;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Worksheet::class, inversedBy="accommodations")
+     * @ORM\OneToMany(targetEntity=Worksheet::class, mappedBy="accommodations")
      */
     private $worksheet;
 
@@ -68,15 +68,19 @@ class Accommodation
         return $this;
     }
 
-    public function getWorksheet(): ?Worksheet
+    /**
+     * @return mixed
+     */
+    public function getWorksheet()
     {
         return $this->worksheet;
     }
 
-    public function setWorksheet(?Worksheet $worksheet): self
+    /**
+     * @param mixed $worksheet
+     */
+    public function setWorksheet($worksheet): void
     {
         $this->worksheet = $worksheet;
-
-        return $this;
     }
 }
