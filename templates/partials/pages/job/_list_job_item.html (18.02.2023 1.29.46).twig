@@ -14,9 +14,9 @@
                     <img class="verif_green" src="{{ asset('assets/img/verif_green.svg') }}" alt="">
                      {% if app.user %}
                     {% if job.id in featuredJobs %}
-                        <span class="remove-job-{{ job.id }} js-add-job like liked" data-id="{{ job.id }}" title="Удалить из избранного"></span>
+                        <span class="remove-job-{{ job.id }} like liked" title="Удалить из избранного"></span>
                     {% else %}
-                        <span class="add-job-{{ job.id }} js-add-job like" data-id="{{ job.id }}" title="Добавить в избранное"></span>
+                        <span class="add-job-{{ job.id }} like" title="Добавить в избранное"></span>
                     {% endif %}
                 {% endif %}
                 </div>
@@ -78,22 +78,31 @@
 
 
     $(document).ready(function(){
-        $('.js-add-job').click(function(){
-            let id = $(this).data('id');
-            let url;
-            if($(this).hasClass('active')){
-                url = '/remove-from-favorite/job-'+id;
-                $.get(url, function (data){
-                    $(this).removeClass('liked');
-                    $('.js-like-info-'+id).remove();
-                });
-            }else{
-                url = '/add-to-favorite/job-'+id;
-                $.get(url, function (data){
-                    $(this).addClass('liked');
-                    $(".js-add-job like").after(' <div class="like-info js-like-info-'+id+' ">Добавлено в избранное</div>');
-                });
-            }
+        $ ('span.add-job-{{ job.id }}').click(function(){
+            var url = '{{ path('app_add_job_to_favorite', { id: job.id}) }}';
+            dataString = 'Добавлено в избранное';
+            jQuery.ajax({
+                url: url,
+                data: dataString,
+                type: "POST",
+                success:function(){
+                    $(".add-job-{{ job.id }}").addClass('liked').after(' <div class="like-info">Добавлено в избранное</div>');
+                },
+                error:function (){}
+            });
+        });
+        $('span.remove-job-{{ job.id }}').click(function(){
+            var url = '{{ path('app_remove_job_from_favorite', { id: job.id}) }}';
+            dataString = 'Удалено из избранного';
+            jQuery.ajax({
+                url: url,
+                data: dataString,
+                type: "POST",
+                success:function(){
+                    $(".remove-job-{{ job.id }}").removeClass('liked').after(' <div class="like-info">Удалено из избранного</div>');
+                },
+                error:function (){}
+            });
         });
 
 

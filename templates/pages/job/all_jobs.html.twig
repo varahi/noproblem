@@ -31,13 +31,13 @@
                     {% endif %}
 
                     <div class="large fon">
-                        <div class="in" >
+                        <div class="in vacan__position" >
                             {% if jobs|length > 0 %}
                                 {% for job in jobs %}
                                     {% include 'partials/pages/job/_list_job_item.html.twig' %}
                                 {% endfor %}
                             {% else %}
-                                <p>По вашему запросу вакансий не найдено</p>
+                                <p class='workers__position'>По вашему запросу вакансий не найдено</p>
                             {% endif %}
                             <div class="pagination">
                                 {{ knp_pagination_render(jobs) }}

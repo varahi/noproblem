@@ -220,3 +220,77 @@ $(function(){
         });
     });
 });
+
+
+
+document.querySelectorAll('input').forEach((input) => {
+    if(input.value.length > 0){
+       input.classList.add('border-black');
+   }
+   input.addEventListener('keydown', function() {
+       if(input.value.length > 0){
+           input.classList.add('border-black');
+       }else{
+           input.classList.remove('border-black');
+       }
+   });
+});
+
+document.querySelectorAll('textarea').forEach((input) => {
+    if(input.value.length > 0){
+      input.classList.add('border-black');
+  }
+  input.addEventListener('keydown', function() {
+      if(input.value.length > 0){
+          input.classList.add('border-black');
+      }else{
+          input.classList.remove('border-black');
+      }
+  });
+});
+
+
+
+const selects = document.querySelectorAll('.select2-selection--single');
+selects.forEach(function(select){
+    select.addEventListener('click', function(){
+       select.classList.add('blackColor');
+    })
+
+});
+
+
+const selects2 = document.querySelectorAll('select');
+selects2.forEach(function(select){
+    select.addEventListener('click', function(){
+       select.classList.add('blackColor');
+    })
+
+});
+
+
+const selects4 = document.querySelectorAll('.select2-selection--multiple');
+selects4.forEach(function(select){
+    select.addEventListener('click', function(){
+       select.classList.add('blackColor');
+    })
+
+});
+
+const selects3 = document.querySelector('#worksheet_form_startDate');
+selects3.addEventListener('click', function(){
+    selects3.classList.add('blackColor');
+});
+
+// document.querySelectorAll('.text_input').forEach((input) => {
+//     if(input.value.length > 0){
+//        input.classList.add('border-black');
+//    }
+//    input.addEventListener('keydown', function() {
+//        if(input.value.length > 0){
+//            input.classList.add('border-black');
+//        }else{
+//            input.classList.remove('border-black');
+//        }
+//    });
+// });

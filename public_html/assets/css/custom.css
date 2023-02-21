@@ -1007,7 +1007,7 @@ Chat
         grid-gap: 15px;
     }
     .btn_try_custom {
-        margin-top: 0;
+        margin-top: 30px;
         text-align: center;
         display: block;
     }
@@ -1019,6 +1019,7 @@ Chat
         min-width: 300px;
         margin-left: -180px;
         top: 8%;
+        margin-top: 0;
     }
     .modal-title h2 {
         font-size: 30px !important;
@@ -1041,7 +1042,7 @@ Chat
 }
 
 /* 320px 480px: мобильные устройства; */
-@media (min-width: 320px) and (max-width: 584px) {
+@media (min-width: 280px) and (max-width: 584px) {
     .frame {
         z-index: -1;
         display: none;
@@ -1063,6 +1064,7 @@ Chat
     .round_account {
         height: 200px;
         border: none;
+        padding-left: 28px;
     }
 
     .round_account img {
@@ -1108,9 +1110,29 @@ Chat
 
 
 @media only screen and (max-width: 800px) {
+ .flex-parent {
+    display: flex;
+    flex-direction: column!important;
+}
+
+.flex-child {
+    border: 1px solid #f5f5f5;
+    width: 80%!important;
+
+   
+}
+
+.abouts_creating_form input {
+    width: 98%!important;
+    max-width: 360px;
+}
 
 }
-@media (min-width: 320px) and (max-width: 584px) {
+@media (min-width: 280px) and (max-width: 584px) {
+    .flex-child {
+
+    width: 75%!important;
+}
     .main {
         height: auto;
         min-height: 400px;
@@ -1119,6 +1141,11 @@ Chat
         font-size: 38px;
         line-height: 42px;
     }
+    .btn_try_custom {
+    margin-top: 10px;
+    text-align: center;
+    display: block;
+}
 }
 
 textarea {
@@ -1149,7 +1176,7 @@ strike {
 
 #ageFrom,
 #ageTo {
-    width: 45% !important;
+    width: 45% ;
     margin-right: 10px;
 }
 
@@ -1192,4 +1219,18 @@ strike {
 }
 .grid_creating_form {
     display: block;
+}
+
+@media only screen and (max-width: 280px) {
+    span.like {
+    cursor: pointer;
+    left: 155px!important;
+    display: block;
+    width: 22px;
+    height: 22px;
+    background-image: url(../img/like.svg);
+    background-size: 22px 22px;
+    background-repeat: no-repeat;
+    position: absolute;
+}
 }

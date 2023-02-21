@@ -4,7 +4,7 @@
         <div class="modal-dialog">
             <div class="modal-content-city">
                 <div class="modal-header">
-                    <h3 class="modal-title">Ваш город <span class="js-name-city-detected"></span>?</h3>
+                    <h3 class="">Ваш город <span class="js-name-city-detected"></span>?</h3>
                     <a href="#close" title="Close" class="close__city js-close-1"><img src="/assets/img/krest.svg" alt=""></a>
                 </div>
                 <div class="modal-body">
@@ -21,12 +21,13 @@
     <div id="openModalCity" class="modal__city" style="display: none">
         <div class="modal-dialog-search">
             <div class="modal-content-city-search">
-                <div class="modal-header">
-                    <h3 class="modal-title">Ваш город <span class="js-name-city-detected"></span>?</h3>
+                <div class="modal-title-city">
+                    <h3 class="">Ваш город <span class="js-name-city-detected"></span>?</h3>
                     <a href="#close" title="Close" class="close__city2 js-close-2"><img src="/assets/img/krest.svg"></a>
                 </div>
                 <div class="modal-body">
                     <div class="input__modal">
+                    <div class="select__search">
                         <img class="search__city" src="/assets/img/search.svg" alt="search">
                         <select class="search__text" name="city" id="city" required>
                             <option value="">Выберите город</option>
@@ -34,6 +35,7 @@
                                 <option value="{{ city.name }}">{{ city.name }}</option>
                             {% endfor %}
                         </select><br />
+                    </div>
                         <div class="btn__search">
                         <button type="button" class="js-send-new-city btn_search-city">Отправить</button>
                         </div>

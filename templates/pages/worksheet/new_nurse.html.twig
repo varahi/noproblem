@@ -25,14 +25,19 @@
                     {% include 'partials/pages/worksheet/form/_city_column.html.twig' %}
                     {% include 'partials/pages/worksheet/form/_start_column.html.twig' %}
 
+                <div class="flex-parent">
+                    <div class="flex-child">
                 <div class="abouts_creating_form">
-                    <div class="abouts_creating_form">
+                    <div class="abouts_creating_form age__work">
                         <p class="required">Возраст подопечного, с которым готов работать:</p>
                         <div class="work_experience_creating_form">
                             {{ form_row(form.clientAge) }}
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="flex-child"></div>
+            </div>
 
                 {% include 'partials/pages/worksheet/form/_payment_column.html.twig' %}
                 {% include 'partials/pages/worksheet/form/_tasks_column.html.twig' %}

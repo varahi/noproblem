@@ -32,17 +32,17 @@
                     {% endif %}
 
                     <div class="large fon">
-                        <div class="in" >
+                        <div class="in vacan__position" >
                             {% include 'partials/_message.html.twig' %}
                             {% if worksheets|length > 0 %}
                                 {% for job in worksheets %}
                                     {% include 'partials/pages/worksheet/_list_item.html.twig' %}
                                 {% endfor %}
                             {% else %}
-                                <p>По вашему запросу анкет не найдено</p>
+                                <p class="workers__position">По вашему запросу анкет не найдено</p>
                             {% endif %}
                                <!-- <div class="not__added">
-                                <p>Вы ещё не добавили никого в избранные</p>
+                                <p class="workers__position">Вы ещё не добавили никого в избранные</p>
                                </div> -->
                         </div>
                     </div>
