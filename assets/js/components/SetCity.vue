@@ -3,7 +3,7 @@
     <!-- overlay -->
     <div class="overlay" v-if="showModal" @click="showModal = false"></div>
     <div class="modal" v-if="showModal">
-      <div class="modal-title">
+      <div class="modal-title modal__title-city">
         <h2>Выберите город</h2>
         <p v-if="alert" class="alert-danger">{{ alertMessage }}</p>
         <button class="close" @click="showModal = false"><img src="/assets/img/krest.svg" alt=""></button>
@@ -125,7 +125,7 @@ export default {
   height: auto;
   top: 40%;
   left: 50%;
-  margin-top: -75px; /* Negative half of height. */
+  margin-top: -250px; /* Negative half of height. */
   margin-left: -200px; /* Negative half of width. */
 }
 
@@ -145,4 +145,21 @@ export default {
 select.city {
   width: 100%;
 }
+
+@media only screen and (max-width: 1350px) {
+
+.select-form {
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal__title-city {
+  text-align: center;
+}
+.btn_try_custom {
+  margin-top: 0px;
+}
+}
+
 </style>

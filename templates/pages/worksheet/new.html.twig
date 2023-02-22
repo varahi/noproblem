@@ -18,7 +18,7 @@
                 <div class="in_creating_form">
                     {% include 'partials/_message.html.twig' %}
                     <h1>Выберите анкету которую вы хотите создать</h1>
-                    <ul>
+                    <ul class="choise__work-new">
                         {% for category in categories %}
                             <li><a href="{{ path('app_create_worksheet', { slug: category.slug}) }}" class="">{{ category.name }}</a></li>
                         {% endfor %}

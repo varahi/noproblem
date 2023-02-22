@@ -1785,7 +1785,7 @@ padding: 12px 40px;
 }
 
 
-.like {
+/*.like {
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
@@ -1795,13 +1795,14 @@ padding: 12px 40px;
     width: max-content;
     margin-bottom: 27px;
 }
-
+*/
 .like img {
     width: 20px;
     height: 20px;
     -o-object-fit: contain;
     object-fit: contain;
 }
+
 
 
 .double {
@@ -3049,6 +3050,8 @@ grid-gap: 35px;
 width: max-content;
 margin-bottom: 16px;}
 
+
+
 .city2_one_vacan{display: grid;
 grid-template-columns: auto 1fr;
 align-items: end;
@@ -3378,7 +3381,7 @@ color: #A6A6A6;
 border-radius: 5px;
 border: 1px solid #D7D7D7;
 background: #fff;
-width:118px;
+width:210px;
 height: 41px;
 padding-left: 20px;
 padding-right: 10px;
@@ -4637,6 +4640,22 @@ background: transparent;
   text-align: center;
 }
 
+.choise__work-new li {
+  padding-top: 7px;
+}
+.btn__support {
+  margin-top: 10px;
+}
+
+#modal__support {
+  margin-top: -18%;
+}
+
+#btn__modal-support {
+  margin-top: 10px;
+}
+
+
 
 @media only screen and (max-width: 1300px) {
    .buts4 {
@@ -4854,6 +4873,9 @@ h2.main-page {
     width: max-content;
 }
 
+#modal__support {
+  margin-top: -23%;
+}
 }
 
 
@@ -5011,7 +5033,7 @@ h2.main-page {
 .flex-child {
     border: 1px solid #f5f5f5!important;
     box-sizing: border-box;
-    width: 70%!important;
+    width: 85%!important;
 }
 
 .btn_box_account_two_vacan {
@@ -5032,6 +5054,10 @@ h2.main-page {
     flex-direction: column;
     align-items: flex-end;
     /* float: right; */
+}
+
+#modal__support {
+  margin-top: -30%;
 }
 
 }
@@ -5395,6 +5421,11 @@ body {
  
     padding-right: 20px;
 }
+.line_one_vacan {
+    
+    grid-gap: 15px;
+  
+}
 
 }
 
@@ -5590,7 +5621,7 @@ font-size: 39px;
 }
 
 .single-map {
-  min-width: 523px!important;
+  min-width: 500px!important;
 }
 
 .name_verif img {
@@ -5607,6 +5638,12 @@ font-size: 39px;
     font-size: 30px;
 }
 
+#modal__support {
+  margin-top: 5%;
+}
+#btn__modal-support {
+  margin-top: 0px;
+}
 }
 
 @media only screen and (max-width: 800px)
@@ -5898,7 +5935,7 @@ position: absolute;
 padding-bottom: 0px;}
 
 .habitation {
-    margin-bottom: -29px!important;
+    margin-bottom: -18px!important;
 }
 
 .abs3 {
@@ -6172,11 +6209,11 @@ display: grid;
 align-items: center;
 box-shadow: 10px 10px 10px rgb(180 180 180 / 25%);}
 
-.in{justify-content: center;
+/*.in{justify-content: center;
 display: grid;
 align-items: center;
 grid-gap: 10px;}
-
+*/
 .set:nth-child(1){grid-column: 1/4;}
 
 .set:nth-child(2){grid-column: 4/-1;}
@@ -6253,6 +6290,8 @@ color: #fff;}
     display: grid;
     grid-template-columns: none;
     padding-bottom: 0px;
+    margin-bottom: -200px;
+
 }
 /*.choose{border: 1px solid #ECECEC;
 background: #fff;
@@ -6516,7 +6555,7 @@ display: block;
   .employer_card-item,
   .worker_card-item {
     min-width: 260px;
-    max-width: 359px;
+    max-width: 285px;
     margin-right: 10px;
     margin-bottom: 10px;
   }
@@ -6697,41 +6736,30 @@ display: block;
 }
 
 
-@media (min-width: 600px) and (max-width: 649px) {
+@media (min-width: 585px) and (max-width: 649px) {
  .btn_resize {
     margin-top: 0px;
     position: absolute;
-    right: 17px;
-    top: 33px;
+    right: -6px;
+    top: 50px;
+}
+
+.btn_resize button {
+    padding: 8px 10px;
+    font-size: 12px;
 }
   .btn_account {
     position: absolute;
-    right: 0px;
-    top: 110px;
+    right: -12px;
+    top: 127px;
 }
 .btn_account a {
    
-    padding: 8px 21px;
+   padding: 7px 9px;
  
 }
 }
 
-@media (min-width: 585px) and (max-width: 599px) {
-.btn_resize {
-    margin-top: 0px;
-    position: absolute;
-    right: 6px;
-    top: 22px;
-}
- .btn_account {
-    position: absolute;
-    right: -11px;
-    top: 100px;
-}
-.btn_account a {
-    padding: 7px 21px;
-}
-}
 /*
 @media (min-width: 480px) and (max-width: 584px) {
 
@@ -6761,6 +6789,20 @@ display: block;
 /* 320px 480px: мобильные устройства; */
 @media (min-width: 280px) and (max-width: 584px) {
 
+  .age__work {
+    max-width: 245px;
+  }
+
+  .habitation {
+    margin-bottom: 16px!important;
+}
+
+  .pay_creating_form {
+    grid-template-columns: 1fr!important;
+    grid-gap: 7px;
+    width: 100%;
+}
+
   .form__aplication .topic__message-input {
     margin-top: 15px;
     width: 70%;
@@ -6781,7 +6823,7 @@ display: block;
 
 .btn_box_account a:nth-child(2) {
     padding-left: 0px;
-    padding-top: 10px;
+    padding-top: 0px;
 }
 
 .btn_box_account_two {
@@ -6819,7 +6861,7 @@ display: block;
 }
 
 .single-map {
-    min-width: 350px!important;
+    min-width: 286px!important;
     width: 69%!important;
 }
 
@@ -6848,14 +6890,12 @@ display: block;
 
 
 .btn_box_account_one {
-    padding: 7px 14px;
-    font-size: 14px;
+    padding: 5px 13px!important;
+    font-size: 14px!important;
+
 }
 
-.btn_box_account_two {
-    font-size: 14px;
-    padding: 5px 10px;
-}
+
 
 .input__modal {
     margin-top: 10px;
@@ -6901,6 +6941,13 @@ display: block;
 
     padding: 5px 14px;
 }
+
+.btn_box_account_two {
+    font-size: 14px!important;
+    padding: 4px 6px!important;
+    margin-left: 5px;
+}
+
 
   .employer_card-item:nth-child(3n+3),
   .worker_card-item:nth-child(3n+3) {
@@ -7517,6 +7564,8 @@ padding-bottom: 30px;
   display: grid;
   grid-template-columns: none;
   padding-bottom: 0px;
+  margin-bottom: 0px;
+
 }
 
 .choose {
@@ -8165,7 +8214,7 @@ p{font-size: 15px;}
   height: 50px;
  
 }*/
-.abouts_creating_form p {margin-bottom: 5px}
+.abouts_creating_form p {margin-bottom: 10px}
 
 .needs{display: grid;
 grid-template-columns: 1fr 1fr;
@@ -8801,6 +8850,13 @@ font-size: 12px;
     font-size: 16px;
 }
 
+.date_creating_form {
+    grid-template-columns: auto;
+    align-items: flex-start;
+    grid-gap: 14px;
+  
+}
+
 /*.btn_box_account_two_vacan {
     margin-top: 10px;
     margin-left: 0px;
@@ -8808,7 +8864,19 @@ font-size: 12px;
 
 }
 
+@media only screen and (max-width: 350px) 
+{
+  .sidenav_container {
+    padding: 15px 126px 0;
+}
 
+.logo_menu {
+    margin-left: 132px;
+}
+.cocial_network {
+    margin-left: 115px;
+}
+}
 
 
 @media only screen and (max-width: 280px) {
@@ -9015,6 +9083,14 @@ h2.main-page {
 .btn_box_account_two_vacan {
     margin-left: 0px;
     margin-top: 10px;
+}
+
+.pay_creating_form {
+    grid-template-columns: 1fr;
+   
+}
+.hide {
+    width: 108%;
 }
 
 }

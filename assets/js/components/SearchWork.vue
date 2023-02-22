@@ -121,7 +121,7 @@ export default {
 }
 .buttons {
   grid-template-columns: auto auto auto;
-  width: max-content;
+/*  width: max-content;*/
   align-items: center;
   display: grid;
   grid-gap: 25px;
@@ -140,5 +140,39 @@ export default {
   opacity: .8;
   transition: .2s;
 }
+
+@media only screen and (max-width: 1200px) {
+.modal-vue .modal {
+    margin-top: -75px;
+    margin-left: -262px;
+}
+}
+
+@media only screen and (max-width: 580px) {
+  .modal-vue .modal{
+  
+    width: 300px;
+    min-width: 346px;
+    margin-top: -75px;
+    margin-left: -204px;
+}
+.buttons{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    grid-gap: 14px;
+
+}
+}
+
+@media only screen and (max-width: 430px) {
+  .modal-vue .modal {
+    width: 250px;
+    min-width: 250px;
+    margin-top: -75px;
+    margin-left: -155px;
+}
+}
+
 
 </style>

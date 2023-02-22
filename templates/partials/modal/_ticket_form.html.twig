@@ -2,7 +2,7 @@
     <div class="overlay"></div>
 
     <!-- Modal content -->
-    <div class="modal">
+    <div class="modal" id="modal__support">
         <div class="modal-title">
             <h2>{{ 'Create ticket'|trans }}</h2>
             <button class="close" onclick="closeModal()"><img src="{{ asset('assets/img/krest.svg') }}" alt=""></button>
@@ -14,7 +14,7 @@
                 {{ form_widget(ticketForm.email) }}
                 {{ form_widget(ticketForm.description) }}
                 {{ form_widget(ticketForm.priority) }}
-                <div class="btn_try btn_try_custom">
+                <div class="btn_try btn_try_custom" id="btn__modal-support">
                     <button type="submit" class="btn btn-success">{{ 'Create ticket'|trans }}</button>
                 </div>
             {{ form_end(ticketForm) }}

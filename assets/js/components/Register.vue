@@ -394,6 +394,7 @@ export default {
 
 .modal-title h2 {
   font-size: 42px;
+  text-align: center;
 }
 
 input.form-control {

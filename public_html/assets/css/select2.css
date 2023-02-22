@@ -686,7 +686,7 @@ width: 244px!important;
 
 .select2-container {
     
-    width: 85%!important;
+    width: 65%!important;
 }
 
 /*.select2-container--default .select2-selection--multiple {
@@ -707,6 +707,10 @@ width: 244px!important;
 
 @media (min-width: 280px) and (max-width: 584px) {
 
+  .but_creating_form select {
+    min-width: 200px;
+}
+
 .select2-container--default .select2-selection--multiple {
     width: 100%!important;
 }
@@ -721,6 +725,9 @@ width: 244px!important;
     border-radius: 4px;
     width: 100%;
     height: 26px;
+}
+.select2-container {
+    width: 85%!important;
 }
 /*#map {
     width: 70%!important;
